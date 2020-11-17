@@ -2,8 +2,8 @@
 name: Scrum 및 wrap-up issue template
 about: 데일리 스크럼 및 wrap-up 이슈 작성시 사용하는 템플릿
 title: 'Day 00 Scrum 및 Wrap Up '
-labels: ''
-assignees: ''
+labels: "daily scrum & Wrap up 👨‍👩‍👧‍👦"
+assignees: whrlgus, SHIVVVPP, seoulboy
 
 ---
 
