@@ -1,7 +1,7 @@
 ---
 name: feature request template
 about: feature 추가시 사용하는 기본 템플릿
-title: 'story를 적어주세요'
+title: story를 적어주세요
 labels: ''
 assignees: ''
 
