@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
+		8ACD88980E8B5D84169431E5 /* Pods_BoostRunClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F13D4C3B7533D5E1C1465C /* Pods_BoostRunClub.framework */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
 		9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB532566AA4400183CB9 /* SceneDelegate.swift */; };
 		9600DB562566AA4400183CB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB552566AA4400183CB9 /* ViewController.swift */; };
@@ -15,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
+		46F13D4C3B7533D5E1C1465C /* Pods_BoostRunClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoostRunClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9600DB4E2566AA4400183CB9 /* BoostRunClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoostRunClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB512566AA4400183CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9600DB532566AA4400183CB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -22,6 +27,7 @@
 		9600DB5A2566AA4700183CB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9600DB5D2566AA4700183CB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9600DB5F2566AA4700183CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E97B7A94FBF7F86A709BC993 /* Pods-BoostRunClub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.release.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ACD88980E8B5D84169431E5 /* Pods_BoostRunClub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CF14F3734FCD2A29FCDC3C0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */,
+				E97B7A94FBF7F86A709BC993 /* Pods-BoostRunClub.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9600DB452566AA4400183CB9 = {
 			isa = PBXGroup;
 			children = (
 				9600DB502566AA4400183CB9 /* BoostRunClub */,
 				9600DB4F2566AA4400183CB9 /* Products */,
+				1CF14F3734FCD2A29FCDC3C0 /* Pods */,
+				C55C5C85FF1A070D490B9094 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +72,7 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
+				4C9C8FD42566B0A400956D51 /* .swiftlint.yml */,
 				9600DB662566AA9900183CB9 /* SupportingFiles */,
 				9600DB512566AA4400183CB9 /* AppDelegate.swift */,
 				9600DB532566AA4400183CB9 /* SceneDelegate.swift */,
@@ -72,6 +91,14 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		C55C5C85FF1A070D490B9094 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46F13D4C3B7533D5E1C1465C /* Pods_BoostRunClub.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -79,9 +106,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9600DB622566AA4700183CB9 /* Build configuration list for PBXNativeTarget "BoostRunClub" */;
 			buildPhases = (
+				B28959AC16131B1D2CDBCCB1 /* [CP] Check Pods Manifest.lock */,
 				9600DB4A2566AA4400183CB9 /* Sources */,
 				9600DB4B2566AA4400183CB9 /* Frameworks */,
 				9600DB4C2566AA4400183CB9 /* Resources */,
+				4C9C8FD82566B0F400956D51 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -129,12 +158,55 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */,
 				9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */,
 				9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4C9C8FD82566B0F400956D51 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		B28959AC16131B1D2CDBCCB1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BoostRunClub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9600DB4A2566AA4400183CB9 /* Sources */ = {
@@ -279,6 +351,7 @@
 		};
 		9600DB632566AA4700183CB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,6 +371,7 @@
 		};
 		9600DB642566AA4700183CB9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E97B7A94FBF7F86A709BC993 /* Pods-BoostRunClub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -1,0 +1,4 @@
+target 'BoostRunClub' do
+  use_frameworks!
+  pod 'SwiftLint'
+end
