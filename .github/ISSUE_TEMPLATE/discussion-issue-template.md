@@ -2,7 +2,7 @@
 name: Discussion issue template
 about: 의논사항에 대한 이슈 작성시 사용하는 템플릿
 title: ''
-labels: "discussion \U0001F4DA"
+labels: "🏷️ discussion 🗨️"
 assignees: whrlgus, SHIVVVPP, seoulboy
 
 ---
