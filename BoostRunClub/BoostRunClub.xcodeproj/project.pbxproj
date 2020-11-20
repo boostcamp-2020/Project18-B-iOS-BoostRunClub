@@ -107,6 +107,7 @@
 			buildConfigurationList = 9600DB622566AA4700183CB9 /* Build configuration list for PBXNativeTarget "BoostRunClub" */;
 			buildPhases = (
 				B28959AC16131B1D2CDBCCB1 /* [CP] Check Pods Manifest.lock */,
+				9608B4AE256761190008D44A /* ShellScript */,
 				9600DB4A2566AA4400183CB9 /* Sources */,
 				9600DB4B2566AA4400183CB9 /* Frameworks */,
 				9600DB4C2566AA4400183CB9 /* Resources */,
@@ -183,6 +184,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		9608B4AE256761190008D44A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\"\n";
 		};
 		B28959AC16131B1D2CDBCCB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
