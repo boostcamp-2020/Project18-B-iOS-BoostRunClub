@@ -1,0 +1,4 @@
+
+excluded:
+- AppDelegate.swift
+- SceneDelegate.swift
