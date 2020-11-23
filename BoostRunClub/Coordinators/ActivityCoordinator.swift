@@ -24,7 +24,6 @@ final class ActivityCoordinator: ActivityCoordinatorProtocol {
 
     func showActivityViewController() {
         let activityVC = ActivityViewController()
-
         navigationController.pushViewController(activityVC, animated: true)
     }
 }
