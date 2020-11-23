@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		157031793501852C09F6DE10 /* Pods_BoostRunClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
-		71E8288B256B9235004A1F30 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288A256B9235004A1F30 /* Coordinator.swift */; };
 		71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288E256B9320004A1F30 /* AppCoordinator.swift */; };
 		71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82891256B9468004A1F30 /* LoginCoordinator.swift */; };
 		71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82894256B9581004A1F30 /* LoginViewController.swift */; };
@@ -17,9 +16,10 @@
 		71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289A256B9B08004A1F30 /* ActivityViewController.swift */; };
 		71E8289E256B9B13004A1F30 /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289D256B9B13004A1F30 /* RunningViewController.swift */; };
 		71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */; };
-		71E828A4256B9F08004A1F30 /* ActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A3256B9F08004A1F30 /* ActivityCoordinator.swift */; };
 		71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */; };
 		71E828AA256B9F23004A1F30 /* RunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A9256B9F23004A1F30 /* RunningCoordinator.swift */; };
+		71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828AF256BADB0004A1F30 /* Coordinator.swift */; };
+		71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
 		9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB532566AA4400183CB9 /* SceneDelegate.swift */; };
 		9600DB562566AA4400183CB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB552566AA4400183CB9 /* ViewController.swift */; };
@@ -30,7 +30,6 @@
 /* Begin PBXFileReference section */
 		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		71E8288A256B9235004A1F30 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Coordinator.swift; path = "../../../../../Documents/ios 13 swift 5/clones/Coordinator.swift"; sourceTree = "<group>"; };
 		71E8288E256B9320004A1F30 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		71E82891256B9468004A1F30 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		71E82894256B9581004A1F30 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -38,9 +37,10 @@
 		71E8289A256B9B08004A1F30 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		71E8289D256B9B13004A1F30 /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
 		71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		71E828A3256B9F08004A1F30 /* ActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivityCoordinator.swift; path = "../../../../../Documents/ios 13 swift 5/clones/ActivityCoordinator.swift"; sourceTree = "<group>"; };
 		71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		71E828A9256B9F23004A1F30 /* RunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCoordinator.swift; sourceTree = "<group>"; };
+		71E828AF256BADB0004A1F30 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCoordinator.swift; sourceTree = "<group>"; };
 		8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoostRunClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB4E2566AA4400183CB9 /* BoostRunClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoostRunClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB512566AA4400183CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,13 +108,13 @@
 		71E82889256B91A0004A1F30 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				71E8288A256B9235004A1F30 /* Coordinator.swift */,
 				71E8288E256B9320004A1F30 /* AppCoordinator.swift */,
 				71E82891256B9468004A1F30 /* LoginCoordinator.swift */,
 				71E82897256B9788004A1F30 /* TabBarCoordinator.swift */,
-				71E828A3256B9F08004A1F30 /* ActivityCoordinator.swift */,
 				71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */,
 				71E828A9256B9F23004A1F30 /* RunningCoordinator.swift */,
+				71E828AF256BADB0004A1F30 /* Coordinator.swift */,
+				71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -307,10 +307,9 @@
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
 				71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */,
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
-				71E8288B256B9235004A1F30 /* Coordinator.swift in Sources */,
 				71E828AA256B9F23004A1F30 /* RunningCoordinator.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
-				71E828A4256B9F08004A1F30 /* ActivityCoordinator.swift in Sources */,
+				71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */,
 				9600DB562566AA4400183CB9 /* ViewController.swift in Sources */,
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */,
@@ -318,6 +317,7 @@
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
+				71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
