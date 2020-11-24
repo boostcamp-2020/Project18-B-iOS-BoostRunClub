@@ -8,9 +8,11 @@
 import Combine
 import UIKit
 
-class GoalTypeViewController: UIViewController {
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+final class GoalTypeViewController: UIViewController {
+    private lazy var tableView: UITableView = {
+        let size = CGSize(width: UIScreen.main.bounds.width, height: tableViewHeight)
+        let origin = CGPoint(x: 0, y: UIScreen.main.bounds.height)
+        let tableView = UITableView(frame: CGRect(origin: origin, size: size), style: .plain)
         tableView.layer.backgroundColor = UIColor.tertiarySystemBackground.cgColor
         tableView.delegate = self
         tableView.dataSource = self
@@ -22,6 +24,7 @@ class GoalTypeViewController: UIViewController {
         tableView.separatorInset.left = 20
         tableView.separatorInset.right = 20
         tableView.layer.cornerRadius = 30
+        tableView.rowHeight = GoalTypeCell.cellHeight
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding * 2))
         let clearButton = UIButton()
@@ -39,11 +42,13 @@ class GoalTypeViewController: UIViewController {
         return tableView
     }()
 
-    let bounds = UIScreen.main.bounds
-    var viewModel: GoalTypeViewModelTypes?
-    var cancellables: Set<AnyCancellable> = []
-    lazy var tableViewHeight = CGFloat(viewModel?.output.numberOfCell ?? 0) * GoalTypeCell.cellHeight + verticalTablePadding * 3
-    let verticalTablePadding: CGFloat = 30
+    private var viewModel: GoalTypeViewModelTypes?
+    private var cancellables: Set<AnyCancellable> = []
+    private var tableViewHeight: CGFloat {
+        CGFloat(viewModel?.outputs.numberOfCell ?? 0) * GoalTypeCell.cellHeight + verticalTablePadding * 3
+    }
+
+    private var verticalTablePadding: CGFloat = 30
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -54,54 +59,45 @@ class GoalTypeViewController: UIViewController {
         viewModel = goalTypeViewModel
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-
-        let size = CGSize(width: bounds.width,
-                          height: tableViewHeight)
-        let origin = CGPoint(x: 0, y: bounds.height)
-
-        tableView.frame = CGRect(origin: origin, size: size)
-
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-
-        var gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
-        gesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(gesture)
-        view.addSubview(tableView)
-//        NSLayoutConstraint.activate([
-//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ////            tableView.heightAnchor.constraint(equalToConstant: 400)
-//        ])
-
-        bindViewModel()
-    }
-
-    func bindViewModel() {
+    private func bindViewModel() {
         guard let viewModel = viewModel else { return }
-        viewModel.output.goalTypeSubject.sink {
-            print($0)
-        }
-
-        viewModel.output.closeSheet
+        viewModel.outputs.closeSheet
             .receive(on: RunLoop.main)
             .sink { self.closeWithAnimation() }
             .store(in: &cancellables)
     }
+}
+
+// MARK: - ViewController LifeCycle
+
+extension GoalTypeViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+        view.addSubview(tableView)
+
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
+        gesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(gesture)
+
+        bindViewModel()
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        tableView.bounds.origin.y = -tableView.bounds.height
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
-            [weak self] in
-            guard let self = self else { return }
-            self.tableView.frame.origin.y = self.bounds.height - self.tableViewHeight
-            self.tableView.bounds.origin.y = 0
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        }, completion: nil)
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: {
+                [weak self] in
+                guard let self = self else { return }
+                self.tableView.frame.origin.y = UIScreen.main.bounds.height - self.tableViewHeight
+                self.tableView.bounds.origin.y = 0
+                self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+            },
+            completion: nil
+        )
     }
 }
 
@@ -111,50 +107,47 @@ extension GoalTypeViewController {
     @objc
     func didTapBackgroundView(gesture: UITapGestureRecognizer) {
         if !tableView.point(inside: gesture.location(in: tableView), with: nil) {
-            viewModel?.input.didTapBackgroundView()
+            viewModel?.inputs.didTapBackgroundView()
         } else {}
     }
 
-    func closeWithAnimation() {
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
-            [weak self] in
-            guard let self = self else { return }
-            self.tableView.frame.origin.y = self.bounds.height
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-        }, completion: { _ in
-
-            self.dismiss(animated: false, completion: nil)
-        })
+    private func closeWithAnimation() {
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                guard let self = self else { return }
+                self.tableView.frame.origin.y = UIScreen.main.bounds.height
+                self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+            },
+            completion: { _ in
+                self.dismiss(animated: false, completion: nil)
+            }
+        )
     }
 }
 
-// MARK: - Delegate
+// MARK: - UITableViewDelegate Implementation
 
 extension GoalTypeViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel?.input.didSelectCell(at: indexPath.row)
-    }
-
-    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        100
-    }
-
-    func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
-        100
+        viewModel?.inputs.didSelectCell(at: indexPath.row)
     }
 }
 
-// MARK: - DataSource
+// MARK: - UITableViewDataSource Implementation
 
 extension GoalTypeViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel?.output.numberOfCell ?? 0
+        return viewModel?.outputs.numberOfCell ?? 0
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
-            let goalType = viewModel?.output.cellForRowAt(index: indexPath.row),
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: GoalTypeCell.self)) as? GoalTypeCell
+            let goalType = viewModel?.outputs.cellForRowAt(index: indexPath.row),
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: String(describing: GoalTypeCell.self)) as? GoalTypeCell
         else { return UITableViewCell() }
 
         cell.goalTypeLabel.text = goalType.name

@@ -42,13 +42,13 @@ protocol PrepareRunViewModelOutputs {
 }
 
 class PrepareRunViewModel {
-    let locationProvider: LocationProvidable
-    weak var coordinator: PrepareRunCoordinatorProtocol?
-    @Published var goalType: GoalType = .none
-
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
     }
+
+    let locationProvider: LocationProvidable
+    weak var coordinator: PrepareRunCoordinatorProtocol?
+    @Published var goalType: GoalType = .none
 }
 
 // MARK: - Inputs

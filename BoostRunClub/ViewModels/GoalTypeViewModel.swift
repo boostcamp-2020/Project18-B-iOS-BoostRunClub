@@ -9,8 +9,8 @@ import Combine
 import Foundation
 
 protocol GoalTypeViewModelTypes {
-    var input: GoalTypeViewModelInputs { get }
-    var output: GoalTypeViewModelOutputs { get }
+    var inputs: GoalTypeViewModelInputs { get }
+    var outputs: GoalTypeViewModelOutputs { get }
 }
 
 protocol GoalTypeViewModelInputs {
@@ -26,14 +26,14 @@ protocol GoalTypeViewModelOutputs {
 }
 
 class GoalTypeViewModel {
-    var closeSheet = PassthroughSubject<Void, Never>()
-    let goalTypeSubject: CurrentValueSubject<GoalType, Never>
-    let sendGoalType: (GoalType) -> Void
-
     init(goalType: GoalType, completion: @escaping (GoalType) -> Void) {
         sendGoalType = completion
         goalTypeSubject = CurrentValueSubject<GoalType, Never>(goalType)
     }
+
+    private(set) var closeSheet = PassthroughSubject<Void, Never>()
+    let goalTypeSubject: CurrentValueSubject<GoalType, Never>
+    let sendGoalType: (GoalType) -> Void
 }
 
 // MARK: - Inputs
@@ -64,6 +64,6 @@ extension GoalTypeViewModel: GoalTypeViewModelOutputs {
 // MARK: - Types
 
 extension GoalTypeViewModel: GoalTypeViewModelTypes {
-    var input: GoalTypeViewModelInputs { self }
-    var output: GoalTypeViewModelOutputs { self }
+    var inputs: GoalTypeViewModelInputs { self }
+    var outputs: GoalTypeViewModelOutputs { self }
 }

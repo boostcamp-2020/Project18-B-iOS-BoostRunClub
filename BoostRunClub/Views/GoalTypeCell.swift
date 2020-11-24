@@ -18,7 +18,6 @@ class GoalTypeCell: UITableViewCell {
 
         goalTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         checkmarkLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
 
         contentView.addSubview(goalTypeLabel)
         contentView.addSubview(checkmarkLabel)
@@ -26,7 +25,6 @@ class GoalTypeCell: UITableViewCell {
         NSLayoutConstraint.activate([
             goalTypeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             goalTypeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 100),
         ])
 
         NSLayoutConstraint.activate([

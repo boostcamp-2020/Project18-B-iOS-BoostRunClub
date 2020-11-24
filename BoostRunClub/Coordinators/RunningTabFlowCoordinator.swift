@@ -7,7 +7,10 @@
 
 import UIKit
 
-protocol RunningTabFlowCoordinatorProtocol: Coordinator {}
+protocol RunningTabFlowCoordinatorProtocol: Coordinator {
+    func showPrepareRunFlow()
+    func showRunningViewController()
+}
 
 final class RunningTabFlowCoordinator: RunningTabFlowCoordinatorProtocol {
     var navigationController: UINavigationController
@@ -29,9 +32,8 @@ final class RunningTabFlowCoordinator: RunningTabFlowCoordinatorProtocol {
         prepareRunCoordinator.start()
     }
 
-//    func showRunningViewController() {
-//        let runningVC = RunningViewController()
-//
-//        navigationController.pushViewController(runningVC, animated: true)
-//    }
+    func showRunningViewController() {
+        let runningVC = RunningViewController()
+        navigationController.pushViewController(runningVC, animated: true)
+    }
 }

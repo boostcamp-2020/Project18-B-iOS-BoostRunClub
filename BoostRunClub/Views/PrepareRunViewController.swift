@@ -10,13 +10,12 @@ import CoreLocation
 import MapKit
 import UIKit
 
-class PrepareRunViewController: UIViewController {
+final class PrepareRunViewController: UIViewController {
     let mapView: MKMapView = {
         let view = MKMapView()
         view.showsUserLocation = true
         view.mapType = MKMapType.standard
         view.userTrackingMode = MKUserTrackingMode.follow
-
         return view
     }()
 
@@ -31,8 +30,7 @@ class PrepareRunViewController: UIViewController {
         ]
         layer.locations = [0, 0.2, 0.7, 1]
         layer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        let endY = 1
-        layer.endPoint = CGPoint(x: 1, y: endY)
+        layer.endPoint = CGPoint(x: 1, y: 1)
         return layer
     }()
 
@@ -44,7 +42,6 @@ class PrepareRunViewController: UIViewController {
         button.titleLabel?.font = button.titleLabel?.font.withSize(12)
         button.layer.cornerRadius = LayoutConstant.setGoalHeight / 2
         button.addTarget(self, action: #selector(didTapSetGoalTypeButton), for: .touchUpInside)
-
         return button
     }()
 
@@ -60,15 +57,8 @@ class PrepareRunViewController: UIViewController {
     }()
 
     var viewModel: PrepareRunViewModelTypes?
-
-    var locationManager = CLLocationManager()
-    var cancellables = Set<AnyCancellable>()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureNavigationItems()
-        configureLayout()
-        bindViewModel()
-    }
+    private var locationManager = CLLocationManager()
+    private var cancellables = Set<AnyCancellable>()
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
@@ -81,6 +71,27 @@ class PrepareRunViewController: UIViewController {
             .store(in: &cancellables)
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        mapGradientLayer.colors = [
+            UIColor.systemBackground.withAlphaComponent(0).cgColor,
+            UIColor.systemBackground.withAlphaComponent(0).cgColor,
+            UIColor.systemBackground.withAlphaComponent(0.5).cgColor,
+            UIColor.systemBackground.cgColor,
+        ]
+    }
+}
+
+// MARK: - ViewController LifeCycle
+
+extension PrepareRunViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureNavigationItems()
+        configureLayout()
+        bindViewModel()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         mapGradientLayer.frame = mapView.bounds
@@ -90,16 +101,6 @@ class PrepareRunViewController: UIViewController {
         setGoalTypeButton.layer.shadowRadius = 50
         setGoalTypeButton.layer.shadowOffset = .zero
         setGoalTypeButton.layer.shadowOpacity = 0.5
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        mapGradientLayer.colors = [
-            UIColor.systemBackground.withAlphaComponent(0).cgColor,
-            UIColor.systemBackground.withAlphaComponent(0).cgColor,
-            UIColor.systemBackground.withAlphaComponent(0.5).cgColor,
-            UIColor.systemBackground.cgColor,
-        ]
     }
 }
 

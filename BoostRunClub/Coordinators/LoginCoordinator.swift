@@ -27,7 +27,6 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
 
     func showLoginViewController() {
         let loginVC = LoginViewController()
-
         navigationController.pushViewController(loginVC, animated: true)
     }
 }
