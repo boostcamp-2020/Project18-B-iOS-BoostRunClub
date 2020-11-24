@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PrepareRunCoordinatorProtocol: Coordinator {
-    func showGoalTypeActionSheet()
+    func showGoalTypeActionSheet(completion: (Int) -> Void)
     func showGoalSetupViewController()
 }
 
@@ -27,17 +27,19 @@ final class PrepareRunCoordinator {
     }
 
     func showPrepareRunViewController() {
+        let prepareRunViewModel = PrepareRunViewModel()
+        prepareRunViewModel.coordinator = self
         let prepareRunVC = PrepareRunViewController()
-        prepareRunVC.delegate = self
+        prepareRunVC.viewModel = prepareRunViewModel
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
 }
 
 extension PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
-    func showGoalTypeActionSheet() {
+    // TODO: Int to GoalType
+    func showGoalTypeActionSheet(completion _: (Int) -> Void) {
         let goalTypeVC = GoalTypeViewController()
         goalTypeVC.modalPresentationStyle = .overFullScreen
-        //		navigationController.topViewController!.present(goalTypeVC, animated: true, completion: nil)
         navigationController.present(goalTypeVC, animated: false, completion: nil)
     }
 
