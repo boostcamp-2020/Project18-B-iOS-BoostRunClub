@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ProfileCoordinatorProtocol: Coordinator {}
+protocol ProfileCoordinatorProtocol: Coordinator {
+    func showProfileViewController()
+}
 
 final class ProfileCoordinator: ProfileCoordinatorProtocol {
     var navigationController: UINavigationController
@@ -24,7 +26,6 @@ final class ProfileCoordinator: ProfileCoordinatorProtocol {
 
     func showProfileViewController() {
         let profileVC = ProfileViewController()
-
         navigationController.pushViewController(profileVC, animated: true)
     }
 }
