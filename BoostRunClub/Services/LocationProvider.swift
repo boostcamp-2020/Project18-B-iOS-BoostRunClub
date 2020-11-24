@@ -14,7 +14,7 @@ protocol LocationProvidable {
 }
 
 class LocationProvider: NSObject, LocationProvidable {
-    static var shard = LocationProvider()
+    static var shared = LocationProvider()
     let locationManager: CLLocationManager
     private(set) var locationSubject = PassthroughSubject<[CLLocation], Never>()
 

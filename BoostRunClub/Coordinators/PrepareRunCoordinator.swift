@@ -5,10 +5,11 @@
 //  Created by 조기현 on 2020/11/23.
 //
 
+import Combine
 import UIKit
 
 protocol PrepareRunCoordinatorProtocol: Coordinator {
-    func showGoalTypeActionSheet(completion: (Int) -> Void)
+    func showGoalTypeActionSheet(goalType: GoalType, completion: @escaping (GoalType) -> Void)
     func showGoalSetupViewController()
 }
 
@@ -36,9 +37,9 @@ final class PrepareRunCoordinator {
 }
 
 extension PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
-    // TODO: Int to GoalType
-    func showGoalTypeActionSheet(completion _: (Int) -> Void) {
-        let goalTypeVC = GoalTypeViewController()
+    func showGoalTypeActionSheet(goalType: GoalType = .none, completion: @escaping (GoalType) -> Void) {
+        let goalTypeVM = GoalTypeViewModel(goalType: goalType, completion: completion)
+        let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
     }
