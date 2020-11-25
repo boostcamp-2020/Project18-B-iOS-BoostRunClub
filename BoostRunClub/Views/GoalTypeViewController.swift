@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol GoalTypeViewControllerDelegate: AnyObject {
+    func setGoalType(with goalType: GoalType)
+}
+
 final class GoalTypeViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let size = CGSize(width: UIScreen.main.bounds.width, height: tableViewHeight)
@@ -49,6 +53,7 @@ final class GoalTypeViewController: UIViewController {
     }
 
     private var verticalTablePadding: CGFloat = 30
+    weak var delegate: GoalTypeViewControllerDelegate?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -61,9 +66,12 @@ final class GoalTypeViewController: UIViewController {
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
-        viewModel.outputs.closeSheet
+        viewModel.outputs.closeSheetSignal
             .receive(on: RunLoop.main)
-            .sink { self.closeWithAnimation() }
+            .sink { goalType in
+                self.closeWithAnimation()
+                self.delegate?.setGoalType(with: goalType)
+            }
             .store(in: &cancellables)
     }
 }
@@ -150,7 +158,7 @@ extension GoalTypeViewController: UITableViewDataSource {
                 withIdentifier: String(describing: GoalTypeCell.self)) as? GoalTypeCell
         else { return UITableViewCell() }
 
-        cell.goalTypeLabel.text = goalType.name
+        cell.goalTypeLabel.text = goalType.description
 
         return cell
     }

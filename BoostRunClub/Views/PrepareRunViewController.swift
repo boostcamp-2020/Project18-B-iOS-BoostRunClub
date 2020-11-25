@@ -10,6 +10,74 @@ import CoreLocation
 import MapKit
 import UIKit
 
+class GoalValueView: UIView {
+    let setGoalDetailButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont(name: "FuturaLT-CondExtraBoldObl", size: 50)
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+
+    let underline: UIView = {
+        let view = UIView()
+        view.backgroundColor = .label
+        return view
+    }()
+
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "킬로미터"
+        return label
+    }()
+
+    init() {
+        super.init(frame: .zero)
+        commonInit()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+
+    func commonInit() {
+        configureLayout()
+    }
+
+    func configureLayout() {
+        addSubview(setGoalDetailButton)
+        setGoalDetailButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            setGoalDetailButton.topAnchor.constraint(equalTo: topAnchor),
+            setGoalDetailButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            setGoalDetailButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+        ])
+
+        addSubview(underline)
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            underline.topAnchor.constraint(equalTo: setGoalDetailButton.lastBaselineAnchor, constant: 9),
+            underline.trailingAnchor.constraint(equalTo: setGoalDetailButton.trailingAnchor),
+            underline.heightAnchor.constraint(equalToConstant: 1),
+        ])
+
+        addSubview(descriptionLabel)
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: underline.bottomAnchor, constant: 7),
+            descriptionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+    }
+
+//    func setButtonText(_ text: String) {
+//        let attributeString = NSMutableAttributedString(string: text, attributes: textAttributes)
+//        setGoalDetailButton.setAttributedTitle(attributeString, for: .normal)
+//    }
+}
+
 final class PrepareRunViewController: UIViewController {
     let mapView: MKMapView = {
         let view = MKMapView()
@@ -55,6 +123,8 @@ final class PrepareRunViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapStartButton), for: .touchUpInside)
         return button
     }()
+
+    let goalValueView = GoalValueView()
 
     var viewModel: PrepareRunViewModelTypes?
     private var locationManager = CLLocationManager()
@@ -149,6 +219,18 @@ extension PrepareRunViewController {
             startButton.heightAnchor.constraint(equalToConstant: LayoutConstant.startButtonDiameter),
             startButton.widthAnchor.constraint(equalTo: startButton.heightAnchor, multiplier: 1),
         ])
+
+        goalValueView.setGoalDetailButton.setTitle("00:30", for: .normal)
+        view.addSubview(goalValueView)
+        goalValueView.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = goalValueView.centerYAnchor.constraint(equalTo: view.topAnchor)
+        constraint.constant = UIScreen.main.bounds.height / 3
+        NSLayoutConstraint.activate([
+            goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            constraint,
+            goalValueView.setGoalDetailButton.widthAnchor.constraint(equalToConstant: goalValueView.setGoalDetailButton.titleLabel!.intrinsicContentSize.width + 5),
+            goalValueView.underline.leadingAnchor.constraint(equalTo: goalValueView.setGoalDetailButton.leadingAnchor, constant: -5),
+        ])
     }
 }
 
@@ -178,5 +260,11 @@ extension PrepareRunViewController {
         static let startButtonDiameter = CGFloat(100)
         static let setGoalWidth = CGFloat(90)
         static let setGoalHeight = CGFloat(40)
+    }
+}
+
+extension PrepareRunViewController: GoalTypeViewControllerDelegate {
+    func setGoalType(with goalType: GoalType) {
+        viewModel?.inputs.didChangeGoalType(goalType)
     }
 }

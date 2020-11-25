@@ -19,46 +19,36 @@ protocol GoalTypeViewModelInputs {
 }
 
 protocol GoalTypeViewModelOutputs {
-    var closeSheet: PassthroughSubject<Void, Never> { get }
-    var goalTypeSubject: CurrentValueSubject<GoalType, Never> { get }
+    var closeSheetSignal: PassthroughSubject<GoalType, Never> { get }
+    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
     var numberOfCell: Int { get }
     func cellForRowAt(index: Int) -> GoalType
 }
 
-class GoalTypeViewModel {
-    init(goalType: GoalType, completion: @escaping (GoalType) -> Void) {
-        sendGoalType = completion
-        goalTypeSubject = CurrentValueSubject<GoalType, Never>(goalType)
+class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
+    init(goalType: GoalType) {
+        goalTypeObservable = CurrentValueSubject<GoalType, Never>(goalType)
     }
 
-    private(set) var closeSheet = PassthroughSubject<Void, Never>()
-    let goalTypeSubject: CurrentValueSubject<GoalType, Never>
-    let sendGoalType: (GoalType) -> Void
-}
+    // MARK: Inputs
 
-// MARK: - Inputs
-
-extension GoalTypeViewModel: GoalTypeViewModelInputs {
     func didTapBackgroundView() {
-        closeSheet.send()
+        closeSheetSignal.send(goalTypeObservable.value)
     }
 
-    func didSelectCell(at index: Int) {
-        if let goalType = GoalType(rawValue: index) {
-            sendGoalType(goalType)
-        }
-        closeSheet.send()
+    func didSelectCell(at _: Int) {
+        closeSheetSignal.send(goalTypeObservable.value)
     }
-}
 
-// MARK: - Outputs
+    // MARK: Ouputs
 
-extension GoalTypeViewModel: GoalTypeViewModelOutputs {
+    private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
+    let goalTypeObservable: CurrentValueSubject<GoalType, Never>
+    var numberOfCell: Int { 3 }
+
     func cellForRowAt(index: Int) -> GoalType {
         return GoalType(rawValue: index) ?? .none
     }
-
-    var numberOfCell: Int { 3 }
 }
 
 // MARK: - Types

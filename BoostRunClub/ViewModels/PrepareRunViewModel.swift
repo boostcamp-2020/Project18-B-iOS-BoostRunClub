@@ -11,7 +11,8 @@ import Foundation
 
 enum GoalType: Int {
     case distance, time, speed, none
-    var name: String {
+
+    var description: String {
         switch self {
         case .distance:
             return "거리"
@@ -34,54 +35,48 @@ protocol PrepareRunViewModelInputs {
     func didTapShowProfileButton()
     func didTapSetGoalButton()
     func didTapStartButton()
+    func didChangeGoalType(_ goalType: GoalType)
 }
 
 protocol PrepareRunViewModelOutputs {
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
-    var goalTypePublisher: Published<GoalType>.Publisher { get }
+    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
+    var goalValueObservable: CurrentValueSubject<String, Never> { get }
 }
 
-class PrepareRunViewModel {
+class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
+    let locationProvider: LocationProvidable
+    weak var coordinator: PrepareRunCoordinatorProtocol?
+
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
     }
 
-    let locationProvider: LocationProvidable
-    weak var coordinator: PrepareRunCoordinatorProtocol?
-    @Published var goalType: GoalType = .none
-}
+    // MARK: Inputs
 
-// MARK: - Inputs
-
-extension PrepareRunViewModel: PrepareRunViewModelInputs {
     func didTapShowProfileButton() {}
 
     func didTapSetGoalButton() {
-        coordinator?.showGoalTypeActionSheet(goalType: goalType, completion: { _ in
-            print("goal Type selected")
-        })
+        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value)
     }
 
     func didTapStartButton() {
-        coordinator?.showRunningScene()
+        coordinator?.showRunningScene(goalTypeObservable.value)
     }
-}
 
-extension Notification.Name {
-    static let showRunningScene = Notification.Name("showRunningScene")
-}
+    func didChangeGoalType(_ goalType: GoalType) {
+        goalTypeObservable.send(goalType)
+        print(goalTypeObservable.value)
+    }
 
-// MARK: - Outputs
+    // MARK: Outputs
 
-extension PrepareRunViewModel: PrepareRunViewModelOutputs {
+    var goalTypeObservable = CurrentValueSubject<GoalType, Never>(.none)
+    var goalValueObservable = CurrentValueSubject<String, Never>("")
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
         locationProvider.locationSubject
             .compactMap { $0.first?.coordinate }
             .eraseToAnyPublisher()
-    }
-
-    var goalTypePublisher: Published<GoalType>.Publisher {
-        $goalType
     }
 }
 

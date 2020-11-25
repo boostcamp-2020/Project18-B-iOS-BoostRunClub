@@ -9,9 +9,9 @@ import Combine
 import UIKit
 
 protocol PrepareRunCoordinatorProtocol: Coordinator {
-    func showGoalTypeActionSheet(goalType: GoalType, completion: @escaping (GoalType) -> Void)
+    func showGoalTypeActionSheet(goalType: GoalType)
     func showGoalSetupViewController()
-    func showRunningScene()
+    func showRunningScene(_ goalType: GoalType)
 }
 
 final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
@@ -40,15 +40,16 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
 
-    func showGoalTypeActionSheet(goalType: GoalType = .none, completion: @escaping (GoalType) -> Void) {
-        let goalTypeVM = GoalTypeViewModel(goalType: goalType, completion: completion)
+    func showGoalTypeActionSheet(goalType: GoalType = .none) {
+        let goalTypeVM = GoalTypeViewModel(goalType: goalType)
         let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
+        goalTypeVC.delegate = navigationController.topViewController as? PrepareRunViewController
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
     }
 
     func showGoalSetupViewController() {}
-    func showRunningScene() {
+    func showRunningScene(_: GoalType) {
         NotificationCenter.default.post(name: .showRunningScene, object: self)
     }
 

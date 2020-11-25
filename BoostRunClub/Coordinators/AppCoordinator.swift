@@ -30,10 +30,14 @@ final class AppCoordinator: AppCoordinatorProtocol {
 
         cancellable = NotificationCenter.default
             .publisher(for: .showRunningScene)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
+            .sink { [weak self] notification in
+                guard
+                    let self = self,
+                    let goalType = notification.userInfo?["goalType"] as? GoalType
+                else { return }
+
                 self.clear()
-                self.showRunningFlow()
+                self.showRunningScene(goalType)
             }
     }
 
@@ -53,9 +57,8 @@ final class AppCoordinator: AppCoordinatorProtocol {
         mainTabBarCoordinator.start()
     }
 
-    func showRunningFlow() {
-        let runningCoordinator = RunningCoordinator(navigationController)
-        childCoordinators.append(runningCoordinator)
-        runningCoordinator.start()
+    func showRunningScene(_: GoalType) {
+        let runningVC = RunningViewController()
+        navigationController.pushViewController(runningVC, animated: false)
     }
 }
