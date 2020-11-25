@@ -11,9 +11,14 @@ import UIKit
 protocol PrepareRunCoordinatorProtocol: Coordinator {
     func showGoalTypeActionSheet(goalType: GoalType, completion: @escaping (GoalType) -> Void)
     func showGoalSetupViewController()
+    func showRunningScene()
 }
 
-final class PrepareRunCoordinator {
+final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
+    weak var finishDelegate: CoordinatorFinishDelegate?
+
+    var type: CoordinatorType { .prepareRun }
+
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
@@ -34,9 +39,7 @@ final class PrepareRunCoordinator {
         prepareRunVC.viewModel = prepareRunViewModel
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
-}
 
-extension PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
     func showGoalTypeActionSheet(goalType: GoalType = .none, completion: @escaping (GoalType) -> Void) {
         let goalTypeVM = GoalTypeViewModel(goalType: goalType, completion: completion)
         let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
@@ -45,4 +48,11 @@ extension PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
     }
 
     func showGoalSetupViewController() {}
+    func showRunningScene() {
+        NotificationCenter.default.post(name: .showRunningScene, object: self)
+    }
+
+    deinit {
+        print("finished \(self)")
+    }
 }

@@ -62,7 +62,13 @@ extension PrepareRunViewModel: PrepareRunViewModelInputs {
         })
     }
 
-    func didTapStartButton() {}
+    func didTapStartButton() {
+        coordinator?.showRunningScene()
+    }
+}
+
+extension Notification.Name {
+    static let showRunningScene = Notification.Name("showRunningScene")
 }
 
 // MARK: - Outputs

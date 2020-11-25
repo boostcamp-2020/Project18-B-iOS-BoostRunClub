@@ -12,6 +12,10 @@ protocol LoginCoordinatorProtocol: Coordinator {
 }
 
 final class LoginCoordinator: LoginCoordinatorProtocol {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var type: CoordinatorType { .login }
+
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()

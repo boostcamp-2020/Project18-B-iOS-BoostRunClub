@@ -22,6 +22,10 @@ protocol MainTabBarCoordinatorProtocol: Coordinator {
 }
 
 final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var type: CoordinatorType { .tab }
+
     var tabBarController = UITabBarController()
 
     var navigationController: UINavigationController
@@ -50,5 +54,9 @@ final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
         tabBarController.tabBar.isTranslucent = false
 
         navigationController.viewControllers = [tabBarController]
+    }
+
+    deinit {
+        print("finished \(self)")
     }
 }

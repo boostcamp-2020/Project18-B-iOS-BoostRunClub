@@ -9,10 +9,13 @@ import UIKit
 
 protocol RunningTabFlowCoordinatorProtocol: Coordinator {
     func showPrepareRunFlow()
-    func showRunningViewController()
 }
 
 final class RunningTabFlowCoordinator: RunningTabFlowCoordinatorProtocol {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var type: CoordinatorType { .runningTabFlow }
+
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
@@ -32,8 +35,7 @@ final class RunningTabFlowCoordinator: RunningTabFlowCoordinatorProtocol {
         prepareRunCoordinator.start()
     }
 
-    func showRunningViewController() {
-        let runningVC = RunningViewController()
-        navigationController.pushViewController(runningVC, animated: true)
+    deinit {
+        print("finished \(self)")
     }
 }

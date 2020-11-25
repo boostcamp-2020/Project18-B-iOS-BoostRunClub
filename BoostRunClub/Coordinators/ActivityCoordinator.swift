@@ -10,6 +10,10 @@ import UIKit
 protocol ActivityCoordinatorProtocol: Coordinator {}
 
 final class ActivityCoordinator: ActivityCoordinatorProtocol {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var type: CoordinatorType { .activity }
+
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
