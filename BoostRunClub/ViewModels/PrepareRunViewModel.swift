@@ -55,11 +55,15 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
                 if goalType != .none {
                     self.goalTypeSetupClosed.send()
                 }
-            }).store(in: &cancellables)
+            })
+            .store(in: &cancellables)
     }
 
     func didTapStartButton() {
-        coordinator?.showRunningScene(goalTypeObservable.value)
+        coordinator?.showRunningScene(
+            goalType: goalTypeObservable.value,
+            goalValue: goalValueObservable.value
+        )
     }
 
     func didChangeGoalType(_ goalType: GoalType) {
@@ -77,7 +81,8 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
         }
         .sink(receiveValue: { goalValue in
             self.goalValueObservable.send(goalValue)
-        }).store(in: &cancellables)
+        })
+        .store(in: &cancellables)
     }
 
     func didChangeGoalValue(_ goalValue: String) {

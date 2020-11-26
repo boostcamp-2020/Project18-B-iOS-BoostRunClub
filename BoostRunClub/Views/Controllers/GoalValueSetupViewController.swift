@@ -38,7 +38,7 @@ class GoalValueSetupViewController: UIViewController {
     }
 }
 
-// MARK: - LifeCycle
+// MARK: - ViewController LifeCycle
 
 extension GoalValueSetupViewController {
     override func viewDidLoad() {
@@ -72,7 +72,7 @@ extension GoalValueSetupViewController {
     }
 }
 
-// MARK: UIKeyInput
+// MARK: UIKeyInput Implementation
 
 extension GoalValueSetupViewController: UIKeyInput {
     var hasText: Bool {
@@ -101,7 +101,10 @@ extension GoalValueSetupViewController {
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             constraint,
-            goalValueView.underline.leadingAnchor.constraint(equalTo: goalValueView.setGoalDetailButton.leadingAnchor, constant: -5),
+            goalValueView.underline.leadingAnchor.constraint(
+                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
+                constant: -5
+            ),
         ])
     }
 

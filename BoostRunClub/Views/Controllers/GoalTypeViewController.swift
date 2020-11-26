@@ -33,15 +33,7 @@ final class GoalTypeViewController: UIViewController {
         viewModel = goalTypeViewModel
     }
 
-    private func bindViewModel() {
-        guard let viewModel = viewModel else { return }
-//        viewModel.outputs.closeSheetSignal
-//            .receive(on: RunLoop.main)
-//            .sink { goalType in
-//                self.closeWithAnimation()
-//            }
-//            .store(in: &cancellables)
-    }
+    private func bindViewModel() {}
 }
 
 // MARK: - ViewController LifeCycle

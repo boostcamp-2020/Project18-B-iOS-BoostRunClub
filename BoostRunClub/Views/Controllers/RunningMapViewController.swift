@@ -1,5 +1,5 @@
 //
-//  RunningViewController.swift
+//  RunningMapViewController.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/11/27.
@@ -7,12 +7,10 @@
 
 import UIKit
 
-class RunningViewController: UIViewController {
-    private var viewModel: RunningViewModelTypes?
-
-    init(with runningViewModel: RunningViewModelTypes?) {
+class RunningMapViewController: UIViewController {
+    // TODO: vc -  ViewModel - Network, cord, Running
+    init() {
         super.init(nibName: nil, bundle: nil)
-        viewModel = runningViewModel
     }
 
     required init?(coder: NSCoder) {
@@ -21,6 +19,6 @@ class RunningViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        view.backgroundColor = .cyan
     }
 }

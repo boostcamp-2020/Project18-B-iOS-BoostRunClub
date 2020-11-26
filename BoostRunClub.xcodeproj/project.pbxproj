@@ -27,7 +27,7 @@
 		71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82894256B9581004A1F30 /* LoginViewController.swift */; };
 		71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82897256B9788004A1F30 /* TabBarCoordinator.swift */; };
 		71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289A256B9B08004A1F30 /* ActivityViewController.swift */; };
-		71E8289E256B9B13004A1F30 /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289D256B9B13004A1F30 /* RunningViewController.swift */; };
+		71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */; };
 		71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */; };
 		71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */; };
 		71E828AA256B9F23004A1F30 /* RunningTabFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A9256B9F23004A1F30 /* RunningTabFlowCoordinator.swift */; };
@@ -35,11 +35,18 @@
 		71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
 		9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB532566AA4400183CB9 /* SceneDelegate.swift */; };
-		9600DB562566AA4400183CB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB552566AA4400183CB9 /* ViewController.swift */; };
 		9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5A2566AA4700183CB9 /* Assets.xcassets */; };
 		9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5C2566AA4700183CB9 /* LaunchScreen.storyboard */; };
 		963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B46F4256CD4E0006138DF /* LocationProvider.swift */; };
 		969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
+		96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF2256FFEE800090999 /* RunningInfoType.swift */; };
+		96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
+		96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DFD25701C7700090999 /* RunningMapViewController.swift */; };
+		96FA7E0125701C9300090999 /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7E0025701C9200090999 /* RunningViewController.swift */; };
+		96FA7E0425701CB800090999 /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7E0325701CB800090999 /* SplitsViewController.swift */; };
+		96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */; };
+		96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7E0D2570260E00090999 /* SplitsViewModel.swift */; };
+		96FA7E162570696800090999 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 96FA7E152570696800090999 /* .swiftformat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +70,7 @@
 		71E82894256B9581004A1F30 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		71E82897256B9788004A1F30 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		71E8289A256B9B08004A1F30 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
-		71E8289D256B9B13004A1F30 /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
+		71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageViewController.swift; sourceTree = "<group>"; };
 		71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		71E828A9256B9F23004A1F30 /* RunningTabFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTabFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -73,12 +80,19 @@
 		9600DB4E2566AA4400183CB9 /* BoostRunClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoostRunClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB512566AA4400183CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9600DB532566AA4400183CB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9600DB552566AA4400183CB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9600DB5A2566AA4700183CB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9600DB5D2566AA4700183CB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9600DB5F2566AA4700183CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		963B46F4256CD4E0006138DF /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Services/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
+		96FA7DF2256FFEE800090999 /* RunningInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningInfoType.swift; path = BoostRunClub/Services/RunningInfoType.swift; sourceTree = SOURCE_ROOT; };
+		96FA7DF52570177C00090999 /* CaseIterable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CaseIterable+.swift"; path = "BoostRunClub/Services/CaseIterable+.swift"; sourceTree = SOURCE_ROOT; };
+		96FA7DFD25701C7700090999 /* RunningMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapViewController.swift; sourceTree = "<group>"; };
+		96FA7E0025701C9200090999 /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
+		96FA7E0325701CB800090999 /* SplitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
+		96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapViewModel.swift; sourceTree = "<group>"; };
+		96FA7E0D2570260E00090999 /* SplitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewModel.swift; sourceTree = "<group>"; };
+		96FA7E152570696800090999 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		E97B7A94FBF7F86A709BC993 /* Pods-BoostRunClub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.release.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,11 +122,14 @@
 			children = (
 				71E82894256B9581004A1F30 /* LoginViewController.swift */,
 				71E8289A256B9B08004A1F30 /* ActivityViewController.swift */,
-				71E8289D256B9B13004A1F30 /* RunningViewController.swift */,
+				71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */,
+				96FA7E0325701CB800090999 /* SplitsViewController.swift */,
+				96FA7E0025701C9200090999 /* RunningViewController.swift */,
 				71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */,
 				4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */,
 				4CCD6E7E256BEA1200195EDA /* GoalTypeViewController.swift */,
 				4CEB6BF1256F657A00FA7E88 /* GoalValueSetupViewController.swift */,
+				96FA7DFD25701C7700090999 /* RunningMapViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -132,6 +149,8 @@
 				71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */,
 				4C3E7AB7256E45480061244F /* RunningViewModel.swift */,
 				4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */,
+				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
+				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -140,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				4C3E7ACB256F46A00061244F /* GoalType.swift */,
+				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,6 +179,7 @@
 			children = (
 				4C3E7AB3256E3D920061244F /* Notification.name.swift */,
 				969D5F1B256FC48000DD11AB /* String+Regex.swift */,
+				96FA7DF52570177C00090999 /* CaseIterable+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -209,7 +230,7 @@
 				9600DB662566AA9900183CB9 /* SupportingFiles */,
 				9600DB512566AA4400183CB9 /* AppDelegate.swift */,
 				9600DB532566AA4400183CB9 /* SceneDelegate.swift */,
-				9600DB552566AA4400183CB9 /* ViewController.swift */,
+				96FA7E152570696800090999 /* .swiftformat */,
 			);
 			path = BoostRunClub;
 			sourceTree = "<group>";
@@ -301,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96FA7E162570696800090999 /* .swiftformat in Resources */,
 				4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */,
 				9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */,
 				4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */,
@@ -377,30 +399,36 @@
 				4C3E7AB8256E45480061244F /* RunningViewModel.swift in Sources */,
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
+				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */,
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				71E828AA256B9F23004A1F30 /* RunningTabFlowCoordinator.swift in Sources */,
+				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				4CCD6E7F256BEA1200195EDA /* GoalTypeViewController.swift in Sources */,
 				4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */,
 				71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */,
 				969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */,
-				9600DB562566AA4400183CB9 /* ViewController.swift in Sources */,
+				96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */,
+				96FA7E0425701CB800090999 /* SplitsViewController.swift in Sources */,
 				4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */,
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
 				71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */,
+				96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */,
+				96FA7E0125701C9300090999 /* RunningViewController.swift in Sources */,
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
-				71E8289E256B9B13004A1F30 /* RunningViewController.swift in Sources */,
+				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
 				71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */,
+				96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */,
 				4CEB6BF5256F661700FA7E88 /* GoalValueSetupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

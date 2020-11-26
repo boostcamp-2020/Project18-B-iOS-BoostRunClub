@@ -100,14 +100,13 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
 
     // MARK: Outputs
 
+    var closeSheetSignal = PassthroughSubject<String?, Never>()
     var goalValueObservable: CurrentValueSubject<String, Never>
     var runningEstimationObservable: AnyPublisher<String, Never> {
         return goalValueObservable.map {
             return $0
         }.eraseToAnyPublisher()
     }
-
-    var closeSheetSignal = PassthroughSubject<String?, Never>()
 }
 
 // MARK: - Types

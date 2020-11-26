@@ -11,6 +11,7 @@ import UIKit
 protocol AppCoordinatorProtocol: Coordinator {
     func showLoginFlow()
     func showMainFlow()
+    func showRunningScene(goalType: GoalType, goalValue: String)
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
@@ -29,11 +30,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
             .sink { [weak self] notification in
                 guard
                     let self = self,
-                    let goalType = notification.userInfo?["goalType"] as? GoalType
+                    let goalType = notification.userInfo?["goalType"] as? GoalType,
+                    let goalValue = notification.userInfo?["goalValue"] as? String
                 else { return }
 
                 self.clear()
-                self.showRunningScene(goalType)
+                self.showRunningScene(goalType: goalType, goalValue: goalValue)
             }
     }
 
@@ -53,8 +55,14 @@ final class AppCoordinator: AppCoordinatorProtocol {
         mainTabBarCoordinator.start()
     }
 
-    func showRunningScene(_: GoalType) {
-        let runningVC = RunningViewController()
+    func showRunningScene(goalType: GoalType, goalValue: String) {
+        // TODO: RunningService 생성
+        //          RunningViewModel(RunningService)
+        //          RunningMapViewModel(RunningService)
+        //          SplitsViewModel(RunningService)
+        //          RunningPageViewController에 주입
+        let runningVM = RunningViewModel(goalType: goalType, goalValue: goalValue)
+        let runningVC = RunningPageViewController(with: runningVM)
         navigationController.pushViewController(runningVC, animated: false)
     }
 }

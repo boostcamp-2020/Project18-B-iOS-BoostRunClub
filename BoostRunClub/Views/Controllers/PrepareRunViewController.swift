@@ -33,7 +33,7 @@ final class PrepareRunViewController: UIViewController {
         viewModel.outputs.userLocation
             .receive(on: DispatchQueue.main)
             .sink { coordinate in
-                let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
+                let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
                 self.mapView.setRegion(viewRegion, animated: false)
             }
             .store(in: &cancellables)
@@ -47,25 +47,29 @@ final class PrepareRunViewController: UIViewController {
                     self?.goalValueView.isHidden = false
                     self?.goalValueView.setLabelText(goalValue: goalValue, goalUnit: goalType.unit)
                 }
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
 
         viewModel.outputs.goalTypeObservable
             .receive(on: DispatchQueue.main)
             .sink { [weak self] goalType in
                 self?.setGoalTypeButton.setTitle(goalType.description, for: .normal)
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
 
         viewModel.outputs.goalValueSetupClosed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewShrinkToOriginalSizeAnimation()
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
 
         viewModel.outputs.goalTypeSetupClosed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewCrossDissolveAnimation()
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -163,6 +167,7 @@ extension PrepareRunViewController {
         view.showsUserLocation = true
         view.mapType = MKMapType.standard
         view.userTrackingMode = MKUserTrackingMode.follow
+        view.isUserInteractionEnabled = false
         return view
     }
 
@@ -260,7 +265,9 @@ extension PrepareRunViewController {
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             constraint,
-            goalValueView.underline.leadingAnchor.constraint(equalTo: goalValueView.setGoalDetailButton.leadingAnchor, constant: -5),
+            goalValueView.underline.leadingAnchor.constraint(
+                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
+                constant: -5),
         ])
     }
 }

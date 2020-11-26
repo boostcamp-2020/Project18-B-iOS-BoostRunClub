@@ -11,7 +11,7 @@ import UIKit
 protocol PrepareRunCoordinatorProtocol: Coordinator {
     func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
     func showGoalValueSetupViewController(goalType: GoalType, goalValue: String) -> AnyPublisher<String?, Never>
-    func showRunningScene(_ goalType: GoalType)
+    func showRunningScene(goalType: GoalType, goalValue: String)
 }
 
 final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
@@ -62,8 +62,15 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
             .eraseToAnyPublisher()
     }
 
-    func showRunningScene(_: GoalType) {
-        NotificationCenter.default.post(name: .showRunningScene, object: self)
+    func showRunningScene(goalType: GoalType, goalValue: String) {
+        NotificationCenter.default.post(
+            name: .showRunningScene,
+            object: self,
+            userInfo: [
+                "goalType": goalType,
+                "goalValue": goalValue,
+            ]
+        )
     }
 
     deinit {

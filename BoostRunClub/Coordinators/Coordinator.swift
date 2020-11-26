@@ -21,6 +21,6 @@ extension Coordinator {
     }
 }
 
-protocol CoordinatorFinishDelegate: class {
+protocol CoordinatorFinishDelegate: AnyObject {
     func coordinatorDidFinish(childCoordinator: Coordinator)
 }
