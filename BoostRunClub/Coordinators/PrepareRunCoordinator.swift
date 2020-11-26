@@ -15,10 +15,6 @@ protocol PrepareRunCoordinatorProtocol: Coordinator {
 }
 
 final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
-    weak var finishDelegate: CoordinatorFinishDelegate?
-
-    var type: CoordinatorType { .prepareRun }
-
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()

@@ -29,7 +29,7 @@ protocol GoalValueSetupViewModelOutputs {
 
 class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupViewModelOutputs {
     var goalType: GoalType
-    var isFirstInput = true
+    private var inputValue = ""
 
     init(goalType: GoalType, goalValue: String) {
         self.goalType = goalType
@@ -39,40 +39,63 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
     // MARK: Inputs
 
     func didInputNumber(_ number: String) {
-        if isFirstInput {
-            goalValueObservable.send(number)
-            isFirstInput.toggle()
-            return
-        }
-
-        var value = goalValueObservable.value.filter { $0 != ":" }
-        value.append(number)
-
+        let currentString = inputValue
         switch goalType {
         case .distance:
-            if value ~= String.RegexPattern.distance.patternString {
-                goalValueObservable.send(value)
+            let text = currentString + number
+            if text ~= String.RegexPattern.distance.patternString {
+                inputValue = text
+                goalValueObservable.send(text)
             }
         case .time:
-            if (1 ... 4).contains(value.count) {}
-        default:
+            guard
+                !(currentString.isEmpty && number == "0"),
+                currentString.count < 4
+            else { return }
+
+            inputValue = currentString + number
+            var outputValue = String(repeating: "0", count: 4 - inputValue.count) + inputValue
+            outputValue.insert(contentsOf: ":", at: outputValue.index(outputValue.startIndex, offsetBy: 2))
+            goalValueObservable.send(outputValue)
+
+        case .speed, .none:
             break
         }
     }
 
     func didDeleteBackward() {
-        var value = goalValueObservable.value
-        if value.isEmpty { return }
-        value.removeLast()
-        goalValueObservable.send(value)
+        if !inputValue.isEmpty {
+            inputValue.removeLast()
+        }
+        switch goalType {
+        case .distance:
+            goalValueObservable.send(inputValue)
+        case .time:
+            var outputValue = String(repeating: "0", count: 4 - inputValue.count) + inputValue
+            outputValue.insert(contentsOf: ":", at: outputValue.index(outputValue.startIndex, offsetBy: 2))
+            goalValueObservable.send(outputValue)
+        case .speed, .none:
+            break
+        }
     }
 
     func didTapCancelButton() {
-        closeSheetSignal.send(goalValueObservable.value)
+        closeSheetSignal.send(nil)
     }
 
     func didTapApplyButton() {
-        closeSheetSignal.send(goalValueObservable.value)
+        var goalValue = goalValueObservable.value
+        switch goalType {
+        case .distance:
+            guard let number = Float(goalValue) else {
+                goalValue = "00.00"
+                break
+            }
+            goalValue = String(format: "%.2f", number)
+        case .time, .speed, .none:
+            break
+        }
+        closeSheetSignal.send(goalValue)
     }
 
     // MARK: Outputs
@@ -93,43 +116,3 @@ extension GoalValueSetupViewModel: GoalValueSetupViewModelTypes {
     var inputs: GoalValueSetupViewModelInputs { self }
     var outputs: GoalValueSetupViewModelOutputs { self }
 }
-
-extension String {
-    enum RegexPattern {
-        case distance, time
-        var patternString: String {
-            switch self {
-            case .distance:
-                return "^([0-9]{0,2}(\\.[0-9]{0,2})?|\\.?\\[0-9]{1,2})$"
-            case .time:
-                return ""
-            }
-        }
-    }
-
-    static func ~= (lhs: String, rhs: String) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: rhs) else { return false }
-        let range = NSRange(location: 0, length: lhs.utf16.count)
-        return regex.firstMatch(in: lhs, options: [], range: range) != nil
-    }
-}
-
-//
-// func matches(for regex: String, in text: String) -> Bool {
-//
-//	do {
-//		let regex = try NSRegularExpression(pattern: regex)
-//		let results = regex.matches(in: text,
-//									range: NSRange(text.startIndex..., in: text))
-//
-//		guard let str = results.map ({
-//			String(text[Range($0.range, in: text)!])
-//		}).first else { return false }
-//
-//		return str.count == text.count
-//
-//	} catch let error {
-//		print("invalid regex: \(error.localizedDescription)")
-//		return false
-//	}
-// }

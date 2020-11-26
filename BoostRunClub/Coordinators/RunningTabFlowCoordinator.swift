@@ -12,10 +12,6 @@ protocol RunningTabFlowCoordinatorProtocol: Coordinator {
 }
 
 final class RunningTabFlowCoordinator: RunningTabFlowCoordinatorProtocol {
-    var finishDelegate: CoordinatorFinishDelegate?
-
-    var type: CoordinatorType { .runningTabFlow }
-
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()

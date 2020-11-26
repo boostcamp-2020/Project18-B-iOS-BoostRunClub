@@ -48,6 +48,14 @@ extension GoalValueSetupViewController {
         bindViewModel()
         goalValueView.becomeFirstResponder()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        goalValueView.transform = goalValueView.transform.scaledBy(x: 0.5, y: 0.5)
+        UIView.animate(withDuration: 0.3) {
+            self.goalValueView.transform = .identity
+        }
+    }
 }
 
 // MARK: - Actions
@@ -110,6 +118,7 @@ extension GoalValueSetupViewController {
             target: self,
             action: #selector(didTapCancelItem)
         )
+        cancelItem.tintColor = .label
         navigationItem.setLeftBarButton(cancelItem, animated: true)
 
         let applyItem = UIBarButtonItem(
@@ -118,6 +127,7 @@ extension GoalValueSetupViewController {
             target: self,
             action: #selector(didTapApplyItem)
         )
+        applyItem.tintColor = .label
         navigationItem.setRightBarButton(applyItem, animated: true)
     }
 }

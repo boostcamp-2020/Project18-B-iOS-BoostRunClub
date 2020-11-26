@@ -26,7 +26,7 @@ enum GoalType: Int {
         case .distance:
             return "5.00"
         case .time:
-            return "00 : 30"
+            return "00:30"
         case .speed, .none:
             return ""
         }

@@ -14,10 +14,6 @@ protocol AppCoordinatorProtocol: Coordinator {
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
-    var finishDelegate: CoordinatorFinishDelegate?
-
-    var type: CoordinatorType { .app }
-
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()

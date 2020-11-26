@@ -41,7 +41,6 @@ final class PrepareRunViewController: UIViewController {
         Publishers.CombineLatest(viewModel.outputs.goalTypeObservable, viewModel.outputs.goalValueObservable)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] goalType, goalValue in
-
                 if goalType == .none {
                     self?.goalValueView.isHidden = true
                 } else {
@@ -54,6 +53,18 @@ final class PrepareRunViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] goalType in
                 self?.setGoalTypeButton.setTitle(goalType.description, for: .normal)
+            }.store(in: &cancellables)
+
+        viewModel.outputs.goalValueSetupClosed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.goalValueViewShrinkToOriginalSizeAnimation()
+            }.store(in: &cancellables)
+
+        viewModel.outputs.goalTypeSetupClosed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.goalValueViewCrossDissolveAnimation()
             }.store(in: &cancellables)
     }
 }
@@ -111,6 +122,26 @@ extension PrepareRunViewController {
             UIColor.systemBackground.withAlphaComponent(0.5).cgColor,
             UIColor.systemBackground.cgColor,
         ]
+    }
+
+    private func goalValueViewShrinkToOriginalSizeAnimation() {
+        goalValueView.transform = goalValueView.transform.scaledBy(x: 1.5, y: 1.5)
+        UIView.animate(withDuration: 0.3) {
+            self.goalValueView.transform = .identity
+        }
+    }
+
+    private func goalValueViewCrossDissolveAnimation() {
+        goalValueView.isHidden = true
+        UIView.transition(
+            with: goalValueView,
+            duration: 0.3,
+            options: [.transitionCrossDissolve],
+            animations: {
+                self.goalValueView.isHidden = false
+            },
+            completion: nil
+        )
     }
 }
 

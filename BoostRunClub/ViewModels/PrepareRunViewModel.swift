@@ -27,6 +27,8 @@ protocol PrepareRunViewModelOutputs {
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
     var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
     var goalValueObservable: CurrentValueSubject<String, Never> { get }
+    var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
+    var goalTypeSetupClosed: PassthroughSubject<Void, Never> { get }
 }
 
 class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
@@ -43,10 +45,17 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     func didTapShowProfileButton() {}
 
     func didTapSetGoalButton() {
-        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value).sink(receiveValue: { goalType in
-            self.goalTypeObservable.send(goalType)
-            self.goalValueObservable.send(goalType.initialValue)
-        }).store(in: &cancellables)
+        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value)
+            .filter {
+                $0 != self.goalTypeObservable.value
+            }
+            .sink(receiveValue: { goalType in
+                self.goalTypeObservable.send(goalType)
+                self.goalValueObservable.send(goalType.initialValue)
+                if goalType != .none {
+                    self.goalTypeSetupClosed.send()
+                }
+            }).store(in: &cancellables)
     }
 
     func didTapStartButton() {
@@ -62,10 +71,13 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
         coordinator?.showGoalValueSetupViewController(
             goalType: goalTypeObservable.value,
             goalValue: goalValueObservable.value
-        ).compactMap { $0 }
-            .sink(receiveValue: { goalValue in
-                self.goalValueObservable.send(goalValue)
-            }).store(in: &cancellables)
+        ).compactMap {
+            self.goalValueSetupClosed.send()
+            return $0
+        }
+        .sink(receiveValue: { goalValue in
+            self.goalValueObservable.send(goalValue)
+        }).store(in: &cancellables)
     }
 
     func didChangeGoalValue(_ goalValue: String) {
@@ -76,6 +88,8 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
 
     var goalTypeObservable = CurrentValueSubject<GoalType, Never>(.none)
     var goalValueObservable = CurrentValueSubject<String, Never>("")
+    var goalValueSetupClosed = PassthroughSubject<Void, Never>()
+    var goalTypeSetupClosed = PassthroughSubject<Void, Never>()
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
         locationProvider.locationSubject
             .compactMap { $0.first?.coordinate }

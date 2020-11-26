@@ -22,10 +22,6 @@ protocol MainTabBarCoordinatorProtocol: Coordinator {
 }
 
 final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
-    var finishDelegate: CoordinatorFinishDelegate?
-
-    var type: CoordinatorType { .tab }
-
     var tabBarController = UITabBarController()
 
     var navigationController: UINavigationController

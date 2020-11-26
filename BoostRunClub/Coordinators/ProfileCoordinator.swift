@@ -12,10 +12,6 @@ protocol ProfileCoordinatorProtocol: Coordinator {
 }
 
 final class ProfileCoordinator: ProfileCoordinatorProtocol {
-    var finishDelegate: CoordinatorFinishDelegate?
-
-    var type: CoordinatorType { .profile }
-
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
