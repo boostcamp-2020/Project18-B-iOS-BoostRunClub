@@ -8,52 +8,21 @@
 import Combine
 import UIKit
 
-protocol GoalTypeViewControllerDelegate: AnyObject {
-    func setGoalType(with goalType: GoalType)
-}
-
 final class GoalTypeViewController: UIViewController {
-    private lazy var tableView: UITableView = {
-        let size = CGSize(width: UIScreen.main.bounds.width, height: tableViewHeight)
-        let origin = CGPoint(x: 0, y: UIScreen.main.bounds.height)
-        let tableView = UITableView(frame: CGRect(origin: origin, size: size), style: .plain)
-        tableView.layer.backgroundColor = UIColor.tertiarySystemBackground.cgColor
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.estimatedRowHeight = 1
-        tableView.allowsSelection = true
-        tableView.alwaysBounceVertical = false
-        tableView.isScrollEnabled = false
-        tableView.register(GoalTypeCell.self, forCellReuseIdentifier: String(describing: GoalTypeCell.self))
-        tableView.separatorInset.left = 20
-        tableView.separatorInset.right = 20
-        tableView.layer.cornerRadius = 30
-        tableView.rowHeight = GoalTypeCell.cellHeight
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding * 2))
-        let clearButton = UIButton()
-        clearButton.translatesAutoresizingMaskIntoConstraints = false
-        clearButton.setTitle("지우기", for: .normal)
-        clearButton.setTitleColor(.label, for: .normal)
-        footer.addSubview(clearButton)
-        NSLayoutConstraint.activate([
-            clearButton.centerXAnchor.constraint(equalTo: footer.centerXAnchor),
-            clearButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 0),
-            clearButton.widthAnchor.constraint(equalToConstant: 50),
-        ])
-        tableView.tableHeaderView = header
-        tableView.tableFooterView = footer
-        return tableView
-    }()
-
+    private lazy var tableView = loadTableView()
     private var viewModel: GoalTypeViewModelTypes?
     private var cancellables: Set<AnyCancellable> = []
+    private var verticalTablePadding: CGFloat = 30
+
     private var tableViewHeight: CGFloat {
-        CGFloat(viewModel?.outputs.numberOfCell ?? 0) * GoalTypeCell.cellHeight + verticalTablePadding * 3
+        CGFloat(tableViewCells.count) * GoalTypeCell.cellHeight + verticalTablePadding * 3
     }
 
-    private var verticalTablePadding: CGFloat = 30
-    weak var delegate: GoalTypeViewControllerDelegate?
+    private var tableViewCells = [
+        GoalTypeCell(GoalType.distance),
+        GoalTypeCell(GoalType.time),
+        GoalTypeCell(GoalType.speed),
+    ]
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -66,13 +35,12 @@ final class GoalTypeViewController: UIViewController {
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
-        viewModel.outputs.closeSheetSignal
-            .receive(on: RunLoop.main)
-            .sink { goalType in
-                self.closeWithAnimation()
-                self.delegate?.setGoalType(with: goalType)
-            }
-            .store(in: &cancellables)
+//        viewModel.outputs.closeSheetSignal
+//            .receive(on: RunLoop.main)
+//            .sink { goalType in
+//                self.closeWithAnimation()
+//            }
+//            .store(in: &cancellables)
     }
 }
 
@@ -116,10 +84,15 @@ extension GoalTypeViewController {
     func didTapBackgroundView(gesture: UITapGestureRecognizer) {
         if !tableView.point(inside: gesture.location(in: tableView), with: nil) {
             viewModel?.inputs.didTapBackgroundView()
-        } else {}
+        }
     }
 
-    private func closeWithAnimation() {
+    @objc
+    func didTapClearButton() {
+        viewModel?.inputs.didSelectGoalType(.none)
+    }
+
+    func closeWithAnimation() {
         UIView.animate(
             withDuration: 0.4,
             delay: 0,
@@ -140,7 +113,7 @@ extension GoalTypeViewController {
 
 extension GoalTypeViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel?.inputs.didSelectCell(at: indexPath.row)
+        viewModel?.inputs.didSelectGoalType(tableViewCells[indexPath.row].goalType)
     }
 }
 
@@ -148,18 +121,49 @@ extension GoalTypeViewController: UITableViewDelegate {
 
 extension GoalTypeViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel?.outputs.numberOfCell ?? 0
+        return tableViewCells.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let goalType = viewModel?.outputs.cellForRowAt(index: indexPath.row),
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: String(describing: GoalTypeCell.self)) as? GoalTypeCell
-        else { return UITableViewCell() }
+        return tableViewCells[indexPath.row]
+    }
+}
 
-        cell.goalTypeLabel.text = goalType.description
+// MARK: - Configure
 
-        return cell
+extension GoalTypeViewController {
+    private func loadTableView() -> UITableView {
+        let size = CGSize(width: UIScreen.main.bounds.width, height: tableViewHeight)
+        let origin = CGPoint(x: 0, y: UIScreen.main.bounds.height)
+        let tableView = UITableView(frame: CGRect(origin: origin, size: size), style: .plain)
+        tableView.layer.backgroundColor = UIColor.tertiarySystemBackground.cgColor
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.estimatedRowHeight = 1
+        tableView.allowsSelection = true
+        tableView.alwaysBounceVertical = false
+        tableView.isScrollEnabled = false
+        tableView.register(GoalTypeCell.self, forCellReuseIdentifier: String(describing: GoalTypeCell.self))
+        tableView.separatorInset.left = 20
+        tableView.separatorInset.right = 20
+        tableView.layer.cornerRadius = 30
+        tableView.rowHeight = GoalTypeCell.cellHeight
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding * 2))
+        let clearButton = UIButton()
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+        clearButton.setTitle("지우기", for: .normal)
+        clearButton.setTitleColor(.label, for: .normal)
+        footer.addSubview(clearButton)
+        NSLayoutConstraint.activate([
+            clearButton.centerXAnchor.constraint(equalTo: footer.centerXAnchor),
+            clearButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 0),
+            clearButton.widthAnchor.constraint(equalToConstant: 50),
+        ])
+        tableView.tableHeaderView = header
+        tableView.tableFooterView = footer
+        clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
+
+        return tableView
     }
 }

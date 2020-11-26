@@ -9,23 +9,6 @@ import Combine
 import CoreLocation
 import Foundation
 
-enum GoalType: Int {
-    case distance, time, speed, none
-
-    var description: String {
-        switch self {
-        case .distance:
-            return "거리"
-        case .time:
-            return "시간"
-        case .speed:
-            return "속도"
-        case .none:
-            return "없음"
-        }
-    }
-}
-
 protocol PrepareRunViewModelTypes {
     var inputs: PrepareRunViewModelInputs { get }
     var outputs: PrepareRunViewModelOutputs { get }
@@ -36,6 +19,8 @@ protocol PrepareRunViewModelInputs {
     func didTapSetGoalButton()
     func didTapStartButton()
     func didChangeGoalType(_ goalType: GoalType)
+    func didChangeGoalValue(_ goalValue: String)
+    func didTapGoalValueButton()
 }
 
 protocol PrepareRunViewModelOutputs {
@@ -47,6 +32,7 @@ protocol PrepareRunViewModelOutputs {
 class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
     let locationProvider: LocationProvidable
     weak var coordinator: PrepareRunCoordinatorProtocol?
+    var cancellables = Set<AnyCancellable>()
 
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
@@ -57,7 +43,10 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     func didTapShowProfileButton() {}
 
     func didTapSetGoalButton() {
-        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value)
+        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value).sink(receiveValue: { goalType in
+            self.goalTypeObservable.send(goalType)
+            self.goalValueObservable.send(goalType.initialValue)
+        }).store(in: &cancellables)
     }
 
     func didTapStartButton() {
@@ -66,7 +55,21 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
 
     func didChangeGoalType(_ goalType: GoalType) {
         goalTypeObservable.send(goalType)
-        print(goalTypeObservable.value)
+        goalValueObservable.send(goalType.initialValue)
+    }
+
+    func didTapGoalValueButton() {
+        coordinator?.showGoalValueSetupViewController(
+            goalType: goalTypeObservable.value,
+            goalValue: goalValueObservable.value
+        ).compactMap { $0 }
+            .sink(receiveValue: { goalValue in
+                self.goalValueObservable.send(goalValue)
+            }).store(in: &cancellables)
+    }
+
+    func didChangeGoalValue(_ goalValue: String) {
+        goalValueObservable.send(goalValue)
     }
 
     // MARK: Outputs

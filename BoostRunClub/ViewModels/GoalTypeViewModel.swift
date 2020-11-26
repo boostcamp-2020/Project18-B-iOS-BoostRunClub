@@ -14,15 +14,13 @@ protocol GoalTypeViewModelTypes {
 }
 
 protocol GoalTypeViewModelInputs {
-    func didSelectCell(at index: Int)
+    func didSelectGoalType(_ goalType: GoalType)
     func didTapBackgroundView()
 }
 
 protocol GoalTypeViewModelOutputs {
     var closeSheetSignal: PassthroughSubject<GoalType, Never> { get }
     var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
-    var numberOfCell: Int { get }
-    func cellForRowAt(index: Int) -> GoalType
 }
 
 class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
@@ -36,7 +34,8 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
         closeSheetSignal.send(goalTypeObservable.value)
     }
 
-    func didSelectCell(at _: Int) {
+    func didSelectGoalType(_ goalType: GoalType) {
+        goalTypeObservable.send(goalType)
         closeSheetSignal.send(goalTypeObservable.value)
     }
 
@@ -44,11 +43,6 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
 
     private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
     let goalTypeObservable: CurrentValueSubject<GoalType, Never>
-    var numberOfCell: Int { 3 }
-
-    func cellForRowAt(index: Int) -> GoalType {
-        return GoalType(rawValue: index) ?? .none
-    }
 }
 
 // MARK: - Types

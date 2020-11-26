@@ -13,9 +13,20 @@ class GoalTypeCell: UITableViewCell {
     let inset: CGFloat = 20
     static let cellHeight: CGFloat = 100
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    var goalType = GoalType.none
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    init(_ goalType: GoalType) {
+        super.init(style: .default, reuseIdentifier: String(describing: Self.self))
+        self.goalType = goalType
+        goalTypeLabel.text = goalType.description
+        commonInit()
+    }
+
+    func commonInit() {
         goalTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         checkmarkLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -31,9 +42,5 @@ class GoalTypeCell: UITableViewCell {
             checkmarkLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
             checkmarkLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
 }
