@@ -51,11 +51,11 @@
 
 /* Begin PBXFileReference section */
 		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
-		4C3E7AB3256E3D920061244F /* Notification.name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notification.name.swift; path = BoostRunClub/Coordinators/Notification.name.swift; sourceTree = SOURCE_ROOT; };
+		4C3E7AB3256E3D920061244F /* Notification.name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notification.name.swift; path = BoostRunClub/Extensions/Notification.name.swift; sourceTree = SOURCE_ROOT; };
 		4C3E7AB7256E45480061244F /* RunningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewModel.swift; sourceTree = "<group>"; };
 		4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura LT Condensed Extra Bold Oblique.ttf"; sourceTree = "<group>"; };
 		4C3E7AC8256F43440061244F /* GoalValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueView.swift; sourceTree = "<group>"; };
-		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Views/GoalType.swift; sourceTree = SOURCE_ROOT; };
+		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunViewController.swift; sourceTree = "<group>"; };
 		4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunCoordinator.swift; sourceTree = "<group>"; };
@@ -84,9 +84,9 @@
 		9600DB5D2566AA4700183CB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9600DB5F2566AA4700183CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		963B46F4256CD4E0006138DF /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
-		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Services/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
-		96FA7DF2256FFEE800090999 /* RunningInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningInfoType.swift; path = BoostRunClub/Services/RunningInfoType.swift; sourceTree = SOURCE_ROOT; };
-		96FA7DF52570177C00090999 /* CaseIterable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CaseIterable+.swift"; path = "BoostRunClub/Services/CaseIterable+.swift"; sourceTree = SOURCE_ROOT; };
+		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Extensions/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
+		96FA7DF2256FFEE800090999 /* RunningInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningInfoType.swift; path = BoostRunClub/Models/RunningInfoType.swift; sourceTree = SOURCE_ROOT; };
+		96FA7DF52570177C00090999 /* CaseIterable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CaseIterable+.swift"; path = "BoostRunClub/Extensions/CaseIterable+.swift"; sourceTree = SOURCE_ROOT; };
 		96FA7DFD25701C7700090999 /* RunningMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapViewController.swift; sourceTree = "<group>"; };
 		96FA7E0025701C9200090999 /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
 		96FA7E0325701CB800090999 /* SplitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
@@ -155,15 +155,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		71E82885256B9122004A1F30 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				4C3E7ACB256F46A00061244F /* GoalType.swift */,
-				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		71E82887256B9184004A1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,16 +163,6 @@
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		71E82888256B9188004A1F30 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				4C3E7AB3256E3D920061244F /* Notification.name.swift */,
-				969D5F1B256FC48000DD11AB /* String+Regex.swift */,
-				96FA7DF52570177C00090999 /* CaseIterable+.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		71E82889256B91A0004A1F30 /* Coordinators */ = {
@@ -222,15 +203,15 @@
 			children = (
 				963B46F3256CD440006138DF /* Services */,
 				71E82889256B91A0004A1F30 /* Coordinators */,
-				71E82888256B9188004A1F30 /* Extensions */,
-				71E82887256B9184004A1F30 /* Views */,
-				71E82885256B9122004A1F30 /* Models */,
-				4C9C8FD42566B0A400956D51 /* .swiftlint.yml */,
+				9680AB9225707E19006F0FD2 /* Models */,
 				71A58D16256D2DE50012FF51 /* ViewModels */,
+				71E82887256B9184004A1F30 /* Views */,
+				9680AB9325707E3E006F0FD2 /* Extensions */,
 				9600DB662566AA9900183CB9 /* SupportingFiles */,
 				9600DB512566AA4400183CB9 /* AppDelegate.swift */,
 				9600DB532566AA4400183CB9 /* SceneDelegate.swift */,
 				96FA7E152570696800090999 /* .swiftformat */,
+				4C9C8FD42566B0A400956D51 /* .swiftlint.yml */,
 			);
 			path = BoostRunClub;
 			sourceTree = "<group>";
@@ -252,6 +233,25 @@
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		9680AB9225707E19006F0FD2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C3E7ACB256F46A00061244F /* GoalType.swift */,
+				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9680AB9325707E3E006F0FD2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4C3E7AB3256E3D920061244F /* Notification.name.swift */,
+				969D5F1B256FC48000DD11AB /* String+Regex.swift */,
+				96FA7DF52570177C00090999 /* CaseIterable+.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C55C5C85FF1A070D490B9094 /* Frameworks */ = {
