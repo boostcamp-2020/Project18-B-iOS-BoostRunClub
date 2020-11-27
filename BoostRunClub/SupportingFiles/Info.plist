@@ -24,6 +24,10 @@
 	<string>사용자 위치 정보를 확인합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>사용자 위치 정보를 확인합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Futura LT Condensed Extra Bold Oblique.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -51,4 +51,8 @@ final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
 
         navigationController.viewControllers = [tabBarController]
     }
+
+    deinit {
+        print("finished \(self)")
+    }
 }

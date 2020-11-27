@@ -9,22 +9,6 @@ import Combine
 import CoreLocation
 import Foundation
 
-enum GoalType: Int {
-    case distance, time, speed, none
-    var name: String {
-        switch self {
-        case .distance:
-            return "거리"
-        case .time:
-            return "시간"
-        case .speed:
-            return "속도"
-        case .none:
-            return "없음"
-        }
-    }
-}
-
 protocol PrepareRunViewModelTypes {
     var inputs: PrepareRunViewModelInputs { get }
     var outputs: PrepareRunViewModelOutputs { get }
@@ -34,48 +18,87 @@ protocol PrepareRunViewModelInputs {
     func didTapShowProfileButton()
     func didTapSetGoalButton()
     func didTapStartButton()
+    func didChangeGoalType(_ goalType: GoalType)
+    func didChangeGoalValue(_ goalValue: String)
+    func didTapGoalValueButton()
 }
 
 protocol PrepareRunViewModelOutputs {
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
-    var goalTypePublisher: Published<GoalType>.Publisher { get }
+    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
+    var goalValueObservable: CurrentValueSubject<String, Never> { get }
+    var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
+    var goalTypeSetupClosed: PassthroughSubject<Void, Never> { get }
 }
 
-class PrepareRunViewModel {
+class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
+    let locationProvider: LocationProvidable
+    weak var coordinator: PrepareRunCoordinatorProtocol?
+    var cancellables = Set<AnyCancellable>()
+
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
     }
 
-    let locationProvider: LocationProvidable
-    weak var coordinator: PrepareRunCoordinatorProtocol?
-    @Published var goalType: GoalType = .none
-}
+    // MARK: Inputs
 
-// MARK: - Inputs
-
-extension PrepareRunViewModel: PrepareRunViewModelInputs {
     func didTapShowProfileButton() {}
 
     func didTapSetGoalButton() {
-        coordinator?.showGoalTypeActionSheet(goalType: goalType, completion: { _ in
-            print("goal Type selected")
-        })
+        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value)
+            .filter {
+                $0 != self.goalTypeObservable.value
+            }
+            .sink(receiveValue: { goalType in
+                self.goalTypeObservable.send(goalType)
+                self.goalValueObservable.send(goalType.initialValue)
+                if goalType != .none {
+                    self.goalTypeSetupClosed.send()
+                }
+            })
+            .store(in: &cancellables)
     }
 
-    func didTapStartButton() {}
-}
+    func didTapStartButton() {
+        coordinator?.showRunningScene(
+            goalType: goalTypeObservable.value,
+            goalValue: goalValueObservable.value
+        )
+    }
 
-// MARK: - Outputs
+    func didChangeGoalType(_ goalType: GoalType) {
+        goalTypeObservable.send(goalType)
+        goalValueObservable.send(goalType.initialValue)
+    }
 
-extension PrepareRunViewModel: PrepareRunViewModelOutputs {
+    func didTapGoalValueButton() {
+        coordinator?.showGoalValueSetupViewController(
+            goalType: goalTypeObservable.value,
+            goalValue: goalValueObservable.value
+        ).compactMap {
+            self.goalValueSetupClosed.send()
+            return $0
+        }
+        .sink(receiveValue: { goalValue in
+            self.goalValueObservable.send(goalValue)
+        })
+        .store(in: &cancellables)
+    }
+
+    func didChangeGoalValue(_ goalValue: String) {
+        goalValueObservable.send(goalValue)
+    }
+
+    // MARK: Outputs
+
+    var goalTypeObservable = CurrentValueSubject<GoalType, Never>(.none)
+    var goalValueObservable = CurrentValueSubject<String, Never>("")
+    var goalValueSetupClosed = PassthroughSubject<Void, Never>()
+    var goalTypeSetupClosed = PassthroughSubject<Void, Never>()
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
         locationProvider.locationSubject
             .compactMap { $0.first?.coordinate }
             .eraseToAnyPublisher()
-    }
-
-    var goalTypePublisher: Published<GoalType>.Publisher {
-        $goalType
     }
 }
 

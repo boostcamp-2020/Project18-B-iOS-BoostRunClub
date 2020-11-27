@@ -14,51 +14,35 @@ protocol GoalTypeViewModelTypes {
 }
 
 protocol GoalTypeViewModelInputs {
-    func didSelectCell(at index: Int)
+    func didSelectGoalType(_ goalType: GoalType)
     func didTapBackgroundView()
 }
 
 protocol GoalTypeViewModelOutputs {
-    var closeSheet: PassthroughSubject<Void, Never> { get }
-    var goalTypeSubject: CurrentValueSubject<GoalType, Never> { get }
-    var numberOfCell: Int { get }
-    func cellForRowAt(index: Int) -> GoalType
+    var closeSheetSignal: PassthroughSubject<GoalType, Never> { get }
+    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
 }
 
-class GoalTypeViewModel {
-    init(goalType: GoalType, completion: @escaping (GoalType) -> Void) {
-        sendGoalType = completion
-        goalTypeSubject = CurrentValueSubject<GoalType, Never>(goalType)
+class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
+    init(goalType: GoalType) {
+        goalTypeObservable = CurrentValueSubject<GoalType, Never>(goalType)
     }
 
-    private(set) var closeSheet = PassthroughSubject<Void, Never>()
-    let goalTypeSubject: CurrentValueSubject<GoalType, Never>
-    let sendGoalType: (GoalType) -> Void
-}
+    // MARK: Inputs
 
-// MARK: - Inputs
-
-extension GoalTypeViewModel: GoalTypeViewModelInputs {
     func didTapBackgroundView() {
-        closeSheet.send()
+        closeSheetSignal.send(goalTypeObservable.value)
     }
 
-    func didSelectCell(at index: Int) {
-        if let goalType = GoalType(rawValue: index) {
-            sendGoalType(goalType)
-        }
-        closeSheet.send()
-    }
-}
-
-// MARK: - Outputs
-
-extension GoalTypeViewModel: GoalTypeViewModelOutputs {
-    func cellForRowAt(index: Int) -> GoalType {
-        return GoalType(rawValue: index) ?? .none
+    func didSelectGoalType(_ goalType: GoalType) {
+        goalTypeObservable.send(goalType)
+        closeSheetSignal.send(goalTypeObservable.value)
     }
 
-    var numberOfCell: Int { 3 }
+    // MARK: Ouputs
+
+    private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
+    let goalTypeObservable: CurrentValueSubject<GoalType, Never>
 }
 
 // MARK: - Types

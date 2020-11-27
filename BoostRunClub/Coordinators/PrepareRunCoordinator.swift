@@ -9,11 +9,12 @@ import Combine
 import UIKit
 
 protocol PrepareRunCoordinatorProtocol: Coordinator {
-    func showGoalTypeActionSheet(goalType: GoalType, completion: @escaping (GoalType) -> Void)
-    func showGoalSetupViewController()
+    func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
+    func showGoalValueSetupViewController(goalType: GoalType, goalValue: String) -> AnyPublisher<String?, Never>
+    func showRunningScene(goalType: GoalType, goalValue: String)
 }
 
-final class PrepareRunCoordinator {
+final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
@@ -28,21 +29,51 @@ final class PrepareRunCoordinator {
     }
 
     func showPrepareRunViewController() {
-        let prepareRunViewModel = PrepareRunViewModel()
-        prepareRunViewModel.coordinator = self
-        let prepareRunVC = PrepareRunViewController()
-        prepareRunVC.viewModel = prepareRunViewModel
+        let prepareRunVM = PrepareRunViewModel()
+        prepareRunVM.coordinator = self
+        let prepareRunVC = PrepareRunViewController(with: prepareRunVM)
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
-}
 
-extension PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
-    func showGoalTypeActionSheet(goalType: GoalType = .none, completion: @escaping (GoalType) -> Void) {
-        let goalTypeVM = GoalTypeViewModel(goalType: goalType, completion: completion)
+    func showGoalTypeActionSheet(goalType: GoalType = .none) -> AnyPublisher<GoalType, Never> {
+        let goalTypeVM = GoalTypeViewModel(goalType: goalType)
         let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
+
+        return goalTypeVM.closeSheetSignal.receive(on: RunLoop.main)
+            .map {
+                goalTypeVC.closeWithAnimation()
+                return $0
+            }.eraseToAnyPublisher()
     }
 
-    func showGoalSetupViewController() {}
+    func showGoalValueSetupViewController(goalType: GoalType, goalValue: String) -> AnyPublisher<String?, Never> {
+        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalType, goalValue: goalValue)
+        let goalValueSetupVC = GoalValueSetupViewController(with: goalValueSetupVM)
+        navigationController.pushViewController(goalValueSetupVC, animated: false)
+
+        return goalValueSetupVM.closeSheetSignal
+            .receive(on: RunLoop.main)
+            .map {
+                goalValueSetupVC.navigationController?.popViewController(animated: false)
+                return $0
+            }
+            .eraseToAnyPublisher()
+    }
+
+    func showRunningScene(goalType: GoalType, goalValue: String) {
+        NotificationCenter.default.post(
+            name: .showRunningScene,
+            object: self,
+            userInfo: [
+                "goalType": goalType,
+                "goalValue": goalValue,
+            ]
+        )
+    }
+
+    deinit {
+        print("finished \(self)")
+    }
 }
