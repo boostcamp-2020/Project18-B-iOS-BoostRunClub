@@ -10,14 +10,14 @@ import UIKit
 
 protocol PrepareRunCoordinatorProtocol: Coordinator {
     func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
-    func showGoalValueSetupViewController(goalType: GoalType, goalValue: String) -> AnyPublisher<String?, Never>
-    func showRunningScene(goalType: GoalType, goalValue: String)
+    func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never>
+    func showRunningScene(goalInfo: GoalInfo)
 }
 
 final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
     var navigationController: UINavigationController
-
     var childCoordinators = [Coordinator]()
+    var cancellables = Set<AnyCancellable>()
 
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -30,7 +30,24 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
 
     func showPrepareRunViewController() {
         let prepareRunVM = PrepareRunViewModel()
-        prepareRunVM.coordinator = self
+
+        prepareRunVM.showRunningSceneSignal
+            .receive(on: RunLoop.main)
+            .sink { self.showRunningScene(goalInfo: $0) }
+            .store(in: &cancellables)
+
+        prepareRunVM.showGoalTypeActionSheetSignal
+            .receive(on: RunLoop.main)
+            .flatMap { self.showGoalTypeActionSheet(goalType: $0) }
+            .sink { prepareRunVM.didChangeGoalType($0) }
+            .store(in: &cancellables)
+
+        prepareRunVM.showGoalValueSetupSceneSignal
+            .receive(on: RunLoop.main)
+            .flatMap { self.showGoalValueSetupViewController(goalInfo: $0) }
+            .sink { prepareRunVM.didChangeGoalValue($0) }
+            .store(in: &cancellables)
+
         let prepareRunVC = PrepareRunViewController(with: prepareRunVM)
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
@@ -38,6 +55,7 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
     func showGoalTypeActionSheet(goalType: GoalType = .none) -> AnyPublisher<GoalType, Never> {
         let goalTypeVM = GoalTypeViewModel(goalType: goalType)
         let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
+
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
 
@@ -48,8 +66,9 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
             }.eraseToAnyPublisher()
     }
 
-    func showGoalValueSetupViewController(goalType: GoalType, goalValue: String) -> AnyPublisher<String?, Never> {
-        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalType, goalValue: goalValue)
+    func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never> {
+        // TODO: goalType, goalValue -> GoalInfo 타입으로 변경
+        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
         let goalValueSetupVC = GoalValueSetupViewController(with: goalValueSetupVM)
         navigationController.pushViewController(goalValueSetupVC, animated: false)
 
@@ -62,13 +81,14 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
             .eraseToAnyPublisher()
     }
 
-    func showRunningScene(goalType: GoalType, goalValue: String) {
+    func showRunningScene(goalInfo: GoalInfo) {
+        // TODO: goalType, goalValue -> GoalInfo 타입으로 변경
         NotificationCenter.default.post(
             name: .showRunningScene,
             object: self,
             userInfo: [
-                "goalType": goalType,
-                "goalValue": goalValue,
+                "goalType": goalInfo.goalType,
+                "goalValue": goalInfo.goalValue,
             ]
         )
     }

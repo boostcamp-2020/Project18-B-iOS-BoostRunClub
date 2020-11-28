@@ -19,22 +19,31 @@ protocol PrepareRunViewModelInputs {
     func didTapSetGoalButton()
     func didTapStartButton()
     func didChangeGoalType(_ goalType: GoalType)
-    func didChangeGoalValue(_ goalValue: String)
+    func didChangeGoalValue(_ goalValue: String?)
     func didTapGoalValueButton()
 }
 
 protocol PrepareRunViewModelOutputs {
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
     var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
-    var goalValueObservable: CurrentValueSubject<String, Never> { get }
+    var goalValueObservable: CurrentValueSubject<String, Never> { get } // TODO: - GoalType/value observable을 goalInfo로 바꿀지 생각해보기
     var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
     var goalTypeSetupClosed: PassthroughSubject<Void, Never> { get }
+    var showGoalTypeActionSheetSignal: PassthroughSubject<GoalType, Never> { get }
+    var showGoalValueSetupSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
+    var showRunningSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
 }
 
 class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
     let locationProvider: LocationProvidable
-    weak var coordinator: PrepareRunCoordinatorProtocol?
+
     var cancellables = Set<AnyCancellable>()
+    private var goalInfo: GoalInfo {
+        GoalInfo(
+            goalType: goalTypeObservable.value,
+            goalValue: goalValueObservable.value
+        )
+    }
 
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
@@ -45,48 +54,32 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     func didTapShowProfileButton() {}
 
     func didTapSetGoalButton() {
-        coordinator?.showGoalTypeActionSheet(goalType: goalTypeObservable.value)
-            .filter {
-                $0 != self.goalTypeObservable.value
-            }
-            .sink(receiveValue: { goalType in
-                self.goalTypeObservable.send(goalType)
-                self.goalValueObservable.send(goalType.initialValue)
-                if goalType != .none {
-                    self.goalTypeSetupClosed.send()
-                }
-            })
-            .store(in: &cancellables)
+        showGoalTypeActionSheetSignal.send(goalTypeObservable.value)
     }
 
     func didTapStartButton() {
-        coordinator?.showRunningScene(
-            goalType: goalTypeObservable.value,
-            goalValue: goalValueObservable.value
-        )
-    }
-
-    func didChangeGoalType(_ goalType: GoalType) {
-        goalTypeObservable.send(goalType)
-        goalValueObservable.send(goalType.initialValue)
+        showRunningSceneSignal.send(goalInfo)
     }
 
     func didTapGoalValueButton() {
-        coordinator?.showGoalValueSetupViewController(
-            goalType: goalTypeObservable.value,
-            goalValue: goalValueObservable.value
-        ).compactMap {
-            self.goalValueSetupClosed.send()
-            return $0
-        }
-        .sink(receiveValue: { goalValue in
-            self.goalValueObservable.send(goalValue)
-        })
-        .store(in: &cancellables)
+        showGoalValueSetupSceneSignal.send(goalInfo)
     }
 
-    func didChangeGoalValue(_ goalValue: String) {
-        goalValueObservable.send(goalValue)
+    func didChangeGoalType(_ goalType: GoalType) {
+        if goalType != goalTypeObservable.value {
+            goalTypeObservable.send(goalType)
+            goalValueObservable.send(goalType.initialValue)
+            if goalType != .none {
+                goalTypeSetupClosed.send()
+            }
+        }
+    }
+
+    func didChangeGoalValue(_ goalValue: String?) {
+        goalValueSetupClosed.send()
+        if let goalValue = goalValue {
+            goalValueObservable.send(goalValue)
+        }
     }
 
     // MARK: Outputs
@@ -100,6 +93,10 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
             .compactMap { $0.first?.coordinate }
             .eraseToAnyPublisher()
     }
+
+    var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
+    var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()
+    var showRunningSceneSignal = PassthroughSubject<GoalInfo, Never>()
 }
 
 // MARK: - Types
