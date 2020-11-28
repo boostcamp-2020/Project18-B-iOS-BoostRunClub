@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RunningViewController: UIViewController {
+class RunningInfoViewController: UIViewController {
     private var viewModel: RunningViewModelTypes?
 
     init(with runningViewModel: RunningViewModelTypes?) {

@@ -19,7 +19,7 @@ final class RunningPageViewController: UIPageViewController {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
         pageDictionary[.map] = RunningMapViewController()
-        pageDictionary[.runningInfo] = RunningViewController(with: runningViewModel)
+        pageDictionary[.runningInfo] = RunningInfoViewController(with: runningViewModel)
         pageDictionary[.splits] = SplitsViewController()
     }
 
