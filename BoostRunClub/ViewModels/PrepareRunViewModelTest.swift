@@ -13,7 +13,7 @@ class PrepareRunViewModelTest: XCTestCase {
     var prepareVM: PrepareRunViewModel!
     var cancellables: Set<AnyCancellable>!
 
-     //func didTapShowProfileButton()
+    // func didTapShowProfileButton()
     /*
      func didTapSetGoalButton() *
      func didTapStartButton()
@@ -52,5 +52,31 @@ class PrepareRunViewModelTest: XCTestCase {
 
         XCTAssertEqual(allCases, results)
     }
-    
+
+    func testdidChangeGoalType() {
+        let allCases: [GoalType] = [.distance, .speed, .time]
+        var results = [GoalInfo]()
+
+        allCases.forEach { goalType in
+            let receivedSignal = expectation(description: "received correct goal type 장임호가 쓴 테스트")
+            let cancellable = prepareVM.goalTypeObservable.zip(prepareVM.goalValueObservable)
+                .dropFirst()
+                .sink {
+                    if $0.0 == goalType,
+                       $0.1 == goalType.initialValue
+                    {
+                        results.append(GoalInfo(goalType: $0.0, goalValue: $0.1))
+                        receivedSignal.fulfill()
+                    }
+                }
+            prepareVM.didChangeGoalType(goalType)
+            waitForExpectations(timeout: 1, handler: nil)
+            cancellable.cancel()
+        }
+        
+        XCTAssertEqual(allCases.count, results.count)
+        allCases.enumerated().forEach { index, goalType in
+            XCTAssertEqual(GoalInfo(goalType: goalType, goalValue: goalType.initialValue), results[index])
+        }
+    }
 }
