@@ -9,6 +9,9 @@ import UIKit
 
 class RunningInfoViewController: UIViewController {
     private var viewModel: RunningViewModelTypes?
+    
+    
+    
 
     init(with runningViewModel: RunningViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
