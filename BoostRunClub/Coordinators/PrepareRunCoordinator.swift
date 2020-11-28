@@ -40,7 +40,7 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
         let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
-
+        -
         return goalTypeVM.closeSheetSignal.receive(on: RunLoop.main)
             .map {
                 goalTypeVC.closeWithAnimation()

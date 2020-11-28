@@ -43,3 +43,8 @@ enum GoalType: Int {
         }
     }
 }
+
+struct GoalInfo {
+    let goalType: GoalType
+    let goalValue: String
+}

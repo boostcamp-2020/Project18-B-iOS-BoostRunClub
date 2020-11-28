@@ -267,7 +267,8 @@ extension PrepareRunViewController {
             constraint,
             goalValueView.underline.leadingAnchor.constraint(
                 equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
-                constant: -5),
+                constant: -5
+            ),
         ])
     }
 }
