@@ -9,6 +9,7 @@ import UIKit
 
 class RunningInfoViewController: UIViewController {
     private var viewModel: RunningViewModelTypes?
+
     private var subRunDataStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -17,6 +18,7 @@ class RunningInfoViewController: UIViewController {
     }()
 
     private var mainRunDataView = RunDataView(style: .main)
+
     private var pauseButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
@@ -39,19 +41,15 @@ class RunningInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
 
+        subRunDataStackView.addArrangedSubview(RunDataView())
+        subRunDataStackView.addArrangedSubview(RunDataView())
+        subRunDataStackView.addArrangedSubview(RunDataView())
+
         subRunDataStackView.translatesAutoresizingMaskIntoConstraints = false
-        mainRunDataView.translatesAutoresizingMaskIntoConstraints = false
-        pauseButton.translatesAutoresizingMaskIntoConstraints = false
-
-        subRunDataStackView.addArrangedSubview(RunDataView())
-        subRunDataStackView.addArrangedSubview(RunDataView())
-        subRunDataStackView.addArrangedSubview(RunDataView())
-
         view.addSubview(subRunDataStackView)
-        view.addSubview(mainRunDataView)
-        view.addSubview(pauseButton)
 
         NSLayoutConstraint.activate([
             subRunDataStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
@@ -59,10 +57,16 @@ class RunningInfoViewController: UIViewController {
             subRunDataStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
 
+        mainRunDataView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mainRunDataView)
+
         NSLayoutConstraint.activate([
             mainRunDataView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
             mainRunDataView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
+
+        pauseButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(pauseButton)
 
         NSLayoutConstraint.activate([
             pauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),

@@ -14,6 +14,8 @@ class RunDataView: UIStackView {
 
     let style: Style
 
+    private var action: (() -> Void)?
+
     private lazy var valueLabel: UILabel = {
         let label: UILabel
         switch style {
@@ -38,8 +40,10 @@ class RunDataView: UIStackView {
         return label
     }()
 
-    init(style: Style = .sub) {
+    init(style: Style = .sub, action: (() -> Void)? = nil) {
         self.style = style
+        self.action = action
+
         super.init(frame: .zero)
         commonInit()
     }
@@ -66,5 +70,12 @@ class RunDataView: UIStackView {
 
         addArrangedSubview(valueLabel)
         addArrangedSubview(descriptionLabel)
+
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(execute)))
+    }
+
+    @objc
+    private func execute() {
+        action?()
     }
 }
