@@ -24,7 +24,7 @@ protocol PrepareRunViewModelInputs {
 }
 
 protocol PrepareRunViewModelOutputs {
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
+    var userLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
     var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
     var goalValueObservable: CurrentValueSubject<String, Never> { get } // TODO: - GoalType/value observable을 goalInfo로 바꿀지 생각해보기
     var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
@@ -47,6 +47,10 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
 
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
+        locationProvider.locationSubject
+            .compactMap { $0.first?.coordinate }
+            .sink { self.userLocation.send($0) }
+            .store(in: &cancellables)
     }
 
     // MARK: Inputs
@@ -88,11 +92,13 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var goalValueObservable = CurrentValueSubject<String, Never>("")
     var goalValueSetupClosed = PassthroughSubject<Void, Never>()
     var goalTypeSetupClosed = PassthroughSubject<Void, Never>()
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
-        locationProvider.locationSubject
-            .compactMap { $0.first?.coordinate }
-            .eraseToAnyPublisher()
-    }
+//    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
+//        locationProvider.locationSubject
+//            .compactMap { $0.first?.coordinate }
+//            .eraseToAnyPublisher()
+//    }
+
+    var userLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
 
     var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
     var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()

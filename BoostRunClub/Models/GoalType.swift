@@ -44,7 +44,7 @@ enum GoalType: Int {
     }
 }
 
-struct GoalInfo {
+struct GoalInfo: Equatable {
     let goalType: GoalType
     let goalValue: String
 }
