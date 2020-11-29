@@ -2,7 +2,7 @@
 //  GoalValueSetupViewModelTest.swift
 //  BoostRunClubTests
 //
-//  Created by 조기현 on 2020/11/29.
+//  Created by 김신우 on 2020/11/29.
 //
 
 @testable import BoostRunClub
