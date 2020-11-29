@@ -21,9 +21,11 @@ class GoalValueSetupViewModelTest: XCTestCase {
             goalType: goalInfo.goalType,
             goalValue: goalInfo.goalValue
         ) // test target
+        let expectedNumReceived = 1
+        var numReceived = 0
         let cancellable = viewModel.goalValueObservable
-            .first()
             .sink { presentingValue in
+                numReceived += 1
                 XCTAssertEqual(presentingValue, goalInfo.goalValue)
                 if presentingValue == goalInfo.goalValue {
                     expectedObserve.fulfill()
@@ -32,6 +34,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
         cancellable.cancel()
+        XCTAssertEqual(expectedNumReceived, numReceived)
     }
 
     func testMakeViewModel_DistanceType() {
@@ -41,9 +44,11 @@ class GoalValueSetupViewModelTest: XCTestCase {
             goalType: goalInfo.goalType,
             goalValue: goalInfo.goalValue
         ) // test target
+        let expectedNumReceived = 1
+        var numReceived = 0
         let cancellable = viewModel.goalValueObservable
-            .first()
             .sink { presentingValue in
+                numReceived += 1
                 XCTAssertEqual(presentingValue, goalInfo.goalValue)
                 if presentingValue == goalInfo.goalValue {
                     expectedObserve.fulfill()
@@ -52,6 +57,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
         cancellable.cancel()
+        XCTAssertEqual(expectedNumReceived, numReceived)
     }
 
     func testInitialInput_TimeType() {
