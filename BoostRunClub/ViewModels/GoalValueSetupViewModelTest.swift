@@ -98,11 +98,11 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testFilterInputs_DistanceType() {
         let inputStreams = [
-            ["1", "1", "1", "1", ".", "2", ".", "2", "2", "2"], // 11.22
-            ["1", "1", "1", "1", "1", "1"], // 11
-            ["1", "1", "1", "."], // 11.
-            [".", ".", "2", "2", "2"], // .22
-            ["0", "2", ".", "1"], // 02.1
+            "1111.2.222", // 11.22
+            "111111", // 11
+            "111.", // 11.
+            "..222", // .22
+            "02.1", // 02.1
         ]
         let expectedResults = [
             "11.22",
@@ -111,14 +111,15 @@ class GoalValueSetupViewModelTest: XCTestCase {
             ".22",
             "02.1",
         ]
+        let expectedNumReceived = expectedResults.map { $0.count }
 
         inputStreams.enumerated().forEach { idx, inputs in
             let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
             let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
 
-            let expectedObserve = expectation(description: "invalidDistanceInputs")
+            let expectedObserve = expectation(description: "invalidTimeInputs")
             let expectedResult = expectedResults[idx]
-            let expectedNumReceived = expectedResults[idx].count
+            let expectedNumReceived = expectedNumReceived[idx]
             var numReceived = 0
             let cancellable = viewModel.goalValueObservable
                 .dropFirst()
@@ -128,22 +129,21 @@ class GoalValueSetupViewModelTest: XCTestCase {
                         expectedObserve.fulfill()
                     }
                 }
-            let cancellable2 = inputs.publisher.sink { viewModel.didInputNumber($0) } // test target
 
+            inputs.map { String($0) }.forEach { viewModel.didInputNumber($0) }
             waitForExpectations(timeout: 1, handler: nil)
             XCTAssertEqual(expectedNumReceived, numReceived)
             cancellable.cancel()
-            cancellable2.cancel()
         }
     }
 
     func testFilterInputs_TimeType() {
         let inputStreams = [
-            ["1", "1", "1", "1", "2", "2", "2", "2"], // 11:11
-            ["0", "0", "1", "1", "1"], // 01:11
-            ["2", "2", "2"], // 02:22
-            ["3", "3"], // 00:33
-            ["4"], // 00:04
+            "11112222", // 11:11
+            "00111", // 01:11
+            "222", // 02:22
+            "33", // 00:33
+            "4", // 00:04
         ]
         let expectedResults = [
             "11:11",
@@ -171,11 +171,10 @@ class GoalValueSetupViewModelTest: XCTestCase {
                     }
                 }
 
-            let cancellable2 = inputs.publisher.sink { viewModel.didInputNumber($0) } // test target
+            inputs.map { String($0) }.forEach { viewModel.didInputNumber($0) }
             waitForExpectations(timeout: 1, handler: nil)
             XCTAssertEqual(expectedNumReceived, numReceived)
             cancellable.cancel()
-            cancellable2.cancel()
         }
     }
 
