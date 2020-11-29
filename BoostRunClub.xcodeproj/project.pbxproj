@@ -24,6 +24,7 @@
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
 		71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
+		71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
 		71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288E256B9320004A1F30 /* AppCoordinator.swift */; };
 		71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82891256B9468004A1F30 /* LoginCoordinator.swift */; };
 		71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82894256B9581004A1F30 /* LoginViewController.swift */; };
@@ -530,6 +531,7 @@
 				4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
+				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
