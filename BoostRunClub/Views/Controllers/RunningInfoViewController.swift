@@ -8,7 +8,7 @@
 import UIKit
 
 class RunningInfoViewController: UIViewController {
-    private var viewModel: RunningViewModelTypes?
+    private var viewModel: RunningInfoViewModelTypes?
 
     private var subRunDataStackView: UIStackView = {
         let stackView = UIStackView()
@@ -30,7 +30,7 @@ class RunningInfoViewController: UIViewController {
         return button
     }()
 
-    init(with runningViewModel: RunningViewModelTypes?) {
+    init(with runningViewModel: RunningInfoViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
         viewModel = runningViewModel
     }

@@ -16,7 +16,7 @@ final class RunningPageViewController: UIPageViewController {
     private var pages = [UIViewController]()
     var pageControl = UIPageControl()
 
-    init(with runningViewModel: RunningViewModelTypes) {
+    init(with runningViewModel: RunningInfoViewModelTypes) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
         pages.append(RunningMapViewController())

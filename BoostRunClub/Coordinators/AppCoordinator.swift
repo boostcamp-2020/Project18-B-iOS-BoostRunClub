@@ -61,7 +61,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
         //          RunningMapViewModel(RunningService)
         //          SplitsViewModel(RunningService)
         //          RunningPageViewController에 주입
-        let runningVM = RunningViewModel(goalType: goalType, goalValue: goalValue)
+        let runningVM = RunningInfoViewModel(goalType: goalType, goalValue: goalValue)
         let runningVC = RunningPageViewController(with: runningVM)
         navigationController.pushViewController(runningVC, animated: false)
     }
