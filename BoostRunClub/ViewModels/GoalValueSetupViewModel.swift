@@ -69,7 +69,7 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
         }
         switch goalType {
         case .distance:
-            goalValueObservable.send(inputValue)
+            goalValueObservable.send(inputValue.isEmpty ? "0" : inputValue)
         case .time:
             var outputValue = String(repeating: "0", count: 4 - inputValue.count) + inputValue
             outputValue.insert(contentsOf: ":", at: outputValue.index(outputValue.startIndex, offsetBy: 2))
