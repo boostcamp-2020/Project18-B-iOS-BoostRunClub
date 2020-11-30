@@ -14,20 +14,8 @@ final class RunningPageViewController: UIPageViewController {
     }
 
     private var pages = [UIViewController]()
-    var pageControl = UIPageControl()
+    private var pageControl = UIPageControl()
 
-//    init(with runningViewModel: RunningInfoViewModelTypes) {
-//        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-//
-//        pages.append(RunningMapViewController())
-//        pages.append(RunningInfoViewController(with: runningViewModel))
-//        pages.append(SplitsViewController())
-//    }
-
-//    required init?(coder _: NSCoder) {
-//        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-//    }
-//
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self

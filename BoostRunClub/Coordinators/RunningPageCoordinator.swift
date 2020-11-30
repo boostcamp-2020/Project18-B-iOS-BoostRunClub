@@ -31,7 +31,6 @@ final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
     }
 
     private func prepareRunningPageController() {
-        // RunningMapView Coordinator , RunningInfoVIew Coordinator, SplitsView Coordinator
         childCoordinators = [
             RunningMapCoordinator(UINavigationController()),
             RunningInfoCoordinator(UINavigationController()),
@@ -39,10 +38,7 @@ final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
         ]
 
         childCoordinators.forEach { $0.start() }
-
         runningPageController.setPages(childCoordinators.map { $0.navigationController })
-        //        runningPageController.currentPage = TabBarPage.running.rawValue
-
         navigationController.viewControllers = [runningPageController]
     }
 

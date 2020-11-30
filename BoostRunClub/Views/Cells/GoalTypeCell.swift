@@ -25,8 +25,12 @@ class GoalTypeCell: UITableViewCell {
         goalTypeLabel.text = goalType.description
         commonInit()
     }
+}
 
-    func commonInit() {
+// MARK: - Configure
+
+extension GoalTypeCell {
+    private func commonInit() {
         goalTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         checkmarkLabel.translatesAutoresizingMaskIntoConstraints = false
 

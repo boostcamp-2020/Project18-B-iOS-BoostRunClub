@@ -16,8 +16,9 @@ final class PrepareRunViewController: UIViewController {
     private lazy var setGoalTypeButton: UIButton = makeSetGoalTypeButton()
     private lazy var startButton: UIButton = makeStartButton()
     private lazy var goalValueView: GoalValueView = makeGoalValueView()
-    private var cancellables = Set<AnyCancellable>()
+
     var viewModel: PrepareRunViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -117,11 +118,6 @@ extension PrepareRunViewController {
         viewModel?.inputs.didTapSetGoalButton()
     }
 
-    @objc
-    func didTapSetGoalValueButton() {
-        // viewModel?.inputs.didTapGoalValueButton()
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         mapGradientLayer.colors = [
@@ -217,7 +213,7 @@ extension PrepareRunViewController {
 
     private func makeGoalValueView() -> GoalValueView {
         let view = GoalValueView()
-//        view.setGoalDetailButton.addTarget(self, action: #selector(didTapSetGoalValueButton), for: .touchUpInside)
+        view.isHidden = true
         return view
     }
 
@@ -265,17 +261,10 @@ extension PrepareRunViewController {
         ])
 
         view.addSubview(goalValueView)
-        goalValueView.isHidden = true
         goalValueView.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = goalValueView.centerYAnchor.constraint(equalTo: view.topAnchor)
-        constraint.constant = UIScreen.main.bounds.height / 3
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            constraint,
-//            goalValueView.underline.leadingAnchor.constraint(
-//                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
-//                constant: -5
-//            ),
+            goalValueView.centerYAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height / 3),
         ])
     }
 }

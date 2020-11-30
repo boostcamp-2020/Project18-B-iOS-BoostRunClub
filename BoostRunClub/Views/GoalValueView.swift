@@ -8,10 +8,7 @@
 import UIKit
 
 final class GoalValueView: UIView {
-    // private lazy var setGoalDetailButton: UIButton = makeSetGoalButton()
     private lazy var goalValueLabel: UILabel = makeGoalValueLabel()
-
-//    var goalDetailButtonWidthConstraint: NSLayoutConstraint?
 
     var tapAction: (() -> Void)?
     let underline: UIView = {
@@ -36,6 +33,24 @@ final class GoalValueView: UIView {
         commonInit()
     }
 
+    func setLabelText(goalValue: String, goalUnit: String) {
+        goalValueLabel.text = goalValue
+        descriptionLabel.text = goalUnit
+    }
+}
+
+// MARK: - Actions
+
+extension GoalValueView {
+    @objc
+    private func execute() {
+        tapAction?()
+    }
+}
+
+// MARK: - Configure
+
+extension GoalValueView {
     func commonInit() {
         isUserInteractionEnabled = true
         configureLayout()
@@ -44,16 +59,6 @@ final class GoalValueView: UIView {
     }
 
     func configureLayout() {
-//        addSubview(setGoalDetailButton)
-//        setGoalDetailButton.translatesAutoresizingMaskIntoConstraints = false
-//        goalDetailButtonWidthConstraint = setGoalDetailButton.widthAnchor.constraint(equalToConstant: 0)
-//        NSLayoutConstraint.activate([
-//            setGoalDetailButton.topAnchor.constraint(equalTo: topAnchor),
-//            setGoalDetailButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            setGoalDetailButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            goalDetailButtonWidthConstraint!,
-//        ])
-
         addSubview(goalValueLabel)
         goalValueLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -81,26 +86,6 @@ final class GoalValueView: UIView {
         ])
     }
 
-    func setLabelText(goalValue: String, goalUnit: String) {
-        goalValueLabel.text = goalValue
-        descriptionLabel.text = goalUnit
-    }
-
-    func setGoalUnit(goalUnit _: String) {}
-}
-
-// MARK: - Actions
-
-extension GoalValueView {
-    @objc
-    private func execute() {
-        tapAction?()
-    }
-}
-
-// MARK: - Configure
-
-extension GoalValueView {
     func makeGoalValueLabel() -> UILabel {
         let label = NikeLabel(with: 50)
         label.textColor = .label

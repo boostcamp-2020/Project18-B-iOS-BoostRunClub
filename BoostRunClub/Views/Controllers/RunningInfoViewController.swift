@@ -9,8 +9,6 @@ import Combine
 import UIKit
 
 final class RunningInfoViewController: UIViewController {
-    private var viewModel: RunningInfoViewModelTypes?
-    private var cancellables = Set<AnyCancellable>()
     private lazy var subRunDataStackView: UIStackView = makeRunDataStackView()
     private lazy var pauseButton: UIButton = makePauseButton()
     private var runDataViews: [RunDataView] = [
@@ -19,6 +17,9 @@ final class RunningInfoViewController: UIViewController {
         RunDataView(),
         RunDataView(),
     ]
+
+    private var viewModel: RunningInfoViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
 
     init(with runningViewModel: RunningInfoViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)

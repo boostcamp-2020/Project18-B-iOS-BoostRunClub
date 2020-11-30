@@ -59,10 +59,5 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let runningPageCoordinator = RunningPageCoordinator(navigationController)
         childCoordinators.append(runningPageCoordinator)
         runningPageCoordinator.start()
-        // TODO: RunningService 생성
-        //          RunningViewModel(RunningService)
-        //          RunningMapViewModel(RunningService)
-        //          SplitsViewModel(RunningService)
-        //          RunningPageViewController에 주입
     }
 }
