@@ -16,18 +16,18 @@ final class RunningPageViewController: UIPageViewController {
     private var pages = [UIViewController]()
     var pageControl = UIPageControl()
 
-    init(with runningViewModel: RunningInfoViewModelTypes) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//    init(with runningViewModel: RunningInfoViewModelTypes) {
+//        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//
+//        pages.append(RunningMapViewController())
+//        pages.append(RunningInfoViewController(with: runningViewModel))
+//        pages.append(SplitsViewController())
+//    }
 
-        pages.append(RunningMapViewController())
-        pages.append(RunningInfoViewController(with: runningViewModel))
-        pages.append(SplitsViewController())
-    }
-
-    required init?(coder _: NSCoder) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-    }
-
+//    required init?(coder _: NSCoder) {
+//        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//    }
+//
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
@@ -45,6 +45,10 @@ final class RunningPageViewController: UIPageViewController {
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
+    }
+
+    func setPages(_ viewControllers: [UIViewController]) {
+        pages.append(contentsOf: viewControllers)
     }
 }
 
@@ -72,7 +76,7 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
     {
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex == 0 {
-                return pages.last
+                return nil
             } else {
                 return pages[viewControllerIndex - 1]
             }
@@ -90,7 +94,7 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
             if viewControllerIndex < pages.count - 1 {
                 return pages[viewControllerIndex + 1]
             } else {
-                return pages.first
+                return nil
             }
         }
         return nil

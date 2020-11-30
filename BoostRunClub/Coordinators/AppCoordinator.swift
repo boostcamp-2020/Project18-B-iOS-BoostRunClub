@@ -55,14 +55,14 @@ final class AppCoordinator: AppCoordinatorProtocol {
         mainTabBarCoordinator.start()
     }
 
-    func showRunningScene(goalType: GoalType, goalValue: String) {
+    func showRunningScene(goalType _: GoalType, goalValue _: String) {
+        let runningPageCoordinator = RunningPageCoordinator(navigationController)
+        childCoordinators.append(runningPageCoordinator)
+        runningPageCoordinator.start()
         // TODO: RunningService 생성
         //          RunningViewModel(RunningService)
         //          RunningMapViewModel(RunningService)
         //          SplitsViewModel(RunningService)
         //          RunningPageViewController에 주입
-        let runningVM = RunningInfoViewModel(goalType: goalType, goalValue: goalValue)
-        let runningVC = RunningPageViewController(with: runningVM)
-        navigationController.pushViewController(runningVC, animated: false)
     }
 }
