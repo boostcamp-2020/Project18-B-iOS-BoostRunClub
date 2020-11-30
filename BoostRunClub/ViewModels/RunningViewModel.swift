@@ -15,44 +15,32 @@ protocol RunningViewModelTypes {
 
 protocol RunningViewModelInputs {
     func didTapPauseButton()
+    func didTapRunData(index: Int)
 }
 
 protocol RunningViewModelOutputs {
-    var runningInfoObservable: [RunningInfoType: PassthroughSubject<String, Never>] { get }
+    var runningInfoObservable: [CurrentValueSubject<RunningInfo, Never>] { get }
 }
 
 class RunningViewModel: RunningViewModelInputs, RunningViewModelOutputs {
-    let goalValue: String
-    var cancellables = Set<AnyCancellable>()
-
-    init(goalType: GoalType, goalValue: String) {
-        self.goalValue = goalValue
-        makeRunningInfoObservables(from: goalType)
-
-        // TODO: Running 계층 만들기
-        LocationProvider.shared.locationSubject
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.runningInfoObservable.forEach {
-                    $0.value.send(String(Int.random(in: 100 ... 200)))
-                }
-            }
-            .store(in: &cancellables)
-    }
-
-    private func makeRunningInfoObservables(from goalType: GoalType) {
-        RunningInfoType.allCases
-            .filter { goalType == .speed || ($0 != .meter && $0 != .interval) }
-            .forEach { self.runningInfoObservable[$0] = PassthroughSubject<String, Never>() }
+    init(goalType _: GoalType, goalValue _: String) {
+        let presentingDataType: [RunningInfoType] = [.time, .pace, .averagePace, .kilometer]
+        presentingDataType.forEach {
+            runningInfoObservable.append(CurrentValueSubject<RunningInfo, Never>(RunningInfo(type: $0, value: "")))
+        }
     }
 
     // MARK: Inputs
 
     func didTapPauseButton() {}
 
+    func didTapRunData(index: Int) {
+        let runInfo = runningInfoObservable[index].value
+    }
+
     // MARK: Outputs
 
-    var runningInfoObservable = [RunningInfoType: PassthroughSubject<String, Never>]()
+    var runningInfoObservable = [CurrentValueSubject<RunningInfo, Never>]()
 }
 
 // MARK: - Types

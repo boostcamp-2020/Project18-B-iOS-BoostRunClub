@@ -42,6 +42,16 @@ enum GoalType: Int {
             return ""
         }
     }
+
+    // TODO: 생각해보기..
+    var possibleRunInfo: [RunningInfoType] {
+        switch self {
+        case .distance, .time, .none:
+            return RunningInfoType.allCases.filter { $0 != .meter && $0 != .interval }
+        case .speed:
+            return RunningInfoType.allCases
+        }
+    }
 }
 
 struct GoalInfo {
