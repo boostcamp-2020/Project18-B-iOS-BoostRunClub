@@ -23,7 +23,10 @@ protocol RunningInfoViewModelOutputs {
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
-    init(goalType _: GoalType, goalValue _: String) {
+    let items: [RunningInfoType]
+    init(goalType: GoalType, goalValue _: String) {
+        items = goalType == .speed ? RunningInfoType.allCases : RunningInfoType.allCases.filter { $0.value != "" }
+
         let presentingDataType: [RunningInfoType] = [.time(""), .pace(""), .averagePace(""), .kilometer("")]
         presentingDataType.forEach {
             runningInfoObservable.append(CurrentValueSubject<RunningInfoType, Never>($0))
@@ -35,9 +38,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     func didTapPauseButton() {}
 
     func didTapRunData(index: Int) {
-        let currentIndex = runningInfoObservable[index].value.index
-        let nextIndex = currentIndex + 1 > RunningInfoType.allCases.count
-        let nextType = RunningInfoType.allCases[currentIndex + 1].value.isEmpty ? RunningInfoType.allCases[0].value : RunningInfoType.allCases[currentIndex + 1].value
+        let currIdx = runningInfoObservable[index].value.index
+        let nextItem = items[(currIdx + 1) % items.count]
+        runningInfoObservable[index].send(nextItem)
     }
 
     // MARK: Outputs

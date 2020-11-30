@@ -47,6 +47,29 @@ enum RunningInfoType: CaseIterable {
         }
     }
 
+    var name: String {
+        switch self {
+        case .pace:
+            return "페이스"
+        case .averagePace:
+            return "평균 페이스"
+        case .bpm:
+            return "BPM"
+        case .calorie:
+            return "칼로리"
+        case .time:
+            return "시간"
+        case .kilometer:
+            return "킬로미터"
+        case .cadence:
+            return "케이던스"
+        case .interval:
+            return "인터벌"
+        case .meter:
+            return "미터"
+        }
+    }
+
     var index: Int {
         switch self {
         case .pace:

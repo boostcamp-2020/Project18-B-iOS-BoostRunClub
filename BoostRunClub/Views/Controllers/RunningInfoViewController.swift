@@ -5,6 +5,7 @@
 //  Created by 김신우 on 2020/11/27.
 //
 
+import Combine
 import UIKit
 
 class RunningInfoViewController: UIViewController {
@@ -17,7 +18,9 @@ class RunningInfoViewController: UIViewController {
         return stackView
     }()
 
-    private var mainRunDataView = RunDataView(style: .main)
+    private lazy var mainRunDataView = RunDataView(style: .main) {
+        self.viewModel?.inputs.didTapRunData(index: 0)
+    }
 
     private var pauseButton: UIButton = {
         let button = UIButton()
@@ -74,6 +77,17 @@ class RunningInfoViewController: UIViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 100),
             pauseButton.widthAnchor.constraint(equalTo: pauseButton.heightAnchor, multiplier: 1),
         ])
+
+        bindViewModel()
+    }
+
+    var cancellables = Set<AnyCancellable>()
+
+    func bindViewModel() {
+        viewModel?.outputs.runningInfoObservable[0].sink(receiveValue: { runningInfoType in
+            self.mainRunDataView.setValue(value: runningInfoType.value)
+            self.mainRunDataView.setType(type: runningInfoType.name)
+        }).store(in: &cancellables)
     }
 
     @objc

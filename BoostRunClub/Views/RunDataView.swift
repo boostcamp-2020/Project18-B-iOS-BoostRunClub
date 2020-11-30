@@ -78,4 +78,12 @@ class RunDataView: UIStackView {
     private func execute() {
         action?()
     }
+
+    func setValue(value: String) {
+        valueLabel.text = value
+    }
+
+    func setType(type: String) {
+        descriptionLabel.text = type
+    }
 }
