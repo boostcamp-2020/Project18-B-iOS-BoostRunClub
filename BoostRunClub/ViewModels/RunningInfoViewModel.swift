@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol RunningInfoViewModelTypes {
+protocol RunningInfoViewModelTypes: AnyObject {
     var inputs: RunningInfoViewModelInputs { get }
     var outputs: RunningInfoViewModelOutputs { get }
 }
@@ -19,18 +19,17 @@ protocol RunningInfoViewModelInputs {
 }
 
 protocol RunningInfoViewModelOutputs {
-    var runningInfoObservable: [CurrentValueSubject<RunningInfoType, Never>] { get }
+    typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfoType, Never>
+
+    var runningInfoObservable: [RunningInfoTypeSubject] { get }
+    var runningInfoTapAnimations: [PassthroughSubject<Void, Never>] { get }
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
-    let items: [RunningInfoType]
-    init(goalType: GoalType, goalValue _: String) {
-        items = goalType == .speed ? RunningInfoType.allCases : RunningInfoType.allCases.filter { $0.value != "" }
+    private let possibleTypes: [RunningInfoType]
 
-        let presentingDataType: [RunningInfoType] = [.time(""), .pace(""), .averagePace(""), .kilometer("")]
-        presentingDataType.forEach {
-            runningInfoObservable.append(CurrentValueSubject<RunningInfoType, Never>($0))
-        }
+    init(goalType: GoalType, goalValue _: String) {
+        possibleTypes = RunningInfoType.getPossibleTypes(from: goalType)
     }
 
     // MARK: Inputs
@@ -39,13 +38,25 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapRunData(index: Int) {
         let currIdx = runningInfoObservable[index].value.index
-        let nextItem = items[(currIdx + 1) % items.count]
+        let nextItem = possibleTypes[(currIdx + 1) % possibleTypes.count]
         runningInfoObservable[index].send(nextItem)
+        runningInfoTapAnimations[index].send()
     }
 
     // MARK: Outputs
 
-    var runningInfoObservable = [CurrentValueSubject<RunningInfoType, Never>]()
+    var runningInfoObservable = [
+        RunningInfoTypeSubject(.time(RunningInfoType.time("").initialValue)),
+        RunningInfoTypeSubject(.pace(RunningInfoType.pace("").initialValue)),
+        RunningInfoTypeSubject(.averagePace(RunningInfoType.averagePace("").initialValue)),
+        RunningInfoTypeSubject(.kilometer(RunningInfoType.kilometer("").initialValue)),
+    ]
+    var runningInfoTapAnimations = [
+        PassthroughSubject<Void, Never>(),
+        PassthroughSubject<Void, Never>(),
+        PassthroughSubject<Void, Never>(),
+        PassthroughSubject<Void, Never>(),
+    ]
 }
 
 // MARK: - Types

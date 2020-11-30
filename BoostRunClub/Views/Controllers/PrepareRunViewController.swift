@@ -70,6 +70,10 @@ final class PrepareRunViewController: UIViewController {
                 self?.goalValueViewCrossDissolveAnimation()
             }
             .store(in: &cancellables)
+
+        goalValueView.tapAction = { [weak viewModel] in
+            viewModel?.inputs.didTapGoalValueButton()
+        }
     }
 }
 
@@ -115,7 +119,7 @@ extension PrepareRunViewController {
 
     @objc
     func didTapSetGoalValueButton() {
-        viewModel?.inputs.didTapGoalValueButton()
+        // viewModel?.inputs.didTapGoalValueButton()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -136,15 +140,18 @@ extension PrepareRunViewController {
     }
 
     private func goalValueViewCrossDissolveAnimation() {
-        goalValueView.isHidden = true
-        UIView.transition(
-            with: goalValueView,
-            duration: 0.3,
-            options: [.transitionCrossDissolve],
-            animations: {
-                self.goalValueView.isHidden = false
-            },
-            completion: nil
+        UIView.animate(
+            withDuration: 0,
+            animations: { self.goalValueView.isHidden = true },
+            completion: { _ in
+                UIView.transition(
+                    with: self.goalValueView,
+                    duration: 0.3,
+                    options: [.transitionCrossDissolve],
+                    animations: nil,
+                    completion: { _ in self.goalValueView.isHidden = false }
+                )
+            }
         )
     }
 }
@@ -210,7 +217,7 @@ extension PrepareRunViewController {
 
     private func makeGoalValueView() -> GoalValueView {
         let view = GoalValueView()
-        view.setGoalDetailButton.addTarget(self, action: #selector(didTapSetGoalValueButton), for: .touchUpInside)
+//        view.setGoalDetailButton.addTarget(self, action: #selector(didTapSetGoalValueButton), for: .touchUpInside)
         return view
     }
 
@@ -265,10 +272,10 @@ extension PrepareRunViewController {
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             constraint,
-            goalValueView.underline.leadingAnchor.constraint(
-                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
-                constant: -5
-            ),
+//            goalValueView.underline.leadingAnchor.constraint(
+//                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
+//                constant: -5
+//            ),
         ])
     }
 }

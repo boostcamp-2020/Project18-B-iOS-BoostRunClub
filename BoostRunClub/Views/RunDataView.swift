@@ -7,16 +7,57 @@
 
 import UIKit
 
-class RunDataView: UIStackView {
+final class RunDataView: UIStackView {
     enum Style {
         case main, sub
     }
 
+    private lazy var valueLabel = makeValueLabel()
+    private lazy var descriptionLabel = maekDescriptionLabel()
     let style: Style
+    var tapAction: (() -> Void)?
 
-    private var action: (() -> Void)?
+    init(style: Style = .sub) {
+        self.style = style
+        super.init(frame: .zero)
+        commonInit()
+    }
 
-    private lazy var valueLabel: UILabel = {
+    required init(coder: NSCoder) {
+        style = .sub
+        super.init(coder: coder)
+        commonInit()
+    }
+
+    func setValue(value: String) {
+        valueLabel.text = value
+    }
+
+    func setType(type: String) {
+        descriptionLabel.text = type
+    }
+}
+
+// MARK: - Actions
+
+extension RunDataView {
+    @objc
+    private func execute() {
+        tapAction?()
+    }
+
+    func startBounceAnimation() {
+        transform = transform.scaledBy(x: 0.5, y: 0.5)
+        UIView.animate(withDuration: 0.3) {
+            self.transform = .identity
+        }
+    }
+}
+
+// MARK: - Configure
+
+extension RunDataView {
+    private func makeValueLabel() -> UILabel {
         let label: UILabel
         switch style {
         case .main:
@@ -29,29 +70,15 @@ class RunDataView: UIStackView {
         label.textAlignment = .center
         label.text = "00:00"
         return label
-    }()
+    }
 
-    private lazy var descriptionLabel: UILabel = {
+    private func maekDescriptionLabel() -> UILabel {
         let label = UILabel()
         label.textColor = UIColor.systemGray2.withAlphaComponent(0.7)
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.text = "시간"
         return label
-    }()
-
-    init(style: Style = .sub, action: (() -> Void)? = nil) {
-        self.style = style
-        self.action = action
-
-        super.init(frame: .zero)
-        commonInit()
-    }
-
-    required init(coder: NSCoder) {
-        style = .sub
-        super.init(coder: coder)
-        commonInit()
     }
 
     private func commonInit() {
@@ -71,19 +98,8 @@ class RunDataView: UIStackView {
         addArrangedSubview(valueLabel)
         addArrangedSubview(descriptionLabel)
 
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(execute)))
-    }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(execute))
 
-    @objc
-    private func execute() {
-        action?()
-    }
-
-    func setValue(value: String) {
-        valueLabel.text = value
-    }
-
-    func setType(type: String) {
-        descriptionLabel.text = type
+        addGestureRecognizer(tapGesture)
     }
 }

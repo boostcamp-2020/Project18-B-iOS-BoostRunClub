@@ -101,10 +101,10 @@ extension GoalValueSetupViewController {
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             constraint,
-            goalValueView.underline.leadingAnchor.constraint(
-                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
-                constant: -5
-            ),
+//            goalValueView.underline.leadingAnchor.constraint(
+//                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
+//                constant: -5
+//            ),
         ])
     }
 

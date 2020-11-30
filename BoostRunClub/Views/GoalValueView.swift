@@ -7,18 +7,13 @@
 
 import UIKit
 
-class GoalValueView: UIView {
-    let setGoalDetailButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = UIFont(name: "FuturaLT-CondExtraBoldObl", size: 50)
-        button.contentHorizontalAlignment = .fill
+final class GoalValueView: UIView {
+    // private lazy var setGoalDetailButton: UIButton = makeSetGoalButton()
+    private lazy var goalValueLabel: UILabel = makeGoalValueLabel()
 
-        return button
-    }()
+//    var goalDetailButtonWidthConstraint: NSLayoutConstraint?
 
-    var goalDetailButtonWidthConstraint: NSLayoutConstraint?
-
+    var tapAction: (() -> Void)?
     let underline: UIView = {
         let view = UIView()
         view.backgroundColor = .label
@@ -42,25 +37,38 @@ class GoalValueView: UIView {
     }
 
     func commonInit() {
+        isUserInteractionEnabled = true
         configureLayout()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(execute))
+        addGestureRecognizer(tapGesture)
     }
 
     func configureLayout() {
-        addSubview(setGoalDetailButton)
-        setGoalDetailButton.translatesAutoresizingMaskIntoConstraints = false
-        goalDetailButtonWidthConstraint = setGoalDetailButton.widthAnchor.constraint(equalToConstant: 0)
+//        addSubview(setGoalDetailButton)
+//        setGoalDetailButton.translatesAutoresizingMaskIntoConstraints = false
+//        goalDetailButtonWidthConstraint = setGoalDetailButton.widthAnchor.constraint(equalToConstant: 0)
+//        NSLayoutConstraint.activate([
+//            setGoalDetailButton.topAnchor.constraint(equalTo: topAnchor),
+//            setGoalDetailButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            setGoalDetailButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            goalDetailButtonWidthConstraint!,
+//        ])
+
+        addSubview(goalValueLabel)
+        goalValueLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            setGoalDetailButton.topAnchor.constraint(equalTo: topAnchor),
-            setGoalDetailButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            setGoalDetailButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            goalDetailButtonWidthConstraint!,
+            goalValueLabel.topAnchor.constraint(equalTo: topAnchor),
+            goalValueLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            goalValueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10),
         ])
+        goalValueLabel.setContentCompressionResistancePriority(.init(rawValue: 999), for: .horizontal)
 
         addSubview(underline)
         underline.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            underline.topAnchor.constraint(equalTo: setGoalDetailButton.lastBaselineAnchor, constant: 9),
-            underline.trailingAnchor.constraint(equalTo: setGoalDetailButton.trailingAnchor),
+            underline.topAnchor.constraint(equalTo: goalValueLabel.lastBaselineAnchor, constant: 9),
+            underline.trailingAnchor.constraint(equalTo: goalValueLabel.trailingAnchor),
+            underline.leadingAnchor.constraint(equalTo: goalValueLabel.leadingAnchor),
             underline.heightAnchor.constraint(equalToConstant: 1),
         ])
 
@@ -74,12 +82,38 @@ class GoalValueView: UIView {
     }
 
     func setLabelText(goalValue: String, goalUnit: String) {
-        setGoalDetailButton.setTitle(goalValue, for: .normal)
-
-        let widthSize = (setGoalDetailButton.titleLabel?.intrinsicContentSize.width ?? 0) + 5
-        goalDetailButtonWidthConstraint?.constant = widthSize
+        goalValueLabel.text = goalValue
         descriptionLabel.text = goalUnit
     }
 
     func setGoalUnit(goalUnit _: String) {}
+}
+
+// MARK: - Actions
+
+extension GoalValueView {
+    @objc
+    private func execute() {
+        tapAction?()
+    }
+}
+
+// MARK: - Configure
+
+extension GoalValueView {
+    func makeGoalValueLabel() -> UILabel {
+        let label = NikeLabel(with: 50)
+        label.textColor = .label
+        label.textAlignment = .center
+        return label
+    }
+
+    func makeSetGoalButton() -> UIButton {
+        let button = UIButton()
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont(name: "FuturaLT-CondExtraBoldObl", size: 50)
+        button.contentHorizontalAlignment = .fill
+
+        return button
+    }
 }
