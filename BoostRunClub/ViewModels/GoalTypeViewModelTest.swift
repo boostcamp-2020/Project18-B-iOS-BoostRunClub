@@ -10,12 +10,14 @@ import Combine
 import XCTest
 
 class GoalTypeViewModelTest: XCTestCase {
+
     var goalTypeVM: GoalTypeViewModel!
     var cancellables: Set<AnyCancellable>!
 
     override func setUp() {
         goalTypeVM = GoalTypeViewModel(goalType: .none)
         cancellables = []
+
     }
 
     override func tearDown() {
@@ -36,6 +38,7 @@ class GoalTypeViewModelTest: XCTestCase {
                     XCTFail("BackgroundView를 탭한 후 goalTypeVM에서 전송하는 값과 GoalType이 들어오는 값이 일치하지 않음")
                 }
             }
+
 
         goalTypeVM.didTapBackgroundView()
         waitForExpectations(timeout: 1, handler: nil)
