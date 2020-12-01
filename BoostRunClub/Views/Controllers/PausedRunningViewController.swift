@@ -66,6 +66,12 @@ class PausedRunningViewController: UIViewController {
                 self.closeAnimation()
             }
             .store(in: &cancellables)
+
+        let data = viewModel.outputs.runInfoData
+        runDataViews.enumerated().forEach { idx, view in
+            view.setType(type: data[idx].type.name)
+            view.setValue(value: data[idx].value)
+        }
     }
 
     func configureLayout() {
@@ -136,7 +142,7 @@ extension PausedRunningViewController {
         mapViewHeightConstraint.constant = UIScreen.main.bounds.height / 3
         resumeButtonInitialCenterXConstraint.constant = 100
         endRunningButtonInitialCenterXConstraint.constant = -100
-        
+
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         }

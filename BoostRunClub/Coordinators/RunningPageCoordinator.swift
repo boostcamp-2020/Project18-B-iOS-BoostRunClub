@@ -35,6 +35,7 @@ final class RunningPageCoordinator: RunningPageCoordinatorProtocol {
      |---|Navigation|---|
          |info| pause|
      */
+    let runningDataProvider = RunningDataProvider()
 
     func start() {
         prepareRunningPageController()
