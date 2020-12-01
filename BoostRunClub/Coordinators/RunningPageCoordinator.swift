@@ -5,13 +5,14 @@
 //  Created by Imho Jang on 2020/11/30.
 //
 
+import Combine
 import UIKit
 
 protocol RunningPageCoordinatorProtocol: Coordinator {
     var runningPageController: RunningPageViewController { get set }
 }
 
-final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
+final class RunningPageCoordinator: RunningPageCoordinatorProtocol {
     var runningPageController = RunningPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
@@ -19,12 +20,21 @@ final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
     )
 
     var navigationController: UINavigationController
-
+    var cancellables = Set<AnyCancellable>()
     var childCoordinators = [Coordinator]()
 
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
+
+    /*
+      ------ page(Navigation - Page) --- running(Navgation) --- runningInfo
+                                                            --- pausedRunning
+                                     --- Map
+                                     --- Splits
+     |---|Navigation|---|
+         |info| pause|
+     */
 
     func start() {
         prepareRunningPageController()
@@ -33,7 +43,7 @@ final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
     private func prepareRunningPageController() {
         childCoordinators = [
             RunningMapCoordinator(UINavigationController()),
-            RunningInfoCoordinator(UINavigationController()),
+            RunningCoordinator(UINavigationController()),
             SplitsCoordinator(UINavigationController()),
         ]
 

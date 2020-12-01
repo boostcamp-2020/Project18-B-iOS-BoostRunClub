@@ -5,6 +5,7 @@
 //  Created by Imho Jang on 2020/11/30.
 //
 
+import Combine
 import UIKit
 
 protocol RunningInfoCoordinatorProtocol: Coordinator {
@@ -15,6 +16,7 @@ final class RunningInfoCoordinator: RunningInfoCoordinatorProtocol {
     var navigationController: UINavigationController
 
     var childCoordinators = [Coordinator]()
+    var cancellables = Set<AnyCancellable>()
 
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -26,7 +28,15 @@ final class RunningInfoCoordinator: RunningInfoCoordinatorProtocol {
     }
 
     func showRunningInfoViewController() {
-        let runningInfoVC = RunningInfoViewController(with: RunningInfoViewModel(goalType: .none, goalValue: ""))
-        navigationController.pushViewController(runningInfoVC, animated: true)
+        let runningInfoVM = RunningInfoViewModel(goalType: .none, goalValue: "")
+        runningInfoVM.showPausedRunningSignal
+            .receive(on: RunLoop.main)
+            .sink {
+                NotificationCenter.default.post(name: .showPausedRunningScene, object: self)
+            }
+            .store(in: &cancellables)
+
+        let runningInfoVC = RunningInfoViewController(with: runningInfoVM)
+        navigationController.pushViewController(runningInfoVC, animated: false)
     }
 }

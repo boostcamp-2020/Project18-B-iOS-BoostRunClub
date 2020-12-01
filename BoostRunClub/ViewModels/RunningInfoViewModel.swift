@@ -23,6 +23,7 @@ protocol RunningInfoViewModelOutputs {
 
     var runningInfoObservables: [RunningInfoTypeSubject] { get }
     var runningInfoTapAnimations: [PassthroughSubject<Void, Never>] { get }
+    var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
@@ -88,7 +89,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     // MARK: Inputs
 
-    func didTapPauseButton() {}
+    func didTapPauseButton() {
+        showPausedRunningSignal.send()
+    }
 
     func didTapRunData(index: Int) {
         var nextType = runningInfoObservables[index].value.type.circularNext()
@@ -111,6 +114,8 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         PassthroughSubject<Void, Never>(),
         PassthroughSubject<Void, Never>(),
     ]
+
+    var showPausedRunningSignal = PassthroughSubject<Void, Never>()
 }
 
 // MARK: - Types

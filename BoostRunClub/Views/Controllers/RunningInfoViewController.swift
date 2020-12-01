@@ -67,7 +67,9 @@ extension RunningInfoViewController {
 
 extension RunningInfoViewController {
     @objc
-    func didTapPauseButton() {}
+    func didTapPauseButton() {
+        viewModel?.inputs.didTapPauseButton()
+    }
 }
 
 // MARK: - Configure
