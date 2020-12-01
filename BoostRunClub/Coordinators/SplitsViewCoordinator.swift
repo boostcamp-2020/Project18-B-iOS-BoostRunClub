@@ -21,7 +21,7 @@ final class SplitsCoordinator: SplitsCoordinatorProtocol {
         navigationController.setNavigationBarHidden(true, animated: true)
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showSplitsViewController()
     }
 

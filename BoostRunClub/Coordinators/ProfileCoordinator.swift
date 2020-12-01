@@ -20,7 +20,7 @@ final class ProfileCoordinator: ProfileCoordinatorProtocol {
         self.navigationController = navigationController
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showProfileViewController()
     }
 

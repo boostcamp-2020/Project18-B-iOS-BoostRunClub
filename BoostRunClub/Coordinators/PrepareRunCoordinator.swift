@@ -24,7 +24,7 @@ final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
         navigationController.view.backgroundColor = .systemBackground
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showPrepareRunViewController()
     }
 

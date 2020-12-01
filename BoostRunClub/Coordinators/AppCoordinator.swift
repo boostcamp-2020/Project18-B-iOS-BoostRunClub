@@ -16,14 +16,14 @@ protocol AppCoordinatorProtocol: Coordinator {
 
 final class AppCoordinator: AppCoordinatorProtocol {
     var navigationController: UINavigationController
-
     var childCoordinators = [Coordinator]()
-
     var cancellable: AnyCancellable?
+    var serviceProvider: ServiceProvidable
 
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(true, animated: true)
+        serviceProvider = ServiceProvider()
 
         cancellable = NotificationCenter.default
             .publisher(for: .showRunningScene)
@@ -39,7 +39,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
             }
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showMainFlow()
     }
 
@@ -58,6 +58,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
         let runningPageCoordinator = RunningPageCoordinator(navigationController)
         childCoordinators.append(runningPageCoordinator)
-        runningPageCoordinator.start()
+        runningPageCoordinator.start(serviceProvider: serviceProvider)
     }
 }

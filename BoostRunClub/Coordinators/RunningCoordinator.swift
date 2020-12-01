@@ -18,6 +18,7 @@ final class RunningCoordinator: RunningCoordinatorProtocol {
 
     var childCoordinators = [Coordinator]()
     var cancellables = Set<AnyCancellable>()
+    private weak var serviceProvider: ServiceProvidable?
 
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -40,19 +41,20 @@ final class RunningCoordinator: RunningCoordinatorProtocol {
             .store(in: &cancellables)
     }
 
-    func start() {
+    func start(serviceProvider: ServiceProvidable? = nil) {
+        self.serviceProvider = serviceProvider
         showRunningInfoScene()
     }
 
     func showRunningInfoScene() {
         let runInfoCoordinator = RunningInfoCoordinator(navigationController)
         childCoordinators.append(runInfoCoordinator)
-        runInfoCoordinator.start()
+        runInfoCoordinator.start(serviceProvider: serviceProvider)
     }
 
     func showPausedRunningScene() {
         let pausedRunningCoordinator = PausedRunningCoordinator(navigationController)
         childCoordinators.append(pausedRunningCoordinator)
-        pausedRunningCoordinator.start()
+        pausedRunningCoordinator.start(serviceProvider: serviceProvider)
     }
 }

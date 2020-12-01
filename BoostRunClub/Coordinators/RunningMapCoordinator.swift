@@ -21,7 +21,7 @@ final class RunningMapCoordinator: RunningMapCoordinatorProtocol {
         navigationController.setNavigationBarHidden(true, animated: true)
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showRunningMapViewController()
     }
 

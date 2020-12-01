@@ -18,17 +18,22 @@ final class RunningInfoCoordinator: RunningInfoCoordinatorProtocol {
     var childCoordinators = [Coordinator]()
     var cancellables = Set<AnyCancellable>()
 
+    private weak var serviceProvider: ServiceProvidable?
+
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(true, animated: true)
     }
 
-    func start() {
+    func start(serviceProvider: ServiceProvidable? = nil) {
+        self.serviceProvider = serviceProvider
         showRunningInfoViewController()
     }
 
     func showRunningInfoViewController() {
-        let runningInfoVM = RunningInfoViewModel(goalType: .none, goalValue: "")
+        guard let runningProvider: RunningDataProvider = serviceProvider?.getService() else { return }
+
+        let runningInfoVM = RunningInfoViewModel(runningProvider: runningProvider)
         runningInfoVM.showPausedRunningSignal
             .receive(on: RunLoop.main)
             .sink {

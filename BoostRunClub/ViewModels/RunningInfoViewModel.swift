@@ -27,19 +27,16 @@ protocol RunningInfoViewModelOutputs {
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
-    let runningProvider: RunningDataProvider
-
     private var cancellables = Set<AnyCancellable>()
 
     private var possibleTypes: [RunningInfoType: String]
 
-    init(goalType: GoalType, goalValue _: String) {
-        possibleTypes = RunningInfoType.getPossibleTypes(from: goalType)
+    init(runningProvider: RunningDataProvider) {
+        // TODO: GOALTYPE - SPEED 제거
+        possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
-        runningProvider = RunningDataProvider()
         runningProvider.start()
-
         runningProvider.elapsedTime
             // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }

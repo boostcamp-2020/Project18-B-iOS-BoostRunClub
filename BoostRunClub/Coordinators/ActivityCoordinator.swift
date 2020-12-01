@@ -18,7 +18,7 @@ final class ActivityCoordinator: ActivityCoordinatorProtocol {
         self.navigationController = navigationController
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         showActivityViewController()
     }
 

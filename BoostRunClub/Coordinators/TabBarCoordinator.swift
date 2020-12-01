@@ -32,7 +32,7 @@ final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
         self.navigationController = navigationController
     }
 
-    func start() {
+    func start(serviceProvider _: ServiceProvidable? = nil) {
         prepareTabBarController()
     }
 
@@ -43,7 +43,7 @@ final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
             ProfileCoordinator(UINavigationController()),
         ]
 
-        childCoordinators.forEach { $0.start() }
+        childCoordinators.forEach { $0.start(serviceProvider: nil) }
 
         tabBarController.setViewControllers(childCoordinators.map { $0.navigationController }, animated: true)
         tabBarController.selectedIndex = TabBarPage.running.rawValue

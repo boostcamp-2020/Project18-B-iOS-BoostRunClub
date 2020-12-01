@@ -64,12 +64,14 @@ class RunningDataProvider {
     }
 
     func start() {
-        isRunning = true
-        startTime = Date.timeIntervalSinceReferenceDate
-        endTime = 0
-        runningTime = 0
-        lastUpdatedTime = startTime
-        timer?.fire()
+        if !isRunning {
+            isRunning = true
+            startTime = Date.timeIntervalSinceReferenceDate
+            endTime = 0
+            runningTime = 0
+            lastUpdatedTime = startTime
+            timer?.fire()
+        }
     }
 
     func updateTime(currentTime: TimeInterval) {

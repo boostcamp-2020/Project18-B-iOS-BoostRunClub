@@ -23,21 +23,14 @@ final class RunningPageCoordinator: RunningPageCoordinatorProtocol {
     var cancellables = Set<AnyCancellable>()
     var childCoordinators = [Coordinator]()
 
+    private weak var serviceProvider: ServiceProvidable?
+
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
-    /*
-      ------ page(Navigation - Page) --- running(Navgation) --- runningInfo
-                                                            --- pausedRunning
-                                     --- Map
-                                     --- Splits
-     |---|Navigation|---|
-         |info| pause|
-     */
-    let runningDataProvider = RunningDataProvider()
-
-    func start() {
+    func start(serviceProvider: ServiceProvidable? = nil) {
+        self.serviceProvider = serviceProvider
         prepareRunningPageController()
     }
 
@@ -48,7 +41,9 @@ final class RunningPageCoordinator: RunningPageCoordinatorProtocol {
             SplitsCoordinator(UINavigationController()),
         ]
 
-        childCoordinators.forEach { $0.start() }
+        serviceProvider?.registerService(service: RunningDataProvider())
+
+        childCoordinators.forEach { $0.start(serviceProvider: serviceProvider) }
         runningPageController.setPages(childCoordinators.map { $0.navigationController })
         navigationController.viewControllers = [runningPageController]
     }

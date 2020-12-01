@@ -63,6 +63,8 @@
 		9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A165257640C700DED689 /* PausedRunningViewModel.swift */; };
 		9689A16A2576441900DED689 /* RunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A1692576441900DED689 /* RunningCoordinator.swift */; };
 		969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
+		96E13212257680B100656476 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* ServiceProvider.swift */; };
+		96E1321925768E2900656476 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* ServiceProvider.swift */; };
 		96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF2256FFEE800090999 /* RunningInfoType.swift */; };
 		96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
 		96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DFD25701C7700090999 /* RunningMapViewController.swift */; };
@@ -137,6 +139,7 @@
 		9689A165257640C700DED689 /* PausedRunningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningViewModel.swift; sourceTree = "<group>"; };
 		9689A1692576441900DED689 /* RunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCoordinator.swift; sourceTree = "<group>"; };
 		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Extensions/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
+		96E13211257680B100656476 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		96FA7DF2256FFEE800090999 /* RunningInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningInfoType.swift; path = BoostRunClub/Models/RunningInfoType.swift; sourceTree = SOURCE_ROOT; };
 		96FA7DF52570177C00090999 /* CaseIterable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CaseIterable+.swift"; path = "BoostRunClub/Extensions/CaseIterable+.swift"; sourceTree = SOURCE_ROOT; };
 		96FA7DFD25701C7700090999 /* RunningMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapViewController.swift; sourceTree = "<group>"; };
@@ -322,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				4C1D491C2575D869002C66CD /* RunningDataProvider.swift */,
+				96E13211257680B100656476 /* ServiceProvider.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 			);
 			path = Services;
@@ -521,6 +525,7 @@
 			files = (
 				4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */,
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
+				96E13212257680B100656476 /* ServiceProvider.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
@@ -576,6 +581,7 @@
 				9635817025726EF800B8BE6B /* GoalType.swift in Sources */,
 				4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */,
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
+				96E1321925768E2900656476 /* ServiceProvider.swift in Sources */,
 				4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
