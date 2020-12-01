@@ -37,7 +37,6 @@
 		71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */; };
 		71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */; };
 		71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */; };
-		71E828AA256B9F23004A1F30 /* RunningTabFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828A9256B9F23004A1F30 /* RunningTabFlowCoordinator.swift */; };
 		71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828AF256BADB0004A1F30 /* Coordinator.swift */; };
 		71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
@@ -110,7 +109,6 @@
 		71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageViewController.swift; sourceTree = "<group>"; };
 		71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
-		71E828A9256B9F23004A1F30 /* RunningTabFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTabFlowCoordinator.swift; sourceTree = "<group>"; };
 		71E828AF256BADB0004A1F30 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCoordinator.swift; sourceTree = "<group>"; };
 		8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoostRunClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,7 +233,6 @@
 				71E82891256B9468004A1F30 /* LoginCoordinator.swift */,
 				71E82897256B9788004A1F30 /* TabBarCoordinator.swift */,
 				71E828A6256B9F13004A1F30 /* ProfileCoordinator.swift */,
-				71E828A9256B9F23004A1F30 /* RunningTabFlowCoordinator.swift */,
 				71E828AF256BADB0004A1F30 /* Coordinator.swift */,
 				71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */,
 				4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */,
@@ -524,7 +521,6 @@
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
-				71E828AA256B9F23004A1F30 /* RunningTabFlowCoordinator.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
