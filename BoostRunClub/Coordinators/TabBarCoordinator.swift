@@ -39,7 +39,7 @@ final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
     private func prepareTabBarController() {
         childCoordinators = [
             ActivityCoordinator(UINavigationController()),
-            RunningTabFlowCoordinator(UINavigationController()),
+            PrepareRunCoordinator(UINavigationController()),
             ProfileCoordinator(UINavigationController()),
         ]
 
