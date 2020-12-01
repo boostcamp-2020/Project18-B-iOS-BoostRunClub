@@ -131,9 +131,9 @@ struct RunningInfo {
     let type: RunningInfoType
     let value: String
 
-    init(type: RunningInfoType, value _: String) {
+    init(type: RunningInfoType, value: String) {
         self.type = type
-        value = type.initialValue
+        self.value = value
     }
 
     init(type: RunningInfoType) {
