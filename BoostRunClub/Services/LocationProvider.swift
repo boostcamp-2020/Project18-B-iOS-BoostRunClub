@@ -18,8 +18,8 @@ class LocationProvider: NSObject, LocationProvidable {
     let locationManager: CLLocationManager
     private(set) var locationSubject = PassthroughSubject<[CLLocation], Never>()
 
-    init(locationMahager: CLLocationManager = CLLocationManager()) {
-        locationManager = locationMahager
+    init(locationManager: CLLocationManager = CLLocationManager()) {
+        self.locationManager = locationManager
         super.init()
         configureLocationManager()
     }
@@ -36,6 +36,7 @@ class LocationProvider: NSObject, LocationProvidable {
 
 extension LocationProvider: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //		guard let location = locations.last else { return }
         locationSubject.send(locations)
     }
 }

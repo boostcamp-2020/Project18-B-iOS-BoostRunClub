@@ -10,14 +10,12 @@ import Combine
 import XCTest
 
 class GoalTypeViewModelTest: XCTestCase {
-
     var goalTypeVM: GoalTypeViewModel!
     var cancellables: Set<AnyCancellable>!
 
     override func setUp() {
         goalTypeVM = GoalTypeViewModel(goalType: .none)
         cancellables = []
-
     }
 
     override func tearDown() {
@@ -27,7 +25,7 @@ class GoalTypeViewModelTest: XCTestCase {
     func testDidTapBackgroundView() {
         let receivedSignal = expectation(description: "received signal to close action sheet")
         let expectedGoalType: GoalType = .distance
-        
+
         goalTypeVM.goalTypeObservable.send(expectedGoalType)
 
         let cancellable = goalTypeVM.closeSheetSignal
@@ -39,18 +37,17 @@ class GoalTypeViewModelTest: XCTestCase {
                 }
             }
 
-
         goalTypeVM.didTapBackgroundView()
         waitForExpectations(timeout: 1, handler: nil)
         cancellable.cancel()
     }
-    
+
     func testDidSelectGoalType() {
         let allCases: [GoalType] = [.distance, .speed, .time]
-        
+
         allCases.forEach { goalType in
             let receivedSignal = expectation(description: "received signal that user selected goal type")
-            
+
             let cancellable = Publishers.CombineLatest(
                 goalTypeVM.goalTypeObservable,
                 goalTypeVM.closeSheetSignal
@@ -64,7 +61,7 @@ class GoalTypeViewModelTest: XCTestCase {
                     XCTFail("GoalType 선택 후 전송하는 값과 들어오는 값이 일치하지 않음")
                 }
             }
-            
+
             goalTypeVM.didSelectGoalType(goalType)
             waitForExpectations(timeout: 1, handler: nil)
             cancellable.cancel()
