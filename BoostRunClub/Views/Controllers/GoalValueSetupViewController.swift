@@ -30,8 +30,7 @@ class GoalValueSetupViewController: UIViewController {
 
         viewModel.outputs.goalValueObservable
             .receive(on: RunLoop.main)
-            .sink { [weak self] goalValue in
-                let value = goalValue.isEmpty ? "0" : goalValue
+            .sink { [weak self] value in
                 self?.goalValueView.setLabelText(goalValue: value, goalUnit: viewModel.outputs.goalType.unit)
                 self?.view.layoutIfNeeded()
             }

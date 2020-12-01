@@ -31,10 +31,10 @@ jobs:
                              -workspace $WORKSPACE \
                              -destination "platform=iOS Simulator,name=$DEVICE" | 
                              xcpretty --color --simple
-#     - name: Run unit tests
-#       run: |
-#         set -eo pipefail && xcodebuild test-without-building \
-#                             -scheme $SCHEME \
-#                             -workspace $WORKSPACE \
-#                             -destination "platform=iOS Simulator,name=$DEVICE" | 
-#                             xcpretty --color --simple
+    - name: Run unit tests
+      run: |
+        set -eo pipefail && xcodebuild test-without-building \
+                            -scheme $SCHEME \
+                            -workspace $WORKSPACE \
+                            -destination "platform=iOS Simulator,name=$DEVICE" | 
+                            xcpretty --color --simple
