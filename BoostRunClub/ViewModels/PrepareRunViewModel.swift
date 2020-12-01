@@ -9,7 +9,7 @@ import Combine
 import CoreLocation
 import Foundation
 
-protocol PrepareRunViewModelTypes {
+protocol PrepareRunViewModelTypes: AnyObject {
     var inputs: PrepareRunViewModelInputs { get }
     var outputs: PrepareRunViewModelOutputs { get }
 }

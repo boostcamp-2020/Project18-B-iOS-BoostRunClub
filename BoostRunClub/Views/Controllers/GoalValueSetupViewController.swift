@@ -11,6 +11,7 @@ import UIKit
 class GoalValueSetupViewController: UIViewController {
     var keyboardType: UIKeyboardType = .default
     let goalValueView = GoalValueView()
+
     var viewModel: GoalValueSetupViewModelTypes?
     var cancellables = Set<AnyCancellable>()
 
@@ -100,10 +101,6 @@ extension GoalValueSetupViewController {
         NSLayoutConstraint.activate([
             goalValueView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             constraint,
-            goalValueView.underline.leadingAnchor.constraint(
-                equalTo: goalValueView.setGoalDetailButton.leadingAnchor,
-                constant: -5
-            ),
         ])
     }
 

@@ -10,19 +10,13 @@ import UIKit
 
 final class GoalTypeViewController: UIViewController {
     private lazy var tableView = loadTableView()
-    private var viewModel: GoalTypeViewModelTypes?
-    private var cancellables: Set<AnyCancellable> = []
-    private var verticalTablePadding: CGFloat = 30
-
-    private var tableViewHeight: CGFloat {
-        CGFloat(tableViewCells.count) * GoalTypeCell.cellHeight + verticalTablePadding * 3
-    }
-
     private var tableViewCells = [
         GoalTypeCell(GoalType.distance),
         GoalTypeCell(GoalType.time),
         GoalTypeCell(GoalType.speed),
     ]
+    private var viewModel: GoalTypeViewModelTypes?
+    private var cancellables: Set<AnyCancellable> = []
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -33,6 +27,7 @@ final class GoalTypeViewController: UIViewController {
         viewModel = goalTypeViewModel
     }
 
+    // TODO: goalTypeViewModel에서 선택되어져 있는 값에 체크마크
     private func bindViewModel() {}
 }
 
@@ -136,8 +131,7 @@ extension GoalTypeViewController {
         tableView.alwaysBounceVertical = false
         tableView.isScrollEnabled = false
         tableView.register(GoalTypeCell.self, forCellReuseIdentifier: String(describing: GoalTypeCell.self))
-        tableView.separatorInset.left = 20
-        tableView.separatorInset.right = 20
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.layer.cornerRadius = 30
         tableView.rowHeight = GoalTypeCell.cellHeight
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
@@ -157,5 +151,11 @@ extension GoalTypeViewController {
         clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
 
         return tableView
+    }
+
+    private var verticalTablePadding: CGFloat { 30 }
+
+    private var tableViewHeight: CGFloat {
+        CGFloat(tableViewCells.count) * GoalTypeCell.cellHeight + verticalTablePadding * 3
     }
 }

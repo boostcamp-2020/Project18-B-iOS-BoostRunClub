@@ -13,31 +13,47 @@ final class RunningPageViewController: UIPageViewController {
         case map, runningInfo, splits
     }
 
-    private var pageDictionary = [Pages: UIViewController]()
-
-    init(with runningViewModel: RunningViewModelTypes) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-
-        pageDictionary[.map] = RunningMapViewController()
-        pageDictionary[.runningInfo] = RunningViewController(with: runningViewModel)
-        pageDictionary[.splits] = SplitsViewController()
-    }
-
-    required init?(coder _: NSCoder) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-    }
+    private var pages = [UIViewController]()
+    private var pageControl = UIPageControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
         delegate = self
-        if let mainVC = pageDictionary[.runningInfo] {
-            setViewControllers([mainVC], direction: .forward, animated: true, completion: nil)
-        }
+        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
+
+        pageControl.pageIndicatorTintColor = UIColor.gray
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.numberOfPages = Pages.allCases.count
+        pageControl.currentPage = 1
+        view.addSubview(pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+    }
+
+    func setPages(_ viewControllers: [UIViewController]) {
+        pages.append(contentsOf: viewControllers)
     }
 }
 
-extension RunningPageViewController: UIPageViewControllerDelegate {}
+extension RunningPageViewController: UIPageViewControllerDelegate {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating _: Bool,
+        previousViewControllers _: [UIViewController],
+        transitionCompleted _: Bool
+    ) {
+        if let viewControllers = pageViewController.viewControllers {
+            if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
+                pageControl.currentPage = viewControllerIndex
+            }
+        }
+    }
+}
 
 extension RunningPageViewController: UIPageViewControllerDataSource {
     func pageViewController(
@@ -46,12 +62,14 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
     )
         -> UIViewController?
     {
-        guard
-            let result = pageDictionary.first(where: { _, value in value == viewController }),
-            let previousPage = result.key.prev()
-        else { return nil }
-
-        return pageDictionary[previousPage]
+        if let viewControllerIndex = pages.firstIndex(of: viewController) {
+            if viewControllerIndex == 0 {
+                return nil
+            } else {
+                return pages[viewControllerIndex - 1]
+            }
+        }
+        return nil
     }
 
     func pageViewController(
@@ -60,11 +78,13 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
     )
         -> UIViewController?
     {
-        guard
-            let result = pageDictionary.first(where: { _, value in value == viewController }),
-            let nextPage = result.key.next()
-        else { return nil }
-
-        return pageDictionary[nextPage]
+        if let viewControllerIndex = pages.firstIndex(of: viewController) {
+            if viewControllerIndex < pages.count - 1 {
+                return pages[viewControllerIndex + 1]
+            } else {
+                return nil
+            }
+        }
+        return nil
     }
 }
