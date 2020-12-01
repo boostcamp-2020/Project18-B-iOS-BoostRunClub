@@ -21,15 +21,38 @@ protocol RunningInfoViewModelInputs {
 protocol RunningInfoViewModelOutputs {
     typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfoType, Never>
 
-    var runningInfoObservable: [RunningInfoTypeSubject] { get }
+    var runningInfoObservables: [RunningInfoTypeSubject] { get }
     var runningInfoTapAnimations: [PassthroughSubject<Void, Never>] { get }
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
-    private let possibleTypes: [RunningInfoType]
+//    let runningProvider: RunningDataProvider
+
+    private var cancellables = Set<AnyCancellable>()
+
+    private let possibleTypes: [RunningInfoType: String]
 
     init(goalType: GoalType, goalValue _: String) {
         possibleTypes = RunningInfoType.getPossibleTypes(from: goalType)
+            .reduce(into: [:]) { $0[$1] = $1.initialValue }
+
+//        runningProvider = RunningDataProvider()
+//        runningProvider.start()
+//
+//        runningProvider.elapsedTime
+//            // .debounce(for: .seconds(1), scheduler: RunLoop.main)
+//            .map { $0.formattedString }
+//            .sink { timeString in
+//                self.possibleTypes[RunningInfoType.time("").index] = RunningInfoType.time(timeString)
+//                self.runningInfoObservables.forEach {
+//                    switch $0.value {
+//                    case .time:
+//                        $0.send(.time(timeString))
+//                    default:
+//                        break
+//                    }
+//                }
+//            }.store(in: &cancellables)
     }
 
     // MARK: Inputs
@@ -37,19 +60,19 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     func didTapPauseButton() {}
 
     func didTapRunData(index: Int) {
-        let currIdx = runningInfoObservable[index].value.index
-        let nextItem = possibleTypes[(currIdx + 1) % possibleTypes.count]
-        runningInfoObservable[index].send(nextItem)
+        var nextType = runningInfoObservables[index].value.circularNext()
+        nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
+        runningInfoObservables[index].send(nextType)
         runningInfoTapAnimations[index].send()
     }
 
     // MARK: Outputs
 
-    var runningInfoObservable = [
-        RunningInfoTypeSubject(.time(RunningInfoType.time("").initialValue)),
-        RunningInfoTypeSubject(.pace(RunningInfoType.pace("").initialValue)),
-        RunningInfoTypeSubject(.averagePace(RunningInfoType.averagePace("").initialValue)),
-        RunningInfoTypeSubject(.kilometer(RunningInfoType.kilometer("").initialValue)),
+    var runningInfoObservables = [
+        RunningInfoTypeSubject(.time),
+        RunningInfoTypeSubject(.pace),
+        RunningInfoTypeSubject(.averagePace),
+        RunningInfoTypeSubject(.kilometer),
     ]
     var runningInfoTapAnimations = [
         PassthroughSubject<Void, Never>(),

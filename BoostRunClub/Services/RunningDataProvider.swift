@@ -18,8 +18,14 @@ class RunningDataProvider {
 
     var startTime: TimeInterval = 0
     var endTime: TimeInterval = 0
-    var runningTime: TimeInterval = 0
-    var lastUpdatedTime: TimeInterval = 0
+    @Published var runningTime: TimeInterval = 0
+    @Published var lastUpdatedTime: TimeInterval = 0
+
+    var elapsedTime: AnyPublisher<TimeInterval, Never> {
+        $lastUpdatedTime
+            .map { $0 - self.startTime }
+            .eraseToAnyPublisher()
+    }
 
     var isRunning: Bool = false
 
@@ -39,7 +45,7 @@ class RunningDataProvider {
                 self.lastUpdatedTime = currentTime
             }
 
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
             guard let self = self else { return }
 
             let currentTime = Date.timeIntervalSinceReferenceDate

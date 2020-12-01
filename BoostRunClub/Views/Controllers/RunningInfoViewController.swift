@@ -37,7 +37,7 @@ final class RunningInfoViewController: UIViewController {
                 viewModel?.inputs.didTapRunData(index: idx)
             }
 
-            viewModel.outputs.runningInfoObservable[idx]
+            viewModel.outputs.runningInfoObservables[idx]
                 .sink { [weak view] runningInfoType in
                     view?.setValue(value: runningInfoType.value)
                     view?.setType(type: runningInfoType.name)
