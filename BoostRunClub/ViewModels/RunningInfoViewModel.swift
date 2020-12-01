@@ -43,10 +43,45 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }
             .sink { timeString in
-                print(timeString)
-                self.possibleTypes[RunningInfoType.time] = timeString
+                self.possibleTypes[.time] = timeString
+
                 self.runningInfoObservables.forEach {
-                    $0.send(RunningInfo(type: .time, value: timeString))
+                    if $0.value.type == .time {
+                        $0.send(RunningInfo(type: .time, value: timeString))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningProvider.distancePublisher
+            .map { String(format: "%.2f", Double($0) / 1000) }
+            .sink { distance in
+                self.possibleTypes[.kilometer] = distance
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .kilometer {
+                        $0.send(RunningInfo(type: .kilometer, value: distance))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningProvider.$pace
+            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
+            .sink { pace in
+                self.possibleTypes[.pace] = pace
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .pace {
+                        $0.send(RunningInfo(type: .pace, value: pace))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningProvider.avgPacePublisher
+            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
+            .sink { averagePace in
+                self.possibleTypes[.averagePace] = averagePace
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .averagePace {
+                        $0.send(RunningInfo(type: .averagePace, value: averagePace))
+                    }
                 }
             }.store(in: &cancellables)
     }

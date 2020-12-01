@@ -15,6 +15,7 @@
 		4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */; };
 		4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC8256F43440061244F /* GoalValueView.swift */; };
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
+		4C60FC59257625C3005EBEB9 /* sample.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4C60FC58257625C2005EBEB9 /* sample.gpx */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
@@ -87,6 +88,7 @@
 		4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura LT Condensed Extra Bold Oblique.ttf"; sourceTree = "<group>"; };
 		4C3E7AC8256F43440061244F /* GoalValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueView.swift; sourceTree = "<group>"; };
 		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
+		4C60FC58257625C2005EBEB9 /* sample.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sample.gpx; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		9600DB452566AA4400183CB9 = {
 			isa = PBXGroup;
 			children = (
+				4C60FC58257625C2005EBEB9 /* sample.gpx */,
 				9600DB502566AA4400183CB9 /* BoostRunClub */,
 				9635815E25726EAB00B8BE6B /* BoostRunClubTests */,
 				9600DB4F2566AA4400183CB9 /* Products */,
@@ -431,6 +434,7 @@
 				9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */,
 				4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */,
 				9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */,
+				4C60FC59257625C3005EBEB9 /* sample.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
