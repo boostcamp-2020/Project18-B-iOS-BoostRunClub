@@ -29,20 +29,20 @@ protocol PausedRunningViewModelOutputs {
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
     // TODO: RunningDataProvicer Protocol 구현
-    init(runningProvider: RunningDataProvider) {
+    init(runningDataProvider: RunningDataProvider) {
         var avgPace = 0
-        if !runningProvider.locations.isEmpty {
-            avgPace = runningProvider.totalPace / runningProvider.locations.count
+        if !runningDataProvider.locations.isEmpty {
+            avgPace = runningDataProvider.totalPace / runningDataProvider.locations.count
         }
 
-        let pace = runningProvider.pace
+        let pace = runningDataProvider.pace
 
         runInfoData = [
-            RunningInfo(type: .time, value: runningProvider.runningTime.formattedString),
+            RunningInfo(type: .time, value: runningDataProvider.runningTime.formattedString),
 //            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
-            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
+            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningDataProvider.distance)),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
         ]

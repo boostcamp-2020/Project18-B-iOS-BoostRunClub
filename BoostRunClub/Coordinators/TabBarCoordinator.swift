@@ -17,38 +17,23 @@ enum TabBarPage: Int {
     // Add tab icon selected / deselected color
 }
 
-protocol MainTabBarCoordinatorProtocol: Coordinator {
-    var tabBarController: UITabBarController { get set }
-}
+protocol MainTabBarCoordinatorProtocol {}
 
-final class MainTabBarCoordinator: NSObject, MainTabBarCoordinatorProtocol {
-    var tabBarController = UITabBarController()
-
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func start(serviceProvider _: ServiceProvidable? = nil) {
+final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtocol {
+    override func start() {
         prepareTabBarController()
     }
 
     private func prepareTabBarController() {
         childCoordinators = [
-            ActivityCoordinator(UINavigationController()),
-            PrepareRunCoordinator(UINavigationController()),
-            ProfileCoordinator(UINavigationController()),
+            ActivityCoordinator(navigationController: UINavigationController(), factory: factory),
+            PrepareRunCoordinator(navigationController: UINavigationController(), factory: factory),
+            ProfileCoordinator(navigationController: UINavigationController(), factory: factory),
         ]
 
-        childCoordinators.forEach { $0.start(serviceProvider: nil) }
+        childCoordinators.forEach { $0.start() }
 
-        tabBarController.setViewControllers(childCoordinators.map { $0.navigationController }, animated: true)
-        tabBarController.selectedIndex = TabBarPage.running.rawValue
-        tabBarController.tabBar.isTranslucent = false
-
+        let tabBarController = factory.makeTabBarVC(with: childCoordinators.map { $0.navigationController }, selectedIndex: TabBarPage.running.rawValue)
         navigationController.viewControllers = [tabBarController]
     }
 

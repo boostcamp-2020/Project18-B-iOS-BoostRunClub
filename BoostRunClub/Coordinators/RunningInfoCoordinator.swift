@@ -8,40 +8,26 @@
 import Combine
 import UIKit
 
-protocol RunningInfoCoordinatorProtocol: Coordinator {
+protocol RunningInfoCoordinatorProtocol {
     func showRunningInfoViewController()
 }
 
-final class RunningInfoCoordinator: RunningInfoCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-    var cancellables = Set<AnyCancellable>()
-
-    private weak var serviceProvider: ServiceProvidable?
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
-    }
-
-    func start(serviceProvider: ServiceProvidable? = nil) {
-        self.serviceProvider = serviceProvider
+final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProtocol {
+    override func start() {
         showRunningInfoViewController()
     }
 
     func showRunningInfoViewController() {
-        guard let runningProvider: RunningDataProvider = serviceProvider?.getService() else { return }
+        let runningInfoVM = factory.makeRunningInfoVM()
 
-        let runningInfoVM = RunningInfoViewModel(runningProvider: runningProvider)
-        runningInfoVM.showPausedRunningSignal
+        runningInfoVM.outputs.showPausedRunningSignal
             .receive(on: RunLoop.main)
             .sink {
                 NotificationCenter.default.post(name: .showPausedRunningScene, object: self)
             }
             .store(in: &cancellables)
 
-        let runningInfoVC = RunningInfoViewController(with: runningInfoVM)
+        let runningInfoVC = factory.makeRunningInfoVC(with: runningInfoVM)
         navigationController.pushViewController(runningInfoVC, animated: false)
     }
 }

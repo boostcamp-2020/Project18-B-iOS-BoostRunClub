@@ -8,24 +8,17 @@
 import Combine
 import UIKit
 
-protocol AppCoordinatorProtocol: Coordinator {
+protocol AppCoordinatorProtocol {
     func showLoginFlow()
     func showMainFlow()
     func showRunningScene(goalType: GoalType, goalValue: String)
 }
 
-final class AppCoordinator: AppCoordinatorProtocol {
-    var navigationController: UINavigationController
-    var childCoordinators = [Coordinator]()
-    var cancellable: AnyCancellable?
-    var serviceProvider: ServiceProvidable
+final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
+    required init(navigationController: UINavigationController, factory: Factory) {
+        super.init(navigationController: navigationController, factory: factory)
 
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
-        serviceProvider = ServiceProvider()
-
-        cancellable = NotificationCenter.default
+        NotificationCenter.default
             .publisher(for: .showRunningScene)
             .sink { [weak self] notification in
                 guard
@@ -36,28 +29,28 @@ final class AppCoordinator: AppCoordinatorProtocol {
 
                 self.clear()
                 self.showRunningScene(goalType: goalType, goalValue: goalValue)
-            }
+            }.store(in: &cancellables)
     }
 
-    func start(serviceProvider _: ServiceProvidable? = nil) {
+    override func start() {
         showMainFlow()
     }
 
     func showLoginFlow() {
-        let loginCoordinator = LoginCoordinator(navigationController)
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController, factory: factory)
         childCoordinators.append(loginCoordinator)
         loginCoordinator.start()
     }
 
     func showMainFlow() {
-        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController)
+        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController, factory: factory)
         childCoordinators.append(mainTabBarCoordinator)
         mainTabBarCoordinator.start()
     }
 
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
-        let runningPageCoordinator = RunningPageCoordinator(navigationController)
+        let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController, factory: factory)
         childCoordinators.append(runningPageCoordinator)
-        runningPageCoordinator.start(serviceProvider: serviceProvider)
+        runningPageCoordinator.start()
     }
 }

@@ -8,44 +8,25 @@
 import Combine
 import UIKit
 
-protocol RunningPageCoordinatorProtocol: Coordinator {
-    var runningPageController: RunningPageViewController { get set }
-}
+protocol RunningPageCoordinatorProtocol {}
 
-final class RunningPageCoordinator: RunningPageCoordinatorProtocol {
-    var runningPageController = RunningPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    )
-
-    var navigationController: UINavigationController
-    var cancellables = Set<AnyCancellable>()
-    var childCoordinators = [Coordinator]()
-
-    private weak var serviceProvider: ServiceProvidable?
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func start(serviceProvider: ServiceProvidable? = nil) {
-        self.serviceProvider = serviceProvider
+final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProtocol {
+    override func start() {
         prepareRunningPageController()
     }
 
     private func prepareRunningPageController() {
         childCoordinators = [
-            RunningMapCoordinator(UINavigationController()),
-            RunningCoordinator(UINavigationController()),
-            SplitsCoordinator(UINavigationController()),
+            RunningMapCoordinator(navigationController: UINavigationController(), factory: factory),
+            RunningCoordinator(navigationController: UINavigationController(), factory: factory),
+            SplitsCoordinator(navigationController: UINavigationController(), factory: factory),
         ]
+        childCoordinators.forEach { $0.start() }
 
-        serviceProvider?.registerService(service: RunningDataProvider())
+        let runningPageVM = factory.makeRunningPageVM()
+        let runningPageVC = factory.makeRunningPageVC(with: runningPageVM, viewControllers: childCoordinators.map { $0.navigationController })
 
-        childCoordinators.forEach { $0.start(serviceProvider: serviceProvider) }
-        runningPageController.setPages(childCoordinators.map { $0.navigationController })
-        navigationController.viewControllers = [runningPageController]
+        navigationController.viewControllers = [runningPageVC]
     }
 
     deinit {

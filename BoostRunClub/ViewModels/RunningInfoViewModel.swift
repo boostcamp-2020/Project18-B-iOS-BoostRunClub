@@ -31,13 +31,13 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     private var possibleTypes: [RunningInfoType: String]
 
-    init(runningProvider: RunningDataProvider) {
+    init(runningDataProvider: RunningDataProvider) {
         // TODO: GOALTYPE - SPEED 제거
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
-        runningProvider.start()
-        runningProvider.elapsedTime
+        runningDataProvider.start()
+        runningDataProvider.elapsedTime
             // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }
             .sink { timeString in
@@ -50,7 +50,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningProvider.distancePublisher
+        runningDataProvider.distancePublisher
             .map { String(format: "%.2f", Double($0) / 1000) }
             .sink { distance in
                 self.possibleTypes[.kilometer] = distance
@@ -61,7 +61,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningProvider.$pace
+        runningDataProvider.$pace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
             .sink { pace in
                 self.possibleTypes[.pace] = pace
@@ -72,7 +72,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningProvider.avgPacePublisher
+        runningDataProvider.avgPacePublisher
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
             .sink { averagePace in
                 self.possibleTypes[.averagePace] = averagePace

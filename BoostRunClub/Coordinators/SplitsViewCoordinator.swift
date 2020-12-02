@@ -7,21 +7,12 @@
 
 import UIKit
 
-protocol SplitsCoordinatorProtocol: Coordinator {
+protocol SplitsCoordinatorProtocol {
     func showSplitsViewController()
 }
 
-final class SplitsCoordinator: SplitsCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
-    }
-
-    func start(serviceProvider _: ServiceProvidable? = nil) {
+final class SplitsCoordinator: BasicCoordinator, SplitsCoordinatorProtocol {
+    override func start() {
         showSplitsViewController()
     }
 

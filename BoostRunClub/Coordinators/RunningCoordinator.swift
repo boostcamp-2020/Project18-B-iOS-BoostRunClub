@@ -8,21 +8,14 @@
 import Combine
 import UIKit
 
-protocol RunningCoordinatorProtocol: Coordinator {
+protocol RunningCoordinatorProtocol {
     func showRunningInfoScene()
     func showPausedRunningScene()
 }
 
-final class RunningCoordinator: RunningCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-    var cancellables = Set<AnyCancellable>()
-    private weak var serviceProvider: ServiceProvidable?
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
+final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
+    required init(navigationController: UINavigationController, factory: Factory) {
+        super.init(navigationController: navigationController, factory: factory)
 
         NotificationCenter.default
             .publisher(for: .showRunningInfoScene)
@@ -41,20 +34,19 @@ final class RunningCoordinator: RunningCoordinatorProtocol {
             .store(in: &cancellables)
     }
 
-    func start(serviceProvider: ServiceProvidable? = nil) {
-        self.serviceProvider = serviceProvider
+    override func start() {
         showRunningInfoScene()
     }
 
     func showRunningInfoScene() {
-        let runInfoCoordinator = RunningInfoCoordinator(navigationController)
+        let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController, factory: factory)
         childCoordinators.append(runInfoCoordinator)
-        runInfoCoordinator.start(serviceProvider: serviceProvider)
+        runInfoCoordinator.start()
     }
 
     func showPausedRunningScene() {
-        let pausedRunningCoordinator = PausedRunningCoordinator(navigationController)
+        let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController, factory: factory)
         childCoordinators.append(pausedRunningCoordinator)
-        pausedRunningCoordinator.start(serviceProvider: serviceProvider)
+        pausedRunningCoordinator.start()
     }
 }
