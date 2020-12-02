@@ -48,7 +48,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     init(locationProvider: LocationProvidable = LocationProvider.shared) {
         self.locationProvider = locationProvider
         locationProvider.locationSubject
-            .compactMap { $0.first?.coordinate }
+            .compactMap { $0.coordinate }
             .sink { self.userLocation.send($0) }
             .store(in: &cancellables)
     }

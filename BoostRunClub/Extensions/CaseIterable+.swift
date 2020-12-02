@@ -15,6 +15,10 @@ extension CaseIterable where Self: Equatable, AllCases: BidirectionalCollection 
         return next == all.endIndex ? nil : all[next]
     }
 
+    func circularNext() -> Self {
+        return next() ?? Self.allCases.first!
+    }
+
     func prev() -> Self? {
         let all = Self.allCases
         let idx = all.firstIndex(of: self)!

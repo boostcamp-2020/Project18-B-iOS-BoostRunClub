@@ -7,18 +7,10 @@
 
 import UIKit
 
-protocol ActivityCoordinatorProtocol: Coordinator {}
+protocol ActivityCoordinatorProtocol {}
 
-final class ActivityCoordinator: ActivityCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func start() {
+final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
+    override func start() {
         showActivityViewController()
     }
 

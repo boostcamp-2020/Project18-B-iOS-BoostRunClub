@@ -7,20 +7,12 @@
 
 import UIKit
 
-protocol ProfileCoordinatorProtocol: Coordinator {
+protocol ProfileCoordinatorProtocol {
     func showProfileViewController()
 }
 
-final class ProfileCoordinator: ProfileCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func start() {
+final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
+    override func start() {
         showProfileViewController()
     }
 

@@ -10,16 +10,16 @@ import CoreLocation
 import Foundation
 
 protocol LocationProvidable {
-    var locationSubject: PassthroughSubject<[CLLocation], Never> { get }
+    var locationSubject: PassthroughSubject<CLLocation, Never> { get }
 }
 
 class LocationProvider: NSObject, LocationProvidable {
     static var shared = LocationProvider()
     let locationManager: CLLocationManager
-    private(set) var locationSubject = PassthroughSubject<[CLLocation], Never>()
+    private(set) var locationSubject = PassthroughSubject<CLLocation, Never>()
 
-    init(locationMahager: CLLocationManager = CLLocationManager()) {
-        locationManager = locationMahager
+    init(locationManager: CLLocationManager = CLLocationManager()) {
+        self.locationManager = locationManager
         super.init()
         configureLocationManager()
     }
@@ -36,6 +36,8 @@ class LocationProvider: NSObject, LocationProvidable {
 
 extension LocationProvider: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationSubject.send(locations)
+        guard let location = locations.last else { return }
+
+        locationSubject.send(location)
     }
 }

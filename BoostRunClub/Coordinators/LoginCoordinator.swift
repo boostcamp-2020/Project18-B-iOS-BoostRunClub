@@ -7,21 +7,12 @@
 
 import UIKit
 
-protocol LoginCoordinatorProtocol: Coordinator {
+protocol LoginCoordinatorProtocol {
     func showLoginViewController()
 }
 
-final class LoginCoordinator: LoginCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
-    }
-
-    func start() {
+final class LoginCoordinator: BasicCoordinator, LoginCoordinatorProtocol {
+    override func start() {
         showLoginViewController()
     }
 

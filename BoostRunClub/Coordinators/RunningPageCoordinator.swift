@@ -5,41 +5,28 @@
 //  Created by Imho Jang on 2020/11/30.
 //
 
+import Combine
 import UIKit
 
-protocol RunningPageCoordinatorProtocol: Coordinator {
-    var runningPageController: RunningPageViewController { get set }
-}
+protocol RunningPageCoordinatorProtocol {}
 
-final class RunningPageCoordinator: NSObject, RunningPageCoordinatorProtocol {
-    var runningPageController = RunningPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    )
-
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func start() {
+final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProtocol {
+    override func start() {
         prepareRunningPageController()
     }
 
     private func prepareRunningPageController() {
         childCoordinators = [
-            RunningMapCoordinator(UINavigationController()),
-            RunningInfoCoordinator(UINavigationController()),
-            SplitsCoordinator(UINavigationController()),
+            RunningMapCoordinator(navigationController: UINavigationController(), factory: factory),
+            RunningCoordinator(navigationController: UINavigationController(), factory: factory),
+            SplitsCoordinator(navigationController: UINavigationController(), factory: factory),
         ]
-
         childCoordinators.forEach { $0.start() }
-        runningPageController.setPages(childCoordinators.map { $0.navigationController })
-        navigationController.viewControllers = [runningPageController]
+
+        let runningPageVM = factory.makeRunningPageVM()
+        let runningPageVC = factory.makeRunningPageVC(with: runningPageVM, viewControllers: childCoordinators.map { $0.navigationController })
+
+        navigationController.viewControllers = [runningPageVC]
     }
 
     deinit {

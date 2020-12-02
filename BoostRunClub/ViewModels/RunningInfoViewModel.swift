@@ -19,37 +19,91 @@ protocol RunningInfoViewModelInputs {
 }
 
 protocol RunningInfoViewModelOutputs {
-    typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfoType, Never>
+    typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfo, Never>
 
-    var runningInfoObservable: [RunningInfoTypeSubject] { get }
+    var runningInfoObservables: [RunningInfoTypeSubject] { get }
     var runningInfoTapAnimations: [PassthroughSubject<Void, Never>] { get }
+    var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutputs {
-    private let possibleTypes: [RunningInfoType]
+    private var cancellables = Set<AnyCancellable>()
 
-    init(goalType: GoalType, goalValue _: String) {
-        possibleTypes = RunningInfoType.getPossibleTypes(from: goalType)
+    private var possibleTypes: [RunningInfoType: String]
+
+    init(runningDataProvider: RunningDataProvider) {
+        // TODO: GOALTYPE - SPEED 제거
+        possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
+            .reduce(into: [:]) { $0[$1] = $1.initialValue }
+
+        runningDataProvider.start()
+        runningDataProvider.elapsedTime
+            // .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .map { $0.formattedString }
+            .sink { timeString in
+                self.possibleTypes[.time] = timeString
+
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .time {
+                        $0.send(RunningInfo(type: .time, value: timeString))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningDataProvider.distancePublisher
+            .map { String(format: "%.2f", Double($0) / 1000) }
+            .sink { distance in
+                self.possibleTypes[.kilometer] = distance
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .kilometer {
+                        $0.send(RunningInfo(type: .kilometer, value: distance))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningDataProvider.$pace
+            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
+            .sink { pace in
+                self.possibleTypes[.pace] = pace
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .pace {
+                        $0.send(RunningInfo(type: .pace, value: pace))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningDataProvider.avgPacePublisher
+            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
+            .sink { averagePace in
+                self.possibleTypes[.averagePace] = averagePace
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .averagePace {
+                        $0.send(RunningInfo(type: .averagePace, value: averagePace))
+                    }
+                }
+            }.store(in: &cancellables)
     }
 
     // MARK: Inputs
 
-    func didTapPauseButton() {}
+    func didTapPauseButton() {
+        showPausedRunningSignal.send()
+    }
 
     func didTapRunData(index: Int) {
-        let currIdx = runningInfoObservable[index].value.index
-        let nextItem = possibleTypes[(currIdx + 1) % possibleTypes.count]
-        runningInfoObservable[index].send(nextItem)
+        var nextType = runningInfoObservables[index].value.type.circularNext()
+        nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
+        runningInfoObservables[index].send(RunningInfo(type: nextType, value: possibleTypes[nextType, default: nextType.initialValue]))
         runningInfoTapAnimations[index].send()
     }
 
     // MARK: Outputs
 
-    var runningInfoObservable = [
-        RunningInfoTypeSubject(.time(RunningInfoType.time("").initialValue)),
-        RunningInfoTypeSubject(.pace(RunningInfoType.pace("").initialValue)),
-        RunningInfoTypeSubject(.averagePace(RunningInfoType.averagePace("").initialValue)),
-        RunningInfoTypeSubject(.kilometer(RunningInfoType.kilometer("").initialValue)),
+    var runningInfoObservables = [
+        RunningInfoTypeSubject(RunningInfo(type: .time)),
+        RunningInfoTypeSubject(RunningInfo(type: .pace)),
+        RunningInfoTypeSubject(RunningInfo(type: .averagePace)),
+        RunningInfoTypeSubject(RunningInfo(type: .kilometer)),
     ]
     var runningInfoTapAnimations = [
         PassthroughSubject<Void, Never>(),
@@ -57,6 +111,8 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         PassthroughSubject<Void, Never>(),
         PassthroughSubject<Void, Never>(),
     ]
+
+    var showPausedRunningSignal = PassthroughSubject<Void, Never>()
 }
 
 // MARK: - Types

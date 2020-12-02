@@ -37,10 +37,11 @@ final class RunningInfoViewController: UIViewController {
                 viewModel?.inputs.didTapRunData(index: idx)
             }
 
-            viewModel.outputs.runningInfoObservable[idx]
-                .sink { [weak view] runningInfoType in
-                    view?.setValue(value: runningInfoType.value)
-                    view?.setType(type: runningInfoType.name)
+            viewModel.outputs.runningInfoObservables[idx]
+                .sink { [weak view] runningInfo in
+                    print(runningInfo)
+                    view?.setValue(value: runningInfo.value)
+                    view?.setType(type: runningInfo.type.name)
                 }
                 .store(in: &cancellables)
 
@@ -66,7 +67,9 @@ extension RunningInfoViewController {
 
 extension RunningInfoViewController {
     @objc
-    func didTapPauseButton() {}
+    func didTapPauseButton() {
+        viewModel?.inputs.didTapPauseButton()
+    }
 }
 
 // MARK: - Configure

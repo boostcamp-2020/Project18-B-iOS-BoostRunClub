@@ -8,47 +8,44 @@
 import Combine
 import UIKit
 
-protocol PrepareRunCoordinatorProtocol: Coordinator {
+protocol PrepareRunCoordinatorProtocol {
     func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
     func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never>
     func showRunningScene(goalInfo: GoalInfo)
 }
 
-final class PrepareRunCoordinator: PrepareRunCoordinatorProtocol {
-    var navigationController: UINavigationController
-    var childCoordinators = [Coordinator]()
-    var cancellables = Set<AnyCancellable>()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
+final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtocol {
+    required init(navigationController: UINavigationController, factory: Factory) {
+        super.init(navigationController: navigationController, factory: factory)
         navigationController.view.backgroundColor = .systemBackground
+        navigationController.setNavigationBarHidden(false, animated: true)
     }
 
-    func start() {
+    override func start() {
         showPrepareRunViewController()
     }
 
     func showPrepareRunViewController() {
-        let prepareRunVM = PrepareRunViewModel()
+        let prepareRunVM = factory.makePrepareRunVM()
 
-        prepareRunVM.showRunningSceneSignal
+        prepareRunVM.outputs.showRunningSceneSignal
             .receive(on: RunLoop.main)
             .sink { self.showRunningScene(goalInfo: $0) }
             .store(in: &cancellables)
 
-        prepareRunVM.showGoalTypeActionSheetSignal
+        prepareRunVM.outputs.showGoalTypeActionSheetSignal
             .receive(on: RunLoop.main)
             .flatMap { self.showGoalTypeActionSheet(goalType: $0) }
-            .sink { prepareRunVM.didChangeGoalType($0) }
+            .sink { prepareRunVM.inputs.didChangeGoalType($0) }
             .store(in: &cancellables)
 
-        prepareRunVM.showGoalValueSetupSceneSignal
+        prepareRunVM.outputs.showGoalValueSetupSceneSignal
             .receive(on: RunLoop.main)
             .flatMap { self.showGoalValueSetupViewController(goalInfo: $0) }
-            .sink { prepareRunVM.didChangeGoalValue($0) }
+            .sink { prepareRunVM.inputs.didChangeGoalValue($0) }
             .store(in: &cancellables)
 
-        let prepareRunVC = PrepareRunViewController(with: prepareRunVM)
+        let prepareRunVC = factory.makePrepareRunVC(with: prepareRunVM)
         navigationController.pushViewController(prepareRunVC, animated: true)
     }
 

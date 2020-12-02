@@ -7,21 +7,12 @@
 
 import UIKit
 
-protocol RunningMapCoordinatorProtocol: Coordinator {
+protocol RunningMapCoordinatorProtocol {
     func showRunningMapViewController()
 }
 
-final class RunningMapCoordinator: RunningMapCoordinatorProtocol {
-    var navigationController: UINavigationController
-
-    var childCoordinators = [Coordinator]()
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(true, animated: true)
-    }
-
-    func start() {
+final class RunningMapCoordinator: BasicCoordinator, RunningMapCoordinatorProtocol {
+    override func start() {
         showRunningMapViewController()
     }
 
