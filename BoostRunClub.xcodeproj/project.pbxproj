@@ -260,6 +260,7 @@
 		71EFCC68257750C8007998AD /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				96E13211257680B100656476 /* DependencyFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -336,7 +337,6 @@
 			isa = PBXGroup;
 			children = (
 				4C1D491C2575D869002C66CD /* RunningDataProvider.swift */,
-				96E13211257680B100656476 /* DependencyFactory.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 			);
 			path = Services;
