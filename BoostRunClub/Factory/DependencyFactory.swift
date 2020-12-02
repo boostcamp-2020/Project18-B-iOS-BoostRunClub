@@ -34,7 +34,7 @@ protocol Factory: AnyObject {
 }
 
 class DependencyFactory: Factory {
-    var runningDataProvider = RunningDataProvider()
+    var runningDataProvider = RunningDataService()
     var locationProvider = LocationProvider()
 
     func makeRunningPageVC(with _: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController {

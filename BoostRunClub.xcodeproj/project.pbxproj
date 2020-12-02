@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		157031793501852C09F6DE10 /* Pods_BoostRunClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */; };
-		4C1D491D2575D869002C66CD /* RunningDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataProvider.swift */; };
-		4C1D49202575D8C4002C66CD /* RunningDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataProvider.swift */; };
+		4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
+		4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
 		4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB3256E3D920061244F /* Notification.name.swift */; };
 		4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */; };
 		4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */; };
 		4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC8256F43440061244F /* GoalValueView.swift */; };
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
+		4C7046002577821D009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
@@ -87,12 +88,13 @@
 
 /* Begin PBXFileReference section */
 		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
-		4C1D491C2575D869002C66CD /* RunningDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDataProvider.swift; sourceTree = "<group>"; };
+		4C1D491C2575D869002C66CD /* RunningDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDataService.swift; sourceTree = "<group>"; };
 		4C3E7AB3256E3D920061244F /* Notification.name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notification.name.swift; path = BoostRunClub/Extensions/Notification.name.swift; sourceTree = SOURCE_ROOT; };
 		4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoViewModel.swift; sourceTree = "<group>"; };
 		4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura LT Condensed Extra Bold Oblique.ttf"; sourceTree = "<group>"; };
 		4C3E7AC8256F43440061244F /* GoalValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueView.swift; sourceTree = "<group>"; };
 		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
+		4C7045FF2577821D009C39A2 /* EventTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimer.swift; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
@@ -335,8 +337,9 @@
 		963B46F3256CD440006138DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				4C1D491C2575D869002C66CD /* RunningDataProvider.swift */,
+				4C1D491C2575D869002C66CD /* RunningDataService.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
+				4C7045FF2577821D009C39A2 /* EventTimer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -546,7 +549,8 @@
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
-				4C1D491D2575D869002C66CD /* RunningDataProvider.swift in Sources */,
+				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
+				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
@@ -597,7 +601,7 @@
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
-				4C1D49202575D8C4002C66CD /* RunningDataProvider.swift in Sources */,
+				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);
