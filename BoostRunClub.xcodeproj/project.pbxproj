@@ -16,6 +16,7 @@
 		4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC8256F43440061244F /* GoalValueView.swift */; };
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
 		4C7046002577821D009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
+		4C7046032577862A009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
@@ -593,6 +594,7 @@
 			files = (
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
+				4C7046032577862A009C39A2 /* EventTimer.swift in Sources */,
 				9635817025726EF800B8BE6B /* GoalType.swift in Sources */,
 				4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */,
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
