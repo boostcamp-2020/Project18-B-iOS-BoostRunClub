@@ -159,7 +159,7 @@ extension PausedRunningViewController {
         resumeButtonInitialCenterXConstraint.constant = 100
         endRunningButtonInitialCenterXConstraint.constant = -100
 
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         }
     }
@@ -169,7 +169,7 @@ extension PausedRunningViewController {
         resumeButtonInitialCenterXConstraint.constant = .zero
         endRunningButtonInitialCenterXConstraint.constant = .zero
         view.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.viewModel?.inputs.closeAnimationEnded()
