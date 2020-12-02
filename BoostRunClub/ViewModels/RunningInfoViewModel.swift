@@ -91,7 +91,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapPauseButton() {
         showPausedRunningSignal.send()
-        runningDataProvider.stop()
+        runningDataProvider.pause()
     }
 
     func didTapRunData(index: Int) {

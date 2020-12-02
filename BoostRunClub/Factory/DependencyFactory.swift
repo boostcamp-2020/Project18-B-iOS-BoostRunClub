@@ -22,7 +22,6 @@ protocol Factory: AnyObject {
 
     //    func makeLoginVM() -> LoginViewModelTypes
     //    func makeActivityVM() -> ActivityViewModelTypes
-    //    func makeRunningPageVM() -> RunningPageViewModelTypes
     //    func makeProfileVM() -> ProfileViewModelTypes
     func makeRunningPageVM() -> RunningPageViewModelTypes
     func makePrepareRunVM() -> PrepareRunViewModelTypes
@@ -34,8 +33,8 @@ protocol Factory: AnyObject {
 }
 
 class DependencyFactory: Factory {
-    var runningDataProvider = RunningDataService()
-    var locationProvider = LocationProvider()
+    lazy var runningDataProvider = RunningDataService(locationProvider: locationProvider)
+    lazy var locationProvider = LocationProvider()
 
     func makeRunningPageVC(with _: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController {
         let runningPageVC = RunningPageViewController(

@@ -11,10 +11,12 @@ import Foundation
 
 protocol LocationProvidable {
     var locationSubject: PassthroughSubject<CLLocation, Never> { get }
+    func startBackgroundTask()
+    func stopBackgroundTask()
 }
 
 class LocationProvider: NSObject, LocationProvidable {
-    static var shared = LocationProvider()
+//    static var shared = LocationProvider()
     let locationManager: CLLocationManager
     private(set) var locationSubject = PassthroughSubject<CLLocation, Never>()
 
@@ -29,6 +31,18 @@ class LocationProvider: NSObject, LocationProvidable {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.allowsBackgroundLocationUpdates = false
+        locationManager.showsBackgroundLocationIndicator = true
+    }
+
+    func startBackgroundTask() {
+        locationManager.allowsBackgroundLocationUpdates = true
+//        locationManager.startUpdatingLocation()
+    }
+
+    func stopBackgroundTask() {
+//        locationManager.stopUpdatingLocation()
+        locationManager.allowsBackgroundLocationUpdates = false
     }
 }
 

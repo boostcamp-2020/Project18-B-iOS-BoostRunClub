@@ -30,6 +30,17 @@ final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
                 self.clear()
                 self.showRunningScene(goalType: goalType, goalValue: goalValue)
             }.store(in: &cancellables)
+
+        NotificationCenter.default
+            .publisher(for: .showPrepareRunningScene)
+            .sink { [weak self] _ in
+                guard
+                    let self = self
+                else { return }
+
+                self.clear()
+                self.showMainFlow()
+            }.store(in: &cancellables)
     }
 
     override func start() {
