@@ -72,6 +72,11 @@ final class PrepareRunViewController: UIViewController {
             }
             .store(in: &cancellables)
 
+        viewModel.outputs.countDownAnimation
+            .receive(on: DispatchQueue.main)
+            .sink { self.countDownAnimation() }
+            .store(in: &cancellables)
+
         goalValueView.tapAction = { [weak viewModel] in
             viewModel?.inputs.didTapGoalValueButton()
         }
@@ -149,6 +154,15 @@ extension PrepareRunViewController {
                 )
             }
         )
+    }
+
+    private func countDownAnimation() {
+        let countDownView = CountDownView(frame: UIScreen.main.bounds)
+        UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.addSubview(countDownView)
+        countDownView.startCountingAnimation(count: 3, completion: {
+            countDownView.removeFromSuperview()
+            self.viewModel?.inputs.countDownAnimationFinished()
+        })
     }
 }
 
