@@ -54,8 +54,7 @@ class GoalTypeCell: UITableViewCell {
 extension GoalTypeCell {
     private func makeCheckMark() -> UIImageView {
         let view = UIImageView()
-        view.image = UIImage(systemName: "checkmark")?
-            .withTintColor(.label, renderingMode: .alwaysOriginal)
+        view.image = UIImage.SFSymbol(name: "checkmark", color: .label)
         return view
     }
 
