@@ -29,12 +29,6 @@ class GoalTypeCell: UITableViewCell {
         commonInit(goalType)
     }
 
-    private func commonInit(_ goalType: GoalType) {
-        selectionStyle = .none
-        goalTypeLabel.text = goalType.description
-        configureLayout()
-    }
-
     func setStyle(with style: Style) {
         switch style {
         case .checked:
@@ -53,6 +47,12 @@ class GoalTypeCell: UITableViewCell {
 // MARK: - Configure
 
 extension GoalTypeCell {
+    private func commonInit(_ goalType: GoalType) {
+        selectionStyle = .none
+        goalTypeLabel.text = goalType.description
+        configureLayout()
+    }
+
     private func makeCheckMark() -> UIImageView {
         let view = UIImageView()
         view.image = UIImage.SFSymbol(name: "checkmark", color: .label)

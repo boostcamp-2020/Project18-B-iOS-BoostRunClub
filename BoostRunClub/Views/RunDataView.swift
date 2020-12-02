@@ -57,6 +57,28 @@ extension RunDataView {
 // MARK: - Configure
 
 extension RunDataView {
+    private func commonInit() {
+        distribution = .equalSpacing
+        alignment = .center
+        axis = .vertical
+
+        switch style {
+        case .main:
+            valueLabel.font = valueLabel.font.withSize(120)
+            descriptionLabel.font = descriptionLabel.font.withSize(30)
+        case .sub:
+            valueLabel.font = valueLabel.font.withSize(35)
+            descriptionLabel.font = descriptionLabel.font.withSize(20)
+        }
+
+        addArrangedSubview(valueLabel)
+        addArrangedSubview(descriptionLabel)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(execute))
+
+        addGestureRecognizer(tapGesture)
+    }
+
     private func makeValueLabel() -> UILabel {
         let label: UILabel
         switch style {
@@ -79,27 +101,5 @@ extension RunDataView {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.text = "시간"
         return label
-    }
-
-    private func commonInit() {
-        distribution = .equalSpacing
-        alignment = .center
-        axis = .vertical
-
-        switch style {
-        case .main:
-            valueLabel.font = valueLabel.font.withSize(120)
-            descriptionLabel.font = descriptionLabel.font.withSize(30)
-        case .sub:
-            valueLabel.font = valueLabel.font.withSize(35)
-            descriptionLabel.font = descriptionLabel.font.withSize(20)
-        }
-
-        addArrangedSubview(valueLabel)
-        addArrangedSubview(descriptionLabel)
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(execute))
-
-        addGestureRecognizer(tapGesture)
     }
 }
