@@ -11,7 +11,6 @@ class CountDownView: UIView {
     let numberLabel: NikeLabel = {
         let label = NikeLabel(with: 180)
         label.textAlignment = .center
-        label.backgroundColor = .white
         label.textColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
         return label
     }()
@@ -44,7 +43,7 @@ class CountDownView: UIView {
         }
         numberLabel.text = "\(count)"
         numberLabel.transform = numberLabel.transform.scaledBy(x: 0.5, y: 0.5)
-        UIView.animate(withDuration: 3) {
+        UIView.animate(withDuration: 1) {
             self.numberLabel.transform = .identity
         } completion: { _ in
             self.startCountingAnimation(count: count - 1, completion: completion)

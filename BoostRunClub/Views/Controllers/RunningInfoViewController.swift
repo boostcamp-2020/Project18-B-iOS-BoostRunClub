@@ -83,12 +83,7 @@ extension RunningInfoViewController {
     }
 
     private func makePauseButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = .black
-        button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-        button.layer.cornerRadius = CGFloat(50)
+        let button = CircleButton(with: .pause)
         button.addTarget(self, action: #selector(didTapPauseButton), for: .touchUpInside)
         return button
     }

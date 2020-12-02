@@ -25,7 +25,12 @@ final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinator
                 NotificationCenter.default.post(name: .showRunningInfoScene, object: self)
             }
             .store(in: &cancellables)
-
+        pausedRunningVM.outputs.showPrepareRunningSignal
+            .receive(on: RunLoop.main)
+            .sink {
+                NotificationCenter.default.post(name: .showPrepareRunningScene, object: self)
+            }
+            .store(in: &cancellables)
         let pausedRunningVC = factory.makePausedRunningVC(with: pausedRunningVM)
         navigationController.pushViewController(pausedRunningVC, animated: false)
     }

@@ -44,6 +44,8 @@
 		71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828AF256BADB0004A1F30 /* Coordinator.swift */; };
 		71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */; };
 		71EFCC6E257753FA007998AD /* RunningPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */; };
+		71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EFCC8C2577C3C0007998AD /* CircleButton.swift */; };
+		71EFCC982577CF9B007998AD /* UIButton+setSFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EFCC972577CF9B007998AD /* UIButton+setSFSymbol.swift */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
 		9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB532566AA4400183CB9 /* SceneDelegate.swift */; };
 		9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5A2566AA4700183CB9 /* Assets.xcassets */; };
@@ -123,6 +125,8 @@
 		71E828AF256BADB0004A1F30 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		71E828B2256BADFA004A1F30 /* ActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCoordinator.swift; sourceTree = "<group>"; };
 		71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageViewModel.swift; sourceTree = "<group>"; };
+		71EFCC8C2577C3C0007998AD /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		71EFCC972577CF9B007998AD /* UIButton+setSFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIButton+setSFSymbol.swift"; path = "../../../Documents/ios 13 swift 5/clones/UIButton+setSFSymbol.swift"; sourceTree = "<group>"; };
 		8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoostRunClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB4E2566AA4400183CB9 /* BoostRunClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoostRunClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB512566AA4400183CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
 				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
+				71EFCC8C2577C3C0007998AD /* CircleButton.swift */,
 				967780282577905400DA2454 /* CountDownView.swift */,
 			);
 			path = Views;
@@ -364,6 +369,7 @@
 				969D5F1B256FC48000DD11AB /* String+Regex.swift */,
 				96FA7DF52570177C00090999 /* CaseIterable+.swift */,
 				967FFAA3257602A200F3340C /* TimerInterval+String.swift */,
+				71EFCC972577CF9B007998AD /* UIButton+setSFSymbol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -544,6 +550,7 @@
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
+				71EFCC982577CF9B007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
@@ -555,6 +562,7 @@
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
 				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
+				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,

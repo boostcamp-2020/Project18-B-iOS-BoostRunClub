@@ -150,8 +150,8 @@ extension PausedRunningViewController {
     }
 
     @objc
-    func didTapStopRunningButton() {
-        viewModel?.inputs.didTapStopRunningButton()
+    func didLongHoldStopRunningButton() {
+        viewModel?.inputs.didLongHoldStopRunningButton()
     }
 
     func beginAnimation() {
@@ -197,24 +197,14 @@ extension PausedRunningViewController {
     }
 
     private func makeResumeButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-//        button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-        button.layer.cornerRadius = CGFloat(50)
+        let button = CircleButton(with: .resume)
         button.addTarget(self, action: #selector(didTapResumeButton), for: .touchUpInside)
         return button
     }
 
     private func makeEndRunningButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = .black
-//        button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-        button.layer.cornerRadius = CGFloat(50)
-        button.addTarget(self, action: #selector(didTapStopRunningButton), for: .touchUpInside)
+        let button = CircleButton(with: .stop)
+        button.addTarget(self, action: #selector(didLongHoldStopRunningButton), for: .touchUpInside)
         return button
     }
 }

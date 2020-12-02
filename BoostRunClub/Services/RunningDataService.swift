@@ -22,7 +22,7 @@ protocol RunningDataServiceable {
 }
 
 class RunningDataService: RunningDataServiceable {
-    let locationProvider: LocationProvidable = LocationProvider.shared
+    var locationProvider: LocationProvidable
 
     var cancellables = Set<AnyCancellable>()
     var locations: [CLLocation] = []
@@ -39,9 +39,9 @@ class RunningDataService: RunningDataServiceable {
     var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer()) {
+    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable) {
         self.eventTimer = eventTimer
-
+        self.locationProvider = locationProvider
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] location in
@@ -58,18 +58,28 @@ class RunningDataService: RunningDataServiceable {
             .store(in: &cancellables)
     }
 
+    func initializeRunningData() {
+        startTime = Date.timeIntervalSinceReferenceDate
+        endTime = 0
+        lastUpdatedTime = startTime
+        runningTime.value = 0
+        pace.value = 0
+        avgPace.value = 0
+        distance.value = 0
+        locations.removeAll()
+    }
+
     func start() {
         if !isRunning {
             isRunning = true
-            startTime = Date.timeIntervalSinceReferenceDate
-            endTime = 0
-            runningTime.value = 0
-            lastUpdatedTime = startTime
             eventTimer.start()
+            locationProvider.startBackgroundTask()
+            initializeRunningData()
         }
     }
 
     func stop() {
+        locationProvider.stopBackgroundTask()
         eventTimer.stop()
         isRunning = false
     }

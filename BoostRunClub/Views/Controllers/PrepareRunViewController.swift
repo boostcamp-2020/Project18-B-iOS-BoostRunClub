@@ -215,13 +215,14 @@ extension PrepareRunViewController {
     }
 
     private func makeStartButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = .systemOrange
-        button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-        button.layer.cornerRadius = LayoutConstant.startButtonDiameter / 2
+        let button = CircleButton(with: .start)
+//        button.setTitleColor(.label, for: .normal)
+//        button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
+//        button.setTitle("시작", for: .normal)
+//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
+//        button.layer.cornerRadius = LayoutConstant.startButtonDiameter / 2
         button.addTarget(self, action: #selector(didTapStartButton), for: .touchUpInside)
+
         return button
     }
 

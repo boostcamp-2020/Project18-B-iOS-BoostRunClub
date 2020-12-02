@@ -11,4 +11,5 @@ extension Notification.Name {
     static let showRunningScene = Notification.Name("showRunningScene")
     static let showPausedRunningScene = Notification.Name("showPausedRunningScene")
     static let showRunningInfoScene = Notification.Name("showRunningInfoScene")
+    static let showPrepareRunningScene = Notification.Name("showPrepareRunningScene")
 }
