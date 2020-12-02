@@ -66,11 +66,16 @@ class PausedRunningViewController: UIViewController {
                 self.closeAnimation()
             }
             .store(in: &cancellables)
+        viewModel.outputs.runningInfoTapAnimationSignal
+            .receive(on: RunLoop.main)
+            .sink { self.runDataViews[$0].startBounceAnimation() }
+            .store(in: &cancellables)
 
         let data = viewModel.outputs.runInfoData
         runDataViews.enumerated().forEach { idx, view in
             view.setType(type: data[idx].type.name)
             view.setValue(value: data[idx].value)
+            view.tapAction = { self.viewModel?.inputs.didTapRunData(index: idx) }
         }
     }
 
@@ -90,8 +95,19 @@ class PausedRunningViewController: UIViewController {
         subRunDataStackViews[0].translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subRunDataStackViews[0])
 
+        let topLimit = subRunDataStackViews[0].topAnchor.constraint(
+            greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 40
+        )
+        let spacingToMap = subRunDataStackViews[0].topAnchor.constraint(
+            equalTo: mapView.bottomAnchor,
+            constant: 40
+        )
+
+        spacingToMap.priority = topLimit.priority - 1
         NSLayoutConstraint.activate([
-            subRunDataStackViews[0].topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 40),
+            topLimit,
+            spacingToMap,
             subRunDataStackViews[0].leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             subRunDataStackViews[0].trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
         ])

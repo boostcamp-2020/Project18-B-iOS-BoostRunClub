@@ -18,12 +18,14 @@ protocol PausedRunningViewModelInputs {
     func didTapStopRunningButton()
     func viewDidAppear()
     func closeAnimationEnded()
+    func didTapRunData(index: Int)
 }
 
 protocol PausedRunningViewModelOutputs {
     var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
     var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
     var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var runInfoData: [RunningInfo] { get }
 }
 
@@ -63,10 +65,15 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         showRunningInfoSignal.send()
     }
 
+    func didTapRunData(index: Int) {
+        runningInfoTapAnimationSignal.send(index)
+    }
+
     // Outputs
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
+    var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var runInfoData: [RunningInfo]
 }
 

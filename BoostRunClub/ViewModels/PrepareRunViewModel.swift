@@ -21,6 +21,7 @@ protocol PrepareRunViewModelInputs {
     func didChangeGoalType(_ goalType: GoalType)
     func didChangeGoalValue(_ goalValue: String?)
     func didTapGoalValueButton()
+    func countDownAnimationFinished()
 }
 
 protocol PrepareRunViewModelOutputs {
@@ -32,6 +33,7 @@ protocol PrepareRunViewModelOutputs {
     var showGoalTypeActionSheetSignal: PassthroughSubject<GoalType, Never> { get }
     var showGoalValueSetupSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
     var showRunningSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
+    var countDownAnimation: PassthroughSubject<Void, Never> { get }
 }
 
 class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
@@ -62,7 +64,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     }
 
     func didTapStartButton() {
-        showRunningSceneSignal.send(goalInfo)
+        countDownAnimation.send()
     }
 
     func didTapGoalValueButton() {
@@ -86,19 +88,20 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
         }
     }
 
+    func countDownAnimationFinished() {
+        showRunningSceneSignal.send(goalInfo)
+    }
+
     // MARK: Outputs
 
     var goalTypeObservable = CurrentValueSubject<GoalType, Never>(.none)
     var goalValueObservable = CurrentValueSubject<String, Never>("")
     var goalValueSetupClosed = PassthroughSubject<Void, Never>()
     var goalTypeSetupClosed = PassthroughSubject<Void, Never>()
-//    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
-//        locationProvider.locationSubject
-//            .compactMap { $0.first?.coordinate }
-//            .eraseToAnyPublisher()
-//    }
 
     var userLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
+
+    var countDownAnimation = PassthroughSubject<Void, Never>()
 
     var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
     var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()

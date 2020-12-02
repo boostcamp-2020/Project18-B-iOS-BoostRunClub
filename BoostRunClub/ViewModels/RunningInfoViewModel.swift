@@ -33,12 +33,13 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     let runningDataProvider: RunningDataServiceable
 
     init(runningDataProvider: RunningDataServiceable) {
+        runningDataProvider.start()
         // TODO: GOALTYPE - SPEED 제거
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
         self.runningDataProvider = runningDataProvider
-        runningDataProvider.start()
+
         runningDataProvider.runningTime
             // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }
