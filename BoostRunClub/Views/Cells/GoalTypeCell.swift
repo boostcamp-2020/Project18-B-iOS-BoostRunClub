@@ -30,6 +30,7 @@ class GoalTypeCell: UITableViewCell {
     }
 
     private func commonInit(_ goalType: GoalType) {
+        selectionStyle = .none
         goalTypeLabel.text = goalType.description
         configureLayout()
     }
