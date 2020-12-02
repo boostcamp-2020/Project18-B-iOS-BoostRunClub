@@ -16,13 +16,16 @@ protocol RunningInfoViewModelTypes: AnyObject {
 protocol RunningInfoViewModelInputs {
     func didTapPauseButton()
     func didTapRunData(index: Int)
+    func viewDidAppear()
 }
 
 protocol RunningInfoViewModelOutputs {
     typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfo, Never>
 
     var runningInfoObservables: [RunningInfoTypeSubject] { get }
-    var runningInfoTapAnimations: [PassthroughSubject<Void, Never>] { get }
+    var runningInfoTapAnimation: PassthroughSubject<Int, Never> { get }
+    var initialAnimation: PassthroughSubject<Void, Never> { get }
+    var resumeAnimation: PassthroughSubject<Void, Never> { get }
     var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 
@@ -33,7 +36,6 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     let runningDataProvider: RunningDataServiceable
 
     init(runningDataProvider: RunningDataServiceable) {
-        runningDataProvider.start()
         // TODO: GOALTYPE - SPEED 제거
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
@@ -98,7 +100,16 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         var nextType = runningInfoObservables[index].value.type.circularNext()
         nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
         runningInfoObservables[index].send(RunningInfo(type: nextType, value: possibleTypes[nextType, default: nextType.initialValue]))
-        runningInfoTapAnimations[index].send()
+        runningInfoTapAnimation.send(index)
+    }
+
+    func viewDidAppear() {
+        if runningDataProvider.isRunning {
+            resumeAnimation.send()
+        } else {
+            runningDataProvider.start()
+            initialAnimation.send()
+        }
     }
 
     // MARK: Outputs
@@ -109,13 +120,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         RunningInfoTypeSubject(RunningInfo(type: .averagePace)),
         RunningInfoTypeSubject(RunningInfo(type: .kilometer)),
     ]
-    var runningInfoTapAnimations = [
-        PassthroughSubject<Void, Never>(),
-        PassthroughSubject<Void, Never>(),
-        PassthroughSubject<Void, Never>(),
-        PassthroughSubject<Void, Never>(),
-    ]
-
+    var runningInfoTapAnimation = PassthroughSubject<Int, Never>()
+    var initialAnimation = PassthroughSubject<Void, Never>()
+    var resumeAnimation = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
 }
 

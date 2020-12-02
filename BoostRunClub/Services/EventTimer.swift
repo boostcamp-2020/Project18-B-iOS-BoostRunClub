@@ -20,7 +20,7 @@ class EventTimer: EventTimerProtocol {
     var cancellable: AnyCancellable?
 
     func start() {
-        cancellable = Timer.TimerPublisher(interval: 1, runLoop: RunLoop.main, mode: .default)
+        cancellable = Timer.TimerPublisher(interval: 0.8, runLoop: RunLoop.main, mode: .default)
             .autoconnect()
             .sink { date in
                 self.timeSubject.send(date.timeIntervalSinceReferenceDate)

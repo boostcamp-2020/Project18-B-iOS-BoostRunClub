@@ -14,6 +14,7 @@ protocol RunningDataServiceable {
     var distance: CurrentValueSubject<Double, Never> { get }
     var pace: CurrentValueSubject<Int, Never> { get }
     var avgPace: CurrentValueSubject<Int, Never> { get }
+    var isRunning: Bool { get }
 
     func start()
     func stop()
@@ -36,7 +37,7 @@ class RunningDataService: RunningDataServiceable {
     var avgPace = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
 
-    var isRunning: Bool = false
+    private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
     init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable) {
@@ -85,12 +86,10 @@ class RunningDataService: RunningDataServiceable {
     }
 
     func pause() {
-        eventTimer.stop()
         isRunning = false
     }
 
     func resume() {
-        eventTimer.start()
         isRunning = true
     }
 
