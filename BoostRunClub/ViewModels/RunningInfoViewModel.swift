@@ -30,14 +30,16 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     private var cancellables = Set<AnyCancellable>()
 
     private var possibleTypes: [RunningInfoType: String]
+    let runningDataProvider: RunningDataServiceable
 
-    init(runningDataProvider: RunningDataProvider) {
+    init(runningDataProvider: RunningDataServiceable) {
         // TODO: GOALTYPE - SPEED 제거
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
+        self.runningDataProvider = runningDataProvider
         runningDataProvider.start()
-        runningDataProvider.elapsedTime
+        runningDataProvider.runningTime
             // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }
             .sink { timeString in
@@ -50,8 +52,8 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningDataProvider.distancePublisher
-            .map { String(format: "%.2f", Double($0) / 1000) }
+        runningDataProvider.distance
+            .map { String(format: "%.2f", $0 / 1000) }
             .sink { distance in
                 self.possibleTypes[.kilometer] = distance
                 self.runningInfoObservables.forEach {
@@ -61,7 +63,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningDataProvider.$pace
+        runningDataProvider.pace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
             .sink { pace in
                 self.possibleTypes[.pace] = pace
@@ -72,7 +74,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningDataProvider.avgPacePublisher
+        runningDataProvider.avgPace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
             .sink { averagePace in
                 self.possibleTypes[.averagePace] = averagePace
@@ -88,6 +90,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapPauseButton() {
         showPausedRunningSignal.send()
+        runningDataProvider.stop()
     }
 
     func didTapRunData(index: Int) {

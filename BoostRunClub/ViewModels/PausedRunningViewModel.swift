@@ -28,21 +28,20 @@ protocol PausedRunningViewModelOutputs {
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
-    // TODO: RunningDataProvicer Protocol 구현
-    init(runningDataProvider: RunningDataProvider) {
-        var avgPace = 0
-        if !runningDataProvider.locations.isEmpty {
-            avgPace = runningDataProvider.totalPace / runningDataProvider.locations.count
-        }
+    let runningDataProvider: RunningDataServiceable
 
-        let pace = runningDataProvider.pace
+    // TODO: RunningDataProvicer Protocol 구현
+    init(runningDataProvider: RunningDataServiceable) {
+        self.runningDataProvider = runningDataProvider
+        let avgPace = runningDataProvider.avgPace.value
+        let pace = runningDataProvider.pace.value
 
         runInfoData = [
-            RunningInfo(type: .time, value: runningDataProvider.runningTime.formattedString),
+            RunningInfo(type: .time, value: runningDataProvider.runningTime.value.formattedString),
 //            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
-            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningDataProvider.distance)),
+            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningDataProvider.distance.value / 1000)),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
         ]
@@ -51,6 +50,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     // Inputs
     func didTapResumeButton() {
         closeRunningInfoAnimationSignal.send()
+        runningDataProvider.resume()
     }
 
     func didTapStopRunningButton() {}
