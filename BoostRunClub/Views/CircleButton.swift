@@ -12,6 +12,8 @@ class CircleButton: UIButton {
         case start, stop, pause, resume
     }
 
+    private var animator: Animator?
+
     init(with buttonStyle: Style) {
         super.init(frame: .zero)
         commonInit(with: buttonStyle)
@@ -29,6 +31,17 @@ class CircleButton: UIButton {
             setTitle("시작", for: .normal)
         case .stop:
             setSFSymbol(iconName: "stop.fill", size: 25, tintColor: .systemBackground, backgroundColor: .label)
+            animator = ScaleAnimation(
+                target: self,
+                duration: 0.5,
+                flow: .backing,
+                startScale: 1,
+                endScale: 1.5,
+                completion: {
+                    print("Animation Complete")
+                }
+            )
+
         case .pause:
             setSFSymbol(iconName: "pause.fill", size: 25, tintColor: .systemBackground, backgroundColor: .label)
         case .resume:
@@ -43,5 +56,13 @@ class CircleButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = bounds.height / 2
+    }
+
+    func start() {
+        animator?.start()
+    }
+
+    func stop() {
+        animator?.stop()
     }
 }

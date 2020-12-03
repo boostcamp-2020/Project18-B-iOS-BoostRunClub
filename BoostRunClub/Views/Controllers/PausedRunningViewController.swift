@@ -109,26 +109,28 @@ extension PausedRunningViewController {
     }
 
     @objc func didTouchDownRunningButton(_ button: UIButton) {
-        pressed = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] _ in
-            guard let self = self else { return }
-            self.view.notificationFeedback()
-            self.viewModel?.inputs.didLongHoldStopRunningButton()
-        })
-
-        UIView.animate(withDuration: 0.2) {
-            button.transform = button.transform.scaledBy(x: 1.1, y: 1.1)
-        }
+//        pressed = true
+//        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] _ in
+//            guard let self = self else { return }
+//            self.view.notificationFeedback()
+//            self.viewModel?.inputs.didLongHoldStopRunningButton()
+//        })
+//
+//        UIView.animate(withDuration: 0.2) {
+//            button.transform = button.transform.scaledBy(x: 1.1, y: 1.1)
+//        }
+        (button as? CircleButton)?.start()
     }
 
     @objc func didTouchReleaseRunningButton(_ button: UIButton) {
-        pressed = false
-        timer?.invalidate()
-
-        button.layer.removeAllAnimations()
-        UIView.animate(withDuration: 0.2) {
-            button.transform = .identity
-        }
+//        pressed = false
+//        timer?.invalidate()
+//
+//        button.layer.removeAllAnimations()
+//        UIView.animate(withDuration: 0.2) {
+//            button.transform = .identity
+//        }
+        (button as? CircleButton)?.stop()
     }
 
     func beginAnimation() {
