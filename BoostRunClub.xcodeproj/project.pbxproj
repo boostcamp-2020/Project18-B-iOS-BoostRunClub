@@ -10,6 +10,7 @@
 		157031793501852C09F6DE10 /* Pods_BoostRunClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */; };
 		4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
 		4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
+		4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB3256E3D920061244F /* Notification.name.swift */; };
 		4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */; };
 		4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */; };
@@ -30,6 +31,7 @@
 		714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */; };
 		714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */; };
 		714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */; };
+		718729422578DA63007BD24F /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
 		71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
@@ -71,6 +73,8 @@
 		9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A165257640C700DED689 /* PausedRunningViewModel.swift */; };
 		9689A16A2576441900DED689 /* RunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A1692576441900DED689 /* RunningCoordinator.swift */; };
 		969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
+		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
+		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
 		96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF2256FFEE800090999 /* RunningInfoType.swift */; };
 		96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
@@ -95,6 +99,7 @@
 /* Begin PBXFileReference section */
 		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
 		4C1D491C2575D869002C66CD /* RunningDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDataService.swift; sourceTree = "<group>"; };
+		4C1EDBF52578E22C004302C5 /* RunningSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSlice.swift; sourceTree = "<group>"; };
 		4C3E7AB3256E3D920061244F /* Notification.name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notification.name.swift; path = BoostRunClub/Extensions/Notification.name.swift; sourceTree = SOURCE_ROOT; };
 		4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoViewModel.swift; sourceTree = "<group>"; };
 		4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura LT Condensed Extra Bold Oblique.ttf"; sourceTree = "<group>"; };
@@ -114,6 +119,7 @@
 		714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoCoordinator.swift; sourceTree = "<group>"; };
 		714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewCoordinator.swift; sourceTree = "<group>"; };
 		714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageCoordinator.swift; sourceTree = "<group>"; };
+		718729412578DA63007BD24F /* RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplit.swift; sourceTree = "<group>"; };
 		71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModel.swift; sourceTree = "<group>"; };
 		71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModel.swift; sourceTree = "<group>"; };
 		71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeCell.swift; sourceTree = "<group>"; };
@@ -362,6 +368,8 @@
 			children = (
 				4C3E7ACB256F46A00061244F /* GoalType.swift */,
 				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
+				718729412578DA63007BD24F /* RunningSplit.swift */,
+				4C1EDBF52578E22C004302C5 /* RunningSlice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -585,6 +593,7 @@
 				96FA7E0425701CB800090999 /* SplitsViewController.swift in Sources */,
 				4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */,
 				967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */,
+				4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */,
 				714C03982574F794006B81E3 /* RunningMapCoordinator.swift in Sources */,
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
@@ -593,6 +602,7 @@
 				96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */,
 				9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */,
 				9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */,
+				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
@@ -624,7 +634,9 @@
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
+				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
+				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

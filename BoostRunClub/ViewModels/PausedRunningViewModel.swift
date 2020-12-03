@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreLocation
 import Foundation
 
 protocol PausedRunningViewModelTypes {
@@ -28,6 +29,9 @@ protocol PausedRunningViewModelOutputs {
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
+    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
+    var pathCoordinates: [CLLocationCoordinate2D] { get }
+    var slices: [RunningSlice] { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
@@ -38,7 +42,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         self.runningDataProvider = runningDataProvider
         let avgPace = runningDataProvider.avgPace.value
         let pace = runningDataProvider.pace.value
-
+        pathCoordinates = runningDataProvider.locations.map { $0.coordinate }
         runInfoData = [
             RunningInfo(type: .time, value: runningDataProvider.runningTime.value.formattedString),
 //            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
@@ -74,12 +78,23 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     }
 
     // Outputs
+    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
+        runningDataProvider.currentLocation
+            .eraseToAnyPublisher()
+    }
+
+    var runInfoData: [RunningInfo]
+    var pathCoordinates: [CLLocationCoordinate2D]
+
+    var slices: [RunningSlice] {
+        runningDataProvider.routes
+    }
+
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var showPrepareRunningSignal = PassthroughSubject<Void, Never>()
-    var runInfoData: [RunningInfo]
 }
 
 extension PausedRunningViewModel: PausedRunningViewModelTypes {
