@@ -17,6 +17,7 @@
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
 		4C7046002577821D009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C7046032577862A009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
+		4C9B985325788547000A6447 /* UIView+otificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
@@ -100,6 +101,7 @@
 		4C3E7AC8256F43440061244F /* GoalValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueView.swift; sourceTree = "<group>"; };
 		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
 		4C7045FF2577821D009C39A2 /* EventTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimer.swift; sourceTree = "<group>"; };
+		4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+otificationFeedback.swift"; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				967FFAA3257602A200F3340C /* TimerInterval+String.swift */,
 				71EFCCA52577D3E6007998AD /* UIButton+setSFSymbol.swift */,
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
+				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9B985325788547000A6447 /* UIView+otificationFeedback.swift in Sources */,
 				4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */,
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,

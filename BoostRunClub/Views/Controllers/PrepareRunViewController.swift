@@ -121,6 +121,22 @@ extension PrepareRunViewController {
     @objc
     func didTapSetGoalTypeButton() {
         viewModel?.inputs.didTapSetGoalButton()
+        view.notificationFeedback()
+        setGoalTypeButton.transform = .identity
+    }
+
+    @objc
+    func didTouchDownSetGoalTypeButton(_ button: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            button.transform = button.transform.scaledBy(x: 0.9, y: 0.9)
+        }
+    }
+
+    @objc
+    func didTouchUpOutsideSetGoalTypeButton(_ button: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            button.transform = .identity
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -211,16 +227,14 @@ extension PrepareRunViewController {
         button.titleLabel?.font = button.titleLabel?.font.withSize(12)
         button.layer.cornerRadius = LayoutConstant.setGoalHeight / 2
         button.addTarget(self, action: #selector(didTapSetGoalTypeButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTouchDownSetGoalTypeButton), for: .touchDown)
+        button.addTarget(self, action: #selector(didTouchUpOutsideSetGoalTypeButton), for: .touchUpOutside)
+
         return button
     }
 
     private func makeStartButton() -> UIButton {
         let button = CircleButton(with: .start)
-//        button.setTitleColor(.label, for: .normal)
-//        button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-//        button.setTitle("시작", for: .normal)
-//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-//        button.layer.cornerRadius = LayoutConstant.startButtonDiameter / 2
         button.addTarget(self, action: #selector(didTapStartButton), for: .touchUpInside)
 
         return button

@@ -13,10 +13,12 @@ class PausedRunningViewController: UIViewController {
     private lazy var mapView: MKMapView = makeMapView()
     private lazy var mapViewHeightConstraint = self.mapView.heightAnchor.constraint(equalToConstant: .zero)
 
-    private lazy var resumeButton: UIButton = makeResumeButton()
+//    private lazy var resumeButton: UIButton = makeResumeButton()
+    private lazy var resumeButton = CircleButton(with: .resume)
     private lazy var resumeButtonInitialCenterXConstraint = self.resumeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
 
-    private lazy var endRunningButton: UIButton = makeEndRunningButton()
+//    private lazy var endRunningButton: UIButton = makeEndRunningButton()
+    private lazy var endRunningButton = CircleButton(with: .stop)
     private lazy var endRunningButtonInitialCenterXConstraint = self.endRunningButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
     private lazy var subRunDataStackViews: [UIStackView] = [makeRunDataStackView(), makeRunDataStackView()]
     private var runDataViews: [RunDataView] = [
@@ -147,11 +149,13 @@ extension PausedRunningViewController {
     @objc
     func didTapResumeButton() {
         viewModel?.inputs.didTapResumeButton()
+        view.notificationFeedback()
     }
 
     @objc
     func didLongHoldStopRunningButton() {
         viewModel?.inputs.didLongHoldStopRunningButton()
+        view.notificationFeedback()
     }
 
     func beginAnimation() {
@@ -202,9 +206,9 @@ extension PausedRunningViewController {
         return button
     }
 
-    private func makeEndRunningButton() -> UIButton {
-        let button = CircleButton(with: .stop)
-        button.addTarget(self, action: #selector(didLongHoldStopRunningButton), for: .touchUpInside)
-        return button
-    }
+//    private func makeEndRunningButton() -> UIButton {
+//        let button = CircleButton(with: .stop)
+//        button.addTarget(self, action: #selector(didLongHoldStopRunningButton), for: .touchUpInside)
+//        return button
+//    }
 }
