@@ -73,6 +73,8 @@
 		9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A165257640C700DED689 /* PausedRunningViewModel.swift */; };
 		9689A16A2576441900DED689 /* RunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A1692576441900DED689 /* RunningCoordinator.swift */; };
 		969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
+		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
+		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
 		96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF2256FFEE800090999 /* RunningInfoType.swift */; };
 		96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
@@ -632,7 +634,9 @@
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
+				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
+				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
