@@ -52,7 +52,17 @@ class RunningDataService: RunningDataServiceable {
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable) {
+    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable, motionProvider: MotionProvider) {
+        motionProvider.startUpdating()
+
+        motionProvider.currentMotionType.sink { motionType in
+            print("@@@@@ \(motionType)")
+        }.store(in: &cancellables)
+
+        motionProvider.steps.sink { steps in
+            print("#####", steps)
+        }.store(in: &cancellables)
+
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         locationProvider.locationSubject
