@@ -30,7 +30,7 @@ protocol PausedRunningViewModelOutputs {
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
-    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { get }
+    var pathCoordinates: [CLLocationCoordinate2D] { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
@@ -41,7 +41,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         self.runningDataProvider = runningDataProvider
         let avgPace = runningDataProvider.avgPace.value
         let pace = runningDataProvider.pace.value
-
+        pathCoordinates = runningDataProvider.locations.map { $0.coordinate }
         runInfoData = [
             RunningInfo(type: .time, value: runningDataProvider.runningTime.value.formattedString),
 //            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
@@ -82,8 +82,8 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
             .eraseToAnyPublisher()
     }
 
-    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { runningDataProvider.routes }
     var runInfoData: [RunningInfo]
+    var pathCoordinates: [CLLocationCoordinate2D]
 
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()

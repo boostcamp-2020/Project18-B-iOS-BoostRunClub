@@ -52,24 +52,20 @@ class PausedRunningViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.routes
-            .receive(on: RunLoop.main)
-            .filter { !$0.isEmpty }
-            .sink { self.showRoutesOnMap(routes: $0) }
-            .store(in: &cancellables)
-
         viewModel.outputs.showRunningInfoAnimationSignal
             .receive(on: RunLoop.main)
             .sink { _ in
                 self.beginAnimation()
             }
             .store(in: &cancellables)
+
         viewModel.outputs.closeRunningInfoAnimationSignal
             .receive(on: RunLoop.main)
             .sink { _ in
                 self.closeAnimation()
             }
             .store(in: &cancellables)
+
         viewModel.outputs.runningInfoTapAnimationSignal
             .receive(on: RunLoop.main)
             .sink { self.runDataViews[$0].startBounceAnimation() }
@@ -81,6 +77,8 @@ class PausedRunningViewController: UIViewController {
             view.setValue(value: data[idx].value)
             view.tapAction = { self.viewModel?.inputs.didTapRunData(index: idx) }
         }
+
+        showRoutesOnMap(routes: viewModel.outputs.pathCoordinates)
     }
 }
 
@@ -160,16 +158,19 @@ extension PausedRunningViewController {
 extension PausedRunningViewController: MKMapViewDelegate {
     func showRoutesOnMap(routes: [CLLocationCoordinate2D]) {
         guard let route = routes.last else { return }
+        mapView.addOverlay(MKPolyline(coordinates: routes, count: routes.count))
         print("[paused: showRouteOnMap] \(route)")
     }
 
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
+        if let routePolyline = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline: routePolyline)
+            renderer.strokeColor = UIColor.systemBlue.withAlphaComponent(0.9)
+            renderer.lineWidth = 7
+            return renderer
+        }
 
-        renderer.strokeColor = .label
-        renderer.lineWidth = 3
-
-        return renderer
+        return MKOverlayRenderer()
     }
 }
 
@@ -250,6 +251,7 @@ extension PausedRunningViewController {
         view.mapType = MKMapType.standard
         view.userTrackingMode = MKUserTrackingMode.follow
         view.isUserInteractionEnabled = false
+        view.delegate = self
         return view
     }
 

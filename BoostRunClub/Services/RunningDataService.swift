@@ -16,8 +16,9 @@ protocol RunningDataServiceable {
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var isRunning: Bool { get }
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
-    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { get }
-
+    var locations: [CLLocation] { get }
+    var runningSplits: [RunningSplit] { get }
+    var currentRunningSlice: RunningSlice
     func start()
     func stop()
     func pause()
@@ -28,12 +29,7 @@ class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
 
     var cancellables = Set<AnyCancellable>()
-    @Published var locations = [CLLocation]()
-    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> {
-        $locations
-            .map { $0.map { $0.coordinate } }
-            .eraseToAnyPublisher()
-    }
+    var locations = [CLLocation]()
 
     var startTime: TimeInterval = 0
     var endTime: TimeInterval = 0
@@ -44,6 +40,10 @@ class RunningDataService: RunningDataServiceable {
     var pace = CurrentValueSubject<Int, Never>(0)
     var avgPace = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
+
+    var runningSplits = [RunningSplit]()
+    var currentRunningSplit = RunningSplit()
+    var currentRunningSlice = RunningSlice()
 
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
@@ -85,6 +85,7 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
+        
     }
 
     func stop() {
@@ -101,6 +102,17 @@ class RunningDataService: RunningDataServiceable {
         isRunning = true
     }
 
+    func addSlice() {
+        currentRunningSlice.endIndex = locations.count - 1
+        currentRunningSplit.runningSlices.append(currentRunningSlice)
+        currentRunningSlice = RunningSlice()
+        currentRunningSlice.startIndex = locations.count - 1
+    }
+
+    func addSplit() {
+        currentRunningSlice.endIndex = locations.count - 1
+    }
+
     func updateTime(currentTime: TimeInterval) {
         if isRunning {
             runningTime.value += currentTime - lastUpdatedTime
@@ -110,19 +122,25 @@ class RunningDataService: RunningDataServiceable {
 
     func updateLocation(location: CLLocation) {
         currentLocation.send(location.coordinate)
-        if !isRunning { return }
-        if let prevLocation = locations.last {
-            distance.value += location.distance(from: prevLocation)
-        }
 
-        let paceDouble = 1000 / location.speed
-        if !(paceDouble.isNaN || paceDouble.isInfinite) {
-            pace.value = Int(paceDouble)
-        }
+        if isRunning {}
 
-        var newLocations = locations
-        newLocations.append(location)
-        locations = newLocations
-        avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
+//        if let prevLocation = locations.last {
+//            distance.value += location.distance(from: prevLocation)
+//        }
+//
+//        let paceDouble = 1000 / location.speed
+//        if !(paceDouble.isNaN || paceDouble.isInfinite) {
+//            pace.value = Int(paceDouble)
+//        }
+//
+//        locations.append(location)
+//        avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
     }
 }
+
+// struct RunningSlice {
+//    var startIndex: Int
+//    var endIndex: Int
+//    var distance: Double
+// }

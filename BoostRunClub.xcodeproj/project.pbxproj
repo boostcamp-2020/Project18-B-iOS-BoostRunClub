@@ -30,6 +30,8 @@
 		714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */; };
 		714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */; };
 		714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */; };
+		7187293E2578D85A007BD24F /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187293D2578D85A007BD24F /* RunningSlice.swift */; };
+		718729422578DA63007BD24F /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
 		71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
@@ -114,6 +116,8 @@
 		714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoCoordinator.swift; sourceTree = "<group>"; };
 		714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewCoordinator.swift; sourceTree = "<group>"; };
 		714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageCoordinator.swift; sourceTree = "<group>"; };
+		7187293D2578D85A007BD24F /* RunningSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningSlice.swift; path = "../../../Documents/ios 13 swift 5/clones/RunningSlice.swift"; sourceTree = "<group>"; };
+		718729412578DA63007BD24F /* RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplit.swift; sourceTree = "<group>"; };
 		71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModel.swift; sourceTree = "<group>"; };
 		71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModel.swift; sourceTree = "<group>"; };
 		71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeCell.swift; sourceTree = "<group>"; };
@@ -362,6 +366,8 @@
 			children = (
 				4C3E7ACB256F46A00061244F /* GoalType.swift */,
 				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
+				7187293D2578D85A007BD24F /* RunningSlice.swift */,
+				718729412578DA63007BD24F /* RunningSplit.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -580,6 +586,7 @@
 				9689A16A2576441900DED689 /* RunningCoordinator.swift in Sources */,
 				4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */,
 				71E828B0256BADB0004A1F30 /* Coordinator.swift in Sources */,
+				7187293E2578D85A007BD24F /* RunningSlice.swift in Sources */,
 				969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */,
 				96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */,
 				96FA7E0425701CB800090999 /* SplitsViewController.swift in Sources */,
@@ -593,6 +600,7 @@
 				96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */,
 				9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */,
 				9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */,
+				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
