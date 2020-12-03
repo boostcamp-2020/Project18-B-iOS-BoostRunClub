@@ -62,7 +62,6 @@ class PrepareRunViewModelTest: XCTestCase {
                 prepareVM.goalTypeSetupClosed
             )
             .sink {
-                print($0)
                 if $0.0 == goalType,
                    $0.1 == goalType.initialValue
                 {
@@ -106,8 +105,7 @@ class PrepareRunViewModelTest: XCTestCase {
             receivedSignal.fulfill()
         }.store(in: &cancellables)
 
-        prepareVM.goalValueObservable.dropFirst().sink {
-            print($0)
+        prepareVM.goalValueObservable.dropFirst().sink {_ in
             XCTFail()
         }.store(in: &cancellables)
 

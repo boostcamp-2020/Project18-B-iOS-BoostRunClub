@@ -38,17 +38,33 @@ final class RunningInfoViewController: UIViewController {
             }
 
             viewModel.outputs.runningInfoObservables[idx]
+                .receive(on: RunLoop.main)
                 .sink { [weak view] runningInfo in
-                    print(runningInfo)
                     view?.setValue(value: runningInfo.value)
                     view?.setType(type: runningInfo.type.name)
                 }
                 .store(in: &cancellables)
-
-            viewModel.outputs.runningInfoTapAnimations[idx]
-                .sink { _ in view.startBounceAnimation() }
-                .store(in: &cancellables)
         }
+
+        viewModel.outputs.runningInfoTapAnimation
+            .receive(on: RunLoop.main)
+            .filter { $0 < self.runDataViews.count }
+            .sink { self.runDataViews[$0].startBounceAnimation() }
+            .store(in: &cancellables)
+
+        viewModel.outputs.initialAnimation
+            .receive(on: RunLoop.main)
+            .sink {
+                self.startInitialAnimation()
+            }
+            .store(in: &cancellables)
+
+        viewModel.outputs.resumeAnimation
+            .receive(on: RunLoop.main)
+            .sink {
+                self.startResumeAnimation()
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -61,6 +77,11 @@ extension RunningInfoViewController {
         configureLayout()
         bindViewModel()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.inputs.viewDidAppear()
+    }
 }
 
 // MARK: - Actions
@@ -69,6 +90,27 @@ extension RunningInfoViewController {
     @objc
     func didTapPauseButton() {
         viewModel?.inputs.didTapPauseButton()
+    }
+
+    private func startInitialAnimation() {
+        view.subviews.forEach {
+            $0.transform = $0.transform.scaledBy(x: 0.5, y: 0.5)
+            $0.alpha = 0
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.view.subviews.forEach {
+                $0.transform = .identity
+                $0.alpha = 1
+            }
+        }
+    }
+
+    private func startResumeAnimation() {
+        let targetView = runDataViews[0]
+        targetView.alpha = 0.5
+        UIView.animate(withDuration: 0.5) {
+            targetView.alpha = 1
+        }
     }
 }
 
