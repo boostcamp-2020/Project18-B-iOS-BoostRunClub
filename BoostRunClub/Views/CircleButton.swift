@@ -12,8 +12,6 @@ class CircleButton: UIButton {
         case start, stop, pause, resume
     }
 
-    var tapAction: (() -> Void)?
-
     init(with buttonStyle: Style) {
         super.init(frame: .zero)
         commonInit(with: buttonStyle)
@@ -45,22 +43,5 @@ class CircleButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = bounds.height / 2
-    }
-
-//    func addGesture(style: Style) {
-//        switch style {
-//        case .start:
-//            addTarget(self, action: #selector(execute), for: .touchUpInside)
-//        case .pause, .resume:
-//
-//        case .stop:
-//        }
-//    }
-}
-
-extension CircleButton {
-    @objc
-    private func execute() {
-        tapAction?()
     }
 }

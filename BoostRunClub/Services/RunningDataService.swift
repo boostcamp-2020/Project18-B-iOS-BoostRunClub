@@ -108,7 +108,7 @@ class RunningDataService: RunningDataServiceable {
 
         // TODO: speed NaN, Infinite 처리
         let paceDouble = 1000 / location.speed
-        if !(paceDouble.isNaN && paceDouble.isInfinite) {
+        if !(paceDouble.isNaN || paceDouble.isInfinite) {
             pace.value = Int(paceDouble)
         }
 

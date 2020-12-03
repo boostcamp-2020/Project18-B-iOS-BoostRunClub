@@ -240,13 +240,13 @@
 		71E82887256B9184004A1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4C3E7AD0256F63230061244F /* Cells */,
-				4C3E7ACE256F63080061244F /* Controllers */,
-				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
-				9635815125722B5B00B8BE6B /* RunDataView.swift */,
-				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
 				71EFCC8C2577C3C0007998AD /* CircleButton.swift */,
 				967780282577905400DA2454 /* CountDownView.swift */,
+				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
+				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
+				9635815125722B5B00B8BE6B /* RunDataView.swift */,
+				4C3E7AD0256F63230061244F /* Cells */,
+				4C3E7ACE256F63080061244F /* Controllers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
