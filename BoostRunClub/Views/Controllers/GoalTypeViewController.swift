@@ -27,8 +27,22 @@ final class GoalTypeViewController: UIViewController {
         viewModel = goalTypeViewModel
     }
 
-    // TODO: goalTypeViewModel에서 선택되어져 있는 값에 체크마크
-    private func bindViewModel() {}
+    private func bindViewModel() {
+        guard let viewModel = viewModel else { return }
+
+        viewModel.outputs.goalTypeObservable
+            .receive(on: RunLoop.main)
+            .sink { goalType in
+                self.tableViewCells.forEach {
+                    if goalType == .none {
+                        $0.setStyle(with: .black)
+                    } else {
+                        $0.setStyle(with: goalType == $0.goalType ? .checked : .gray)
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - ViewController LifeCycle
@@ -133,7 +147,7 @@ extension GoalTypeViewController {
         tableView.register(GoalTypeCell.self, forCellReuseIdentifier: String(describing: GoalTypeCell.self))
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.layer.cornerRadius = 30
-        tableView.rowHeight = GoalTypeCell.cellHeight
+        tableView.rowHeight = GoalTypeCell.LayoutConstant.cellHeight
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding * 2))
         let clearButton = UIButton()
@@ -156,6 +170,6 @@ extension GoalTypeViewController {
     private var verticalTablePadding: CGFloat { 30 }
 
     private var tableViewHeight: CGFloat {
-        CGFloat(tableViewCells.count) * GoalTypeCell.cellHeight + verticalTablePadding * 3
+        CGFloat(tableViewCells.count) * GoalTypeCell.LayoutConstant.cellHeight + verticalTablePadding * 3
     }
 }

@@ -7,38 +7,12 @@
 
 import UIKit
 
-enum ButtonStyle {
-    case start, stop, pause, resume
-
-    var backgroundColor: UIColor {
-        switch self {
-        case .start:
-            return #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-        case .stop:
-            return .label
-        case .pause:
-            return .label
-        case .resume:
-            return #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-        }
-    }
-
-    var title: String {
-        switch self {
-        case .start:
-            return "시작"
-        case .stop:
-            return ""
-        case .pause:
-            return ""
-        case .resume:
-            return ""
-        }
-    }
-}
-
 class CircleButton: UIButton {
-    init(with buttonStyle: ButtonStyle) {
+    enum Style {
+        case start, stop, pause, resume
+    }
+
+    init(with buttonStyle: Style) {
         super.init(frame: .zero)
         commonInit(with: buttonStyle)
     }
@@ -48,7 +22,7 @@ class CircleButton: UIButton {
         commonInit()
     }
 
-    private func commonInit(with buttonStyle: ButtonStyle = .start) {
+    private func commonInit(with buttonStyle: Style = .start) {
         switch buttonStyle {
         case .start:
             backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)

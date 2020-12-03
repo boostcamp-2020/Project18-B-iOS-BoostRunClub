@@ -11,8 +11,13 @@ extension UIButton {
     func setSFSymbol(iconName: String, size: CGFloat, weight: UIImage.SymbolWeight = .regular,
                      scale: UIImage.SymbolScale = .default, tintColor: UIColor, backgroundColor: UIColor)
     {
-        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: size, weight: weight, scale: scale)
-        let buttonImage = UIImage(systemName: iconName, withConfiguration: symbolConfiguration)
+        let buttonImage = UIImage.SFSymbol(
+            name: iconName,
+            size: size,
+            weight: weight,
+            scale: scale,
+            color: tintColor
+        )
         setImage(buttonImage, for: .normal)
         self.tintColor = tintColor
         self.backgroundColor = backgroundColor
