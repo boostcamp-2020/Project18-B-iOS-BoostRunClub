@@ -31,6 +31,7 @@ protocol PausedRunningViewModelOutputs {
     var runInfoData: [RunningInfo] { get }
     var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
+    var slices: [RunningSlice] { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
@@ -84,6 +85,10 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
 
     var runInfoData: [RunningInfo]
     var pathCoordinates: [CLLocationCoordinate2D]
+
+    var slices: [RunningSlice] {
+        runningDataProvider.routes
+    }
 
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()

@@ -32,6 +32,7 @@ class PausedRunningViewController: UIViewController {
 
     private var timer: Timer?
     private var pressed: Bool = false
+    var color: UIColor?
 
     init(with pausedRunningViewModel: PausedRunningViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
@@ -78,7 +79,7 @@ class PausedRunningViewController: UIViewController {
             view.tapAction = { self.viewModel?.inputs.didTapRunData(index: idx) }
         }
 
-        showRoutesOnMap(routes: viewModel.outputs.pathCoordinates)
+        showRoutesOnMap(routes: viewModel.outputs.pathCoordinates, slices: viewModel.outputs.slices)
     }
 }
 
@@ -156,16 +157,33 @@ extension PausedRunningViewController {
 // MARK: - MKMapViewDelegate Implementation
 
 extension PausedRunningViewController: MKMapViewDelegate {
-    func showRoutesOnMap(routes: [CLLocationCoordinate2D]) {
+    func showRoutesOnMap(routes: [CLLocationCoordinate2D], slices: [RunningSlice]) {
         guard let route = routes.last else { return }
-        mapView.addOverlay(MKPolyline(coordinates: routes, count: routes.count))
-        print("[paused: showRouteOnMap] \(route)")
+
+//        var runningRoutes = [[CLLocationCoordinate2D]]()
+
+        slices.forEach { slice in
+            let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex
+            if slice.isRunning {
+                print(1)
+                color = UIColor.systemBlue.withAlphaComponent(0.9)
+                mapView.addOverlay(MKPolyline(coordinates: Array(routes[slice.startIndex ... endIdx]), count: routes.count))
+            } else {
+                print(2)
+                color = UIColor.systemRed.withAlphaComponent(0.9)
+                mapView.addOverlay(MKPolyline(coordinates: Array(routes[slice.startIndex ... endIdx]), count: routes.count))
+            }
+        }
+
+//        mapView.addOverlay(MKPolyline(coordinates: runningRoutes[0], count: routes.count))
+        //		mapView.addOverlay(MKPolyline(coordinates: runningRoutes[1], count: routes.count))
+//        print("[paused: showRouteOnMap] \(route)")
     }
 
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
-            renderer.strokeColor = UIColor.systemBlue.withAlphaComponent(0.9)
+            renderer.strokeColor = color // UIColor.systemBlue.withAlphaComponent(0.9)
             renderer.lineWidth = 7
             return renderer
         }

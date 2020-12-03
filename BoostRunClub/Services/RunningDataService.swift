@@ -18,7 +18,8 @@ protocol RunningDataServiceable {
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
     var locations: [CLLocation] { get }
     var runningSplits: [RunningSplit] { get }
-    var currentRunningSlice: RunningSlice
+    var currentRunningSlice: RunningSlice { get }
+    var routes: [RunningSlice] { get }
     func start()
     func stop()
     func pause()
@@ -44,6 +45,9 @@ class RunningDataService: RunningDataServiceable {
     var runningSplits = [RunningSplit]()
     var currentRunningSplit = RunningSplit()
     var currentRunningSlice = RunningSlice()
+    var routes: [RunningSlice] {
+        runningSplits.flatMap { $0.runningSlices } + currentRunningSplit.runningSlices + [currentRunningSlice]
+    }
 
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
@@ -85,32 +89,40 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
-        
+        //		addSplit()
     }
 
     func stop() {
+        addSplit()
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
         isRunning = false
     }
 
     func pause() {
+        addSlice()
         isRunning = false
     }
 
     func resume() {
+        addSlice()
         isRunning = true
     }
 
     func addSlice() {
+        currentRunningSlice.isRunning = isRunning
         currentRunningSlice.endIndex = locations.count - 1
         currentRunningSplit.runningSlices.append(currentRunningSlice)
+
         currentRunningSlice = RunningSlice()
         currentRunningSlice.startIndex = locations.count - 1
     }
 
     func addSplit() {
-        currentRunningSlice.endIndex = locations.count - 1
+        addSlice()
+        runningSplits.append(currentRunningSplit)
+
+        currentRunningSplit = RunningSplit()
     }
 
     func updateTime(currentTime: TimeInterval) {
@@ -123,19 +135,21 @@ class RunningDataService: RunningDataServiceable {
     func updateLocation(location: CLLocation) {
         currentLocation.send(location.coordinate)
 
-        if isRunning {}
+        if isRunning, let prevLocation = locations.last {
+            let newDistance = location.distance(from: prevLocation) + distance.value
+            if Int(newDistance / 1000) - Int(distance.value / 1000) > 0 {
+                addSplit()
+            }
+            distance.value = newDistance
+        }
 
-//        if let prevLocation = locations.last {
-//            distance.value += location.distance(from: prevLocation)
-//        }
-//
-//        let paceDouble = 1000 / location.speed
-//        if !(paceDouble.isNaN || paceDouble.isInfinite) {
-//            pace.value = Int(paceDouble)
-//        }
-//
-//        locations.append(location)
-//        avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
+        let paceDouble = 1000 / location.speed
+        if !(paceDouble.isNaN || paceDouble.isInfinite) {
+            pace.value = Int(paceDouble)
+        }
+
+        locations.append(location)
+        avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
     }
 }
 
