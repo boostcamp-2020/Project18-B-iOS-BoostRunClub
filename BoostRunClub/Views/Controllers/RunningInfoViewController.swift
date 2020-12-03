@@ -35,6 +35,7 @@ final class RunningInfoViewController: UIViewController {
         runDataViews.enumerated().forEach { idx, view in
             view.tapAction = { [weak viewModel] in
                 viewModel?.inputs.didTapRunData(index: idx)
+                view.notificationFeedback()
             }
 
             viewModel.outputs.runningInfoObservables[idx]
@@ -90,6 +91,7 @@ extension RunningInfoViewController {
     @objc
     func didTapPauseButton() {
         viewModel?.inputs.didTapPauseButton()
+        view.notificationFeedback()
     }
 
     private func startInitialAnimation() {
@@ -107,9 +109,11 @@ extension RunningInfoViewController {
 
     private func startResumeAnimation() {
         let targetView = runDataViews[0]
-        targetView.alpha = 0.5
-        UIView.animate(withDuration: 0.5) {
+        targetView.alpha = 0
+        targetView.transform = targetView.transform.scaledBy(x: 0.9, y: 0.9)
+        UIView.animate(withDuration: 0.2) {
             targetView.alpha = 1
+            targetView.transform = .identity
         }
     }
 }

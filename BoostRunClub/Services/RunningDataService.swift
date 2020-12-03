@@ -107,7 +107,10 @@ class RunningDataService: RunningDataServiceable {
         }
 
         // TODO: speed NaN, Infinite 처리
-        pace.value = Int(1000 / location.speed)
+        let paceDouble = 1000 / location.speed
+        if !(paceDouble.isNaN || paceDouble.isInfinite) {
+            pace.value = Int(paceDouble)
+        }
 
         locations.append(location)
         avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count

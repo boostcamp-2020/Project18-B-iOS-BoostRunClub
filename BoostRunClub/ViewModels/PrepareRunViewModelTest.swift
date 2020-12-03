@@ -105,7 +105,7 @@ class PrepareRunViewModelTest: XCTestCase {
             receivedSignal.fulfill()
         }.store(in: &cancellables)
 
-        prepareVM.goalValueObservable.dropFirst().sink {_ in
+        prepareVM.goalValueObservable.dropFirst().sink { _ in
             XCTFail()
         }.store(in: &cancellables)
 
