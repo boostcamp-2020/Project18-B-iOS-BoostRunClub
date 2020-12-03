@@ -49,7 +49,7 @@ class PausedRunningViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { coordinate in
                 let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                self.mapView.setRegion(viewRegion, animated: true)
+                self.mapView.setRegion(viewRegion, animated: false)
             }
             .store(in: &cancellables)
 
@@ -163,15 +163,22 @@ extension PausedRunningViewController: MKMapViewDelegate {
 //        var runningRoutes = [[CLLocationCoordinate2D]]()
 
         slices.forEach { slice in
+            // if slice.startIndex == slice.endIndex || slice.startIndex == routes.count - 1 { return }
             let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex
             if slice.isRunning {
-                print(1)
+                print("slice isRunning \(slice.startIndex)~\(endIdx)")
                 color = UIColor.systemBlue.withAlphaComponent(0.9)
-                mapView.addOverlay(MKPolyline(coordinates: Array(routes[slice.startIndex ... endIdx]), count: routes.count))
+                mapView.addOverlay(MKPolyline(
+                    coordinates: Array(routes[slice.startIndex ... endIdx]),
+                    count: endIdx - slice.startIndex + 1
+                ))
             } else {
                 print(2)
                 color = UIColor.systemRed.withAlphaComponent(0.9)
-                mapView.addOverlay(MKPolyline(coordinates: Array(routes[slice.startIndex ... endIdx]), count: routes.count))
+                mapView.addOverlay(MKPolyline(
+                    coordinates: Array(routes[slice.startIndex ... endIdx]),
+                    count: endIdx - slice.startIndex + 1
+                ))
             }
         }
 
