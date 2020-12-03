@@ -15,6 +15,8 @@ protocol RunningDataServiceable {
     var pace: CurrentValueSubject<Int, Never> { get }
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var isRunning: Bool { get }
+    var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
+    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { get }
 
     func start()
     func stop()
@@ -26,12 +28,18 @@ class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
 
     var cancellables = Set<AnyCancellable>()
-    var locations: [CLLocation] = []
+    @Published var locations = [CLLocation]()
+    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> {
+        $locations
+            .map { $0.map { $0.coordinate } }
+            .eraseToAnyPublisher()
+    }
 
     var startTime: TimeInterval = 0
     var endTime: TimeInterval = 0
     var lastUpdatedTime: TimeInterval = 0
 
+    var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
     var pace = CurrentValueSubject<Int, Never>(0)
     var avgPace = CurrentValueSubject<Int, Never>(0)
@@ -101,18 +109,20 @@ class RunningDataService: RunningDataServiceable {
     }
 
     func updateLocation(location: CLLocation) {
+        currentLocation.send(location.coordinate)
         if !isRunning { return }
         if let prevLocation = locations.last {
             distance.value += location.distance(from: prevLocation)
         }
 
-        // TODO: speed NaN, Infinite 처리
         let paceDouble = 1000 / location.speed
         if !(paceDouble.isNaN || paceDouble.isInfinite) {
             pace.value = Int(paceDouble)
         }
 
-        locations.append(location)
+        var newLocations = locations
+        newLocations.append(location)
+        locations = newLocations
         avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
     }
 }

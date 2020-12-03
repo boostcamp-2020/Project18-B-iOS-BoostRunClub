@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreLocation
 import Foundation
 
 protocol PausedRunningViewModelTypes {
@@ -28,6 +29,8 @@ protocol PausedRunningViewModelOutputs {
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
+    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
+    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
@@ -74,12 +77,19 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     }
 
     // Outputs
+    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
+        runningDataProvider.currentLocation
+            .eraseToAnyPublisher()
+    }
+
+    var routes: AnyPublisher<[CLLocationCoordinate2D], Never> { runningDataProvider.routes }
+    var runInfoData: [RunningInfo]
+
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var showPrepareRunningSignal = PassthroughSubject<Void, Never>()
-    var runInfoData: [RunningInfo]
 }
 
 extension PausedRunningViewModel: PausedRunningViewModelTypes {
