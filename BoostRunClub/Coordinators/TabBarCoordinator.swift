@@ -12,8 +12,8 @@ enum TabBarPage: Int {
     case running
     case profile
 
+    // TODO:
     // Add tab icon value
-
     // Add tab icon selected / deselected color
 }
 

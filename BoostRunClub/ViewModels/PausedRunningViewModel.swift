@@ -45,12 +45,11 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         pathCoordinates = runningDataProvider.locations.map { $0.coordinate }
         runInfoData = [
             RunningInfo(type: .time, value: runningDataProvider.runningTime.value.formattedString),
-//            RunningInfo(type: .kilometer, value: String(format: "%.2f", runningProvider.distance)),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
             RunningInfo(type: .kilometer, value: String(format: "%.2f", runningDataProvider.distance.value / 1000)),
-            RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
-            RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
+            RunningInfo(type: .calorie, value: String(Int(runningDataProvider.calorie.value))),
+            RunningInfo(type: .cadence, value: String(runningDataProvider.cadence.value)),
         ]
     }
 

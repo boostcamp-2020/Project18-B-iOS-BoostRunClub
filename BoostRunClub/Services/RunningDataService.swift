@@ -13,13 +13,17 @@ protocol RunningDataServiceable {
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
     var distance: CurrentValueSubject<Double, Never> { get }
     var pace: CurrentValueSubject<Int, Never> { get }
+    var calorie: CurrentValueSubject<Double, Never> { get }
     var avgPace: CurrentValueSubject<Int, Never> { get }
+    var cadence: CurrentValueSubject<Int, Never> { get }
+
     var isRunning: Bool { get }
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
     var locations: [CLLocation] { get }
     var runningSplits: [RunningSplit] { get }
     var currentRunningSlice: RunningSlice { get }
     var routes: [RunningSlice] { get }
+
     func start()
     func stop()
     func pause()
@@ -28,20 +32,21 @@ protocol RunningDataServiceable {
 
 class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
-
     var cancellables = Set<AnyCancellable>()
-    var locations = [CLLocation]()
 
+    var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
+    var calorie = CurrentValueSubject<Double, Never>(0)
+    var pace = CurrentValueSubject<Int, Never>(0)
+    var avgPace = CurrentValueSubject<Int, Never>(0)
+    var cadence = CurrentValueSubject<Int, Never>(0)
+    var distance = CurrentValueSubject<Double, Never>(0)
+
+    var locations = [CLLocation]()
     var startTime: TimeInterval = 0
     var endTime: TimeInterval = 0
     var lastUpdatedTime: TimeInterval = 0
 
     var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
-    var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
-    var pace = CurrentValueSubject<Int, Never>(0)
-    var avgPace = CurrentValueSubject<Int, Never>(0)
-    var distance = CurrentValueSubject<Double, Never>(0)
-
     var runningSplits = [RunningSplit]()
     var currentRunningSplit = RunningSplit()
     var currentRunningSlice = RunningSlice()
@@ -49,10 +54,14 @@ class RunningDataService: RunningDataServiceable {
         runningSplits.flatMap { $0.runningSlices } + currentRunningSplit.runningSlices + [currentRunningSlice]
     }
 
+    var motion: MotionType = .running
+
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable) {
+    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable, motionProvider: MotionProvider) {
+        motionProvider.startUpdating()
+
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         locationProvider.locationSubject
@@ -69,6 +78,20 @@ class RunningDataService: RunningDataServiceable {
                 self?.updateTime(currentTime: time)
             }
             .store(in: &cancellables)
+
+        motionProvider.currentMotionType
+            .sink { _ in
+                //				self.motion = $0
+            }
+            .store(in: &cancellables)
+
+        //        motionProvider.steps.sink { steps in
+        //            print("#####", steps)
+        //        }.store(in: &cancellables)
+
+        motionProvider.cadence.sink { cadence in
+            self.cadence.value = cadence
+        }.store(in: &cancellables)
     }
 
     func initializeRunningData() {
@@ -140,7 +163,12 @@ class RunningDataService: RunningDataServiceable {
         currentLocation.send(location.coordinate)
 
         if isRunning, let prevLocation = locations.last {
-            let newDistance = location.distance(from: prevLocation) + distance.value
+            let addedDistance = location.distance(from: prevLocation)
+            let newDistance = addedDistance + distance.value
+
+            //	킬로미터 * Motion상수 * weight
+            calorie.value += addedDistance / 1000 * motion.METFactor * 70
+
             if Int(newDistance / 1000) - Int(distance.value / 1000) > 0 {
                 addSplit()
             }
@@ -156,9 +184,3 @@ class RunningDataService: RunningDataServiceable {
         avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
     }
 }
-
-// struct RunningSlice {
-//    var startIndex: Int
-//    var endIndex: Int
-//    var distance: Double
-// }

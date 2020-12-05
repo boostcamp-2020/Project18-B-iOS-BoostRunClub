@@ -33,8 +33,9 @@ protocol Factory: AnyObject {
 }
 
 class DependencyFactory: Factory {
-    lazy var runningDataProvider = RunningDataService(locationProvider: locationProvider)
+    lazy var runningDataProvider = RunningDataService(locationProvider: locationProvider, motionProvider: motionProvider)
     lazy var locationProvider = LocationProvider()
+    lazy var motionProvider = MotionProvider()
 
     func makeRunningPageVC(with _: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController {
         let runningPageVC = RunningPageViewController(
