@@ -236,13 +236,13 @@
 				4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */,
 				4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */,
 				4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */,
+				9689A165257640C700DED689 /* PausedRunningViewModel.swift */,
 				71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */,
 				9635816925726ECC00B8BE6B /* PrepareRunViewModelTest.swift */,
-				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
 				4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */,
-				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
-				9689A165257640C700DED689 /* PausedRunningViewModel.swift */,
+				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
+				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

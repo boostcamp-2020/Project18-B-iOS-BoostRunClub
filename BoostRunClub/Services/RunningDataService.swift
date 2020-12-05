@@ -90,6 +90,9 @@ class RunningDataService: RunningDataServiceable {
         avgPace.value = 0
         distance.value = 0
         locations.removeAll()
+        currentRunningSlice = RunningSlice()
+        currentRunningSplit = RunningSplit()
+        runningSplits.removeAll()
     }
 
     func start() {
@@ -120,6 +123,7 @@ class RunningDataService: RunningDataServiceable {
     }
 
     func addSlice() {
+        if locations.isEmpty { return }
         currentRunningSlice.isRunning = isRunning
         currentRunningSlice.endIndex = locations.count - 1
         currentRunningSplit.runningSlices.append(currentRunningSlice)
