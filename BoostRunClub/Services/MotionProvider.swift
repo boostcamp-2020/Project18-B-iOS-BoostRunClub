@@ -15,7 +15,7 @@ final class MotionProvider {
     private var isActive = false
 
     var currentMotionType = CurrentValueSubject<MotionType, Never>(MotionType.unknown)
-    var steps = CurrentValueSubject<Int, Never>(0)
+    var cadence = CurrentValueSubject<Int, Never>(0)
 
     func startTrackingActivityType() {
         if isActive { return }
@@ -59,29 +59,27 @@ final class MotionProvider {
 
             guard
                 let self = self,
-                let pedometerData = pedometerData,
+                let cadence = pedometerData?.currentCadence,
                 error == nil
             else { return }
 
-            DispatchQueue.main.async {
-                self.steps.value = Int(truncating: pedometerData.numberOfSteps)
-            }
+            self.cadence.value = Int(truncating: cadence)
         }
     }
 }
 
 extension CMMotionActivity {
     var motionType: MotionType {
-        if walking {
-            return .walking
-        } else if stationary {
+        if stationary {
             return .stationary
+        } else if walking {
+            return .walking
         } else if running {
             return .running
-        } else if automotive {
-            return .automotive
         } else if cycling {
             return .cycling
+        } else if automotive {
+            return .automotive
         }
         return .unknown
     }

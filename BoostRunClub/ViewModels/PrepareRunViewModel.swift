@@ -8,7 +8,7 @@
 import Combine
 import CoreLocation
 import Foundation
-// Running -> 일시정지 -> 정지 -> 파란색 인디케이터가 사라짐
+
 protocol PrepareRunViewModelTypes: AnyObject {
     var inputs: PrepareRunViewModelInputs { get }
     var outputs: PrepareRunViewModelOutputs { get }
