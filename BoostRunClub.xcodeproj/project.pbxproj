@@ -382,12 +382,12 @@
 				4C1D491C2575D869002C66CD /* RunningDataService.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 				4C7045FF2577821D009C39A2 /* EventTimer.swift */,
-<<<<<<< HEAD
+
 				96ED403A257C7747007DB3DF /* CoreDataService.swift */,
 				96ED403E257C7947007DB3DF /* ActivityProvider.swift */,
-=======
+
 				7187295425791A70007BD24F /* MotionProvider.swift */,
->>>>>>> master
+
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -400,12 +400,12 @@
 				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
 				718729412578DA63007BD24F /* RunningSplit.swift */,
 				4C1EDBF52578E22C004302C5 /* RunningSlice.swift */,
-<<<<<<< HEAD
+
 				96ED4034257C768A007DB3DF /* Activity.swift */,
 				4CF009C5257CADC300EC928A /* Location.swift */,
-=======
+
 				7187295D25791BEF007BD24F /* MotionType.swift */,
->>>>>>> master
+
 			);
 			path = Models;
 			sourceTree = "<group>";
