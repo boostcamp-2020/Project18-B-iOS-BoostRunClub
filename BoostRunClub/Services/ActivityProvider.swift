@@ -24,9 +24,7 @@ protocol ActivityManageable {
 }
 
 class ActivityProvider: ActivityWritable, ActivityReadable {
-    func fetchActivityDetail(activityId _: UUID) -> ActivityDetail? {
-        nil
-    }
+    
 
     let coreDataService: CoreDataServiceable
 
@@ -42,8 +40,11 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
         } catch {
             print(error.localizedDescription)
         }
+		
         fetchActivities().forEach {
             print($0.distance)
+			let detail = fetchActivityDetail(activityId: $0.uuid!)
+			print(detail?.calorie)
         }
     }
 
@@ -60,6 +61,17 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
         }
         return []
     }
+	
+	func fetchActivityDetail(activityId: UUID) -> ActivityDetail? {
+		let request: NSFetchRequest<ZActivityDetail> = ZActivityDetail.fetchRequest(activityId: activityId)
+		do {
+			let result = try coreDataService.context.fetch(request)
+			return result.map ({ ActivityDetail(zActivityDetail: $0) }).first
+		} catch {
+			print(error.localizedDescription)
+		}
+		return nil
+	}
 }
 
 extension ActivityProvider: ActivityManageable {

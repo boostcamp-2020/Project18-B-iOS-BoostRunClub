@@ -37,7 +37,6 @@ class RunningDataService: RunningDataServiceable {
 
     var cancellables = Set<AnyCancellable>()
 
-
     var startTime = Date()
     var endTime = Date()
     var lastUpdatedTime: TimeInterval = 0
@@ -52,11 +51,7 @@ class RunningDataService: RunningDataServiceable {
     var distance = CurrentValueSubject<Double, Never>(0)
 
     var locations = [CLLocation]()
-    var startTime: TimeInterval = 0
-    var endTime: TimeInterval = 0
-    var lastUpdatedTime: TimeInterval = 0
 
-    var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
     var runningSplits = [RunningSplit]()
     var currentRunningSplit = RunningSplit()
     var currentRunningSlice = RunningSlice()
@@ -71,7 +66,6 @@ class RunningDataService: RunningDataServiceable {
 
     init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable, motionProvider: MotionProvider, activityWriter: ActivityWritable) {
         motionProvider.startUpdating()
-
 
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
@@ -136,8 +130,19 @@ class RunningDataService: RunningDataServiceable {
         eventTimer.stop()
         endTime = Date()
         let uuid = UUID()
-        let activity = Activity(avgPace: avgPace.value, distance: distance.value, duration: runningTime.value, thumbnail: nil, createdAt: startTime, uuid: uuid)
-        let activityDetail = ActivityDetail(activityUUID: uuid, avgBPM: 0, cadence: 0, calorie: 0, elevation: 0, locations: [])
+        let activity = Activity(avgPace: avgPace.value,
+                                distance: distance.value,
+                                duration: runningTime.value,
+                                thumbnail: nil,
+                                createdAt: startTime,
+                                uuid: uuid)
+
+        let activityDetail = ActivityDetail(activityUUID: uuid,
+                                            avgBPM: 0,
+                                            cadence: cadence.value,
+                                            calorie: Int(calorie.value),
+                                            elevation: 0,
+                                            locations: locations.map { Location(clLocation: $0) })
         activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
 
         isRunning = false
