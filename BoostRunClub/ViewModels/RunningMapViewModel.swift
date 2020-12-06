@@ -17,7 +17,11 @@ protocol RunningMapViewModelInputs {}
 
 protocol RunningMapViewModelOutputs {}
 
-class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs {}
+class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs {
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+}
 
 extension RunningMapViewModel: RunningMapViewModelTypes {
     var inputs: RunningMapViewModelInputs { self }

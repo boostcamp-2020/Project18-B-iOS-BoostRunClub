@@ -150,6 +150,10 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     var initialAnimation = PassthroughSubject<Void, Never>()
     var resumeAnimation = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Types

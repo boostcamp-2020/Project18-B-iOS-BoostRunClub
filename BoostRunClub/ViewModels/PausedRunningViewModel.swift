@@ -94,6 +94,10 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var showPrepareRunningSignal = PassthroughSubject<Void, Never>()
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 extension PausedRunningViewModel: PausedRunningViewModelTypes {
