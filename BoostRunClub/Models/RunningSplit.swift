@@ -8,12 +8,10 @@
 import Foundation
 
 struct RunningSplit {
-    var runningSlices = [RunningSlice]()
-    var averagePace: Int = 0
+    var activityUUID: UUID?
+    var avgBPM: Int = 0
+    var avgPace: Int = 0
     var distance: Double = 0
-
-//    var elevation: Int
-//    var bpm: Int
-//    var cadence: Int
-//    var calorie: Int
+    var elevation: Int = 0
+    var runningSlices = [RunningSlice]()
 }

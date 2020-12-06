@@ -10,7 +10,12 @@ import UIKit
 protocol Factory: AnyObject {
     //    func makeLoginVC(with viewModel: LoginViewModelTypes) -> UIViewController
     //    func makeActivityVC(with viewModel: ActivityViewModelTypes) -> UIViewController
-    func makeRunningPageVC(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController
+    func makeRunningPageVC(
+        with viewModel: RunningPageViewModelTypes,
+        viewControllers: [UIViewController]
+    )
+        -> UIViewController
+
     func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UIViewController
     //    func makeProfileVC(with viewModel: ProfileViewModelTypes) -> UIViewController
     func makePrepareRunVC(with viewModel: PrepareRunViewModelTypes) -> UIViewController
@@ -33,7 +38,14 @@ protocol Factory: AnyObject {
 }
 
 class DependencyFactory: Factory {
-    lazy var runningDataProvider = RunningDataService(locationProvider: locationProvider, motionProvider: motionProvider)
+    lazy var coreDataService = CoreDataService()
+
+    lazy var runningDataProvider = RunningDataService(
+        locationProvider: locationProvider,
+        motionProvider: motionProvider,
+        activityWriter: ActivityProvider(coreDataService: coreDataService)
+    )
+
     lazy var locationProvider = LocationProvider()
     lazy var motionProvider = MotionProvider()
 

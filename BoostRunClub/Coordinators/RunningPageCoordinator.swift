@@ -24,7 +24,10 @@ final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProt
         childCoordinators.forEach { $0.start() }
 
         let runningPageVM = factory.makeRunningPageVM()
-        let runningPageVC = factory.makeRunningPageVC(with: runningPageVM, viewControllers: childCoordinators.map { $0.navigationController })
+        let runningPageVC = factory.makeRunningPageVC(
+            with: runningPageVM,
+            viewControllers: childCoordinators.map { $0.navigationController }
+        )
 
         navigationController.viewControllers = [runningPageVC]
     }

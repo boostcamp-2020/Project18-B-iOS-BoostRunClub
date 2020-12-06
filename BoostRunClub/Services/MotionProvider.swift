@@ -22,9 +22,7 @@ final class MotionProvider {
 
         isActive = true
 
-        activityManager.startActivityUpdates(to: OperationQueue.main) {
-            [weak self] (activity: CMMotionActivity?) in
-
+        activityManager.startActivityUpdates(to: OperationQueue.main) { [weak self] (activity: CMMotionActivity?) in
             guard
                 let self = self,
                 let activity = activity
@@ -54,8 +52,7 @@ final class MotionProvider {
     }
 
     func startCountingSteps() {
-        pedometer.startUpdates(from: Date()) {
-            [weak self] pedometerData, error in
+        pedometer.startUpdates(from: Date()) { [weak self] pedometerData, error in
 
             guard
                 let self = self,

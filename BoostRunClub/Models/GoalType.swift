@@ -42,8 +42,6 @@ enum GoalType: Int {
             return ""
         }
     }
-
-    // TODO: 생각해보기..
 }
 
 struct GoalInfo: Equatable {
