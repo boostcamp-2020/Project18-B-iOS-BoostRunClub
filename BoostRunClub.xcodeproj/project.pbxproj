@@ -76,6 +76,10 @@
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
+		96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96ED402F257C7654007DB3DF /* BRCModel.xcdatamodeld */; };
+		96ED4035257C768A007DB3DF /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED4034257C768A007DB3DF /* Activity.swift */; };
+		96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED403A257C7747007DB3DF /* CoreDataService.swift */; };
+		96ED403F257C7947007DB3DF /* ActivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED403E257C7947007DB3DF /* ActivityProvider.swift */; };
 		96FA7DF3256FFEE800090999 /* RunningInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF2256FFEE800090999 /* RunningInfoType.swift */; };
 		96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
 		96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DFD25701C7700090999 /* RunningMapViewController.swift */; };
@@ -160,6 +164,10 @@
 		9689A1692576441900DED689 /* RunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCoordinator.swift; sourceTree = "<group>"; };
 		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Extensions/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
+		96ED4030257C7654007DB3DF /* BRCModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BRCModel.xcdatamodel; sourceTree = "<group>"; };
+		96ED4034257C768A007DB3DF /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		96ED403A257C7747007DB3DF /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		96ED403E257C7947007DB3DF /* ActivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityProvider.swift; sourceTree = "<group>"; };
 		96FA7DF2256FFEE800090999 /* RunningInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunningInfoType.swift; path = BoostRunClub/Models/RunningInfoType.swift; sourceTree = SOURCE_ROOT; };
 		96FA7DF52570177C00090999 /* CaseIterable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CaseIterable+.swift"; path = "BoostRunClub/Extensions/CaseIterable+.swift"; sourceTree = SOURCE_ROOT; };
 		96FA7DFD25701C7700090999 /* RunningMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapViewController.swift; sourceTree = "<group>"; };
@@ -308,6 +316,7 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
+				96ED402E257C7633007DB3DF /* CoreData */,
 				71EFCC68257750C8007998AD /* Factory */,
 				963B46F3256CD440006138DF /* Services */,
 				71E82889256B91A0004A1F30 /* Coordinators */,
@@ -359,6 +368,8 @@
 				4C1D491C2575D869002C66CD /* RunningDataService.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 				4C7045FF2577821D009C39A2 /* EventTimer.swift */,
+				96ED403A257C7747007DB3DF /* CoreDataService.swift */,
+				96ED403E257C7947007DB3DF /* ActivityProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -370,6 +381,7 @@
 				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
 				718729412578DA63007BD24F /* RunningSplit.swift */,
 				4C1EDBF52578E22C004302C5 /* RunningSlice.swift */,
+				96ED4034257C768A007DB3DF /* Activity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -386,6 +398,14 @@
 				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		96ED402E257C7633007DB3DF /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				96ED402F257C7654007DB3DF /* BRCModel.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		C55C5C85FF1A070D490B9094 /* Frameworks */ = {
@@ -565,10 +585,13 @@
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
+				96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
+				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
+				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
 				71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */,
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
@@ -576,6 +599,7 @@
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
 				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
+				96ED403F257C7947007DB3DF /* ActivityProvider.swift in Sources */,
 				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
@@ -890,6 +914,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		96ED402F257C7654007DB3DF /* BRCModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				96ED4030257C7654007DB3DF /* BRCModel.xcdatamodel */,
+			);
+			currentVersion = 96ED4030257C7654007DB3DF /* BRCModel.xcdatamodel */;
+			path = BRCModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9600DB462566AA4400183CB9 /* Project object */;
 }

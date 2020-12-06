@@ -28,6 +28,7 @@ protocol RunningDataServiceable {
 
 class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
+    var activityWriter: ActivityWritable
 
     var cancellables = Set<AnyCancellable>()
     var locations = [CLLocation]()
@@ -52,9 +53,14 @@ class RunningDataService: RunningDataServiceable {
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable) {
+    init(eventTimer: EventTimerProtocol = EventTimer(),
+         locationProvider: LocationProvidable,
+         activityWriter: ActivityWritable)
+    {
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
+        self.activityWriter = activityWriter
+
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] location in
@@ -99,6 +105,11 @@ class RunningDataService: RunningDataServiceable {
         addSplit()
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
+
+        let activity = Activity()
+        activity.distance = distance.value
+        activityWriter.addActivity(activity: activity)
+
         isRunning = false
     }
 
