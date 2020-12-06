@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ZActivity" representedClassName="ZActivity" syncable="YES" codeGenerationType="class">
-        <attribute name="activity" attributeType="Transformable" valueTransformerName="ActivityAttributeTransformer" customClassName="Activity"/>
+        <attribute name="avgPace" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="ZActivity" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="ZActivity" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

@@ -316,8 +316,8 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
-				96ED402E257C7633007DB3DF /* CoreData */,
 				71EFCC68257750C8007998AD /* Factory */,
+				96ED402E257C7633007DB3DF /* CoreData */,
 				963B46F3256CD440006138DF /* Services */,
 				71E82889256B91A0004A1F30 /* Coordinators */,
 				9680AB9225707E19006F0FD2 /* Models */,

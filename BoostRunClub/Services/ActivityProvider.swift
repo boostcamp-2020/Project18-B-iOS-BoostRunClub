@@ -30,20 +30,21 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
     }
 
     func addActivity(activity: Activity) {
-        print("-------------------------------------------------")
-        print("-------------------------------------------------")
-        print("-------------------------------------------------")
         let zActivity = ZActivity(context: coreDataService.context)
-        zActivity.activity = activity
+        zActivity.avgPace = Int32(activity.avgPace)
+        zActivity.distance = activity.distance
+        zActivity.uuid = activity.uuid
+        zActivity.thumbnail = activity.thumbnail
+        zActivity.createdAt = activity.createdAt
+        zActivity.duration = activity.duration
         do {
             try coreDataService.context.save()
         } catch {
             print(error.localizedDescription)
         }
-        print("-------------------------------------------------")
-        print("-------------------------------------------------")
-        print("-------------------------------------------------")
-        print(fetchActivities())
+        fetchActivities().forEach {
+            print($0.distance)
+        }
     }
 
     func editActivity(activity _: Activity) {}
@@ -53,7 +54,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
 
         do {
             let result = try coreDataService.context.fetch(request)
-            return result.compactMap { $0.activity }
+            return result.map { Activity(zActivity: $0) }
         } catch {
             print(error.localizedDescription)
         }

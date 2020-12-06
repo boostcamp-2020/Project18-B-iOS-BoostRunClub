@@ -33,8 +33,8 @@ class RunningDataService: RunningDataServiceable {
     var cancellables = Set<AnyCancellable>()
     var locations = [CLLocation]()
 
-    var startTime: TimeInterval = 0
-    var endTime: TimeInterval = 0
+    var startTime = Date()
+    var endTime = Date()
     var lastUpdatedTime: TimeInterval = 0
 
     var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
@@ -78,9 +78,8 @@ class RunningDataService: RunningDataServiceable {
     }
 
     func initializeRunningData() {
-        startTime = Date.timeIntervalSinceReferenceDate
-        endTime = 0
-        lastUpdatedTime = startTime
+        startTime = Date()
+        lastUpdatedTime = Date.timeIntervalSinceReferenceDate
         runningTime.value = 0
         pace.value = 0
         avgPace.value = 0
@@ -105,9 +104,9 @@ class RunningDataService: RunningDataServiceable {
         addSplit()
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
+        endTime = Date()
+        let activity = Activity(avgPace: avgPace.value, distance: distance.value, duration: runningTime.value, thumbnail: nil, createdAt: startTime, uuid: UUID())
 
-        let activity = Activity()
-        activity.distance = distance.value
         activityWriter.addActivity(activity: activity)
 
         isRunning = false
