@@ -15,8 +15,11 @@ protocol PrepareRunCoordinatorProtocol {
 }
 
 final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtocol {
-    required init(navigationController: UINavigationController, factory: Factory) {
-        super.init(navigationController: navigationController, factory: factory)
+    let factory: PrepareRunSceneFactory
+
+    init(navigationController: UINavigationController, factory: PrepareRunSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
         navigationController.view.backgroundColor = .systemBackground
         navigationController.setNavigationBarHidden(false, animated: true)
     }

@@ -12,6 +12,13 @@ protocol LoginCoordinatorProtocol {
 }
 
 final class LoginCoordinator: BasicCoordinator, LoginCoordinatorProtocol {
+    let factory: LoginSceneFactory
+
+    init(navigationController: UINavigationController, factory: LoginSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showLoginViewController()
     }

@@ -20,15 +20,22 @@ enum TabBarPage: Int {
 protocol MainTabBarCoordinatorProtocol {}
 
 final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtocol {
+    let factory: TabBarContainerFactory
+
+    init(navigationController: UINavigationController, factory: TabBarContainerFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         prepareTabBarController()
     }
 
     private func prepareTabBarController() {
         childCoordinators = [
-            ActivityCoordinator(navigationController: UINavigationController(), factory: factory),
-            PrepareRunCoordinator(navigationController: UINavigationController(), factory: factory),
-            ProfileCoordinator(navigationController: UINavigationController(), factory: factory),
+            ActivityCoordinator(navigationController: UINavigationController()),
+            PrepareRunCoordinator(navigationController: UINavigationController()),
+            ProfileCoordinator(navigationController: UINavigationController()),
         ]
 
         childCoordinators.forEach { $0.start() }

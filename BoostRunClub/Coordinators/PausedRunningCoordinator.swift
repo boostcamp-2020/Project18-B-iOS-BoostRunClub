@@ -13,6 +13,13 @@ protocol PausedRunningCoordinatorProtocol {
 }
 
 final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinatorProtocol {
+    let factory: PausedRunningSceneFactory
+
+    init(navigationController: UINavigationController, factory: PausedRunningSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showPausedRunningViewController()
     }

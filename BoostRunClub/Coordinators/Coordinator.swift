@@ -13,7 +13,6 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     func start()
     func clear()
-    init(navigationController: UINavigationController, factory: Factory)
 }
 
 extension Coordinator {
@@ -26,11 +25,9 @@ class BasicCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators = [Coordinator]()
     var cancellables = Set<AnyCancellable>()
-    var factory: Factory
 
-    required init(navigationController: UINavigationController, factory: Factory) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.factory = factory
         navigationController.setNavigationBarHidden(true, animated: true)
     }
 
