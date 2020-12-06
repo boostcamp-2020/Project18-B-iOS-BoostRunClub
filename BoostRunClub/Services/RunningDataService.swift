@@ -105,9 +105,10 @@ class RunningDataService: RunningDataServiceable {
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
         endTime = Date()
-        let activity = Activity(avgPace: avgPace.value, distance: distance.value, duration: runningTime.value, thumbnail: nil, createdAt: startTime, uuid: UUID())
-
-        activityWriter.addActivity(activity: activity)
+        let uuid = UUID()
+        let activity = Activity(avgPace: avgPace.value, distance: distance.value, duration: runningTime.value, thumbnail: nil, createdAt: startTime, uuid: uuid)
+        let activityDetail = ActivityDetail(activityUUID: uuid, avgBPM: 0, cadence: 0, calorie: 0, elevation: 0, locations: [])
+        activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
 
         isRunning = false
     }

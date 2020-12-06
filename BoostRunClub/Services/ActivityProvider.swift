@@ -9,12 +9,13 @@ import CoreData
 import Foundation
 
 protocol ActivityWritable {
-    func addActivity(activity: Activity)
+    func addActivity(activity: Activity, activityDetail: ActivityDetail)
     func editActivity(activity: Activity)
 }
 
 protocol ActivityReadable {
     func fetchActivities() -> [Activity]
+    func fetchActivityDetail(activityId: UUID) -> ActivityDetail?
 }
 
 protocol ActivityManageable {
@@ -23,20 +24,19 @@ protocol ActivityManageable {
 }
 
 class ActivityProvider: ActivityWritable, ActivityReadable {
+    func fetchActivityDetail(activityId _: UUID) -> ActivityDetail? {
+        nil
+    }
+
     let coreDataService: CoreDataServiceable
 
     init(coreDataService: CoreDataServiceable) {
         self.coreDataService = coreDataService
     }
 
-    func addActivity(activity: Activity) {
-        let zActivity = ZActivity(context: coreDataService.context)
-        zActivity.avgPace = Int32(activity.avgPace)
-        zActivity.distance = activity.distance
-        zActivity.uuid = activity.uuid
-        zActivity.thumbnail = activity.thumbnail
-        zActivity.createdAt = activity.createdAt
-        zActivity.duration = activity.duration
+    func addActivity(activity: Activity, activityDetail: ActivityDetail) {
+        ZActivity(context: coreDataService.context, activity: activity)
+        ZActivityDetail(context: coreDataService.context, activityDetail: activityDetail)
         do {
             try coreDataService.context.save()
         } catch {
