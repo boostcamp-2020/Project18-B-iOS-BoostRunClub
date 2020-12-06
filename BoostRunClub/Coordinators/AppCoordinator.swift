@@ -15,8 +15,8 @@ protocol AppCoordinatorProtocol {
 }
 
 final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
-    required init(navigationController: UINavigationController, factory: Factory) {
-        super.init(navigationController: navigationController, factory: factory)
+    override init(navigationController: UINavigationController) {
+        super.init(navigationController: navigationController)
 
         NotificationCenter.default
             .publisher(for: .showRunningScene)
@@ -48,19 +48,19 @@ final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
     }
 
     func showLoginFlow() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController, factory: factory)
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
         childCoordinators.append(loginCoordinator)
         loginCoordinator.start()
     }
 
     func showMainFlow() {
-        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController, factory: factory)
+        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController)
         childCoordinators.append(mainTabBarCoordinator)
         mainTabBarCoordinator.start()
     }
 
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
-        let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController, factory: factory)
+        let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController)
         childCoordinators.append(runningPageCoordinator)
         runningPageCoordinator.start()
     }

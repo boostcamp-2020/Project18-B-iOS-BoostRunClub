@@ -14,8 +14,8 @@ protocol RunningCoordinatorProtocol {
 }
 
 final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
-    required init(navigationController: UINavigationController, factory: Factory) {
-        super.init(navigationController: navigationController, factory: factory)
+    override init(navigationController: UINavigationController) {
+        super.init(navigationController: navigationController)
 
         NotificationCenter.default
             .publisher(for: .showRunningInfoScene)
@@ -39,13 +39,13 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
     }
 
     func showRunningInfoScene() {
-        let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController, factory: factory)
+        let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController)
         childCoordinators.append(runInfoCoordinator)
         runInfoCoordinator.start()
     }
 
     func showPausedRunningScene() {
-        let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController, factory: factory)
+        let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController)
         childCoordinators.append(pausedRunningCoordinator)
         pausedRunningCoordinator.start()
     }

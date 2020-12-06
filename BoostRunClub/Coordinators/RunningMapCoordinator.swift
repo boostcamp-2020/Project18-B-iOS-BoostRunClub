@@ -12,6 +12,13 @@ protocol RunningMapCoordinatorProtocol {
 }
 
 final class RunningMapCoordinator: BasicCoordinator, RunningMapCoordinatorProtocol {
+    let factory: RunningMapSceneFactory
+
+    init(navigationController: UINavigationController, factory: RunningMapSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showRunningMapViewController()
     }

@@ -13,6 +13,13 @@ protocol RunningInfoCoordinatorProtocol {
 }
 
 final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProtocol {
+    let factory: RunningInfoSceneFactory
+
+    init(navigationController: UINavigationController, factory: RunningInfoSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showRunningInfoViewController()
     }

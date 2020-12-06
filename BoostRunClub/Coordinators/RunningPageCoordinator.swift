@@ -11,15 +11,22 @@ import UIKit
 protocol RunningPageCoordinatorProtocol {}
 
 final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProtocol {
+    let factory: RunningPageContainerFactory
+
+    init(navigationController: UINavigationController, factory: RunningPageContainerFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         prepareRunningPageController()
     }
 
     private func prepareRunningPageController() {
         childCoordinators = [
-            RunningMapCoordinator(navigationController: UINavigationController(), factory: factory),
-            RunningCoordinator(navigationController: UINavigationController(), factory: factory),
-            SplitsCoordinator(navigationController: UINavigationController(), factory: factory),
+            RunningMapCoordinator(navigationController: UINavigationController()),
+            RunningCoordinator(navigationController: UINavigationController()),
+            SplitsCoordinator(navigationController: UINavigationController()),
         ]
         childCoordinators.forEach { $0.start() }
 

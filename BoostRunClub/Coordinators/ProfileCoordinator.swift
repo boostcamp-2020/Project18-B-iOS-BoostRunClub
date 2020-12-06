@@ -12,6 +12,13 @@ protocol ProfileCoordinatorProtocol {
 }
 
 final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
+    let factory: ProfileSceneFactory
+
+    init(navigationController: UINavigationController, factory: ProfileSceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showProfileViewController()
     }

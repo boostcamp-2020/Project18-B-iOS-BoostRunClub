@@ -10,6 +10,13 @@ import UIKit
 protocol ActivityCoordinatorProtocol {}
 
 final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
+    let factory: ActivitySceneFactory
+
+    init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
+        self.factory = factory
+        super.init(navigationController: navigationController)
+    }
+
     override func start() {
         showActivityViewController()
     }
