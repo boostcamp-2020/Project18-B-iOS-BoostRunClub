@@ -64,7 +64,12 @@ class RunningDataService: RunningDataServiceable {
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable, motionProvider: MotionProvider, activityWriter: ActivityWritable) {
+    init(
+        eventTimer: EventTimerProtocol = EventTimer(),
+        locationProvider: LocationProvidable,
+        motionProvider: MotionProvider,
+        activityWriter: ActivityWritable
+    ) {
         motionProvider.startUpdating()
 
         self.eventTimer = eventTimer

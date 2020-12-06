@@ -24,8 +24,10 @@ class PausedRunningViewController: UIViewController {
     ]
 
     private lazy var mapViewHeightConstraint = self.mapView.heightAnchor.constraint(equalToConstant: .zero)
-    private lazy var resumeButtonInitialCenterXConstraint = self.resumeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
-    private lazy var endRunningButtonInitialCenterXConstraint = self.endRunningButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
+    private lazy var resumeButtonInitialCenterXConstraint
+        = self.resumeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
+    private lazy var endRunningButtonInitialCenterXConstraint
+        = self.endRunningButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
 
     private var viewModel: PausedRunningViewModelTypes?
     private var cancellables = Set<AnyCancellable>()

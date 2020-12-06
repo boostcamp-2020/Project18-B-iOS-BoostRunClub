@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ZActivity" representedClassName="ZActivity" syncable="YES" codeGenerationType="class">
+    <entity name="ZActivity" representedClassName="ZActivity" syncable="YES">
         <attribute name="avgPace" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -8,7 +8,7 @@
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
-    <entity name="ZActivityDetail" representedClassName="ZActivityDetail" syncable="YES" codeGenerationType="class">
+    <entity name="ZActivityDetail" representedClassName="ZActivityDetail" syncable="YES">
         <attribute name="activityUUID" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="avgBPM" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="cadence" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -17,7 +17,7 @@
         <attribute name="locations" attributeType="Binary"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
-    <entity name="ZRunningSplit" representedClassName="ZRunningSplit" syncable="YES" codeGenerationType="class">
+    <entity name="ZRunningSplit" representedClassName="ZRunningSplit" syncable="YES">
         <attribute name="activityUUID" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="avgBPM" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="avgPace" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>

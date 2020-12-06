@@ -15,14 +15,3 @@ struct Activity {
     var createdAt: Date?
     var uuid: UUID?
 }
-
-extension Activity {
-    init(zActivity: ZActivity) {
-        self.init(avgPace: Int(zActivity.avgPace),
-                  distance: zActivity.distance,
-                  duration: zActivity.duration,
-                  thumbnail: zActivity.thumbnail,
-                  createdAt: zActivity.createdAt,
-                  uuid: zActivity.uuid)
-    }
-}

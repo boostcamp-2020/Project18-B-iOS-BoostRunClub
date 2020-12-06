@@ -15,20 +15,3 @@ struct RunningSplit {
     var elevation: Int = 0
     var runningSlices = [RunningSlice]()
 }
-
-extension RunningSplit {
-    init(zRunningSplit: ZRunningSplit) {
-        if
-            let data = zRunningSplit.runningSlices as? Data,
-            let slices = try? JSONDecoder().decode([RunningSlice].self, from: data)
-        {
-            runningSlices = slices
-        }
-
-        activityUUID = zRunningSplit.activityUUID
-        avgBPM = Int(zRunningSplit.avgBPM)
-        avgPace = Int(zRunningSplit.avgPace)
-        distance = zRunningSplit.distance
-        elevation = Int(zRunningSplit.elevation)
-    }
-}

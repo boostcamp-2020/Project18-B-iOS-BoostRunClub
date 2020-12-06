@@ -8,7 +8,21 @@
 import CoreData
 import Foundation
 
+@objc(ZActivity)
+public class ZActivity: NSManagedObject {
+    @NSManaged public var avgPace: Int32
+    @NSManaged public var createdAt: Date?
+    @NSManaged public var distance: Double
+    @NSManaged public var duration: Double
+    @NSManaged public var thumbnail: Data?
+    @NSManaged public var uuid: UUID?
+}
+
 extension ZActivity {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ZActivity> {
+        return NSFetchRequest<ZActivity>(entityName: "ZActivity")
+    }
+
     @discardableResult
     convenience init(context: NSManagedObjectContext, activity: Activity) {
         self.init(context: context)
@@ -18,5 +32,16 @@ extension ZActivity {
         thumbnail = activity.thumbnail
         createdAt = activity.createdAt
         duration = activity.duration
+    }
+
+    var activity: Activity {
+        Activity(
+            avgPace: Int(avgPace),
+            distance: distance,
+            duration: duration,
+            thumbnail: thumbnail,
+            createdAt: createdAt,
+            uuid: uuid
+        )
     }
 }

@@ -62,7 +62,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
 
         do {
             let result = try coreDataService.context.fetch(request)
-            return result.map { Activity(zActivity: $0) }
+            return result.map { $0.activity }
         } catch {
             print(error.localizedDescription)
         }
@@ -73,7 +73,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
         let request: NSFetchRequest<ZActivityDetail> = ZActivityDetail.fetchRequest(activityId: activityId)
         do {
             let result = try coreDataService.context.fetch(request)
-            return result.map { ActivityDetail(zActivityDetail: $0) }.first
+            return result.map { $0.activityDetail }.first
         } catch {
             print(error.localizedDescription)
         }
@@ -84,7 +84,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
         let request: NSFetchRequest<ZRunningSplit> = ZRunningSplit.fetchRequest(activityId: activityId)
         do {
             let result = try coreDataService.context.fetch(request)
-            return result.map { RunningSplit(zRunningSplit: $0) }
+            return result.map { $0.runningSplit }
         } catch {
             print(error.localizedDescription)
         }
