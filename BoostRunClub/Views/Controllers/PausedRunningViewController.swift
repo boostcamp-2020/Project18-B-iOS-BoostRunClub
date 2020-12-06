@@ -24,8 +24,10 @@ class PausedRunningViewController: UIViewController {
     ]
 
     private lazy var mapViewHeightConstraint = self.mapView.heightAnchor.constraint(equalToConstant: .zero)
-    private lazy var resumeButtonInitialCenterXConstraint = self.resumeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
-    private lazy var endRunningButtonInitialCenterXConstraint = self.endRunningButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
+    private lazy var resumeButtonInitialCenterXConstraint
+        = self.resumeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
+    private lazy var endRunningButtonInitialCenterXConstraint
+        = self.endRunningButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: .zero)
 
     private var viewModel: PausedRunningViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
@@ -180,7 +182,7 @@ extension PausedRunningViewController: MKMapViewDelegate {
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
-            renderer.strokeColor = color // UIColor.systemBlue.withAlphaComponent(0.9)
+            renderer.strokeColor = color
             renderer.lineWidth = 7
             return renderer
         }

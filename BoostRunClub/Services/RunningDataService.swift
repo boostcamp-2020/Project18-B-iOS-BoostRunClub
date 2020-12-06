@@ -32,7 +32,16 @@ protocol RunningDataServiceable {
 
 class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
+
+    var activityWriter: ActivityWritable
+
     var cancellables = Set<AnyCancellable>()
+
+    var startTime = Date()
+    var endTime = Date()
+    var lastUpdatedTime: TimeInterval = 0
+
+    var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
 
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
     var calorie = CurrentValueSubject<Double, Never>(0)
@@ -42,11 +51,7 @@ class RunningDataService: RunningDataServiceable {
     var distance = CurrentValueSubject<Double, Never>(0)
 
     var locations = [CLLocation]()
-    var startTime: TimeInterval = 0
-    var endTime: TimeInterval = 0
-    var lastUpdatedTime: TimeInterval = 0
 
-    var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
     var runningSplits = [RunningSplit]()
     var currentRunningSplit = RunningSplit()
     var currentRunningSlice = RunningSlice()
@@ -59,11 +64,18 @@ class RunningDataService: RunningDataServiceable {
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
 
-    init(eventTimer: EventTimerProtocol = EventTimer(), locationProvider: LocationProvidable, motionProvider: MotionProvider) {
+    init(
+        eventTimer: EventTimerProtocol = EventTimer(),
+        locationProvider: LocationProvidable,
+        motionProvider: MotionProvider,
+        activityWriter: ActivityWritable
+    ) {
         motionProvider.startUpdating()
 
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
+        self.activityWriter = activityWriter
+
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] location in
@@ -81,10 +93,12 @@ class RunningDataService: RunningDataServiceable {
 
         motionProvider.currentMotionType
             .sink { _ in
+                // TODO: Motion Classifier
                 //				self.motion = $0
             }
             .store(in: &cancellables)
 
+        // TODO: Cadence
         //        motionProvider.steps.sink { steps in
         //            print("#####", steps)
         //        }.store(in: &cancellables)
@@ -95,9 +109,8 @@ class RunningDataService: RunningDataServiceable {
     }
 
     func initializeRunningData() {
-        startTime = Date.timeIntervalSinceReferenceDate
-        endTime = 0
-        lastUpdatedTime = startTime
+        startTime = Date()
+        lastUpdatedTime = Date.timeIntervalSinceReferenceDate
         runningTime.value = 0
         pace.value = 0
         avgPace.value = 0
@@ -115,13 +128,35 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
-        //		addSplit()
     }
 
     func stop() {
         addSplit()
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
+        endTime = Date()
+        let uuid = UUID()
+        let activity = Activity(avgPace: avgPace.value,
+                                distance: distance.value,
+                                duration: runningTime.value,
+                                thumbnail: nil,
+                                createdAt: startTime,
+                                uuid: uuid)
+
+        let activityDetail = ActivityDetail(activityUUID: uuid,
+                                            avgBPM: 0,
+                                            cadence: cadence.value,
+                                            calorie: Int(calorie.value),
+                                            elevation: 0,
+                                            locations: locations.map { Location(clLocation: $0) })
+        let splits: [RunningSplit] = runningSplits.map {
+            var split = $0
+            split.activityUUID = uuid
+            return split
+        }
+
+        activityWriter.addActivity(activity: activity, activityDetail: activityDetail, splits: splits)
+
         isRunning = false
     }
 

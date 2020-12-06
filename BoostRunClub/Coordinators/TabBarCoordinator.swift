@@ -40,7 +40,10 @@ final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtoc
 
         childCoordinators.forEach { $0.start() }
 
-        let tabBarController = factory.makeTabBarVC(with: childCoordinators.map { $0.navigationController }, selectedIndex: TabBarPage.running.rawValue)
+        let tabBarController = factory.makeTabBarVC(
+            with: childCoordinators.map { $0.navigationController },
+            selectedIndex: TabBarPage.running.rawValue
+        )
         navigationController.viewControllers = [tabBarController]
     }
 

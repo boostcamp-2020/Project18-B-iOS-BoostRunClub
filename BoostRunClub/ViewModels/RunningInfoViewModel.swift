@@ -120,7 +120,12 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     func didTapRunData(index: Int) {
         var nextType = runningInfoObservables[index].value.type.circularNext()
         nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
-        runningInfoObservables[index].send(RunningInfo(type: nextType, value: possibleTypes[nextType, default: nextType.initialValue]))
+        runningInfoObservables[index].send(
+            RunningInfo(
+                type: nextType,
+                value: possibleTypes[nextType, default: nextType.initialValue]
+            )
+        )
         runningInfoTapAnimation.send(index)
     }
 

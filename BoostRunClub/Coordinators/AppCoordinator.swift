@@ -61,6 +61,7 @@ final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
 
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
         let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController)
+
         childCoordinators.append(runningPageCoordinator)
         runningPageCoordinator.start()
     }

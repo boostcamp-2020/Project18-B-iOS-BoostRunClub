@@ -46,6 +46,7 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
 
     func showPausedRunningScene() {
         let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController)
+
         childCoordinators.append(pausedRunningCoordinator)
         pausedRunningCoordinator.start()
     }

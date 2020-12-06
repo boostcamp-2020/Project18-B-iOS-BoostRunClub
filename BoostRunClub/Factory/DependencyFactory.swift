@@ -10,26 +10,27 @@ import UIKit
 protocol Factory: AnyObject {
     //    func makeLoginVC(with viewModel: LoginViewModelTypes) -> UIViewController
     //    func makeActivityVC(with viewModel: ActivityViewModelTypes) -> UIViewController
-//    func makeRunningPageVC(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController
+    //    func makeRunningPageVC(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController
+
     func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UIViewController
     //    func makeProfileVC(with viewModel: ProfileViewModelTypes) -> UIViewController
-//    func makePrepareRunVC(with viewModel: PrepareRunViewModelTypes) -> UIViewController
-//    func makeGoalTypeVC(with viewModel: GoalTypeViewModelTypes) -> UIViewController
-//    func makeGoalValueSetupVC(with viewModel: GoalValueSetupViewModelTypes) -> UIViewController
-//    func makeRunningMapVC(with viewModel: RunningMapViewModelTypes) -> UIViewController
-//    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes) -> UIViewController
-//    func makePausedRunningVC(with viewModel: PausedRunningViewModelTypes) -> UIViewController
+    //    func makePrepareRunVC(with viewModel: PrepareRunViewModelTypes) -> UIViewController
+    //    func makeGoalTypeVC(with viewModel: GoalTypeViewModelTypes) -> UIViewController
+    //    func makeGoalValueSetupVC(with viewModel: GoalValueSetupViewModelTypes) -> UIViewController
+    //    func makeRunningMapVC(with viewModel: RunningMapViewModelTypes) -> UIViewController
+    //    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes) -> UIViewController
+    //    func makePausedRunningVC(with viewModel: PausedRunningViewModelTypes) -> UIViewController
 
-//    func makeLoginVM() -> LoginViewModelTypes
-//    func makeActivityVM() -> ActivityViewModelTypes
-//    func makeProfileVM() -> ProfileViewModelTypes
-//    func makeRunningPageVM() -> RunningPageViewModelTypes
-//    func makePrepareRunVM() -> PrepareRunViewModelTypes
-//    func makeGoalTypeVM(goalType: GoalType) -> GoalTypeViewModelTypes
-//    func makeGoalValueSetupVM(goalType: GoalType, goalValue: String) -> GoalValueSetupViewModelTypes
-//    func makeRunningMapVM() -> RunningMapViewModelTypes
-//    func makeRunningInfoVM() -> RunningInfoViewModelTypes
-//    func makePausedRunningVM() -> PausedRunningViewModelTypes
+    //    func makeLoginVM() -> LoginViewModelTypes
+    //    func makeActivityVM() -> ActivityViewModelTypes
+    //    func makeProfileVM() -> ProfileViewModelTypes
+    //    func makeRunningPageVM() -> RunningPageViewModelTypes
+    //    func makePrepareRunVM() -> PrepareRunViewModelTypes
+    //    func makeGoalTypeVM(goalType: GoalType) -> GoalTypeViewModelTypes
+    //    func makeGoalValueSetupVM(goalType: GoalType, goalValue: String) -> GoalValueSetupViewModelTypes
+    //    func makeRunningMapVM() -> RunningMapViewModelTypes
+    //    func makeRunningInfoVM() -> RunningInfoViewModelTypes
+    //    func makePausedRunningVM() -> PausedRunningViewModelTypes
 }
 
 protocol TabBarContainerFactory {
@@ -194,8 +195,14 @@ extension DependencyFactory: GoalValueSetupSceneFactory {
 
 class DependencyFactory {
     static let shared = DependencyFactory()
-    lazy var runningDataProvider = RunningDataService(locationProvider: locationProvider, motionProvider: motionProvider)
+    lazy var coreDataService = CoreDataService()
+
+    lazy var runningDataProvider = RunningDataService(
+        locationProvider: locationProvider,
+        motionProvider: motionProvider,
+        activityWriter: ActivityProvider(coreDataService: coreDataService)
+    )
+
     lazy var locationProvider = LocationProvider()
     lazy var motionProvider = MotionProvider()
-
 }
