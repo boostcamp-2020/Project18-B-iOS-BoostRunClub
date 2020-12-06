@@ -43,7 +43,6 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         self.runningDataProvider = runningDataProvider
 
         runningDataProvider.runningTime
-            // .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .map { $0.formattedString }
             .sink { timeString in
                 self.possibleTypes[.time] = timeString
@@ -84,6 +83,28 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .averagePace {
                         $0.send(RunningInfo(type: .averagePace, value: averagePace))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningDataProvider.calorie
+            .map { String(Int($0)) }
+            .sink { calorie in
+                self.possibleTypes[.calorie] = calorie
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .calorie {
+                        $0.send(RunningInfo(type: .calorie, value: calorie))
+                    }
+                }
+            }.store(in: &cancellables)
+
+        runningDataProvider.cadence
+            .map { String($0) }
+            .sink { cadence in
+                self.possibleTypes[.cadence] = cadence
+                self.runningInfoObservables.forEach {
+                    if $0.value.type == .cadence {
+                        $0.send(RunningInfo(type: .cadence, value: cadence))
                     }
                 }
             }.store(in: &cancellables)
