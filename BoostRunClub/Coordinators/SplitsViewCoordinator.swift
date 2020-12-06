@@ -27,4 +27,8 @@ final class SplitsCoordinator: BasicCoordinator, SplitsCoordinatorProtocol {
         let splitsVC = SplitsViewController()
         navigationController.pushViewController(splitsVC, animated: true)
     }
+
+    deinit {
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated")
+    }
 }

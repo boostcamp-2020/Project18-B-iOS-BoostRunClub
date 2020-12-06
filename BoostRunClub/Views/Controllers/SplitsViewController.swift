@@ -21,4 +21,8 @@ class SplitsViewController: UITableViewController {
         super.viewDidLoad()
         view.backgroundColor = .green
     }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }

@@ -33,39 +33,39 @@ final class RunningInfoViewController: UIViewController {
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
         runDataViews.enumerated().forEach { idx, view in
-            view.tapAction = { [weak viewModel] in
-                viewModel?.inputs.didTapRunData(index: idx)
+            view.tapAction = { [unowned self] in
+                self.viewModel?.inputs.didTapRunData(index: idx)
                 view.notificationFeedback()
             }
 
             viewModel.outputs.runningInfoObservables[idx]
                 .receive(on: RunLoop.main)
-                .sink { [weak view] runningInfo in
-                    view?.setValue(value: runningInfo.value)
-                    view?.setType(type: runningInfo.type.name)
+                .sink { [unowned view] runningInfo in
+                    view.setValue(value: runningInfo.value)
+                    view.setType(type: runningInfo.type.name)
                 }
                 .store(in: &cancellables)
         }
 
         viewModel.outputs.runningInfoTapAnimation
             .receive(on: RunLoop.main)
-            .filter { $0 < self.runDataViews.count }
-            .sink { self.runDataViews[$0].startBounceAnimation() }
+            .filter { [unowned self] in $0 < self.runDataViews.count }
+            .sink { [unowned self] in self.runDataViews[$0].startBounceAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.initialAnimation
             .receive(on: RunLoop.main)
-            .sink {
-                self.startInitialAnimation()
-            }
+            .sink { [unowned self] in self.startInitialAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.resumeAnimation
             .receive(on: RunLoop.main)
-            .sink {
-                self.startResumeAnimation()
-            }
+            .sink { [unowned self] in self.startResumeAnimation() }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

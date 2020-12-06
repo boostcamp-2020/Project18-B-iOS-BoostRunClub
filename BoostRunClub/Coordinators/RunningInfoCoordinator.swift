@@ -29,12 +29,16 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
 
         runningInfoVM.outputs.showPausedRunningSignal
             .receive(on: RunLoop.main)
-            .sink {
+            .sink { [unowned self] in
                 NotificationCenter.default.post(name: .showPausedRunningScene, object: self)
             }
             .store(in: &cancellables)
 
         let runningInfoVC = factory.makeRunningInfoVC(with: runningInfoVM)
         navigationController.pushViewController(runningInfoVC, animated: false)
+    }
+
+    deinit {
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
     }
 }

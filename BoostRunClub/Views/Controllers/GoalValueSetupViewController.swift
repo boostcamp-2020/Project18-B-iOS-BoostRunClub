@@ -30,11 +30,15 @@ class GoalValueSetupViewController: UIViewController {
 
         viewModel.outputs.goalValueObservable
             .receive(on: RunLoop.main)
-            .sink { [weak self] value in
-                self?.goalValueView.setLabelText(goalValue: value, goalUnit: viewModel.outputs.goalType.unit)
-                self?.view.layoutIfNeeded()
+            .sink { [unowned self] value in
+                self.goalValueView.setLabelText(goalValue: value, goalUnit: viewModel.outputs.goalType.unit)
+                self.view.layoutIfNeeded()
             }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

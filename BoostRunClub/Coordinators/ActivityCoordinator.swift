@@ -25,4 +25,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
         let activityVC = ActivityViewController()
         navigationController.pushViewController(activityVC, animated: true)
     }
+
+    deinit {
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
+    }
 }

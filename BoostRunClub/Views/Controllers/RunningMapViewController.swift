@@ -21,4 +21,8 @@ class RunningMapViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .cyan
     }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }

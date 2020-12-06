@@ -49,43 +49,39 @@ class PausedRunningViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.outputs.userLocation
             .receive(on: RunLoop.main)
-            .sink { [weak self] coordinate in
+            .sink { [unowned self] coordinate in
                 let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                self?.mapView.setRegion(viewRegion, animated: false)
+                self.mapView.setRegion(viewRegion, animated: false)
             }
             .store(in: &cancellables)
 
         viewModel.outputs.showRunningInfoAnimationSignal
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.beginAnimation()
-            }
+            .sink { [unowned self] in self.beginAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.closeRunningInfoAnimationSignal
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.closeAnimation()
-            }
+            .sink { [unowned self] in self.closeAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.runningInfoTapAnimationSignal
             .receive(on: RunLoop.main)
-            .sink { [weak self] index in
-                self?.runDataViews[index].startBounceAnimation()
-            }
+            .sink { [unowned self] index in self.runDataViews[index].startBounceAnimation() }
             .store(in: &cancellables)
 
         let data = viewModel.outputs.runInfoData
         runDataViews.enumerated().forEach { idx, view in
             view.setType(type: data[idx].type.name)
             view.setValue(value: data[idx].value)
-            view.tapAction = { [weak self] in
-                self?.viewModel?.inputs.didTapRunData(index: idx)
-            }
+            view.tapAction = { [unowned self] in self.viewModel?.inputs.didTapRunData(index: idx) }
         }
 
         showRoutesOnMap(routes: viewModel.outputs.pathCoordinates, slices: viewModel.outputs.slices)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 
@@ -116,8 +112,7 @@ extension PausedRunningViewController {
 
     @objc func didTouchDownRunningButton(_ button: UIButton) {
         pressed = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] _ in
-            guard let self = self else { return }
+        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [unowned self] _ in
             self.view.notificationFeedback()
             self.viewModel?.inputs.didLongHoldStopRunningButton()
         })

@@ -44,7 +44,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.runningTime
             .map { $0.formattedString }
-            .sink { timeString in
+            .sink { [unowned self] timeString in
                 self.possibleTypes[.time] = timeString
 
                 self.runningInfoObservables.forEach {
@@ -56,7 +56,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.distance
             .map { String(format: "%.2f", $0 / 1000) }
-            .sink { distance in
+            .sink { [unowned self] distance in
                 self.possibleTypes[.kilometer] = distance
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .kilometer {
@@ -67,7 +67,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.pace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-            .sink { pace in
+            .sink { [unowned self] pace in
                 self.possibleTypes[.pace] = pace
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .pace {
@@ -78,7 +78,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.avgPace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-            .sink { averagePace in
+            .sink { [unowned self] averagePace in
                 self.possibleTypes[.averagePace] = averagePace
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .averagePace {
@@ -89,7 +89,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.calorie
             .map { String(Int($0)) }
-            .sink { calorie in
+            .sink { [unowned self] calorie in
                 self.possibleTypes[.calorie] = calorie
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .calorie {
@@ -100,7 +100,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.cadence
             .map { String($0) }
-            .sink { cadence in
+            .sink { [unowned self] cadence in
                 self.possibleTypes[.cadence] = cadence
                 self.runningInfoObservables.forEach {
                     if $0.value.type == .cadence {

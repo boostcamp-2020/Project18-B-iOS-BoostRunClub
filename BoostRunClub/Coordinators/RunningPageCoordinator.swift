@@ -40,6 +40,6 @@ final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProt
     }
 
     deinit {
-        print("finished \(self)")
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated")
     }
 }
