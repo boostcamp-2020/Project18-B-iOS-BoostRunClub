@@ -26,14 +26,3 @@ extension ZActivityDetail {
         locations = try? JSONEncoder().encode(activityDetail.locations)
     }
 }
-
-// static func fetch(with identifier: UUID) -> AudioRecord? {
-//	var record: AudioRecord?
-//	moc.performAndWait {
-//		let fetchRequest = AudioRecord.request
-//		fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier as CVarArg)
-//		fetchRequest.fetchLimit = 1
-//		record = (try? fetchRequest.execute())?.first
-//	}
-//	return record
-// }

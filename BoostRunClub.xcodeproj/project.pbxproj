@@ -81,6 +81,7 @@
 		9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A165257640C700DED689 /* PausedRunningViewModel.swift */; };
 		9689A16A2576441900DED689 /* RunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A1692576441900DED689 /* RunningCoordinator.swift */; };
 		969D5F1C256FC48000DD11AB /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
+		96B90635257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B90634257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift */; };
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
@@ -177,6 +178,7 @@
 		9689A165257640C700DED689 /* PausedRunningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningViewModel.swift; sourceTree = "<group>"; };
 		9689A1692576441900DED689 /* RunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCoordinator.swift; sourceTree = "<group>"; };
 		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Extensions/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
+		96B90634257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZRunningSplit+RunningSplit.swift"; sourceTree = "<group>"; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		96ED4030257C7654007DB3DF /* BRCModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BRCModel.xcdatamodel; sourceTree = "<group>"; };
 		96ED4034257C768A007DB3DF /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
@@ -382,12 +384,9 @@
 				4C1D491C2575D869002C66CD /* RunningDataService.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 				4C7045FF2577821D009C39A2 /* EventTimer.swift */,
-
 				96ED403A257C7747007DB3DF /* CoreDataService.swift */,
 				96ED403E257C7947007DB3DF /* ActivityProvider.swift */,
-
 				7187295425791A70007BD24F /* MotionProvider.swift */,
-
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -400,12 +399,9 @@
 				96FA7DF2256FFEE800090999 /* RunningInfoType.swift */,
 				718729412578DA63007BD24F /* RunningSplit.swift */,
 				4C1EDBF52578E22C004302C5 /* RunningSlice.swift */,
-
 				96ED4034257C768A007DB3DF /* Activity.swift */,
 				4CF009C5257CADC300EC928A /* Location.swift */,
-
 				7187295D25791BEF007BD24F /* MotionType.swift */,
-
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -430,6 +426,7 @@
 				96ED402F257C7654007DB3DF /* BRCModel.xcdatamodeld */,
 				4CF009BB257CA9EB00EC928A /* ZActivity+Activity.swift */,
 				4CF009C9257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift */,
+				96B90634257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -632,6 +629,7 @@
 				7187295E25791BEF007BD24F /* MotionType.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
+				96B90635257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */,
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,

@@ -180,7 +180,7 @@ extension PausedRunningViewController: MKMapViewDelegate {
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
-            renderer.strokeColor = color // UIColor.systemBlue.withAlphaComponent(0.9)
+            renderer.strokeColor = color
             renderer.lineWidth = 7
             return renderer
         }

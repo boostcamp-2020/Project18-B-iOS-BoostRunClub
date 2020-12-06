@@ -88,10 +88,12 @@ class RunningDataService: RunningDataServiceable {
 
         motionProvider.currentMotionType
             .sink { _ in
+                // TODO: Motion Classifier
                 //				self.motion = $0
             }
             .store(in: &cancellables)
 
+        // TODO: Cadence
         //        motionProvider.steps.sink { steps in
         //            print("#####", steps)
         //        }.store(in: &cancellables)
@@ -121,7 +123,6 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
-        //		addSplit()
     }
 
     func stop() {
@@ -143,7 +144,13 @@ class RunningDataService: RunningDataServiceable {
                                             calorie: Int(calorie.value),
                                             elevation: 0,
                                             locations: locations.map { Location(clLocation: $0) })
-        activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
+        let splits: [RunningSplit] = runningSplits.map {
+            var split = $0
+            split.activityUUID = uuid
+            return split
+        }
+
+        activityWriter.addActivity(activity: activity, activityDetail: activityDetail, splits: splits)
 
         isRunning = false
     }

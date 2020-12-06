@@ -14,7 +14,6 @@ protocol CoreDataServiceable {
 
 class CoreDataService: CoreDataServiceable {
     lazy var persistentContainer: NSPersistentContainer = {
-//        ActivityAttributeTransformer.register()
         let container = NSPersistentContainer(name: "BRCModel")
         container.loadPersistentStores { description, error in
             print(description)

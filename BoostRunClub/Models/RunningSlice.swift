@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RunningSlice {
+struct RunningSlice: Codable {
     var startIndex: Int = 0
     var endIndex: Int = -1
     var distance: Double = 0
