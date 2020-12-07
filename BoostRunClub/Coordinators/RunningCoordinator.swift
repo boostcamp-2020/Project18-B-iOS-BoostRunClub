@@ -39,25 +39,16 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
     }
 
     func showRunningInfoScene() {
-        removeChildren()
+        clear()
         let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController)
         childCoordinators.append(runInfoCoordinator)
         runInfoCoordinator.start()
     }
 
     func showPausedRunningScene() {
-        removeChildren()
+        clear()
         let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController)
         childCoordinators.append(pausedRunningCoordinator)
         pausedRunningCoordinator.start()
-    }
-
-    private func removeChildren() {
-        childCoordinators.removeAll()
-        navigationController.children.forEach { $0.removeFromParent() }
-    }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated")
     }
 }

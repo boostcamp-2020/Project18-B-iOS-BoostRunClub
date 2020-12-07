@@ -41,8 +41,4 @@ final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinator
         let pausedRunningVC = factory.makePausedRunningVC(with: pausedRunningVM)
         navigationController.pushViewController(pausedRunningVC, animated: false)
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
-    }
 }

@@ -38,8 +38,4 @@ final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProt
 
         navigationController.viewControllers = [runningPageVC]
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated")
-    }
 }

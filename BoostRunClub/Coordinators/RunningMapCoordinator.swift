@@ -27,8 +27,4 @@ final class RunningMapCoordinator: BasicCoordinator, RunningMapCoordinatorProtoc
         let runningMapVC = RunningMapViewController()
         navigationController.pushViewController(runningMapVC, animated: true)
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated")
-    }
 }

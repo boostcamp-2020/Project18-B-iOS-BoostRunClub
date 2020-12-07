@@ -37,8 +37,4 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
         let runningInfoVC = factory.makeRunningInfoVC(with: runningInfoVM)
         navigationController.pushViewController(runningInfoVC, animated: false)
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
-    }
 }

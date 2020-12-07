@@ -92,8 +92,4 @@ final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtoc
             ]
         )
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
-    }
 }
