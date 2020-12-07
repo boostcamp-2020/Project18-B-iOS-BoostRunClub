@@ -20,7 +20,7 @@ class ActivityTotalView: UIView {
     lazy var runningTimeLabel = makeNormalLabel()
 
     var didChangeSelectedItem: ((Int) -> Void)?
-    var didTapChooseDateButton: (() -> Void)?
+    var didTapShowDateFilter: (() -> Void)?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -55,7 +55,7 @@ class ActivityTotalView: UIView {
 extension ActivityTotalView {
     @objc
     func didTapDateButton() {
-        didTapChooseDateButton?()
+        didTapShowDateFilter?()
     }
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 
 struct ActivityStatistic {
+    let filterType: ActivityFilterType
     let period: String
     let distance: String
     let numRunning: Int
@@ -16,6 +17,7 @@ struct ActivityStatistic {
     let elevation: Int
 
     init(
+        filterType: ActivityFilterType = .week,
         period: String = "",
         distance: String = "",
         numRunning: Int = 0,
@@ -23,6 +25,7 @@ struct ActivityStatistic {
         runningTime: String = "",
         elevation: Int = 0
     ) {
+        self.filterType = filterType
         self.period = period
         self.distance = distance
         self.numRunning = numRunning

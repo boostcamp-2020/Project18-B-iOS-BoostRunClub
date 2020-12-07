@@ -9,6 +9,8 @@ import UIKit
 
 final class ActivityViewController: UIViewController {
     var tableView = ActivityTableView()
+    var activityTotalView = ActivityTotalView()
+    let activityFooterView = ActivityFooterView()
     var activitiyCells: [ActivityCellView] = [
         ActivityCellView(),
         ActivityCellView(),
@@ -46,7 +48,24 @@ final class ActivityViewController: UIViewController {
         bindViewModel()
     }
 
-    private func bindViewModel() {}
+    private func bindViewModel() {
+        guard let viewModel = viewModel else { return }
+
+        // outputs
+
+        // inputs
+        activityFooterView.didTapAllActivityButton = { [weak viewModel] in
+            viewModel?.inputs.didTapShowAllActivities()
+        }
+
+        activityTotalView.didChangeSelectedItem = { [weak viewModel] idx in
+            viewModel?.inputs.didFilterChanged(to: idx)
+        }
+
+        activityTotalView.didTapShowDateFilter = { [weak viewModel] in
+            viewModel?.inputs.didTapShowDateFilter()
+        }
+    }
 }
 
 // MARK: - Actions
@@ -60,7 +79,7 @@ extension ActivityViewController {
 
 // MARK: - UITableViewDataSource Implementation
 
-extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
+extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
         return activitiyCells.count + 1
     }
@@ -76,7 +95,11 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
             return activitiyCells[indexPath.section - 1]
         }
     }
+}
 
+// MARK: - UITableViewDelegate Implementation
+
+extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section < 2 ? 50 : 5
     }
@@ -108,17 +131,11 @@ extension ActivityViewController {
     }
 
     private func configureTableView() {
-        tableView.register(ActivityCellView.self, forCellReuseIdentifier: String(describing: ActivityCellView.self))
-        tableView.register(ActivityStatisticCellView.self, forCellReuseIdentifier: String(describing: ActivityStatisticCellView.self))
         tableView.dataSource = self
         tableView.delegate = self
-
-        let headerView = ActivityTotalView()
-        headerView.selfResizing()
-        tableView.tableHeaderView = headerView
-
-        let footerView = ActivityFooterView()
-        tableView.tableFooterView = footerView
+        activityTotalView.selfResizing()
+        tableView.tableHeaderView = activityTotalView
+        tableView.tableFooterView = activityFooterView
     }
 
     private func configureLayout() {

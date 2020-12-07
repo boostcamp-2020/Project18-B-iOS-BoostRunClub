@@ -9,15 +9,16 @@ import Foundation
 
 import Combine
 
-protocol ActivityViewModelTypes {
+protocol ActivityViewModelTypes: AnyObject {
     var inputs: ActivityViewModelInputs { get }
     var outputs: ActivityViewModelOutputs { get }
 }
 
 protocol ActivityViewModelInputs {
-    func didFilterChanged(to type: ActivityFilter)
+    func didFilterChanged(to idx: Int)
     func didFilterRangeChanged(from startDate: Date, to endDate: Date)
     func didSelectActivity(at index: Int)
+    func didTapShowDateFilter()
     func didTapShowAllActivities()
     func didTapShowProfileButton()
 }
@@ -39,11 +40,12 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     }
 
     // Inputs
-    func didFilterChanged(to _: ActivityFilter) {}
+    func didFilterChanged(to _: Int) {}
     func didFilterRangeChanged(from _: Date, to _: Date) {}
     func didSelectActivity(at _: Int) {}
     func didTapShowAllActivities() {}
     func didTapShowProfileButton() {}
+    func didTapShowDateFilter() {}
 
     // Outputs
     var activityTotal = CurrentValueSubject<ActivityTotal, Never>(ActivityTotal())
