@@ -33,48 +33,48 @@ final class PrepareRunViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.outputs.userLocation
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] coordinate in
+            .sink { [weak self] coordinate in
                 let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                self.mapView.setRegion(viewRegion, animated: false)
+                self?.mapView.setRegion(viewRegion, animated: false)
             }
             .store(in: &cancellables)
 
         Publishers.CombineLatest(viewModel.outputs.goalTypeObservable, viewModel.outputs.goalValueObservable)
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] goalType, goalValue in
+            .sink { [weak self] goalType, goalValue in
                 if goalType == .none {
-                    self.goalValueView.isHidden = true
+                    self?.goalValueView.isHidden = true
                 } else {
-                    self.goalValueView.isHidden = false
-                    self.goalValueView.setLabelText(goalValue: goalValue, goalUnit: goalType.unit)
+                    self?.goalValueView.isHidden = false
+                    self?.goalValueView.setLabelText(goalValue: goalValue, goalUnit: goalType.unit)
                 }
             }
             .store(in: &cancellables)
 
         viewModel.outputs.goalTypeObservable
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] goalType in
-                self.setGoalTypeButton.setTitle(goalType.description, for: .normal)
+            .sink { [weak self] goalType in
+                self?.setGoalTypeButton.setTitle(goalType.description, for: .normal)
             }
             .store(in: &cancellables)
 
         viewModel.outputs.goalValueSetupClosed
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] in
-                self.goalValueViewShrinkToOriginalSizeAnimation()
+            .sink { [weak self] in
+                self?.goalValueViewShrinkToOriginalSizeAnimation()
             }
             .store(in: &cancellables)
 
         viewModel.outputs.goalTypeSetupClosed
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] in
-                self.goalValueViewCrossDissolveAnimation()
+            .sink { [weak self] in
+                self?.goalValueViewCrossDissolveAnimation()
             }
             .store(in: &cancellables)
 
         viewModel.outputs.countDownAnimation
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] in self.countDownAnimation() }
+            .sink { [weak self] in self?.countDownAnimation() }
             .store(in: &cancellables)
 
         goalValueView.tapAction = { [weak viewModel] in

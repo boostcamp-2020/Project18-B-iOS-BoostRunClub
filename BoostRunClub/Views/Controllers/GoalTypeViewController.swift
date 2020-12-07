@@ -32,8 +32,8 @@ final class GoalTypeViewController: UIViewController {
 
         viewModel.outputs.goalTypeObservable
             .receive(on: RunLoop.main)
-            .sink { [unowned self] goalType in
-                self.tableViewCells.forEach {
+            .sink { [weak self] goalType in
+                self?.tableViewCells.forEach {
                     if goalType == .none {
                         $0.setStyle(with: .black)
                     } else {
