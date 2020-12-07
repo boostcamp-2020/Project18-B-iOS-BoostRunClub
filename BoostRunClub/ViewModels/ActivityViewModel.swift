@@ -24,11 +24,11 @@ protocol ActivityViewModelInputs {
 }
 
 protocol ActivityViewModelOutputs {
-    var activityTotal: CurrentValueSubject<ActivityTotal, Never> { get }
-    var activityStatistic: CurrentValueSubject<ActivityStatistic, Never> { get }
+    var activityTotal: CurrentValueSubject<ActivityTotalConfig, Never> { get }
+    var activityStatistic: CurrentValueSubject<ActivityStatisticConfig, Never> { get }
     var activitiesSubject: CurrentValueSubject<[Activity], Never> { get }
 
-    var showStatisticSignal: PassthroughSubject<ActivityStatistic?, Never> { get }
+    var showStatisticSignal: PassthroughSubject<ActivityStatisticConfig?, Never> { get }
     var showProfileScene: PassthroughSubject<Void, Never> { get }
 }
 
@@ -48,11 +48,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     func didTapShowDateFilter() {}
 
     // Outputs
-    var activityTotal = CurrentValueSubject<ActivityTotal, Never>(ActivityTotal())
-    var activityStatistic = CurrentValueSubject<ActivityStatistic, Never>(ActivityStatistic())
+    var activityTotal = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
+    var activityStatistic = CurrentValueSubject<ActivityStatisticConfig, Never>(ActivityStatisticConfig())
     var activitiesSubject = CurrentValueSubject<[Activity], Never>([])
 
-    var showStatisticSignal = PassthroughSubject<ActivityStatistic?, Never>()
+    var showStatisticSignal = PassthroughSubject<ActivityStatisticConfig?, Never>()
     var showProfileScene = PassthroughSubject<Void, Never>()
 }
 

@@ -77,8 +77,8 @@
 		96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */; };
 		960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */; };
 		960A14E6257DD8D1008D2BD3 /* ActivityFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */; };
-		960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */; };
-		960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */; };
+		960A14F1257DF916008D2BD3 /* ActivityStatisticConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F0257DF916008D2BD3 /* ActivityStatisticConfig.swift */; };
+		960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */; };
 		960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */; };
 		960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14FF257E057B008D2BD3 /* ActivityCellView.swift */; };
 		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
@@ -210,8 +210,8 @@
 		96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
 		960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFilterType.swift; sourceTree = "<group>"; };
-		960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistic.swift; sourceTree = "<group>"; };
-		960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotal.swift; sourceTree = "<group>"; };
+		960A14F0257DF916008D2BD3 /* ActivityStatisticConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatisticConfig.swift; sourceTree = "<group>"; };
+		960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalConfig.swift; sourceTree = "<group>"; };
 		960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableView.swift; sourceTree = "<group>"; };
 		960A14FF257E057B008D2BD3 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
 		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
@@ -466,8 +466,8 @@
 		96386604257E9BD2003EEE4B /* CellConfigurable */ = {
 			isa = PBXGroup;
 			children = (
-				960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */,
-				960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */,
+				960A14F0257DF916008D2BD3 /* ActivityStatisticConfig.swift */,
+				960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */,
 			);
 			path = CellConfigurable;
 			sourceTree = "<group>";
@@ -778,11 +778,11 @@
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
 				967780292577905400DA2454 /* CountDownView.swift in Sources */,
-				960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */,
+				960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */,
 				963865F4257E7A71003EEE4B /* ActivityStatisticCellView.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
-				960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */,
+				960A14F1257DF916008D2BD3 /* ActivityStatisticConfig.swift in Sources */,
 				71FBAAFE257D24A9005C8D30 /* Factory+ProfileScene.swift in Sources */,
 				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,

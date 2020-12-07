@@ -32,7 +32,7 @@ class ActivityTotalView: UIView {
         commonInit()
     }
 
-    func configure(activityTotal: ActivityTotal) {
+    func configure(activityTotal: ActivityTotalConfig) {
         distanceValueLabel.text = activityTotal.distance
         runningTimeValueLabel.text = activityTotal.runningTime
         numRunningValueLabel.text = String(activityTotal.numRunning)
