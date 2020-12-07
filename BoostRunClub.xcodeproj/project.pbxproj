@@ -75,6 +75,7 @@
 		9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5A2566AA4700183CB9 /* Assets.xcassets */; };
 		9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5C2566AA4700183CB9 /* LaunchScreen.storyboard */; };
 		96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */; };
+		960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -197,6 +198,7 @@
 		9600DB5D2566AA4700183CB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9600DB5F2566AA4700183CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
+		960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,6 +299,7 @@
 				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
 				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
+				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
 				71FBAAFE257D24A9005C8D30 /* Factory+ProfileScene.swift in Sources */,
+				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
 				71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */,
 				96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */,
