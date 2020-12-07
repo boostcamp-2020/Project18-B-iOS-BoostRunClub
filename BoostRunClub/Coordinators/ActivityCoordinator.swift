@@ -15,6 +15,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
     init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
         self.factory = factory
         super.init(navigationController: navigationController)
+        navigationController.view.backgroundColor = .systemBackground
+        navigationController.setNavigationBarHidden(false, animated: true)
     }
 
     override func start() {

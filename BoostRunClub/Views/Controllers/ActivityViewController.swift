@@ -22,5 +22,39 @@ final class ActivityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        configureNavigationItems()
+        configureLayout()
+        bindViewModel()
     }
+
+    private func bindViewModel() {}
+}
+
+// MARK: - Actions
+
+extension ActivityViewController {
+    @objc
+    func showProfileViewController() {
+        viewModel?.inputs.didTapShowProfileButton()
+    }
+}
+
+// MARK: - Configure
+
+extension ActivityViewController {
+    private func configureNavigationItems() {
+        navigationItem.title = "활동"
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        let profileItem = UIBarButtonItem(
+            image: UIImage.SFSymbol(name: "person.circle.fill", color: .systemGray),
+            style: .plain,
+            target: self,
+            action: #selector(showProfileViewController)
+        )
+
+        navigationItem.setLeftBarButton(profileItem, animated: true)
+    }
+
+    private func configureLayout() {}
 }

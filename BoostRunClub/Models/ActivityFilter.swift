@@ -9,7 +9,7 @@ import Foundation
 
 enum ActivityFilter {
     case week, month, year, all
-    
+
     var name: String {
         switch self {
         case .week:

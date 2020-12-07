@@ -14,15 +14,15 @@ struct ActivityStatistic {
     let avgPace: String
     let runningTime: String
     let elevation: Int
-    
+
     init(
         period: String = "",
         distance: String = "",
         numRunning: Int = 0,
         avgPace: String = "",
         runningTime: String = "",
-        elevation: Int = 0)
-    {
+        elevation: Int = 0
+    ) {
         self.period = period
         self.distance = distance
         self.numRunning = numRunning
