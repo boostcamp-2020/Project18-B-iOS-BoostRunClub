@@ -31,12 +31,10 @@ final class ActivityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.backgroundColor = .systemBackground
         configureNavigationItems()
+        configureTableView()
         configureLayout()
-        tableView.register(ActivityCellView.self, forCellReuseIdentifier: String(describing: ActivityCellView.self))
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.reloadData()
         bindViewModel()
     }
 
@@ -67,17 +65,13 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         return activitiyCells[indexPath.section]
     }
 
-    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "최근 활동" : nil
-    }
-
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 50 : 5
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-        var label = UILabel()
+        let label = UILabel()
         label.text = "최근 활동"
         label.textColor = .label
         return label
@@ -99,6 +93,16 @@ extension ActivityViewController {
         )
 
         navigationItem.setLeftBarButton(profileItem, animated: true)
+    }
+
+    private func configureTableView() {
+        tableView.register(ActivityCellView.self, forCellReuseIdentifier: String(describing: ActivityCellView.self))
+        tableView.dataSource = self
+        tableView.delegate = self
+
+        let headerView = ActivityTotalView()
+        headerView.selfResizing()
+        tableView.tableHeaderView = headerView
     }
 
     private func configureLayout() {
