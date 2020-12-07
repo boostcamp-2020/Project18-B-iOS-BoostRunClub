@@ -93,7 +93,7 @@ extension ActivityCellView {
             axis: .horizontal,
             alignment: .leading,
             distribution: .fill,
-            spacing: 20
+            spacing: 50
         )
 
         let stackView = UIStackView.make(

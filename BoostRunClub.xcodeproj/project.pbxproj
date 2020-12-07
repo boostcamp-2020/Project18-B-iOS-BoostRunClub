@@ -83,6 +83,8 @@
 		960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14FF257E057B008D2BD3 /* ActivityCellView.swift */; };
 		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
 		960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */; };
+		960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */; };
+		960A1520257E4D8B008D2BD3 /* UIImage+withColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A151F257E4D8B008D2BD3 /* UIImage+withColor.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -213,6 +215,8 @@
 		960A14FF257E057B008D2BD3 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
 		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
 		960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalView.swift; sourceTree = "<group>"; };
+		960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSegmentControl.swift; sourceTree = "<group>"; };
+		960A151F257E4D8B008D2BD3 /* UIImage+withColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+withColor.swift"; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,6 +336,7 @@
 				4C3E7ACE256F63080061244F /* Controllers */,
 				960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */,
 				960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */,
+				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
 				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
+				960A151F257E4D8B008D2BD3 /* UIImage+withColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -706,6 +712,7 @@
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
 				960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
+				960A1520257E4D8B008D2BD3 /* UIImage+withColor.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
 				71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */,
@@ -762,6 +769,7 @@
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
+				960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */,
 				71FBAAEA257D23F0005C8D30 /* Factory+ActivityScene.swift in Sources */,
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,

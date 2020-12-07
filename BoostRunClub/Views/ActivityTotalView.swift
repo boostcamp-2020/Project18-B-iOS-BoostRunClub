@@ -8,6 +8,7 @@
 import UIKit
 
 class ActivityTotalView: UIView {
+    lazy var segmentedControl = makeSegmentedControl()
     lazy var datelabel = makeNormalLabel()
     lazy var distanceValueLabel = NikeLabel(with: 50)
     lazy var distancelabel = makeNormalLabel()
@@ -37,6 +38,13 @@ class ActivityTotalView: UIView {
         newFrame.size.height = height
         frame = newFrame
     }
+}
+
+// MARK: - Actions
+
+extension ActivityTotalView {
+    @objc
+    func didTapSegmentItem(_: UISegmentedControl) {}
 }
 
 // MARK: - Configure
@@ -101,10 +109,10 @@ extension ActivityTotalView {
         )
 
         let vStackView = UIStackView.make(
-            with: [datelabel, distanceStackView, dataHStackView],
+            with: [segmentedControl, datelabel, distanceStackView, dataHStackView],
             axis: .vertical,
             alignment: .leading,
-            distribution: .fillProportionally,
+            distribution: .fill,
             spacing: 10
         )
         addSubview(vStackView)
@@ -115,6 +123,25 @@ extension ActivityTotalView {
             vStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             vStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
         ])
+
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            segmentedControl.widthAnchor.constraint(equalTo: vStackView.widthAnchor, constant: -10),
+//            segmentedControl.heightAnchor.constraint(equalToConstant: 30),
+        ])
+    }
+
+    private func makeSegmentedControl() -> RoundSegmentControl {
+        let items = ["주", "월", "년", "전체"]
+        let control = RoundSegmentControl(
+            items: items,
+            background: .systemBackground,
+            foreground: .label,
+            selectedColor: .systemBackground,
+            normalColor: .systemGray,
+            borderColor: .systemGray
+        )
+        return control
     }
 
     private func makeValueLabel() -> UILabel {
