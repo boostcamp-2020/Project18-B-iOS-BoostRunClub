@@ -79,6 +79,10 @@
 		960A14E6257DD8D1008D2BD3 /* ActivityFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilter.swift */; };
 		960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */; };
 		960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */; };
+		960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */; };
+		960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14FF257E057B008D2BD3 /* ActivityCellView.swift */; };
+		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
+		960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -205,6 +209,10 @@
 		960A14E5257DD8D1008D2BD3 /* ActivityFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFilter.swift; sourceTree = "<group>"; };
 		960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistic.swift; sourceTree = "<group>"; };
 		960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotal.swift; sourceTree = "<group>"; };
+		960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableView.swift; sourceTree = "<group>"; };
+		960A14FF257E057B008D2BD3 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
+		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
+		960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalView.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */,
+				960A14FF257E057B008D2BD3 /* ActivityCellView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -313,6 +322,7 @@
 		71E82887256B9184004A1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				960A14F8257DFFB6008D2BD3 /* DataSource */,
 				71EFCC8C2577C3C0007998AD /* CircleButton.swift */,
 				967780282577905400DA2454 /* CountDownView.swift */,
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
@@ -320,6 +330,8 @@
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
 				4C3E7AD0256F63230061244F /* Cells */,
 				4C3E7ACE256F63080061244F /* Controllers */,
+				960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */,
+				960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -424,6 +436,13 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		960A14F8257DFFB6008D2BD3 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		9635815E25726EAB00B8BE6B /* BoostRunClubTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +502,7 @@
 				71EFCCA52577D3E6007998AD /* UIButton+setSFSymbol.swift */,
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
 				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
+				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -674,14 +694,17 @@
 				4C9B985325788547000A6447 /* UIView+otificationFeedback.swift in Sources */,
 				4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */,
 				71FBAAE2257D23C1005C8D30 /* Factory+RunningPageContainer.swift in Sources */,
+				960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */,
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
 				96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
+				960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
+				960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
@@ -705,6 +728,7 @@
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,
+				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				4CF009C6257CADC300EC928A /* Location.swift in Sources */,
