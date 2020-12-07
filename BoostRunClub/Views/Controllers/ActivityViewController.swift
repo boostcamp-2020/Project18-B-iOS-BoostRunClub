@@ -35,6 +35,7 @@ final class ActivityViewController: UIViewController {
         configureLayout()
         tableView.register(ActivityCellView.self, forCellReuseIdentifier: String(describing: ActivityCellView.self))
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
         bindViewModel()
     }
@@ -53,7 +54,7 @@ extension ActivityViewController {
 
 // MARK: - UITableViewDataSource Implementation
 
-extension ActivityViewController: UITableViewDataSource {
+extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in _: UITableView) -> Int {
         return activitiyCells.count
     }
@@ -64,6 +65,22 @@ extension ActivityViewController: UITableViewDataSource {
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return activitiyCells[indexPath.section]
+    }
+
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "최근 활동" : nil
+    }
+
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 50 : 5
+    }
+
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+        var label = UILabel()
+        label.text = "최근 활동"
+        label.textColor = .label
+        return label
     }
 }
 
