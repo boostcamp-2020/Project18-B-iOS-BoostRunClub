@@ -14,16 +14,16 @@ protocol ActivityViewModelTypes {
     var outputs: ActivityViewModelOutputs { get }
 }
 
-protocol ActivityViewModelInputs {
-    
-}
+protocol ActivityViewModelInputs {}
 
-protocol ActivityViewModelOutputs {
-    
-}
+protocol ActivityViewModelOutputs {}
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
-    
+    let activityProvider: ActivityReadable
+
+    init(activityProvider: ActivityReadable) {
+        self.activityProvider = activityProvider
+    }
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

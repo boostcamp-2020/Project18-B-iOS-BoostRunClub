@@ -22,7 +22,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
     }
 
     func showActivityViewController() {
-        let activityVC = ActivityViewController()
+        let activityVM = factory.makeActivityVM()
+        let activityVC = factory.makeActivityVC(with: activityVM)
         navigationController.pushViewController(activityVC, animated: true)
     }
 }

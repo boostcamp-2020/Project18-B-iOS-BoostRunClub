@@ -8,8 +8,19 @@
 import UIKit
 
 final class ActivityViewController: UIViewController {
+    var viewModel: ActivityViewModelTypes?
+
+    init(with viewModel: ActivityViewModelTypes) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = .systemBackground
     }
 }
