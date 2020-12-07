@@ -62,7 +62,7 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in _: UITableView) -> Int {
-        return activitiyCells.count
+        return activitiyCells.count + 1
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,7 +73,7 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 0 {
             return activityStatisticCells[indexPath.row]
         } else {
-            return activitiyCells[indexPath.section]
+            return activitiyCells[indexPath.section - 1]
         }
     }
 
@@ -116,6 +116,9 @@ extension ActivityViewController {
         let headerView = ActivityTotalView()
         headerView.selfResizing()
         tableView.tableHeaderView = headerView
+
+        let footerView = ActivityFooterView()
+        tableView.tableFooterView = footerView
     }
 
     private func configureLayout() {

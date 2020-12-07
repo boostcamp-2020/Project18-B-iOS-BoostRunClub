@@ -93,6 +93,7 @@
 		963581762572705200B8BE6B /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B46F4256CD4E0006138DF /* LocationProvider.swift */; };
 		9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635817B2572707C00B8BE6B /* LocationProviderMock.swift */; };
 		963865F4257E7A71003EEE4B /* ActivityStatisticCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963865F3257E7A71003EEE4B /* ActivityStatisticCellView.swift */; };
+		963865F8257E858D003EEE4B /* ActivityFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963865F7257E858D003EEE4B /* ActivityFooterView.swift */; };
 		963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B46F4256CD4E0006138DF /* LocationProvider.swift */; };
 		963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */; };
 		963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
@@ -224,6 +225,7 @@
 		9635816925726ECC00B8BE6B /* PrepareRunViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModelTest.swift; sourceTree = "<group>"; };
 		9635817B2572707C00B8BE6B /* LocationProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProviderMock.swift; sourceTree = "<group>"; };
 		963865F3257E7A71003EEE4B /* ActivityStatisticCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatisticCellView.swift; sourceTree = "<group>"; };
+		963865F7257E858D003EEE4B /* ActivityFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFooterView.swift; sourceTree = "<group>"; };
 		963B46F4256CD4E0006138DF /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		967780282577905400DA2454 /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
 		967FFAA3257602A200F3340C /* TimerInterval+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+String.swift"; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */,
 				960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */,
 				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
+				963865F7257E858D003EEE4B /* ActivityFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
 				960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */,
+				963865F8257E858D003EEE4B /* ActivityFooterView.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
 				960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */,
