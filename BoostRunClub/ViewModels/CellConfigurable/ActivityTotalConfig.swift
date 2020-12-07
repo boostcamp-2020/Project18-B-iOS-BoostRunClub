@@ -25,7 +25,7 @@ struct ActivityTotalConfig {
     ) {
         self.filterType = filterType
         self.period = period // 주: 날짜 or 이번주 or 저번주, 월: yyyy년 mm월, 년: yyyy년, 전체: 2020년 ...
-        self.distance = String(format: "%.2", distance)
+        self.distance = String(format: "%.2f", distance)
         self.numRunning = "\(numRunning)"
         self.avgPace = String(format: "%d'%d\"", avgPace / 60, avgPace % 60)
         self.runningTime = TimeInterval(runningTime).formattedString

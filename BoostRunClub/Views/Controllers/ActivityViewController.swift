@@ -5,29 +5,18 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import UIKit
 
 final class ActivityViewController: UIViewController {
     var tableView = ActivityTableView()
     var activityTotalView = ActivityTotalView()
     let activityFooterView = ActivityFooterView()
-    var activitiyCells: [ActivityCellView] = [
-        ActivityCellView(),
-        ActivityCellView(),
-        ActivityCellView(),
-        ActivityCellView(),
-        ActivityCellView(),
-    ]
-
-    var activityStatisticCells: [UITableViewCell] = [
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-    ]
+    var activitiyCells: [ActivityCellView] = []
+    var activityStatisticCells: [UITableViewCell] = []
 
     var viewModel: ActivityViewModelTypes?
+    var cancellables = Set<AnyCancellable>()
 
     init(with viewModel: ActivityViewModelTypes) {
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +41,39 @@ final class ActivityViewController: UIViewController {
         guard let viewModel = viewModel else { return }
 
         // outputs
+        viewModel.outputs.activitiesSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.activitiyCells.removeAll()
+                $0.forEach {
+                    let cell = ActivityCellView()
+                    cell.configure(with: $0)
+                    self?.activitiyCells.append(cell)
+                }
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel.outputs.activityTotal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.activityTotalView.configure(activityTotal: $0)
+            }
+            .store(in: &cancellables)
+
+        viewModel.outputs.activityStatistic
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.activityStatisticCells.append(contentsOf: [
+                    ActivityStatisticCellView(title: "러닝", value: $0.numRunning),
+                    ActivityStatisticCellView(title: "킬로미터", value: $0.distance),
+                    ActivityStatisticCellView(title: "평균 페이스", value: $0.avgPace),
+                    ActivityStatisticCellView(title: "시간", value: $0.runningTime),
+                    ActivityStatisticCellView(title: "고도상승", value: $0.elevation),
+                ])
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
 
         // inputs
         activityFooterView.didTapAllActivityButton = { [weak viewModel] in
@@ -81,7 +103,7 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return activitiyCells.count + 1
+        return activitiyCells.count + (activityStatisticCells.isEmpty ? 0 : 1)
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,10 +111,12 @@ extension ActivityViewController: UITableViewDataSource {
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if !activityStatisticCells.isEmpty,
+           indexPath.section == 0
+        {
             return activityStatisticCells[indexPath.row]
         } else {
-            return activitiyCells[indexPath.section - 1]
+            return activitiyCells[indexPath.section - (activityStatisticCells.isEmpty ? 0 : 1)]
         }
     }
 }
