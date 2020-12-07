@@ -29,6 +29,7 @@ extension ActivityTableView {
         isScrollEnabled = true
         sectionHeaderHeight = 5
         sectionFooterHeight = 5
+        separatorInset.right = 20
         rowHeight = UITableView.automaticDimension
     }
 }

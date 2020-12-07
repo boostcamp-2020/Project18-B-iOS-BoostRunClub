@@ -17,6 +17,14 @@ final class ActivityViewController: UIViewController {
         ActivityCellView(),
     ]
 
+    var activityStatisticCells: [UITableViewCell] = [
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+    ]
+
     var viewModel: ActivityViewModelTypes?
 
     init(with viewModel: ActivityViewModelTypes) {
@@ -57,22 +65,26 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         return activitiyCells.count
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 1
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 5 : 1
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return activitiyCells[indexPath.section]
+        if indexPath.section == 0 {
+            return activityStatisticCells[indexPath.row]
+        } else {
+            return activitiyCells[indexPath.section]
+        }
     }
 
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 50 : 5
+        return section < 2 ? 50 : 5
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 0 else { return nil }
+        guard section < 2 else { return nil }
         let label = UILabel()
-        label.text = "최근 활동"
+        label.text = section == 0 ? "총 활동 통계" : "최근 활동"
         label.textColor = .label
         return label
     }
@@ -97,6 +109,7 @@ extension ActivityViewController {
 
     private func configureTableView() {
         tableView.register(ActivityCellView.self, forCellReuseIdentifier: String(describing: ActivityCellView.self))
+        tableView.register(ActivityStatisticCellView.self, forCellReuseIdentifier: String(describing: ActivityStatisticCellView.self))
         tableView.dataSource = self
         tableView.delegate = self
 
