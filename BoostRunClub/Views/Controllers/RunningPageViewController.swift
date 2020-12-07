@@ -38,6 +38,10 @@ final class RunningPageViewController: UIPageViewController {
     func setPages(_ viewControllers: [UIViewController]) {
         pages.append(contentsOf: viewControllers)
     }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }
 
 extension RunningPageViewController: UIPageViewControllerDelegate {

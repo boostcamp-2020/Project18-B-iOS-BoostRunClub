@@ -107,6 +107,10 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
             return $0
         }.eraseToAnyPublisher()
     }
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Types

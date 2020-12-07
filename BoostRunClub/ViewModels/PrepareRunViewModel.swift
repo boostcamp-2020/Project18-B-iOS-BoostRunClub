@@ -51,7 +51,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
         self.locationProvider = locationProvider
         locationProvider.locationSubject
             .compactMap { $0.coordinate }
-            .sink { self.userLocation.send($0) }
+            .sink { [weak self] in self?.userLocation.send($0) }
             .store(in: &cancellables)
     }
 
@@ -106,6 +106,10 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
     var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()
     var showRunningSceneSignal = PassthroughSubject<GoalInfo, Never>()
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Types

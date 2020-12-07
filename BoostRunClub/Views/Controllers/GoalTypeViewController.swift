@@ -32,8 +32,8 @@ final class GoalTypeViewController: UIViewController {
 
         viewModel.outputs.goalTypeObservable
             .receive(on: RunLoop.main)
-            .sink { goalType in
-                self.tableViewCells.forEach {
+            .sink { [weak self] goalType in
+                self?.tableViewCells.forEach {
                     if goalType == .none {
                         $0.setStyle(with: .black)
                     } else {
@@ -42,6 +42,10 @@ final class GoalTypeViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 
@@ -67,8 +71,6 @@ extension GoalTypeViewController {
             delay: 0,
             options: .curveEaseInOut,
             animations: {
-                [weak self] in
-                guard let self = self else { return }
                 self.tableView.frame.origin.y = UIScreen.main.bounds.height - self.tableViewHeight
                 self.tableView.bounds.origin.y = 0
                 self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -98,8 +100,7 @@ extension GoalTypeViewController {
             withDuration: 0.4,
             delay: 0,
             options: .curveEaseInOut,
-            animations: { [weak self] in
-                guard let self = self else { return }
+            animations: {
                 self.tableView.frame.origin.y = UIScreen.main.bounds.height
                 self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
             },

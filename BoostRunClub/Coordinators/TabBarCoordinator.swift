@@ -46,8 +46,4 @@ final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtoc
         )
         navigationController.viewControllers = [tabBarController]
     }
-
-    deinit {
-        print("finished \(self)")
-    }
 }

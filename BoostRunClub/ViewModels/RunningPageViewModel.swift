@@ -17,7 +17,11 @@ protocol RunningPageViewModelInputs {}
 
 protocol RunningPageViewModelOutputs {}
 
-class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {}
+class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+}
 
 extension RunningPageViewModel: RunningPageViewModelTypes {
     var inputs: RunningPageViewModelInputs { self }

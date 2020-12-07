@@ -33,9 +33,9 @@ final class PrepareRunViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.outputs.userLocation
             .receive(on: DispatchQueue.main)
-            .sink { coordinate in
+            .sink { [weak self] coordinate in
                 let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                self.mapView.setRegion(viewRegion, animated: false)
+                self?.mapView.setRegion(viewRegion, animated: false)
             }
             .store(in: &cancellables)
 
@@ -74,12 +74,16 @@ final class PrepareRunViewController: UIViewController {
 
         viewModel.outputs.countDownAnimation
             .receive(on: DispatchQueue.main)
-            .sink { self.countDownAnimation() }
+            .sink { [weak self] in self?.countDownAnimation() }
             .store(in: &cancellables)
 
         goalValueView.tapAction = { [weak viewModel] in
             viewModel?.inputs.didTapGoalValueButton()
         }
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

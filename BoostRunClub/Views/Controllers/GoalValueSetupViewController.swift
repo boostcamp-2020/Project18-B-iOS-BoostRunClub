@@ -36,6 +36,10 @@ class GoalValueSetupViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - ViewController LifeCycle

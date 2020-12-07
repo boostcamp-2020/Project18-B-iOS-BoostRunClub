@@ -17,7 +17,11 @@ protocol SplitsViewModelInputs {}
 
 protocol SplitsViewModelOutputs {}
 
-class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {}
+class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+}
 
 extension SplitsViewModel: SplitsViewModelTypes {
     var inputs: SplitsViewModelInputs { self }

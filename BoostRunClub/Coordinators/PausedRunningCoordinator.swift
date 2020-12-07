@@ -28,13 +28,13 @@ final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinator
         let pausedRunningVM = factory.makePausedRunningVM()
         pausedRunningVM.outputs.showRunningInfoSignal
             .receive(on: RunLoop.main)
-            .sink {
+            .sink { [weak self] in
                 NotificationCenter.default.post(name: .showRunningInfoScene, object: self)
             }
             .store(in: &cancellables)
         pausedRunningVM.outputs.showPrepareRunningSignal
             .receive(on: RunLoop.main)
-            .sink {
+            .sink { [weak self] in
                 NotificationCenter.default.post(name: .showPrepareRunningScene, object: self)
             }
             .store(in: &cancellables)

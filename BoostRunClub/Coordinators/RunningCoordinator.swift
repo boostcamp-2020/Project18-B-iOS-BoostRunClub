@@ -39,14 +39,15 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
     }
 
     func showRunningInfoScene() {
+        clear()
         let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController)
         childCoordinators.append(runInfoCoordinator)
         runInfoCoordinator.start()
     }
 
     func showPausedRunningScene() {
+        clear()
         let pausedRunningCoordinator = PausedRunningCoordinator(navigationController: navigationController)
-
         childCoordinators.append(pausedRunningCoordinator)
         pausedRunningCoordinator.start()
     }

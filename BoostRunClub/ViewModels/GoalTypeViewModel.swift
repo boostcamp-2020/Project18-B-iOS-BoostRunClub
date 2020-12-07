@@ -43,6 +43,10 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
 
     private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
     let goalTypeObservable: CurrentValueSubject<GoalType, Never>
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Types

@@ -44,10 +44,10 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.runningTime
             .map { $0.formattedString }
-            .sink { timeString in
-                self.possibleTypes[.time] = timeString
+            .sink { [weak self] timeString in
+                self?.possibleTypes[.time] = timeString
 
-                self.runningInfoObservables.forEach {
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .time {
                         $0.send(RunningInfo(type: .time, value: timeString))
                     }
@@ -56,9 +56,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.distance
             .map { String(format: "%.2f", $0 / 1000) }
-            .sink { distance in
-                self.possibleTypes[.kilometer] = distance
-                self.runningInfoObservables.forEach {
+            .sink { [weak self] distance in
+                self?.possibleTypes[.kilometer] = distance
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .kilometer {
                         $0.send(RunningInfo(type: .kilometer, value: distance))
                     }
@@ -67,9 +67,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.pace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-            .sink { pace in
-                self.possibleTypes[.pace] = pace
-                self.runningInfoObservables.forEach {
+            .sink { [weak self] pace in
+                self?.possibleTypes[.pace] = pace
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .pace {
                         $0.send(RunningInfo(type: .pace, value: pace))
                     }
@@ -78,9 +78,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.avgPace
             .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-            .sink { averagePace in
-                self.possibleTypes[.averagePace] = averagePace
-                self.runningInfoObservables.forEach {
+            .sink { [weak self] averagePace in
+                self?.possibleTypes[.averagePace] = averagePace
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .averagePace {
                         $0.send(RunningInfo(type: .averagePace, value: averagePace))
                     }
@@ -89,9 +89,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.calorie
             .map { String(Int($0)) }
-            .sink { calorie in
-                self.possibleTypes[.calorie] = calorie
-                self.runningInfoObservables.forEach {
+            .sink { [weak self] calorie in
+                self?.possibleTypes[.calorie] = calorie
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .calorie {
                         $0.send(RunningInfo(type: .calorie, value: calorie))
                     }
@@ -100,9 +100,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         runningDataProvider.cadence
             .map { String($0) }
-            .sink { cadence in
-                self.possibleTypes[.cadence] = cadence
-                self.runningInfoObservables.forEach {
+            .sink { [weak self] cadence in
+                self?.possibleTypes[.cadence] = cadence
+                self?.runningInfoObservables.forEach {
                     if $0.value.type == .cadence {
                         $0.send(RunningInfo(type: .cadence, value: cadence))
                     }
@@ -150,6 +150,10 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     var initialAnimation = PassthroughSubject<Void, Never>()
     var resumeAnimation = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Types

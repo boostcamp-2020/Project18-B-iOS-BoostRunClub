@@ -18,6 +18,7 @@ protocol Coordinator: AnyObject {
 extension Coordinator {
     func clear() {
         childCoordinators.removeAll()
+        navigationController.children.forEach { $0.removeFromParent() }
     }
 }
 
@@ -32,4 +33,8 @@ class BasicCoordinator: Coordinator {
     }
 
     func start() {}
+
+    deinit {
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
+    }
 }

@@ -33,8 +33,8 @@ final class RunningInfoViewController: UIViewController {
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
         runDataViews.enumerated().forEach { idx, view in
-            view.tapAction = { [weak viewModel] in
-                viewModel?.inputs.didTapRunData(index: idx)
+            view.tapAction = { [weak self] in
+                self?.viewModel?.inputs.didTapRunData(index: idx)
                 view.notificationFeedback()
             }
 
@@ -49,23 +49,23 @@ final class RunningInfoViewController: UIViewController {
 
         viewModel.outputs.runningInfoTapAnimation
             .receive(on: RunLoop.main)
-            .filter { $0 < self.runDataViews.count }
-            .sink { self.runDataViews[$0].startBounceAnimation() }
+            .filter { [weak self] in $0 < self?.runDataViews.count ?? 0 }
+            .sink { [weak self] in self?.runDataViews[$0].startBounceAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.initialAnimation
             .receive(on: RunLoop.main)
-            .sink {
-                self.startInitialAnimation()
-            }
+            .sink { [weak self] in self?.startInitialAnimation() }
             .store(in: &cancellables)
 
         viewModel.outputs.resumeAnimation
             .receive(on: RunLoop.main)
-            .sink {
-                self.startResumeAnimation()
-            }
+            .sink { [weak self] in self?.startResumeAnimation() }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

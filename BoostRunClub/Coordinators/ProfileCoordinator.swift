@@ -27,4 +27,8 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
         let profileVC = ProfileViewController()
         navigationController.pushViewController(profileVC, animated: true)
     }
+
+    deinit {
+        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
+    }
 }

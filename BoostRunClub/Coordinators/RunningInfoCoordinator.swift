@@ -29,7 +29,7 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
 
         runningInfoVM.outputs.showPausedRunningSignal
             .receive(on: RunLoop.main)
-            .sink {
+            .sink { [weak self] in
                 NotificationCenter.default.post(name: .showPausedRunningScene, object: self)
             }
             .store(in: &cancellables)
