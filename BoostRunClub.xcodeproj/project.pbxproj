@@ -76,6 +76,9 @@
 		9600DB5E2566AA4700183CB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5C2566AA4700183CB9 /* LaunchScreen.storyboard */; };
 		96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */; };
 		960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */; };
+		960A14E6257DD8D1008D2BD3 /* ActivityFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilter.swift */; };
+		960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */; };
+		960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -199,6 +202,9 @@
 		9600DB5F2566AA4700183CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
 		960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
+		960A14E5257DD8D1008D2BD3 /* ActivityFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFilter.swift; sourceTree = "<group>"; };
+		960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistic.swift; sourceTree = "<group>"; };
+		960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotal.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -460,6 +466,9 @@
 				96ED4034257C768A007DB3DF /* Activity.swift */,
 				4CF009C5257CADC300EC928A /* Location.swift */,
 				7187295D25791BEF007BD24F /* MotionType.swift */,
+				960A14E5257DD8D1008D2BD3 /* ActivityFilter.swift */,
+				960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */,
+				960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				4CF009C6257CADC300EC928A /* Location.swift in Sources */,
+				960A14E6257DD8D1008D2BD3 /* ActivityFilter.swift in Sources */,
 				71EFCC6E257753FA007998AD /* RunningPageViewModel.swift in Sources */,
 				71FBAAFA257D2488005C8D30 /* Factory+SplitScene.swift in Sources */,
 				4CCD6E7F256BEA1200195EDA /* GoalTypeViewController.swift in Sources */,
@@ -733,8 +743,10 @@
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
 				967780292577905400DA2454 /* CountDownView.swift in Sources */,
+				960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
+				960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */,
 				71FBAAFE257D24A9005C8D30 /* Factory+ProfileScene.swift in Sources */,
 				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
