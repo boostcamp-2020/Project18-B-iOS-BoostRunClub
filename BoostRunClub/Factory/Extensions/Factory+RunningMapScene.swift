@@ -8,16 +8,16 @@
 import UIKit
 
 protocol RunningMapSceneFactory {
-//    func makeRunningMapVC(with viewModel: RunningMapViewModelTypes) -> UIViewController
-//    func makeRunningMapVM() -> RunningMapViewModelTypes
+    func makeRunningMapVC(with viewModel: RunningMapViewModelTypes) -> UIViewController
+    func makeRunningMapVM() -> RunningMapViewModelTypes
 }
 
 extension DependencyFactory: RunningMapSceneFactory {
-    func makeRunningMapVC(with _: RunningMapViewModelTypes) -> UIViewController {
-        RunningMapViewController()
+    func makeRunningMapVC(with viewModel: RunningMapViewModelTypes) -> UIViewController {
+        RunningMapViewController(with: viewModel)
     }
 
     func makeRunningMapVM() -> RunningMapViewModelTypes {
-        RunningMapViewModel()
+        RunningMapViewModel(runningDataProvider: runningDataProvider)
     }
 }

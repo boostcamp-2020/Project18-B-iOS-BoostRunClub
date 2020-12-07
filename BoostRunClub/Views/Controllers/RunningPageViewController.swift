@@ -26,13 +26,32 @@ final class RunningPageViewController: UIPageViewController {
         pageControl.currentPageIndicatorTintColor = UIColor.black
         pageControl.numberOfPages = Pages.allCases.count
         pageControl.currentPage = 1
+        pageControl.addTarget(self,
+                              action: #selector(pageControlSelectionAction),
+                              for: .valueChanged)
+
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
+    }
+
+    // TODO: 뷰 전환 벼튼 클릭 이벤트로 대체, 애니메이션 적용
+    @objc func pageControlSelectionAction(_ sender: UIPageControl) {
+        guard
+            let viewControllers = viewControllers,
+            let prevIdx = pages.firstIndex(of: viewControllers[0])
+        else { return }
+
+        let currIdx = sender.currentPage
+        DispatchQueue.main.async {
+            self.setViewControllers([self.pages[currIdx]],
+                                    direction: currIdx > prevIdx ? .forward : .reverse,
+                                    animated: true,
+                                    completion: nil)
+        }
     }
 
     func setPages(_ viewControllers: [UIViewController]) {
