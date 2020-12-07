@@ -14,7 +14,7 @@ class RoundSegmentControl: UIView {
     var normalLabelColor: UIColor
     var borderColor: UIColor
 
-    var items: [UIButton] = []
+    private var items: [UIButton] = []
     lazy var focusedView: UILabel = {
         let label = UILabel()
         label.backgroundColor = self.foreground
@@ -31,6 +31,8 @@ class RoundSegmentControl: UIView {
             }
         }
     }
+
+    var didChangeSelectedItem: ((Int) -> Void)?
 
     init(
         items: [String],
@@ -69,17 +71,19 @@ class RoundSegmentControl: UIView {
             focusedView.frame = items[selectedIdx].frame
         }
     }
-
 }
 
 // MARK: - Actions
 
 extension RoundSegmentControl {
-    
     @objc
     func didTapItem(_ button: UIButton) {
-        guard let idx = items.firstIndex(of: button) else { return }
+        guard
+            let idx = items.firstIndex(of: button),
+            idx != selectedIdx
+        else { return }
         selectedIdx = idx
+        didChangeSelectedItem?(idx)
     }
 
     private func didItemChanged(from oldIdx: Int, to newIdx: Int) {
@@ -103,14 +107,11 @@ extension RoundSegmentControl {
             }
         )
     }
-    
 }
-
 
 // MARK: - Configure
 
 extension RoundSegmentControl {
-    
     private func commonInit(items: [String]) {
         layer.masksToBounds = true
         layer.borderWidth = 1

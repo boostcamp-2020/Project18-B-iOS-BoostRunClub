@@ -9,7 +9,7 @@ import UIKit
 
 class ActivityTotalView: UIView {
     lazy var segmentedControl = makeSegmentedControl()
-    lazy var datelabel = makeNormalLabel()
+    lazy var dateButton = makeDateLabeButton()
     lazy var distanceValueLabel = NikeLabel(with: 50)
     lazy var distancelabel = makeNormalLabel()
     lazy var numRunningValueLabel = makeValueLabel()
@@ -19,6 +19,9 @@ class ActivityTotalView: UIView {
     lazy var runningTimeValueLabel = makeValueLabel()
     lazy var runningTimeLabel = makeNormalLabel()
 
+    var didChangeSelectedItem: ((Int) -> Void)?
+    var didTapChooseDateButton: (() -> Void)?
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -27,6 +30,13 @@ class ActivityTotalView: UIView {
     init() {
         super.init(frame: .zero)
         commonInit()
+    }
+
+    func configure(activityTotal: ActivityTotal) {
+        distanceValueLabel.text = activityTotal.distance
+        runningTimeValueLabel.text = activityTotal.runningTime
+        numRunningValueLabel.text = String(activityTotal.numRunning)
+        avgPaceValueLabel.text = activityTotal.avgPace
     }
 
     func selfResizing() {
@@ -44,7 +54,9 @@ class ActivityTotalView: UIView {
 
 extension ActivityTotalView {
     @objc
-    func didTapSegmentItem(_: UISegmentedControl) {}
+    func didTapDateButton() {
+        didTapChooseDateButton?()
+    }
 }
 
 // MARK: - Configure
@@ -53,7 +65,7 @@ extension ActivityTotalView {
     private func commonInit() {
         backgroundColor = .systemBackground
 
-        datelabel.text = "이번 주"
+        dateButton.setTitle("이번 주", for: .normal)
         distanceValueLabel.text = "7.8"
         distancelabel.text = "킬로미터"
         numRunningValueLabel.text = "2"
@@ -109,7 +121,7 @@ extension ActivityTotalView {
         )
 
         let vStackView = UIStackView.make(
-            with: [segmentedControl, datelabel, distanceStackView, dataHStackView],
+            with: [segmentedControl, dateButton, distanceStackView, dataHStackView],
             axis: .vertical,
             alignment: .leading,
             distribution: .fill,
@@ -127,7 +139,6 @@ extension ActivityTotalView {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             segmentedControl.widthAnchor.constraint(equalTo: vStackView.widthAnchor, constant: -10),
-//            segmentedControl.heightAnchor.constraint(equalToConstant: 30),
         ])
     }
 
@@ -141,6 +152,7 @@ extension ActivityTotalView {
             normalColor: .systemGray,
             borderColor: .systemGray
         )
+        control.didChangeSelectedItem = didChangeSelectedItem
         return control
     }
 
@@ -157,5 +169,20 @@ extension ActivityTotalView {
         label.textColor = .systemGray
         label.text = "타이틀"
         return label
+    }
+
+    private func makeDateLabeButton() -> UIButton {
+        let button = UIButton()
+        button.setTitle("날짜 선택", for: .normal)
+        button.setTitleColor(.systemGray, for: .normal)
+        button.setImage(dateIcon, for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
+        button.imageEdgeInsets.right = -10
+        button.addTarget(self, action: #selector(didTapDateButton), for: .touchUpInside)
+        return button
+    }
+
+    private var dateIcon: UIImage? {
+        UIImage.SFSymbol(name: "chevron.down", color: .label)
     }
 }
