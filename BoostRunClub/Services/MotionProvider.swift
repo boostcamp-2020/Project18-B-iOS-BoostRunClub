@@ -14,7 +14,7 @@ final class MotionProvider {
     private let pedometer = CMPedometer()
     private var isActive = false
 
-    var currentMotionType = CurrentValueSubject<MotionType, Never>(MotionType.unknown)
+    var currentMotionType = CurrentValueSubject<CMMotionActivity, Never>(.init())
     var cadence = CurrentValueSubject<Int, Never>(0)
 
     func startTrackingActivityType() {
@@ -28,11 +28,7 @@ final class MotionProvider {
                 let activity = activity
             else { return }
 
-            let motionType = activity.motionType
-
-            if self.currentMotionType.value != motionType {
-                self.currentMotionType.send(motionType)
-            }
+            self.currentMotionType.send(activity)
         }
     }
 
