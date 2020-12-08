@@ -15,6 +15,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
     init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
         self.factory = factory
         super.init(navigationController: navigationController)
+        navigationController.view.backgroundColor = .systemBackground
+        navigationController.setNavigationBarHidden(false, animated: true)
     }
 
     override func start() {
@@ -22,7 +24,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
     }
 
     func showActivityViewController() {
-        let activityVC = ActivityViewController()
+        let activityVM = factory.makeActivityVM()
+        let activityVC = factory.makeActivityVC(with: activityVM)
         navigationController.pushViewController(activityVC, animated: true)
     }
 }
