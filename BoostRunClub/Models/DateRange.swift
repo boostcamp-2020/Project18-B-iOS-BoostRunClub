@@ -11,3 +11,9 @@ struct DateRange {
     let from: Date
     let to: Date
 }
+
+extension DateRange {
+    func contains(date: Date) -> Bool {
+        (from ... to) ~= date
+    }
+}

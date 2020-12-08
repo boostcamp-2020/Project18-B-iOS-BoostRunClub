@@ -39,6 +39,8 @@ class ActivityDateFilterViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
 
+        let rangeOfYear = Date().rangeOfYear!
+        print(rangeOfYear.contains(date: Date()))
         print("\(DateFormatter.YMDHMFormatter.string(from: Date()))")
         print(" -> \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.from))")
         print(" ~ \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.to))")

@@ -26,19 +26,28 @@ enum ActivityFilterType {
         }
     }
 
-//    func groupDateRanges(from dates: [Date]) -> [DateRange] {
-//        guard let firstDate = dates.first else { return [] }
-//        let calendar = Calendar.current
-//
-//        switch self {
-//        case .week
-//
-//        case .month
-//
-//        case .year
-//
-//        case .all
-//         return [DateRange(from: dates.first!, to: dates.last ?? dates.first!)]
-//        }
-//    }
+    func groupDateRanges(from dates: [Date]) -> [DateRange] {
+        guard !dates.isEmpty else { return [] }
+
+        if self == .all {
+            return [DateRange(from: dates.first!, to: dates.last ?? dates.first!)]
+        }
+
+        var results = [DateRange]()
+        dates.forEach {
+            if
+                results.isEmpty,
+               let range = $0.rangeOf(type: self)
+            {
+                results.append(range)
+            } else if
+                let lastRange = results.last,
+                !lastRange.contains(date: $0),
+                let newRange = $0.rangeOfWeek
+            {
+                results.append(newRange)
+            }
+        }
+        return results
+    }
 }

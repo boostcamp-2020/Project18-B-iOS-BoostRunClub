@@ -118,6 +118,7 @@
 		96C468B1257F51020062AAA4 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B0257F51020062AAA4 /* DateRange.swift */; };
 		96C468B5257F58600062AAA4 /* Date+DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B4257F58600062AAA4 /* Date+DateRange.swift */; };
 		96C468BD257F61DA0062AAA4 /* DateFormatter+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */; };
+		96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */; };
@@ -245,6 +246,7 @@
 		96C468B0257F51020062AAA4 /* DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		96C468B4257F58600062AAA4 /* Date+DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+DateRange.swift"; sourceTree = "<group>"; };
 		96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Common.swift"; sourceTree = "<group>"; };
+		96C468C4257F6D900062AAA4 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewController.swift; sourceTree = "<group>"; };
 		96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewModel.swift; sourceTree = "<group>"; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
 				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
 				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
+				96C468C4257F6D900062AAA4 /* Date+String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,
 				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
+				96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				4CF009C6257CADC300EC928A /* Location.swift in Sources */,

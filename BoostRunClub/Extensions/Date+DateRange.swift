@@ -8,6 +8,19 @@
 import Foundation
 
 extension Date {
+    func rangeOf(type: ActivityFilterType) -> DateRange? {
+        switch type {
+        case .week:
+            return rangeOfWeek
+        case .month:
+            return rangeOfMonth
+        case .year:
+            return rangeOfYear
+        case .all:
+            return nil
+        }
+    }
+
     var rangeOfWeek: DateRange? {
         var calendar = Calendar.current
         calendar.firstWeekday = 2
