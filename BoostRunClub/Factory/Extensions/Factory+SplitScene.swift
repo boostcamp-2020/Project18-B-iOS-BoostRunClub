@@ -8,8 +8,21 @@
 import UIKit
 
 protocol SplitSceneFactory {
-//    func makeSplitVC()
-//    func makeSplitVM()
+    func makeSplitVC(with viewModel: SplitsViewModelTypes) -> UIViewController
+    func makeSplitVM() -> SplitsViewModelTypes
+    func makeRunningSplitCellVM() -> RunningSplitCellViewModelType
 }
 
-extension DependencyFactory: SplitSceneFactory {}
+extension DependencyFactory: SplitSceneFactory {
+    func makeRunningSplitCellVM() -> RunningSplitCellViewModelType {
+        RunningSplitCellViewModel()
+    }
+
+    func makeSplitVC(with viewModel: SplitsViewModelTypes) -> UIViewController {
+        SplitsViewController(with: viewModel)
+    }
+
+    func makeSplitVM() -> SplitsViewModelTypes {
+        SplitsViewModel(runningDataProvider: runningDataProvider)
+    }
+}
