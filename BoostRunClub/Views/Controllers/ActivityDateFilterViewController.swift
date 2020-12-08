@@ -10,21 +10,38 @@ import UIKit
 
 class ActivityDateFilterViewController: UIViewController {
     private lazy var backgroundView = UIView()
-    private lazy var sheetView = makeSheetView()
-    private lazy var selectButton = makeSelectButton()
-    private var pickerView = UIPickerView()
+    private lazy var sheetView = DateFilterSheetView(
+        contentSize: CGSize(
+            width: UIScreen.main.bounds.width,
+            height: 400
+        ))
+
     private lazy var sheetViewBottomHeightConstraint = sheetView.heightAnchor.constraint(equalToConstant: 0)
 
     var tabHeight: CGFloat = 0
 
-    let components: [String] = ["2020"]
-    let pickerLists: [[String]] = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]]
+    let pickerLists: [[String]] = [
+        [
+            "item1",
+            "item2",
+            "item3",
+        ],
+        [
+            "item1",
+            "item2",
+            "item3",
+        ],
+    ]
 
     var viewModel: ActivityDateFilterViewModelTypes?
 
     init(with viewModel: ActivityDateFilterViewModelTypes) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+
+        print("\(DateFormatter.YMDHMFormatter.string(from: Date()))")
+        print(" -> \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.from))")
+        print(" ~ \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.to))")
     }
 
     required init?(coder: NSCoder) {
@@ -33,6 +50,11 @@ class ActivityDateFilterViewController: UIViewController {
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
+
+        // Inputs
+        sheetView.didTapSelect = { [weak viewModel] in
+            viewModel?.inputs.didSelectDateFilter(selects: $0)
+        }
     }
 
     deinit {
@@ -49,8 +71,8 @@ extension ActivityDateFilterViewController {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
         gesture.cancelsTouchesInView = false
         view.addGestureRecognizer(gesture)
-        pickerView.dataSource = self
-        pickerView.reloadAllComponents()
+        sheetView.pickerView.dataSource = self
+        sheetView.pickerView.delegate = self
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         configureLayout()
         bindViewModel()
@@ -58,7 +80,7 @@ extension ActivityDateFilterViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        sheetViewBottomHeightConstraint.constant = 400
+        sheetViewBottomHeightConstraint.constant = sheetView.contentSize.height
         UIView.animate(
             withDuration: 0.4,
             delay: 0,
@@ -82,9 +104,6 @@ extension ActivityDateFilterViewController {
         }
     }
 
-    @objc
-    func didTapSelectButton() {}
-
     func closeWithAnimation() {
         sheetViewBottomHeightConstraint.constant = 0
         UIView.animate(
@@ -104,13 +123,13 @@ extension ActivityDateFilterViewController {
 
 // MARK: - UIPickerViewDatasource Implementation
 
-extension ActivityDateFilterViewController: UIPickerViewDataSource {
+extension ActivityDateFilterViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerLists[component][row]
     }
 
     func numberOfComponents(in _: UIPickerView) -> Int {
-        return components.count
+        return pickerLists.count
     }
 
     func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -128,7 +147,7 @@ extension ActivityDateFilterViewController {
             backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -tabHeight),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabHeight),
         ])
 
         view.addSubview(sheetView)
@@ -139,61 +158,5 @@ extension ActivityDateFilterViewController {
             sheetView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             sheetViewBottomHeightConstraint,
         ])
-    }
-
-    private func makeSheetView() -> UIScrollView {
-        let scrollView = UIScrollView()
-        let size = CGSize(width: UIScreen.main.bounds.width, height: 400)
-        let origin = CGPoint(x: 0, y: UIScreen.main.bounds.height)
-        scrollView.contentSize = size
-        scrollView.alwaysBounceHorizontal = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isScrollEnabled = false
-
-        let view = UIView(frame: CGRect(origin: origin, size: size))
-        view.backgroundColor = .systemBackground
-        scrollView.addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
-            view.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            view.widthAnchor.constraint(equalToConstant: size.width),
-            view.heightAnchor.constraint(equalToConstant: size.height),
-        ])
-
-        view.addSubview(pickerView)
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            pickerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            pickerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-        ])
-
-        view.addSubview(selectButton)
-        selectButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            selectButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 10),
-            selectButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            selectButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
-            selectButton.heightAnchor.constraint(equalToConstant: 60),
-        ])
-
-        return scrollView
-    }
-
-    private func makeSelectButton() -> UIButton {
-        let button = UIButton(type: .system)
-        button.setTitle("선택", for: .normal)
-        button.setTitleColor(.systemBackground, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.backgroundColor = .label
-        button.layer.cornerRadius = 30
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(didTapSelectButton), for: .touchUpInside)
-        return button
     }
 }

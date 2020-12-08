@@ -9,13 +9,13 @@ import Foundation
 
 import Combine
 
-protocol ActivityDateFilterViewModelTypes {
+protocol ActivityDateFilterViewModelTypes: AnyObject {
     var inputs: ActivityDateFilterViewModelInputs { get }
     var outputs: ActivityDateFilterViewModelOutputs { get }
 }
 
 protocol ActivityDateFilterViewModelInputs {
-    func didSelectDateFilter(component: Int, row: Int)
+    func didSelectDateFilter(selects: [Int])
     func didTapBackgroundView()
 }
 
@@ -31,7 +31,7 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
     }
 
     // Inputs
-    func didSelectDateFilter(component _: Int, row _: Int) {
+    func didSelectDateFilter(selects _: [Int]) {
         closeSheetSignal.send((Date(), Date()))
     }
 

@@ -8,7 +8,10 @@
 import Foundation
 
 enum ActivityFilterType {
-    case week, month, year, all
+    case week,
+         month,
+         year,
+         all
 
     var name: String {
         switch self {
@@ -22,4 +25,20 @@ enum ActivityFilterType {
             return "전체"
         }
     }
+
+//    func groupDateRanges(from dates: [Date]) -> [DateRange] {
+//        guard let firstDate = dates.first else { return [] }
+//        let calendar = Calendar.current
+//
+//        switch self {
+//        case .week
+//
+//        case .month
+//
+//        case .year
+//
+//        case .all
+//         return [DateRange(from: dates.first!, to: dates.last ?? dates.first!)]
+//        }
+//    }
 }
