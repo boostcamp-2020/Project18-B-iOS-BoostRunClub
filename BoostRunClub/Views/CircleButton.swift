@@ -9,7 +9,7 @@ import UIKit
 
 class CircleButton: UIButton {
     enum Style {
-        case start, stop, pause, resume
+        case start, stop, pause, resume, locate
     }
 
     init(with buttonStyle: Style) {
@@ -33,6 +33,8 @@ class CircleButton: UIButton {
             setSFSymbol(iconName: "pause.fill", size: 25, tintColor: .systemBackground, backgroundColor: .label)
         case .resume:
             setSFSymbol(iconName: "play.fill", size: 25, tintColor: .label, backgroundColor: #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1))
+        case .locate:
+            setSFSymbol(iconName: "location.fill", size: 25, tintColor: .systemBackground, backgroundColor: .label)
         }
 
         setTitleColor(.label, for: .normal)

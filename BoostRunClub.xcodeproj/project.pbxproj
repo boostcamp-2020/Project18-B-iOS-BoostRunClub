@@ -347,19 +347,19 @@
 		71FBAAD2257D2319005C8D30 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				71FBAAD3257D2341005C8D30 /* Factory+RunningInfoScene.swift */,
-				71FBAADD257D23AF005C8D30 /* Factory+TabBarContainer.swift */,
-				71FBAAE1257D23C1005C8D30 /* Factory+RunningPageContainer.swift */,
-				71FBAAE5257D23DB005C8D30 /* Factory+LoginScene.swift */,
-				71FBAAE9257D23F0005C8D30 /* Factory+ActivityScene.swift */,
 				71FBAAED257D2418005C8D30 /* Factory+ActivityDetailScene.swift */,
-				71FBAAF1257D244F005C8D30 /* Factory+PrepareRunScene.swift */,
-				71FBAAF5257D246A005C8D30 /* Factory+PausedRunningScene.swift */,
-				71FBAAF9257D2488005C8D30 /* Factory+SplitScene.swift */,
-				71FBAAFD257D24A9005C8D30 /* Factory+ProfileScene.swift */,
+				71FBAAE9257D23F0005C8D30 /* Factory+ActivityScene.swift */,
 				71FBAB01257D24BB005C8D30 /* Factory+GoalTypeScene.swift */,
-				71FBAB05257D24E3005C8D30 /* Factory+RunningMapScene.swift */,
 				71FBAB09257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift */,
+				71FBAAE5257D23DB005C8D30 /* Factory+LoginScene.swift */,
+				71FBAAF5257D246A005C8D30 /* Factory+PausedRunningScene.swift */,
+				71FBAAF1257D244F005C8D30 /* Factory+PrepareRunScene.swift */,
+				71FBAAFD257D24A9005C8D30 /* Factory+ProfileScene.swift */,
+				71FBAAD3257D2341005C8D30 /* Factory+RunningInfoScene.swift */,
+				71FBAB05257D24E3005C8D30 /* Factory+RunningMapScene.swift */,
+				71FBAAE1257D23C1005C8D30 /* Factory+RunningPageContainer.swift */,
+				71FBAAF9257D2488005C8D30 /* Factory+SplitScene.swift */,
+				71FBAADD257D23AF005C8D30 /* Factory+TabBarContainer.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
