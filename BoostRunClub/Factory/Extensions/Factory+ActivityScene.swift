@@ -35,9 +35,7 @@ extension DependencyFactory: ActivitySceneFactory {
         with viewModel: ActivityDateFilterViewModelTypes,
         tabHeight: CGFloat
     ) -> UIViewController {
-        let viewController = ActivityDateFilterViewController(with: viewModel)
-        viewController.tabHeight = tabHeight
-        return viewController
+        return ActivityDateFilterViewController(with: viewModel, tabHeight: tabHeight)
     }
 
     func makeActivityDateFilterVM(

@@ -31,4 +31,10 @@ extension DateFormatter {
         fmt.dateFormat = "yyyy년"
         return fmt
     }()
+
+    static var YMDFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        return fmt
+    }()
 }

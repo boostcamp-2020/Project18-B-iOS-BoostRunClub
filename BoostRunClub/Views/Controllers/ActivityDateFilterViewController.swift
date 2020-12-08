@@ -18,32 +18,17 @@ class ActivityDateFilterViewController: UIViewController {
 
     private lazy var sheetViewBottomHeightConstraint = sheetView.heightAnchor.constraint(equalToConstant: 0)
 
-    var tabHeight: CGFloat = 0
+    private var tabHeight: CGFloat = 0
 
-    let pickerLists: [[String]] = [
-        [
-            "item1",
-            "item2",
-            "item3",
-        ],
-        [
-            "item1",
-            "item2",
-            "item3",
-        ],
-    ]
+    private var rows = [[String]]()
 
     var viewModel: ActivityDateFilterViewModelTypes?
+    var cancellables = Set<AnyCancellable>()
 
-    init(with viewModel: ActivityDateFilterViewModelTypes) {
+    init(with viewModel: ActivityDateFilterViewModelTypes, tabHeight: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-
-        let rangeOfYear = Date().rangeOfYear!
-        print(rangeOfYear.contains(date: Date()))
-        print("\(DateFormatter.YMDHMFormatter.string(from: Date()))")
-        print(" -> \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.start))")
-        print(" ~ \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.end))")
+        self.tabHeight = tabHeight
     }
 
     required init?(coder: NSCoder) {
@@ -53,9 +38,24 @@ class ActivityDateFilterViewController: UIViewController {
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
+        viewModel.outputs.pickerListSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.rows = $0
+                self?.sheetView.pickerView.reloadAllComponents()
+            }
+            .store(in: &cancellables)
+
+        viewModel.outputs.adjustPickerSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.sheetView.pickerView.selectRow($0.row, inComponent: $0.component, animated: true)
+            }
+            .store(in: &cancellables)
+
         // Inputs
         sheetView.didTapSelect = { [weak viewModel] in
-            viewModel?.inputs.didSelectDateFilter(selects: $0)
+            viewModel?.inputs.didTapSelectButton()
         }
     }
 
@@ -126,22 +126,27 @@ extension ActivityDateFilterViewController {
 // MARK: - UIPickerViewDatasource Implementation
 
 extension ActivityDateFilterViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        viewModel?.inputs.didPickerChanged(row: row, component: component)
+    }
+
     func pickerView(_: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerLists[component][row]
+        return rows[component][row]
     }
 
     func numberOfComponents(in _: UIPickerView) -> Int {
-        return pickerLists.count
+        return rows.count
     }
 
     func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerLists[component].count
+        return rows[component].count
     }
 }
 
 // MARK: - Configure
 
 extension ActivityDateFilterViewController {
+    
     private func configureLayout() {
         view.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false

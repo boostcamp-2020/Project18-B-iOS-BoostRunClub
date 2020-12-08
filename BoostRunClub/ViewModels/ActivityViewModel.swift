@@ -77,33 +77,24 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didFilterChanged(to idx: Int) {
         guard let filterType = ActivityFilterType(rawValue: idx) else { return }
-
-        let ranges: [DateRange]
-        if self.ranges.contains(where: { $0.key == filterType }) {
-            ranges = self.ranges[filterType]!
-        } else {
-            let dates = dummyActivity.compactMap { $0.createdAt }
-            ranges = filterType.groupDateRanges(from: dates)
-            self.ranges[filterType] = ranges
-        }
+        let ranges = getDateRanges(for: filterType)
 
         if let latestRange = ranges.last {
             let total = ActivityTotalConfig(
                 filterType: filterType,
                 filterRange: latestRange,
-                activities: dummyActivity.filter { latestRange.contains(date: $0.createdAt) }
+                activities: activities.filter { latestRange.contains(date: $0.createdAt) }
             )
+            filterTypeSubject.send(filterType)
             totalDataSubject.send(total)
         }
-
-        self.ranges[filterType] = ranges
     }
 
     func didFilterRangeChanged(range: DateRange) {
         let total = ActivityTotalConfig(
             filterType: filterTypeSubject.value,
             filterRange: range,
-            activities: dummyActivity.filter { range.contains(date: $0.createdAt) }
+            activities: activities.filter { range.contains(date: $0.createdAt) }
         )
         totalDataSubject.send(total)
     }
@@ -115,18 +106,8 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     func didTapShowProfileButton() {}
 
     func didTapShowDateFilter() {
-        let filterType = filterTypeSubject.value
-
-        let ranges: [DateRange]
-        if self.ranges.contains(where: { $0.key == filterType }) {
-            ranges = self.ranges[filterType]!
-        } else {
-            let dates = dummyActivity.compactMap { $0.createdAt }
-            ranges = filterType.groupDateRanges(from: dates)
-            self.ranges[filterType] = ranges
-        }
-
-        showFilterSheetSignal.send((filterType, ranges))
+        let ranges = getDateRanges(for: filterTypeSubject.value)
+        showFilterSheetSignal.send((filterTypeSubject.value, ranges))
     }
 
     // Outputs
@@ -141,4 +122,20 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 extension ActivityViewModel: ActivityViewModelTypes {
     var inputs: ActivityViewModelInputs { self }
     var outputs: ActivityViewModelOutputs { self }
+}
+
+// MARK: - Private Functions
+
+extension ActivityViewModel {
+    func getDateRanges(for filter: ActivityFilterType) -> [DateRange] {
+        let ranges: [DateRange]
+        if self.ranges.contains(where: { $0.key == filter }) {
+            ranges = self.ranges[filter]!
+        } else {
+            let dates = dummyActivity.compactMap { $0.createdAt }
+            ranges = filter.groupDateRanges(from: dates)
+            self.ranges[filter] = ranges
+        }
+        return ranges
+    }
 }

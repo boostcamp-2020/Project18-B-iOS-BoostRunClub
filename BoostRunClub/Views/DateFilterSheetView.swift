@@ -17,7 +17,7 @@ class DateFilterSheetView: UIScrollView {
     private(set) var pickerView = UIPickerView()
     private lazy var selectButton = makeSelectButton()
 
-    var didTapSelect: (([Int]) -> Void)?
+    var didTapSelect: (() -> Void)?
 
     init(contentSize: CGSize) {
         super.init(frame: .zero)
@@ -35,7 +35,9 @@ class DateFilterSheetView: UIScrollView {
 
 extension DateFilterSheetView {
     @objc
-    func didTapSelectButton() {}
+    func didTapSelectButton() {
+        didTapSelect?()
+    }
 }
 
 // MARK: - Configure
