@@ -97,6 +97,12 @@
 		963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */; };
 		963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
 		963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
+		964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B4257F58600062AAA4 /* Date+DateRange.swift */; };
+		964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
+		964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */; };
+		964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */; };
+		964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B0257F51020062AAA4 /* DateRange.swift */; };
+		964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		967780292577905400DA2454 /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967780282577905400DA2454 /* CountDownView.swift */; };
 		967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A15D25763CC800DED689 /* PausedRunningViewController.swift */; };
@@ -820,8 +826,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */,
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
+				964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */,
 				4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */,
 				96B90638257CDF4E0081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */,
 				96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */,
@@ -837,13 +845,17 @@
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
+				964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
 				4C7133D4257B57540083ECD3 /* MotionType.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
+				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
+				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
+				964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */,
 				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);
