@@ -8,12 +8,12 @@
 import Foundation
 
 struct DateRange {
-    let from: Date
-    let to: Date
+    let start: Date
+    let end: Date
 }
 
 extension DateRange {
     func contains(date: Date) -> Bool {
-        (from ... to) ~= date
+        (start ... end) ~= date
     }
 }

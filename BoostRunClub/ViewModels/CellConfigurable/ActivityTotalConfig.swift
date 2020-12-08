@@ -61,7 +61,7 @@ struct ActivityTotalConfig {
         avgPace: Int = 0,
         runningTime: Double = 0,
         elevation: Double = 0,
-        dateRange: DateRange = DateRange(from: Date(), to: Date())
+        dateRange: DateRange = DateRange(start: Date(), end: Date())
     ) {
         self.period = period // 주: 날짜 or 이번주 or 저번주, 월: yyyy년 mm월, 년: yyyy년, 전체: 2020년 ...
         totalDistance = distance
@@ -97,9 +97,9 @@ struct ActivityTotalConfig {
             let start = activities.first?.createdAt,
             let last = activities.last?.createdAt
         {
-            dateRange = DateRange(from: start, to: last)
+            dateRange = DateRange(start: start, end: last)
         } else {
-            dateRange = DateRange(from: Date(), to: Date())
+            dateRange = DateRange(start: Date(), end: Date())
         }
     }
 }

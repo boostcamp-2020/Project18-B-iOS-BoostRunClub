@@ -16,7 +16,15 @@ struct Activity {
     var uuid: UUID
     var elevation: Double
 
-    init?(avgPace: Int, distance: Double, duration: Double, elevation: Double, thumbnail: Data?, createdAt: Date?, uuid: UUID?) {
+    init?(
+        avgPace: Int,
+        distance: Double,
+        duration: Double,
+        elevation: Double,
+        thumbnail: Data?,
+        createdAt: Date?,
+        uuid: UUID?
+    ) {
         guard
             let createdAt = createdAt,
             let uuid = uuid
@@ -30,7 +38,15 @@ struct Activity {
         self.uuid = uuid
     }
 
-    init(avgPace: Int, distance: Double, duration: Double, elevation: Double, thumbnail: Data?, createdAt: Date, uuid: UUID) {
+    init(
+        avgPace: Int,
+        distance: Double,
+        duration: Double,
+        elevation: Double,
+        thumbnail: Data?,
+        createdAt: Date,
+        uuid: UUID
+    ) {
         self.avgPace = avgPace
         self.distance = distance
         self.duration = duration

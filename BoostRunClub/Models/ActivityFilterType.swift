@@ -30,7 +30,7 @@ enum ActivityFilterType: Int {
         guard !dates.isEmpty else { return [] }
 
         if self == .all {
-            return [DateRange(from: dates.first!, to: dates.last ?? dates.first!)]
+            return [DateRange(start: dates.first!, end: dates.last ?? dates.first!)]
         }
 
         var results = [DateRange]()
@@ -54,15 +54,15 @@ enum ActivityFilterType: Int {
     func rangeDescription(from range: DateRange) -> String {
         switch self {
         case .week:
-            return range.from.toMDString + "~" + range.to.toMDString
+            return range.start.toMDString + "~" + range.end.toMDString
         case .month:
-            return range.to.toYMString
+            return range.end.toYMString
         case .year:
-            return range.to.toYString
+            return range.end.toYString
         case .all:
-            let from = range.from.toYString
-            let to = range.to.toYString
-            return from == to ? to : from + "-" + to
+            let from = range.start.toYString
+            let end = range.end.toYString
+            return from == end ? end : from + "-" + end
         }
     }
 }

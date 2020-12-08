@@ -28,7 +28,7 @@ extension Date {
         guard let startOfWeek = calendar.date(from: components),
               let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
         else { return nil }
-        return DateRange(from: startOfWeek, to: endOfWeek)
+        return DateRange(start: startOfWeek, end: endOfWeek)
     }
 
     var rangeOfMonth: DateRange? {
@@ -41,7 +41,7 @@ extension Date {
               let endOfMonth = calendar.date(byAdding: endComponents, to: startOfMonth)
         else { return nil }
 
-        return DateRange(from: startOfMonth, to: endOfMonth)
+        return DateRange(start: startOfMonth, end: endOfMonth)
     }
 
     var rangeOfYear: DateRange? {
@@ -55,12 +55,12 @@ extension Date {
               let endOfMonth = calendar.date(byAdding: endComponents, to: startOfMonth)
         else { return nil }
 
-        return DateRange(from: startOfMonth, to: endOfMonth)
+        return DateRange(start: startOfMonth, end: endOfMonth)
     }
 
     static func numberOfWeeks(range: DateRange) -> Int? {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.weekOfMonth], from: range.from, to: range.to)
+        let components = calendar.dateComponents([.weekOfMonth], from: range.start, to: range.end)
         return components.weekOfMonth
     }
 }

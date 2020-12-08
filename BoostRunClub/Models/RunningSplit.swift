@@ -15,7 +15,14 @@ struct RunningSplit {
     var elevation: Int = 0
     var runningSlices = [RunningSlice]()
 
-    init?(activityUUID: UUID?, avgBPM: Int, avgPace: Int, distance: Double, elevation: Int, runningSlices: [RunningSlice]) {
+    init?(
+        activityUUID: UUID?,
+        avgBPM: Int,
+        avgPace: Int,
+        distance: Double,
+        elevation: Int,
+        runningSlices: [RunningSlice]
+    ) {
         guard let activityUUID = activityUUID else { return nil }
         self.activityUUID = activityUUID
         self.avgBPM = avgBPM
@@ -25,7 +32,14 @@ struct RunningSplit {
         self.runningSlices = runningSlices
     }
 
-    init(activityUUID: UUID, avgBPM: Int, avgPace: Int, distance: Double, elevation: Int, runningSlices: [RunningSlice]) {
+    init(
+        activityUUID: UUID,
+        avgBPM: Int,
+        avgPace: Int,
+        distance: Double,
+        elevation: Int,
+        runningSlices: [RunningSlice]
+    ) {
         self.activityUUID = activityUUID
         self.avgBPM = avgBPM
         self.avgPace = avgPace

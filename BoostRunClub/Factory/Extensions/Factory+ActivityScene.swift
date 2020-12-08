@@ -11,8 +11,15 @@ protocol ActivitySceneFactory {
     func makeActivityVC(with viewModel: ActivityViewModelTypes) -> UIViewController
     func makeActivityVM() -> ActivityViewModelTypes
 
-    func makeActivityDateFilterVC(with viewModel: ActivityDateFilterViewModelTypes, tabHeight: CGFloat) -> UIViewController
-    func makeActivityDateFilterVM(filterType: ActivityFilterType, dateRanges: [DateRange]) -> ActivityDateFilterViewModelTypes
+    func makeActivityDateFilterVC(
+        with viewModel: ActivityDateFilterViewModelTypes,
+        tabHeight: CGFloat
+    ) -> UIViewController
+
+    func makeActivityDateFilterVM(
+        filterType: ActivityFilterType,
+        dateRanges: [DateRange]
+    ) -> ActivityDateFilterViewModelTypes
 }
 
 extension DependencyFactory: ActivitySceneFactory {
@@ -24,13 +31,19 @@ extension DependencyFactory: ActivitySceneFactory {
         return ActivityViewModel(activityProvider: activityProvider)
     }
 
-    func makeActivityDateFilterVC(with viewModel: ActivityDateFilterViewModelTypes, tabHeight: CGFloat) -> UIViewController {
-        let vc = ActivityDateFilterViewController(with: viewModel)
-        vc.tabHeight = tabHeight
-        return vc
+    func makeActivityDateFilterVC(
+        with viewModel: ActivityDateFilterViewModelTypes,
+        tabHeight: CGFloat
+    ) -> UIViewController {
+        let viewController = ActivityDateFilterViewController(with: viewModel)
+        viewController.tabHeight = tabHeight
+        return viewController
     }
 
-    func makeActivityDateFilterVM(filterType: ActivityFilterType, dateRanges: [DateRange]) -> ActivityDateFilterViewModelTypes {
+    func makeActivityDateFilterVM(
+        filterType: ActivityFilterType,
+        dateRanges: [DateRange]
+    ) -> ActivityDateFilterViewModelTypes {
         return ActivityDateFilterViewModel(filterType: filterType, dateRanges: dateRanges)
     }
 }

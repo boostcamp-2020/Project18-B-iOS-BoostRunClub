@@ -106,7 +106,7 @@ class PrepareRunViewModelTest: XCTestCase {
         }.store(in: &cancellables)
 
         prepareVM.goalValueObservable.dropFirst().sink { _ in
-            XCTFail()
+            XCTFail("초기화 값 이외의 다른 값이 발생했습니다.")
         }.store(in: &cancellables)
 
         prepareVM.didChangeGoalValue(goalValue)

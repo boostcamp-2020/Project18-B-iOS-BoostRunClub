@@ -42,17 +42,17 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
             print(error.localizedDescription)
         }
 
-        // test
-        fetchActivities().forEach {
-            print($0.distance)
-            let detail = fetchActivityDetail(activityId: $0.uuid)
-            print(detail?.calorie)
-            print(detail?.locations.count)
-            print(detail?.locations)
-            let splits = fetchSplits(activityId: $0.uuid)
-            print(splits.count)
-            splits.forEach { print($0.avgPace); print($0.runningSlices) }
-        }
+        // ERASE!: test
+//        fetchActivities().forEach {
+//            print($0.distance)
+//            let detail = fetchActivityDetail(activityId: $0.uuid)
+//            print(detail!.calorie)
+//            print(detail!.locations.count)
+//            print(detail!.locations)
+//            let splits = fetchSplits(activityId: $0.uuid)
+//            print(splits.count)
+//            splits.forEach { print($0.avgPace); print($0.runningSlices) }
+//        }
     }
 
     func editActivity(activity _: Activity) {}

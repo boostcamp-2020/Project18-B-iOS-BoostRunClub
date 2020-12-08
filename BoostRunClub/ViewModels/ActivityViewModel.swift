@@ -77,8 +77,16 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didFilterChanged(to idx: Int) {
         guard let filterType = ActivityFilterType(rawValue: idx) else { return }
-        let dates = dummyActivity.compactMap { $0.createdAt }
-        let ranges = self.ranges[filterType] ?? filterType.groupDateRanges(from: dates)
+
+        let ranges: [DateRange]
+        if self.ranges.contains(where: { $0.key == filterType }) {
+            ranges = self.ranges[filterType]!
+        } else {
+            let dates = dummyActivity.compactMap { $0.createdAt }
+            ranges = filterType.groupDateRanges(from: dates)
+            self.ranges[filterType] = ranges
+        }
+
         if let latestRange = ranges.last {
             let total = ActivityTotalConfig(
                 filterType: filterType,
@@ -108,9 +116,17 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didTapShowDateFilter() {
         let filterType = filterTypeSubject.value
-        let ranges = self.ranges[filterType] ?? filterType.groupDateRanges(from: dummyActivity.compactMap { $0.createdAt })
+
+        let ranges: [DateRange]
+        if self.ranges.contains(where: { $0.key == filterType }) {
+            ranges = self.ranges[filterType]!
+        } else {
+            let dates = dummyActivity.compactMap { $0.createdAt }
+            ranges = filterType.groupDateRanges(from: dates)
+            self.ranges[filterType] = ranges
+        }
+
         showFilterSheetSignal.send((filterType, ranges))
-        self.ranges[filterType] = ranges
     }
 
     // Outputs

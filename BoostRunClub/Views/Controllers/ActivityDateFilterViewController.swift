@@ -42,8 +42,8 @@ class ActivityDateFilterViewController: UIViewController {
         let rangeOfYear = Date().rangeOfYear!
         print(rangeOfYear.contains(date: Date()))
         print("\(DateFormatter.YMDHMFormatter.string(from: Date()))")
-        print(" -> \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.from))")
-        print(" ~ \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.to))")
+        print(" -> \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.start))")
+        print(" ~ \(DateFormatter.YMDHMFormatter.string(from: Date().rangeOfYear!.end))")
     }
 
     required init?(coder: NSCoder) {
