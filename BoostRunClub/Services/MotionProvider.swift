@@ -56,7 +56,7 @@ final class MotionProvider {
                 error == nil
             else { return }
 
-            self.cadence.value = Int(truncating: cadence)
+            self.cadence.value = Int(truncating: cadence) * 60
         }
     }
 }
