@@ -30,6 +30,7 @@ protocol ActivityViewModelOutputs {
 
     var showStatisticSignal: PassthroughSubject<ActivityStatisticConfig?, Never> { get }
     var showProfileScene: PassthroughSubject<Void, Never> { get }
+    var showFilterSheetSignal: PassthroughSubject<ActivityFilterType, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
@@ -70,7 +71,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     func didSelectActivity(at _: Int) {}
     func didTapShowAllActivities() {}
     func didTapShowProfileButton() {}
-    func didTapShowDateFilter() {}
+    func didTapShowDateFilter() {
+        showFilterSheetSignal.send(activityTotal.value.filterType)
+    }
 
     // Outputs
     var activityTotal = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
@@ -79,6 +82,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     var showStatisticSignal = PassthroughSubject<ActivityStatisticConfig?, Never>()
     var showProfileScene = PassthroughSubject<Void, Never>()
+    var showFilterSheetSignal = PassthroughSubject<ActivityFilterType, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

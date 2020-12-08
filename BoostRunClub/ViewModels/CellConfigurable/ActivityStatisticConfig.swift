@@ -27,7 +27,7 @@ struct ActivityStatisticConfig {
     ) {
         self.filterType = filterType
         self.period = period // year - ~년 통계, 총 활동 통계
-        self.distance = String(format: "%.2fkm/러닝", distance)
+        self.distance = String(format: "%.2fkm/러닝", distance / 1000)
         self.numRunning = "\(numRunning)러닝/주"
         self.avgPace = String(format: "%d'%d\"", avgPace / 60, avgPace % 60)
         self.runningTime = TimeInterval(runningTime).formattedString + "/러닝"

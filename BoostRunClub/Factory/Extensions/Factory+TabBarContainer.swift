@@ -17,6 +17,7 @@ extension DependencyFactory: TabBarContainerFactory {
         tabBarController.setViewControllers(viewControllers, animated: true)
         tabBarController.selectedIndex = selectedIndex
         tabBarController.tabBar.isTranslucent = false // TODO: false true 비교
+        tabBarController.tabBar.backgroundColor = .red
         return tabBarController
     }
 }
