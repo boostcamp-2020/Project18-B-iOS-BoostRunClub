@@ -7,13 +7,14 @@
 
 import Combine
 import CoreLocation
+import CoreMotion
 import Foundation
 
 protocol RunningDataServiceable {
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
     var distance: CurrentValueSubject<Double, Never> { get }
     var pace: CurrentValueSubject<Int, Never> { get }
-    var calorie: CurrentValueSubject<Double, Never> { get }
+    var calorie: CurrentValueSubject<Int, Never> { get }
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var cadence: CurrentValueSubject<Int, Never> { get }
 
@@ -23,7 +24,7 @@ protocol RunningDataServiceable {
     var runningSplits: [RunningSplit] { get }
     var currentRunningSlice: RunningSlice { get }
     var routes: [RunningSlice] { get }
-
+    var currentMotionType: CurrentValueSubject<CMMotionActivity, Never> { get }
     func start()
     func stop()
     func pause()
@@ -44,12 +45,11 @@ class RunningDataService: RunningDataServiceable {
     var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
 
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
-    var calorie = CurrentValueSubject<Double, Never>(0)
+    var calorie = CurrentValueSubject<Int, Never>(0)
     var pace = CurrentValueSubject<Int, Never>(0)
     var avgPace = CurrentValueSubject<Int, Never>(0)
     var cadence = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
-
     var locations = [CLLocation]()
 
     var runningSplits = [RunningSplit]()
@@ -59,7 +59,7 @@ class RunningDataService: RunningDataServiceable {
         runningSplits.flatMap { $0.runningSlices } + currentRunningSplit.runningSlices + [currentRunningSlice]
     }
 
-    var motion: MotionType = .running
+    var currentMotionType = CurrentValueSubject<CMMotionActivity, Never>(.init())
 
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
@@ -92,20 +92,15 @@ class RunningDataService: RunningDataServiceable {
             .store(in: &cancellables)
 
         motionProvider.currentMotionType
-            .sink { _ in
-                // TODO: Motion Classifier
-                //				self.motion = $0
+            .sink { [weak self] currentMotionType in
+                self?.currentMotionType.send(currentMotionType)
             }
             .store(in: &cancellables)
 
-        // TODO: Cadence
-        //        motionProvider.steps.sink { steps in
-        //            print("#####", steps)
-        //        }.store(in: &cancellables)
-
-        motionProvider.cadence.sink { cadence in
-            self.cadence.value = cadence
-        }.store(in: &cancellables)
+        motionProvider.cadence
+            .sink { [weak self] cadence in
+                self?.cadence.value = cadence
+            }.store(in: &cancellables)
     }
 
     func initializeRunningData() {
