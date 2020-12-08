@@ -197,7 +197,7 @@ class RunningDataService: RunningDataServiceable {
             let newDistance = addedDistance + distance.value
 
             //	킬로미터 * Motion상수 * weight
-            calorie.value += addedDistance / 1000 * motion.METFactor * 70
+            calorie.value += Int(addedDistance / 1000 * currentMotionType.value.METFactor * 70)
 
             if Int(newDistance / 1000) - Int(distance.value / 1000) > 0 {
                 addSplit()
