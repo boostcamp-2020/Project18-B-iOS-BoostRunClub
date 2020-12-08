@@ -21,7 +21,7 @@ final class ActivityViewController: UIViewController {
         ActivityStatisticCellView(),
     ]
 
-    var showStatisticCell: Bool = false
+    var statisticHeaderTitle: String = ""
 
     private var viewModel: ActivityViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
@@ -50,7 +50,7 @@ final class ActivityViewController: UIViewController {
         guard let viewModel = viewModel else { return }
 
         // outputs
-        viewModel.outputs.activities
+        viewModel.outputs.recentActivitiesSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.activitiyCells.removeAll()
@@ -63,7 +63,7 @@ final class ActivityViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.activityTotal
+        viewModel.outputs.totalDataSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.configureActivityTotal(to: $0)
@@ -89,9 +89,9 @@ final class ActivityViewController: UIViewController {
 
         switch config.filterType {
         case .week, .month:
-            showStatisticCell = false
+            statisticHeaderTitle = ""
         case .all, .year:
-            showStatisticCell = true
+            statisticHeaderTitle = config.filterType == .all ? "총 활동 통계" : config.period + " 통계"
             activityStatisticCells[0].configure(title: "러닝", value: config.numRunningPerWeekText)
             activityStatisticCells[1].configure(title: "킬로미터", value: config.distancePerRunningText)
             activityStatisticCells[2].configure(title: "러닝페이스", value: config.avgPaceText)
@@ -115,24 +115,24 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return activitiyCells.count + (showStatisticCell ? 1 : 0)
+        return activitiyCells.count + (statisticHeaderTitle.isEmpty ? 0 : 1)
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showStatisticCell {
-            return section == 0 ? 5 : 1
-        } else {
+        if statisticHeaderTitle.isEmpty {
             return 1
+        } else {
+            return section == 0 ? 5 : 1
         }
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if showStatisticCell,
+        if !statisticHeaderTitle.isEmpty,
            indexPath.section == 0
         {
             return activityStatisticCells[indexPath.row]
         } else {
-            return activitiyCells[indexPath.section - (showStatisticCell ? 1 : 0)]
+            return activitiyCells[indexPath.section - (statisticHeaderTitle.isEmpty ? 0 : 1)]
         }
     }
 }
@@ -141,7 +141,7 @@ extension ActivityViewController: UITableViewDataSource {
 
 extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if showStatisticCell {
+        if !statisticHeaderTitle.isEmpty {
             return section < 2 ? 50 : 5
         } else {
             return section < 1 ? 50 : 5
@@ -149,11 +149,11 @@ extension ActivityViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if showStatisticCell {
+        if !statisticHeaderTitle.isEmpty {
             switch section {
             case 0:
                 let label = UILabel()
-                label.text = "총 활동 통계"
+                label.text = statisticHeaderTitle
                 return label
             case 1:
                 let label = UILabel()

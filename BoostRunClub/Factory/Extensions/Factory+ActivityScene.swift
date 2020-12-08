@@ -12,7 +12,7 @@ protocol ActivitySceneFactory {
     func makeActivityVM() -> ActivityViewModelTypes
 
     func makeActivityDateFilterVC(with viewModel: ActivityDateFilterViewModelTypes, tabHeight: CGFloat) -> UIViewController
-    func makeActivityDateFilterVM(filterType: ActivityFilterType) -> ActivityDateFilterViewModelTypes
+    func makeActivityDateFilterVM(filterType: ActivityFilterType, dateRanges: [DateRange]) -> ActivityDateFilterViewModelTypes
 }
 
 extension DependencyFactory: ActivitySceneFactory {
@@ -30,7 +30,7 @@ extension DependencyFactory: ActivitySceneFactory {
         return vc
     }
 
-    func makeActivityDateFilterVM(filterType: ActivityFilterType) -> ActivityDateFilterViewModelTypes {
-        return ActivityDateFilterViewModel(filterType: filterType, activityProvider: activityProvider)
+    func makeActivityDateFilterVM(filterType: ActivityFilterType, dateRanges: [DateRange]) -> ActivityDateFilterViewModelTypes {
+        return ActivityDateFilterViewModel(filterType: filterType, dateRanges: dateRanges)
     }
 }

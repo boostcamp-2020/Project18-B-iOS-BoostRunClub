@@ -40,8 +40,8 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
         navigationController.pushViewController(activityVC, animated: true)
     }
 
-    func showActivityDateFilterViewController(filterType: ActivityFilterType, dateRanges _: [DateRange]) -> AnyPublisher<DateRange, Never> {
-        let activityDateFilterVM = factory.makeActivityDateFilterVM(filterType: filterType)
+    func showActivityDateFilterViewController(filterType: ActivityFilterType, dateRanges: [DateRange]) -> AnyPublisher<DateRange, Never> {
+        let activityDateFilterVM = factory.makeActivityDateFilterVM(filterType: filterType, dateRanges: dateRanges)
         let activityDateFilterVC = factory.makeActivityDateFilterVC(
             with: activityDateFilterVM,
             tabHeight: navigationController.tabBarController?.tabBar.bounds.height ?? 0

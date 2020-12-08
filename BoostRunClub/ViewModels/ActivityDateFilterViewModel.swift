@@ -24,10 +24,12 @@ protocol ActivityDateFilterViewModelOutputs {
 }
 
 class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDateFilterViewModelOutputs {
-    var filterType: ActivityFilterType
+    private var filterType: ActivityFilterType
+    private var dateRanges: [DateRange]
 
-    init(filterType: ActivityFilterType, activityProvider _: ActivityWritable) {
+    init(filterType: ActivityFilterType, dateRanges: [DateRange]) {
         self.filterType = filterType
+        self.dateRanges = dateRanges
     }
 
     // Inputs

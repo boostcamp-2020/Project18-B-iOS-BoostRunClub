@@ -15,7 +15,7 @@ struct ActivityTotalConfig {
     let numRunning: Int
     let avgPace: Int
     let totalRunningTime: Double
-    let totalElevation: Int
+    let totalElevation: Double
 
     var avgPaceText: String {
         String(format: "%d'%d\"", avgPace / 60, avgPace % 60)
@@ -41,15 +41,17 @@ struct ActivityTotalConfig {
     }
 
     var distancePerRunningText: String {
-        String(format: "%.2fkm/러닝", (totalDistance / 1000) / Double(numRunning))
+        guard numRunning > 0 else { return "--" }
+        return String(format: "%.2fkm/러닝", (totalDistance / 1000) / Double(numRunning))
     }
 
     var runningTimePerRunningText: String {
-        TimeInterval(totalRunningTime / Double(numRunning)).formattedString
+        guard numRunning > 0 else { return "--" }
+        return TimeInterval(totalRunningTime / Double(numRunning)).formattedString
     }
 
     var totalElevationText: String {
-        String(format: "%d m", totalElevation)
+        String(format: "%.0f m", totalElevation)
     }
 
     init(
@@ -58,7 +60,7 @@ struct ActivityTotalConfig {
         numRunning: Int = 1,
         avgPace: Int = 0,
         runningTime: Double = 0,
-        elevation: Int = 0,
+        elevation: Double = 0,
         dateRange: DateRange = DateRange(from: Date(), to: Date())
     ) {
         self.period = period // 주: 날짜 or 이번주 or 저번주, 월: yyyy년 mm월, 년: yyyy년, 전체: 2020년 ...
@@ -75,13 +77,13 @@ struct ActivityTotalConfig {
         var sumAvgPace: Int = 0
         var sumDuration: Double = 0
         var sumDistance: Double = 0
-        var sumElevation: Int = 0
+        var sumElevation: Double = 0
 
         activities.forEach {
             sumAvgPace += $0.avgPace
             sumDuration += $0.duration
             sumDistance += $0.distance
-            sumElevation += 0
+            sumElevation += $0.elevation
         }
         self.filterType = filterType
         period = filterType.rangeDescription(from: filterRange)

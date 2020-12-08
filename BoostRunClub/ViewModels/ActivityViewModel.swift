@@ -27,9 +27,9 @@ protocol ActivityViewModelInputs {
 protocol ActivityViewModelOutputs {
     typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange])
 
-    var activityFilterType: CurrentValueSubject<ActivityFilterType, Never> { get }
-    var activityTotal: CurrentValueSubject<ActivityTotalConfig, Never> { get }
-    var activities: CurrentValueSubject<[Activity], Never> { get }
+    var filterTypeSubject: CurrentValueSubject<ActivityFilterType, Never> { get }
+    var totalDataSubject: CurrentValueSubject<ActivityTotalConfig, Never> { get }
+    var recentActivitiesSubject: CurrentValueSubject<[Activity], Never> { get }
 
     var showProfileScene: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
@@ -38,29 +38,36 @@ protocol ActivityViewModelOutputs {
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     let activityProvider: ActivityReadable
 
-    // DummyData
+    // ERASE!: DummyData
     let dummyActivity = [
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-24 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-24 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")!),
     ]
 
+    private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
 
     init(activityProvider: ActivityReadable) {
         self.activityProvider = activityProvider
 
-        let dates = dummyActivity.compactMap { $0.createdAt }
-        ranges[activityFilterType.value] = activityFilterType.value.groupDateRanges(from: dates)
+        // ERASE! : dummy Data
+        activities = dummyActivity
 
-        activities.send(dummyActivity)
+        let dates = activities.map { $0.createdAt }
+        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: dates)
+
+        let numRecentActivity = activities.count < 5 ? activities.count : 5
+        if numRecentActivity > 0 {
+            recentActivitiesSubject.send(activities[0 ..< numRecentActivity].map { $0 })
+        }
     }
 
     // Inputs
@@ -76,12 +83,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
             let total = ActivityTotalConfig(
                 filterType: filterType,
                 filterRange: latestRange,
-                activities: dummyActivity.filter {
-                    guard let createdAt = $0.createdAt else { return false }
-                    return latestRange.contains(date: createdAt)
-                }
+                activities: dummyActivity.filter { latestRange.contains(date: $0.createdAt) }
             )
-            activityTotal.send(total)
+            totalDataSubject.send(total)
         }
 
         self.ranges[filterType] = ranges
@@ -89,14 +93,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didFilterRangeChanged(range: DateRange) {
         let total = ActivityTotalConfig(
-            filterType: activityFilterType.value,
+            filterType: filterTypeSubject.value,
             filterRange: range,
-            activities: dummyActivity.filter {
-                guard let createdAt = $0.createdAt else { return false }
-                return range.contains(date: createdAt)
-            }
+            activities: dummyActivity.filter { range.contains(date: $0.createdAt) }
         )
-        activityTotal.send(total)
+        totalDataSubject.send(total)
     }
 
     func didSelectActivity(at _: Int) {}
@@ -106,16 +107,16 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     func didTapShowProfileButton() {}
 
     func didTapShowDateFilter() {
-        let filterType = activityFilterType.value
+        let filterType = filterTypeSubject.value
         let ranges = self.ranges[filterType] ?? filterType.groupDateRanges(from: dummyActivity.compactMap { $0.createdAt })
         showFilterSheetSignal.send((filterType, ranges))
         self.ranges[filterType] = ranges
     }
 
     // Outputs
-    var activityFilterType = CurrentValueSubject<ActivityFilterType, Never>(.week)
-    var activityTotal = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
-    var activities = CurrentValueSubject<[Activity], Never>([])
+    var filterTypeSubject = CurrentValueSubject<ActivityFilterType, Never>(.week)
+    var totalDataSubject = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
+    var recentActivitiesSubject = CurrentValueSubject<[Activity], Never>([])
 
     var showProfileScene = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
