@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DateRange {
+struct DateRange: Equatable {
     let start: Date
     let end: Date
 }

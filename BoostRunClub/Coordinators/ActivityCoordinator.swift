@@ -31,7 +31,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
         activityVM.outputs.showFilterSheetSignal
             .receive(on: RunLoop.main)
             .compactMap { [weak self] in
-                self?.showActivityDateFilterViewController(filterType: $0.type, dateRanges: $0.ranges)
+                self?.showActivityDateFilterViewController(
+                    filterType: $0.type,
+                    dateRanges: $0.ranges,
+                    currentRange: $0.current
+                )
             }
             .flatMap { $0 }
             .compactMap { $0 }
@@ -45,9 +49,14 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
 
     func showActivityDateFilterViewController(
         filterType: ActivityFilterType,
-        dateRanges: [DateRange]
+        dateRanges: [DateRange],
+        currentRange: DateRange
     ) -> AnyPublisher<DateRange?, Never> {
-        let activityDateFilterVM = factory.makeActivityDateFilterVM(filterType: filterType, dateRanges: dateRanges)
+        let activityDateFilterVM = factory.makeActivityDateFilterVM(
+            filterType: filterType,
+            dateRanges: dateRanges,
+            currentRange: currentRange
+        )
         let activityDateFilterVC = factory.makeActivityDateFilterVC(
             with: activityDateFilterVM,
             tabHeight: navigationController.tabBarController?.tabBar.bounds.height ?? 0

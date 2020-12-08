@@ -49,7 +49,7 @@ class ActivityDateFilterViewController: UIViewController {
         viewModel.outputs.adjustPickerSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.sheetView.pickerView.selectRow($0.row, inComponent: $0.component, animated: true)
+                self?.sheetView.pickerView.selectRow($0.row, inComponent: $0.component, animated: $0.animate)
             }
             .store(in: &cancellables)
 
@@ -82,6 +82,7 @@ extension ActivityDateFilterViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        viewModel?.inputs.viewDidLoad()
         sheetViewBottomHeightConstraint.constant = sheetView.contentSize.height
         UIView.animate(
             withDuration: 0.4,
@@ -146,7 +147,6 @@ extension ActivityDateFilterViewController: UIPickerViewDataSource, UIPickerView
 // MARK: - Configure
 
 extension ActivityDateFilterViewController {
-    
     private func configureLayout() {
         view.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false

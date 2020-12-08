@@ -25,7 +25,7 @@ protocol ActivityViewModelInputs {
 }
 
 protocol ActivityViewModelOutputs {
-    typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange])
+    typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange], current: DateRange)
 
     var filterTypeSubject: CurrentValueSubject<ActivityFilterType, Never> { get }
     var totalDataSubject: CurrentValueSubject<ActivityTotalConfig, Never> { get }
@@ -107,7 +107,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didTapShowDateFilter() {
         let ranges = getDateRanges(for: filterTypeSubject.value)
-        showFilterSheetSignal.send((filterTypeSubject.value, ranges))
+        showFilterSheetSignal.send((filterTypeSubject.value, ranges, totalDataSubject.value.selectedRange))
     }
 
     // Outputs

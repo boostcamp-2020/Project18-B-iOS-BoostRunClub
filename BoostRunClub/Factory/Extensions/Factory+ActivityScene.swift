@@ -18,7 +18,8 @@ protocol ActivitySceneFactory {
 
     func makeActivityDateFilterVM(
         filterType: ActivityFilterType,
-        dateRanges: [DateRange]
+        dateRanges: [DateRange],
+        currentRange: DateRange
     ) -> ActivityDateFilterViewModelTypes
 }
 
@@ -40,8 +41,13 @@ extension DependencyFactory: ActivitySceneFactory {
 
     func makeActivityDateFilterVM(
         filterType: ActivityFilterType,
-        dateRanges: [DateRange]
+        dateRanges: [DateRange],
+        currentRange: DateRange
     ) -> ActivityDateFilterViewModelTypes {
-        return ActivityDateFilterViewModel(filterType: filterType, dateRanges: dateRanges)
+        return ActivityDateFilterViewModel(
+            filterType: filterType,
+            dateRanges: dateRanges,
+            currentRange: currentRange
+        )
     }
 }

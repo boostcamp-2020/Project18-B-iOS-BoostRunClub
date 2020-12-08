@@ -15,13 +15,15 @@ protocol ActivityDateFilterViewModelTypes: AnyObject {
 }
 
 protocol ActivityDateFilterViewModelInputs {
+    func viewDidLoad()
+
     func didTapSelectButton()
     func didTapBackgroundView()
     func didPickerChanged(row: Int, component: Int)
 }
 
 protocol ActivityDateFilterViewModelOutputs {
-    typealias PickerMover = (component: Int, row: Int)
+    typealias PickerMover = (component: Int, row: Int, animate: Bool)
 
     var pickerListSubject: CurrentValueSubject<[[String]], Never> { get }
 
@@ -34,12 +36,22 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
     private var dateRanges = [[DateRange?]]()
     private var selectedRow = [Int](repeating: 0, count: 2)
 
-    init(filterType: ActivityFilterType, dateRanges: [DateRange]) {
+    init(filterType: ActivityFilterType, dateRanges: [DateRange], currentRange: DateRange) {
         self.filterType = filterType
-        configurePickerList(filterType: filterType, ranges: dateRanges)
+        configurePickerList(filterType: filterType, ranges: dateRanges, currentRange: currentRange)
     }
 
     // Inputs
+    func viewDidLoad() {
+        switch filterType {
+        case .all, .week, .year:
+            adjustPickerSignal.send((component: 0, row: selectedRow[0], animate: false))
+        case .month:
+            adjustPickerSignal.send((component: 0, row: selectedRow[0], animate: false))
+            adjustPickerSignal.send((component: 1, row: selectedRow[1], animate: false))
+        }
+    }
+
     func didPickerChanged(row: Int, component: Int) {
         switch filterType {
         case .all, .week, .year:
@@ -57,7 +69,13 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
     }
 
     func didTapSelectButton() {
-        let dateRange = dateRanges[selectedRow[0]][selectedRow[1]]
+        let dateRange: DateRange?
+        switch filterType {
+        case .all, .week, .year:
+            dateRange = dateRanges[0][selectedRow[1]]
+        case .month:
+            dateRange = dateRanges[selectedRow[0]][selectedRow[1]]
+        }
         closeSheetSignal.send(dateRange)
     }
 
@@ -80,29 +98,37 @@ extension ActivityDateFilterViewModel: ActivityDateFilterViewModelTypes {
 // MARK: - private function
 
 extension ActivityDateFilterViewModel {
-    private func configurePickerList(filterType: ActivityFilterType, ranges: [DateRange]) {
+    private func configurePickerList(
+        filterType: ActivityFilterType,
+        ranges: [DateRange],
+        currentRange: DateRange
+    ) {
         var pickerList: [[String]]
 
         switch filterType {
         case .all:
             dateRanges = []
             pickerList = []
-
         case .week:
             dateRanges = [[]]
             pickerList = [[]]
 
-            ranges.forEach {
-                self.dateRanges[0].append($0)
-                pickerList[0].append($0.start.toMDString + "~" + $0.end.toMDString)
+            for (idx, range) in ranges.enumerated() {
+                dateRanges[0].append(range)
+                pickerList[0].append(range.start.toMDString + "~" + range.end.toMDString)
+                if range == currentRange {
+                    selectedRow[0] = idx
+                }
             }
         case .year:
             dateRanges = [[]]
             pickerList = [[]]
-
-            ranges.forEach {
-                self.dateRanges[0].append($0)
-                pickerList[0].append($0.start.toYString)
+            for (idx, range) in ranges.enumerated() {
+                dateRanges[0].append(range)
+                pickerList[0].append(range.start.toYString)
+                if range == currentRange {
+                    selectedRow[0] = idx
+                }
             }
         case .month:
             dateRanges = []
@@ -117,12 +143,15 @@ extension ActivityDateFilterViewModel {
             }
 
             let sortedTable = monthTable.sorted(by: { $0.key < $1.key })
-            for (idx, elements) in sortedTable.enumerated() {
+            for (sectionIndex, elements) in sortedTable.enumerated() {
                 pickerList[0].append("\(elements.key)년")
                 dateRanges.append([DateRange?](repeating: nil, count: 12))
                 elements.value.forEach {
-                    print($0.month)
-                    dateRanges[idx][$0.month - 1] = $0.range
+                    dateRanges[sectionIndex][$0.month - 1] = $0.range
+                    if $0.range == currentRange {
+                        selectedRow[0] = sectionIndex
+                        selectedRow[1] = $0.month - 1
+                    }
                 }
             }
         }
@@ -132,6 +161,6 @@ extension ActivityDateFilterViewModel {
     private func adjustPicker(component: Int, componentRow: Int) {
         guard let index = dateRanges[componentRow].firstIndex(where: { $0 != nil }) else { return }
         selectedRow[component] = index
-        adjustPickerSignal.send((component: component, row: index))
+        adjustPickerSignal.send((component: component, row: index, animate: true))
     }
 }

@@ -10,7 +10,8 @@ import Foundation
 struct ActivityTotalConfig {
     let filterType: ActivityFilterType
     let period: String
-    let dateRange: DateRange
+    let selectedRange: DateRange
+    let totalRange: DateRange
     let totalDistance: Double
     let numRunning: Int
     let avgPace: Int
@@ -36,7 +37,7 @@ struct ActivityTotalConfig {
 
     // Statistic
     var numRunningPerWeekText: String {
-        let numberOfWeeks = Date.numberOfWeeks(range: dateRange) ?? 1
+        let numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
         return String(format: "%.2f러닝/주", Double(numRunning) / Double(numberOfWeeks))
     }
 
@@ -69,8 +70,9 @@ struct ActivityTotalConfig {
         self.avgPace = avgPace
         totalRunningTime = runningTime
         totalElevation = elevation
-        self.dateRange = dateRange
+        totalRange = dateRange
         filterType = .week
+        selectedRange = dateRange
     }
 
     init(filterType: ActivityFilterType, filterRange: DateRange, activities: [Activity]) {
@@ -86,6 +88,7 @@ struct ActivityTotalConfig {
             sumElevation += $0.elevation
         }
         self.filterType = filterType
+        selectedRange = filterRange
         period = filterType.rangeDescription(from: filterRange)
         avgPace = sumAvgPace / activities.count
         totalDistance = sumDistance
@@ -97,9 +100,9 @@ struct ActivityTotalConfig {
             let start = activities.first?.createdAt,
             let last = activities.last?.createdAt
         {
-            dateRange = DateRange(start: start, end: last)
+            totalRange = DateRange(start: start, end: last)
         } else {
-            dateRange = DateRange(start: Date(), end: Date())
+            totalRange = DateRange(start: Date(), end: Date())
         }
     }
 }
