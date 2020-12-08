@@ -64,13 +64,13 @@ final class MotionProvider {
 extension CMMotionActivity {
     var METFactor: Double {
         switch self {
-        case _ where self.running :
+        case _ where running:
             return 1.035
-        case _ where self.walking:
+        case _ where walking:
             return 0.655
-        case _ where self.cycling:
+        case _ where cycling:
             return 0.450
-        case _ where self.unknown:
+        case _ where unknown:
             return 0
         default:
             return 0
