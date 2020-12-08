@@ -57,4 +57,10 @@ extension Date {
 
         return DateRange(from: startOfMonth, to: endOfMonth)
     }
+
+    static func numberOfWeeks(range: DateRange) -> Int? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.weekOfMonth], from: range.from, to: range.to)
+        return components.weekOfMonth
+    }
 }

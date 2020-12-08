@@ -15,3 +15,14 @@ struct Activity {
     var createdAt: Date?
     var uuid: UUID?
 }
+
+extension Activity {
+    init(date: Date?) {
+        self.init(avgPace: Int.random(in: 500 ... 3000),
+                  distance: Double.random(in: 800 ... 9000),
+                  duration: Double.random(in: 3000 ... 9000),
+                  thumbnail: nil,
+                  createdAt: date,
+                  uuid: nil)
+    }
+}

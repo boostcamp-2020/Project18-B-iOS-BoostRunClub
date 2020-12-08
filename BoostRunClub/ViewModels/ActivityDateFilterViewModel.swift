@@ -20,7 +20,7 @@ protocol ActivityDateFilterViewModelInputs {
 }
 
 protocol ActivityDateFilterViewModelOutputs {
-    var closeSheetSignal: PassthroughSubject<(Date, Date), Never> { get }
+    var closeSheetSignal: PassthroughSubject<DateRange, Never> { get }
 }
 
 class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDateFilterViewModelOutputs {
@@ -32,15 +32,15 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
 
     // Inputs
     func didSelectDateFilter(selects _: [Int]) {
-        closeSheetSignal.send((Date(), Date()))
+        closeSheetSignal.send(DateRange(from: Date(), to: Date()))
     }
 
     func didTapBackgroundView() {
-        closeSheetSignal.send((Date(), Date()))
+        closeSheetSignal.send(DateRange(from: Date(), to: Date()))
     }
 
     // Outputs
-    var closeSheetSignal = PassthroughSubject<(Date, Date), Never>()
+    var closeSheetSignal = PassthroughSubject<DateRange, Never>()
 }
 
 extension ActivityDateFilterViewModel: ActivityDateFilterViewModelTypes {

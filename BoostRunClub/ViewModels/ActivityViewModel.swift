@@ -15,8 +15,9 @@ protocol ActivityViewModelTypes: AnyObject {
 }
 
 protocol ActivityViewModelInputs {
+    func viewDidLoad()
     func didFilterChanged(to idx: Int)
-    func didFilterRangeChanged(from startDate: Date, to endDate: Date)
+    func didFilterRangeChanged(range: DateRange)
     func didSelectActivity(at index: Int)
     func didTapShowDateFilter()
     func didTapShowAllActivities()
@@ -24,13 +25,14 @@ protocol ActivityViewModelInputs {
 }
 
 protocol ActivityViewModelOutputs {
-    var activityTotal: CurrentValueSubject<ActivityTotalConfig, Never> { get }
-    var activityStatistic: CurrentValueSubject<ActivityStatisticConfig, Never> { get }
-    var activitiesSubject: CurrentValueSubject<[Activity], Never> { get }
+    typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange])
 
-    var showStatisticSignal: PassthroughSubject<ActivityStatisticConfig?, Never> { get }
+    var activityFilterType: CurrentValueSubject<ActivityFilterType, Never> { get }
+    var activityTotal: CurrentValueSubject<ActivityTotalConfig, Never> { get }
+    var activities: CurrentValueSubject<[Activity], Never> { get }
+
     var showProfileScene: PassthroughSubject<Void, Never> { get }
-    var showFilterSheetSignal: PassthroughSubject<ActivityFilterType, Never> { get }
+    var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
@@ -38,51 +40,85 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     // DummyData
     let dummyActivity = [
-        Activity(avgPace: 1300, distance: 3300, duration: 10000, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 1600, distance: 5300, duration: 23410, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 1234, distance: 3353, duration: 1230, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 1129, distance: 2023, duration: 3304, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 3033, distance: 44000, duration: 2222, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 0933, distance: 11342, duration: 3034, thumbnail: nil, createdAt: nil, uuid: nil),
-        Activity(avgPace: 0822, distance: 2348, duration: 0035, thumbnail: nil, createdAt: nil, uuid: nil),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-24 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")),
     ]
 
-    let dummyTotal = ActivityTotalConfig(filterType: .week, period: "이번주", distance: 1258, numRunning: 5, avgPace: 1382, runningTime: 5843)
-
-    let dummyStatistic = ActivityStatisticConfig(filterType: .week, period: "2020년 통계", distance: 1258, numRunning: 30, avgPace: 2259, runningTime: 8302, elevation: 882)
+    private var ranges = [ActivityFilterType: [DateRange]]()
 
     init(activityProvider: ActivityReadable) {
         self.activityProvider = activityProvider
 
-        activityTotal.send(dummyTotal)
-        activityStatistic.send(dummyStatistic)
-        let activities: [Activity] = (1 ... 5).compactMap {
-            if $0 < self.dummyActivity.count {
-                return dummyActivity[$0]
-            }
-            return nil
-        }
-        activitiesSubject.send(activities)
+        let dates = dummyActivity.compactMap { $0.createdAt }
+        ranges[activityFilterType.value] = activityFilterType.value.groupDateRanges(from: dates)
+
+        activities.send(dummyActivity)
     }
 
     // Inputs
-    func didFilterChanged(to _: Int) {}
-    func didFilterRangeChanged(from _: Date, to _: Date) {}
+    func viewDidLoad() {
+        didFilterChanged(to: 0)
+    }
+
+    func didFilterChanged(to idx: Int) {
+        guard let filterType = ActivityFilterType(rawValue: idx) else { return }
+        let dates = dummyActivity.compactMap { $0.createdAt }
+        let ranges = self.ranges[filterType] ?? filterType.groupDateRanges(from: dates)
+        if let latestRange = ranges.last {
+            let total = ActivityTotalConfig(
+                filterType: filterType,
+                filterRange: latestRange,
+                activities: dummyActivity.filter {
+                    guard let createdAt = $0.createdAt else { return false }
+                    return latestRange.contains(date: createdAt)
+                }
+            )
+            activityTotal.send(total)
+        }
+
+        self.ranges[filterType] = ranges
+    }
+
+    func didFilterRangeChanged(range: DateRange) {
+        let total = ActivityTotalConfig(
+            filterType: activityFilterType.value,
+            filterRange: range,
+            activities: dummyActivity.filter {
+                guard let createdAt = $0.createdAt else { return false }
+                return range.contains(date: createdAt)
+            }
+        )
+        activityTotal.send(total)
+    }
+
     func didSelectActivity(at _: Int) {}
+
     func didTapShowAllActivities() {}
+
     func didTapShowProfileButton() {}
+
     func didTapShowDateFilter() {
-        showFilterSheetSignal.send(activityTotal.value.filterType)
+        let filterType = activityFilterType.value
+        let ranges = self.ranges[filterType] ?? filterType.groupDateRanges(from: dummyActivity.compactMap { $0.createdAt })
+        showFilterSheetSignal.send((filterType, ranges))
+        self.ranges[filterType] = ranges
     }
 
     // Outputs
+    var activityFilterType = CurrentValueSubject<ActivityFilterType, Never>(.week)
     var activityTotal = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
-    var activityStatistic = CurrentValueSubject<ActivityStatisticConfig, Never>(ActivityStatisticConfig())
-    var activitiesSubject = CurrentValueSubject<[Activity], Never>([])
+    var activities = CurrentValueSubject<[Activity], Never>([])
 
-    var showStatisticSignal = PassthroughSubject<ActivityStatisticConfig?, Never>()
     var showProfileScene = PassthroughSubject<Void, Never>()
-    var showFilterSheetSignal = PassthroughSubject<ActivityFilterType, Never>()
+    var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

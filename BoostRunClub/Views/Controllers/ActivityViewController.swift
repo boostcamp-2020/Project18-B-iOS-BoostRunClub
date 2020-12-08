@@ -9,14 +9,22 @@ import Combine
 import UIKit
 
 final class ActivityViewController: UIViewController {
-    var tableView = ActivityTableView()
-    var activityTotalView = ActivityTotalView()
-    let activityFooterView = ActivityFooterView()
-    var activitiyCells: [ActivityCellView] = []
-    var activityStatisticCells: [UITableViewCell] = []
+    private var tableView = ActivityTableView()
+    private var activityTotalView = ActivityTotalView()
+    private let activityFooterView = ActivityFooterView()
+    private var activitiyCells: [ActivityCellView] = []
+    private var activityStatisticCells: [ActivityStatisticCellView] = [
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+        ActivityStatisticCellView(),
+    ]
 
-    var viewModel: ActivityViewModelTypes?
-    var cancellables = Set<AnyCancellable>()
+    var showStatisticCell: Bool = false
+
+    private var viewModel: ActivityViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
 
     init(with viewModel: ActivityViewModelTypes) {
         super.init(nibName: nil, bundle: nil)
@@ -35,13 +43,14 @@ final class ActivityViewController: UIViewController {
         configureTableView()
         configureLayout()
         bindViewModel()
+        viewModel?.inputs.viewDidLoad()
     }
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
         // outputs
-        viewModel.outputs.activitiesSubject
+        viewModel.outputs.activities
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.activitiyCells.removeAll()
@@ -57,21 +66,7 @@ final class ActivityViewController: UIViewController {
         viewModel.outputs.activityTotal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.activityTotalView.configure(activityTotal: $0)
-            }
-            .store(in: &cancellables)
-
-        viewModel.outputs.activityStatistic
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in
-                self?.activityStatisticCells.append(contentsOf: [
-                    ActivityStatisticCellView(title: "러닝", value: $0.numRunning),
-                    ActivityStatisticCellView(title: "킬로미터", value: $0.distance),
-                    ActivityStatisticCellView(title: "평균 페이스", value: $0.avgPace),
-                    ActivityStatisticCellView(title: "시간", value: $0.runningTime),
-                    ActivityStatisticCellView(title: "고도상승", value: $0.elevation),
-                ])
-                self?.tableView.reloadData()
+                self?.configureActivityTotal(to: $0)
             }
             .store(in: &cancellables)
 
@@ -88,6 +83,23 @@ final class ActivityViewController: UIViewController {
             viewModel?.inputs.didTapShowDateFilter()
         }
     }
+
+    private func configureActivityTotal(to config: ActivityTotalConfig) {
+        activityTotalView.configure(config: config)
+
+        switch config.filterType {
+        case .week, .month:
+            showStatisticCell = false
+        case .all, .year:
+            showStatisticCell = true
+            activityStatisticCells[0].configure(title: "러닝", value: config.numRunningPerWeekText)
+            activityStatisticCells[1].configure(title: "킬로미터", value: config.distancePerRunningText)
+            activityStatisticCells[2].configure(title: "러닝페이스", value: config.avgPaceText)
+            activityStatisticCells[3].configure(title: "시간", value: config.runningTimePerRunningText)
+            activityStatisticCells[4].configure(title: "고도 상승", value: config.totalElevationText)
+        }
+        tableView.reloadData()
+    }
 }
 
 // MARK: - Actions
@@ -103,20 +115,24 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return activitiyCells.count + (activityStatisticCells.isEmpty ? 0 : 1)
+        return activitiyCells.count + (showStatisticCell ? 1 : 0)
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 5 : 1
+        if showStatisticCell {
+            return section == 0 ? 5 : 1
+        } else {
+            return 1
+        }
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !activityStatisticCells.isEmpty,
+        if showStatisticCell,
            indexPath.section == 0
         {
             return activityStatisticCells[indexPath.row]
         } else {
-            return activitiyCells[indexPath.section - (activityStatisticCells.isEmpty ? 0 : 1)]
+            return activitiyCells[indexPath.section - (showStatisticCell ? 1 : 0)]
         }
     }
 }
@@ -125,15 +141,35 @@ extension ActivityViewController: UITableViewDataSource {
 
 extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section < 2 ? 50 : 5
+        if showStatisticCell {
+            return section < 2 ? 50 : 5
+        } else {
+            return section < 1 ? 50 : 5
+        }
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section < 2 else { return nil }
-        let label = UILabel()
-        label.text = section == 0 ? "총 활동 통계" : "최근 활동"
-        label.textColor = .label
-        return label
+        if showStatisticCell {
+            switch section {
+            case 0:
+                let label = UILabel()
+                label.text = "총 활동 통계"
+                return label
+            case 1:
+                let label = UILabel()
+                label.text = "최근 활동"
+                return label
+            default:
+                return nil
+            }
+        }
+
+        if section == 0 {
+            let label = UILabel()
+            label.text = "최근 활동"
+            return label
+        }
+        return nil
     }
 }
 

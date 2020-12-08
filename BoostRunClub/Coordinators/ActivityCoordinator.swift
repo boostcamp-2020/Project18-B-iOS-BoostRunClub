@@ -30,17 +30,17 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
 
         activityVM.outputs.showFilterSheetSignal
             .receive(on: RunLoop.main)
-            .compactMap { [weak self] in self?.showActivityDateFilterViewController(filterType: $0) }
+            .compactMap { [weak self] in self?.showActivityDateFilterViewController(filterType: $0.type, dateRanges: $0.ranges) }
             .flatMap { $0 }
-            .sink { [weak activityVM] (dates: (from: Date, to: Date)) in
-                activityVM?.inputs.didFilterRangeChanged(from: dates.from, to: dates.to)
+            .sink { [weak activityVM] in
+                activityVM?.inputs.didFilterRangeChanged(range: $0)
             }
             .store(in: &cancellables)
 
         navigationController.pushViewController(activityVC, animated: true)
     }
 
-    func showActivityDateFilterViewController(filterType: ActivityFilterType) -> AnyPublisher<(Date, Date), Never> {
+    func showActivityDateFilterViewController(filterType: ActivityFilterType, dateRanges _: [DateRange]) -> AnyPublisher<DateRange, Never> {
         let activityDateFilterVM = factory.makeActivityDateFilterVM(filterType: filterType)
         let activityDateFilterVC = factory.makeActivityDateFilterVC(
             with: activityDateFilterVM,

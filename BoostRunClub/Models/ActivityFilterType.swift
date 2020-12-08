@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ActivityFilterType {
+enum ActivityFilterType: Int {
     case week,
          month,
          year,
@@ -37,7 +37,7 @@ enum ActivityFilterType {
         dates.forEach {
             if
                 results.isEmpty,
-               let range = $0.rangeOf(type: self)
+                let range = $0.rangeOf(type: self)
             {
                 results.append(range)
             } else if
@@ -49,5 +49,20 @@ enum ActivityFilterType {
             }
         }
         return results
+    }
+
+    func rangeDescription(from range: DateRange) -> String {
+        switch self {
+        case .week:
+            return range.from.toMDString + "~" + range.to.toMDString
+        case .month:
+            return range.to.toYMString
+        case .year:
+            return range.to.toYString
+        case .all:
+            let from = range.from.toYString
+            let to = range.to.toYString
+            return from == to ? to : from + "-" + to
+        }
     }
 }
