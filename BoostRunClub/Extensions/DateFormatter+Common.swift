@@ -37,4 +37,17 @@ extension DateFormatter {
         fmt.dateFormat = "yyyy-MM-dd"
         return fmt
     }()
+
+    static var HMSFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "HH:mm:ss"
+        return fmt
+    }()
+
+    static var KRDayOfWeekFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.locale = Locale(identifier: "ko")
+        fmt.dateFormat = "EEEE"
+        return fmt
+    }()
 }

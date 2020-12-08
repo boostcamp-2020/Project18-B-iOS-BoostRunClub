@@ -79,6 +79,10 @@ extension ActivityTotalView {
 extension ActivityTotalView {
     private func commonInit() {
         backgroundColor = .systemBackground
+        distancelabel.text = "킬로미터"
+        numRunningLabel.text = "러닝"
+        avgPaceLabel.text = "평균 페이스"
+        runningTimeLabel.text = "시간"
 
         segmentedControl.didChangeSelectedItem = { [weak self] idx in
             self?.didChangeSelectedItem?(idx)

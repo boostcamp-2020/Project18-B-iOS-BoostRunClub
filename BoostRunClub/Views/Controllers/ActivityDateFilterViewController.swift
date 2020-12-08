@@ -126,7 +126,6 @@ extension ActivityDateFilterViewController {
 // MARK: - UIPickerViewDatasource Implementation
 
 extension ActivityDateFilterViewController: UIPickerViewDataSource {
-
     func pickerView(_: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return rows[component][row]
     }
@@ -143,7 +142,6 @@ extension ActivityDateFilterViewController: UIPickerViewDataSource {
 // MARK: - UIPickerViewDelegate Implementation
 
 extension ActivityDateFilterViewController: UIPickerViewDelegate {
-    
     func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         viewModel?.inputs.didPickerChanged(row: row, component: component)
     }

@@ -68,4 +68,25 @@ extension Activity {
                   createdAt: date,
                   uuid: UUID())
     }
+
+    var weekOfDayText: String {
+        createdAt.toDayOfWeekString
+    }
+
+    var title: String {
+        "\(createdAt.toDayOfWeekString) \(createdAt.period) 러닝 "
+    }
+
+    // TODO: avgPace, distance, time 등 단위 변환이 겹치는 것 공통으로 처리하도록 하기
+    var avgPaceText: String {
+        String(format: "%d'%d\"", avgPace / 60, avgPace % 60)
+    }
+
+    var distanceText: String {
+        String(format: "%.2f", distance / 1000)
+    }
+
+    var runningTimeText: String {
+        TimeInterval(duration).formattedString
+    }
 }

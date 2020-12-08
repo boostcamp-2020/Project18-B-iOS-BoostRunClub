@@ -127,7 +127,7 @@ extension ActivityViewModel: ActivityViewModelTypes {
 // MARK: - Private Functions
 
 extension ActivityViewModel {
-    func getDateRanges(for filter: ActivityFilterType) -> [DateRange] {
+    private func getDateRanges(for filter: ActivityFilterType) -> [DateRange] {
         let ranges: [DateRange]
         if self.ranges.contains(where: { $0.key == filter }) {
             ranges = self.ranges[filter]!

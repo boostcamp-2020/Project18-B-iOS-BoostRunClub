@@ -28,12 +28,12 @@ class ActivityCellView: UITableViewCell {
         commonInit()
     }
 
-    func configure(with _: Activity) {
-        dateLabel.text = "오늘"
-        titleLabel.text = "월요일 야간 러닝"
-        distanceValueLabel.text = "7.46"
-        avgPaceValueLabel.text = "13'18\""
-        runningTimeValueLabel.text = "1:18:37"
+    func configure(with activity: Activity) {
+        dateLabel.text = activity.weekOfDayText
+        titleLabel.text = activity.title
+        distanceValueLabel.text = activity.distanceText
+        avgPaceValueLabel.text = activity.avgPaceText
+        runningTimeValueLabel.text = activity.runningTimeText
     }
 }
 
