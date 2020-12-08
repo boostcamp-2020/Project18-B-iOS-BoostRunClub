@@ -98,6 +98,7 @@ extension ActivityDateFilterViewModel: ActivityDateFilterViewModelTypes {
 // MARK: - private function
 
 extension ActivityDateFilterViewModel {
+    
     private func configurePickerList(
         filterType: ActivityFilterType,
         ranges: [DateRange],

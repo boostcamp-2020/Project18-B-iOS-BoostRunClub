@@ -19,7 +19,6 @@ class ActivityDateFilterViewController: UIViewController {
     private lazy var sheetViewBottomHeightConstraint = sheetView.heightAnchor.constraint(equalToConstant: 0)
 
     private var tabHeight: CGFloat = 0
-
     private var rows = [[String]]()
 
     var viewModel: ActivityDateFilterViewModelTypes?
@@ -126,10 +125,7 @@ extension ActivityDateFilterViewController {
 
 // MARK: - UIPickerViewDatasource Implementation
 
-extension ActivityDateFilterViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewModel?.inputs.didPickerChanged(row: row, component: component)
-    }
+extension ActivityDateFilterViewController: UIPickerViewDataSource {
 
     func pickerView(_: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return rows[component][row]
@@ -141,6 +137,15 @@ extension ActivityDateFilterViewController: UIPickerViewDataSource, UIPickerView
 
     func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return rows[component].count
+    }
+}
+
+// MARK: - UIPickerViewDelegate Implementation
+
+extension ActivityDateFilterViewController: UIPickerViewDelegate {
+    
+    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        viewModel?.inputs.didPickerChanged(row: row, component: component)
     }
 }
 
