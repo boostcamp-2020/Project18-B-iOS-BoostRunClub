@@ -66,18 +66,18 @@ final class MotionProvider {
 }
 
 extension CMMotionActivity {
-    var motionType: MotionType {
-        if stationary {
-            return .stationary
-        } else if walking {
-            return .walking
-        } else if running {
-            return .running
-        } else if cycling {
-            return .cycling
-        } else if automotive {
-            return .automotive
+    var METFactor: Double {
+        switch self {
+        case _ where self.running :
+            return 1.035
+        case _ where self.walking:
+            return 0.655
+        case _ where self.cycling:
+            return 0.450
+        case _ where self.unknown:
+            return 0
+        default:
+            return 0
         }
-        return .unknown
     }
 }
