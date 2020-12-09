@@ -81,8 +81,7 @@
 		96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */; };
 		960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */; };
 		960A14E6257DD8D1008D2BD3 /* ActivityFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */; };
-		960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */; };
-		960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */; };
+		960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */; };
 		960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */; };
 		960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14FF257E057B008D2BD3 /* ActivityCellView.swift */; };
 		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
@@ -102,6 +101,12 @@
 		963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */; };
 		963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
 		963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
+		964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B4257F58600062AAA4 /* Date+DateRange.swift */; };
+		964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
+		964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */; };
+		964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */; };
+		964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B0257F51020062AAA4 /* DateRange.swift */; };
+		964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		967780292577905400DA2454 /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967780282577905400DA2454 /* CountDownView.swift */; };
 		967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A15D25763CC800DED689 /* PausedRunningViewController.swift */; };
@@ -118,8 +123,15 @@
 		96B90647257CE1DD0081E8BF /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED403A257C7747007DB3DF /* CoreDataService.swift */; };
 		96B9064A257CE22A0081E8BF /* ZActivityDetail+ActivityDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF009C9257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift */; };
 		96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF009BB257CA9EB00EC928A /* ZActivity+Activity.swift */; };
+		96C468A7257F426F0062AAA4 /* DateFilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468A6257F426F0062AAA4 /* DateFilterSheetView.swift */; };
+		96C468B1257F51020062AAA4 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B0257F51020062AAA4 /* DateRange.swift */; };
+		96C468B5257F58600062AAA4 /* Date+DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B4257F58600062AAA4 /* Date+DateRange.swift */; };
+		96C468BD257F61DA0062AAA4 /* DateFormatter+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */; };
+		96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
+		96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */; };
+		96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
 		96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96ED402F257C7654007DB3DF /* BRCModel.xcdatamodeld */; };
 		96ED4035257C768A007DB3DF /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED4034257C768A007DB3DF /* Activity.swift */; };
@@ -218,8 +230,7 @@
 		96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
 		960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFilterType.swift; sourceTree = "<group>"; };
-		960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistic.swift; sourceTree = "<group>"; };
-		960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotal.swift; sourceTree = "<group>"; };
+		960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalConfig.swift; sourceTree = "<group>"; };
 		960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableView.swift; sourceTree = "<group>"; };
 		960A14FF257E057B008D2BD3 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
 		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
@@ -243,6 +254,13 @@
 		9689A1692576441900DED689 /* RunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCoordinator.swift; sourceTree = "<group>"; };
 		969D5F1B256FC48000DD11AB /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "BoostRunClub/Extensions/String+Regex.swift"; sourceTree = SOURCE_ROOT; };
 		96B90634257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZRunningSplit+RunningSplit.swift"; sourceTree = "<group>"; };
+		96C468A6257F426F0062AAA4 /* DateFilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterSheetView.swift; sourceTree = "<group>"; };
+		96C468B0257F51020062AAA4 /* DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
+		96C468B4257F58600062AAA4 /* Date+DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+DateRange.swift"; sourceTree = "<group>"; };
+		96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Common.swift"; sourceTree = "<group>"; };
+		96C468C4257F6D900062AAA4 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewController.swift; sourceTree = "<group>"; };
+		96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewModel.swift; sourceTree = "<group>"; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		96ED4030257C7654007DB3DF /* BRCModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BRCModel.xcdatamodel; sourceTree = "<group>"; };
 		96ED4034257C768A007DB3DF /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
@@ -301,6 +319,10 @@
 				96FA7E0025701C9200090999 /* RunningInfoViewController.swift */,
 				96FA7DFD25701C7700090999 /* RunningMapViewController.swift */,
 				71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */,
+
+				96FA7E0325701CB800090999 /* SplitsViewController.swift */,
+				96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */,
+
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -332,7 +354,11 @@
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
 				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
+
 				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
+
+				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
+
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -352,6 +378,7 @@
 				960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */,
 				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
 				963865F7257E858D003EEE4B /* ActivityFooterView.swift */,
+				96C468A6257F426F0062AAA4 /* DateFilterSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -477,8 +504,7 @@
 		96386604257E9BD2003EEE4B /* CellConfigurable */ = {
 			isa = PBXGroup;
 			children = (
-				960A14F0257DF916008D2BD3 /* ActivityStatistic.swift */,
-				960A14F4257DF9D1008D2BD3 /* ActivityTotal.swift */,
+				960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */,
 			);
 			path = CellConfigurable;
 			sourceTree = "<group>";
@@ -508,6 +534,7 @@
 				4CF009C5257CADC300EC928A /* Location.swift */,
 				7187295D25791BEF007BD24F /* MotionType.swift */,
 				960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */,
+				96C468B0257F51020062AAA4 /* DateRange.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -523,7 +550,13 @@
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
 				4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */,
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
+
 				4C58750F258014C000185B4C /* UIView+identifier.swift */,
+
+				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
+				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
+				96C468C4257F6D900062AAA4 /* Date+String.swift */,
+
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -724,6 +757,7 @@
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
 				960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */,
+				96C468B5257F58600062AAA4 /* Date+DateRange.swift in Sources */,
 				963865F8257E858D003EEE4B /* ActivityFooterView.swift in Sources */,
 				4C5874FA257FD88D00185B4C /* RunningSplitCellViewModel.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
@@ -738,6 +772,7 @@
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				71FBAB02257D24BB005C8D30 /* Factory+GoalTypeScene.swift in Sources */,
+				96C468BD257F61DA0062AAA4 /* DateFormatter+Common.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
 				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
@@ -754,6 +789,7 @@
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,
 				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
+				96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				4CF009C6257CADC300EC928A /* Location.swift in Sources */,
@@ -773,6 +809,7 @@
 				967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */,
 				71FBAAF6257D246A005C8D30 /* Factory+PausedRunningScene.swift in Sources */,
 				4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */,
+				96C468A7257F426F0062AAA4 /* DateFilterSheetView.swift in Sources */,
 				714C03982574F794006B81E3 /* RunningMapCoordinator.swift in Sources */,
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71FBAB06257D24E3005C8D30 /* Factory+RunningMapScene.swift in Sources */,
@@ -793,12 +830,14 @@
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
+				96C468B1257F51020062AAA4 /* DateRange.swift in Sources */,
 				967780292577905400DA2454 /* CountDownView.swift in Sources */,
-				960A14F5257DF9D1008D2BD3 /* ActivityTotal.swift in Sources */,
+				96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */,
+				960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */,
 				963865F4257E7A71003EEE4B /* ActivityStatisticCellView.swift in Sources */,
+				96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
-				960A14F1257DF916008D2BD3 /* ActivityStatistic.swift in Sources */,
 				71FBAAFE257D24A9005C8D30 /* Factory+ProfileScene.swift in Sources */,
 				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
@@ -812,8 +851,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */,
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
+				964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */,
 				4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */,
 				96B90638257CDF4E0081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */,
 				96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */,
@@ -829,13 +870,17 @@
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
+				964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
 				4C7133D4257B57540083ECD3 /* MotionType.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
+				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
+				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
+				964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */,
 				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);

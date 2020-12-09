@@ -27,6 +27,14 @@ class ActivityCellView: UITableViewCell {
         super.init(style: .default, reuseIdentifier: String(describing: Self.self))
         commonInit()
     }
+
+    func configure(with activity: Activity) {
+        dateLabel.text = activity.weekOfDayText
+        titleLabel.text = activity.title
+        distanceValueLabel.text = activity.distanceText
+        avgPaceValueLabel.text = activity.avgPaceText
+        runningTimeValueLabel.text = activity.runningTimeText
+    }
 }
 
 // MARK: - Configure
@@ -35,14 +43,9 @@ extension ActivityCellView {
     private func commonInit() {
         selectionStyle = .none
         configureLayout()
-        dateLabel.text = "오늘"
-        titleLabel.text = "월요일 야간 러닝"
         distanceLabel.text = "Km"
-        distanceValueLabel.text = "7.46"
         avgPaceLabel.text = "평균 페이스"
-        avgPaceValueLabel.text = "13'18\""
         runningTimeLabel.text = "시간"
-        runningTimeValueLabel.text = "1:18:37"
     }
 
     private func configureLayout() {

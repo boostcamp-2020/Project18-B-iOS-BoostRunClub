@@ -141,6 +141,7 @@ class RunningDataService: RunningDataServiceable {
         let activity = Activity(avgPace: avgPace.value,
                                 distance: distance.value,
                                 duration: runningTime.value,
+                                elevation: 0, // TODO: elevation 값 저장
                                 thumbnail: nil,
                                 createdAt: startTime,
                                 uuid: uuid)

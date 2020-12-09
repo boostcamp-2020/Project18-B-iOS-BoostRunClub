@@ -16,9 +16,20 @@ class ActivityStatisticCellView: UITableViewCell {
         commonInit()
     }
 
+    init(title: String, value: String) {
+        super.init(style: .default, reuseIdentifier: String(describing: Self.self))
+        commonInit()
+        configure(title: title, value: value)
+    }
+
     init() {
         super.init(style: .default, reuseIdentifier: String(describing: Self.self))
         commonInit()
+    }
+
+    func configure(title: String, value: String) {
+        titleLabel.text = title
+        valueLabel.text = value
     }
 }
 
