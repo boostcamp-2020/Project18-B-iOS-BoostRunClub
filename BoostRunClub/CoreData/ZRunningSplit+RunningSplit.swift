@@ -40,7 +40,7 @@ extension ZRunningSplit {
         runningSlices = try? JSONEncoder().encode(runningSplit.runningSlices)
     }
 
-    var runningSplit: RunningSplit {
+    var runningSplit: RunningSplit? {
         var slice: [RunningSlice] = []
         if
             let data = runningSlices,

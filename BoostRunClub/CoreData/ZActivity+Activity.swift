@@ -16,6 +16,7 @@ public class ZActivity: NSManagedObject {
     @NSManaged public var duration: Double
     @NSManaged public var thumbnail: Data?
     @NSManaged public var uuid: UUID?
+    @NSManaged public var elevation: Double
 }
 
 extension ZActivity {
@@ -34,11 +35,12 @@ extension ZActivity {
         duration = activity.duration
     }
 
-    var activity: Activity {
+    var activity: Activity? {
         Activity(
             avgPace: Int(avgPace),
             distance: distance,
             duration: duration,
+            elevation: elevation,
             thumbnail: thumbnail,
             createdAt: createdAt,
             uuid: uuid

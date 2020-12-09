@@ -5,3 +5,6 @@ disabled_rules:
 excluded:
 - AppDelegate.swift
 - SceneDelegate.swift
+
+weak_delegate:
+    excluded: ".*Test\\.swift"
