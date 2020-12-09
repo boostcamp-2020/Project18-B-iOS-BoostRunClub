@@ -82,17 +82,12 @@ final class ActivityViewController: UIViewController {
             viewModel?.inputs.didTapShowDateFilter()
         }
 
-        containerCellView.didChangeCellSize = { [weak self] _ in
-            guard let self = self else { return }
-            let indexPath: IndexPath
-            if self.statisticHeaderTitle.isEmpty {
-                indexPath = IndexPath(row: 0, section: 0)
-            } else {
-                indexPath = IndexPath(row: 0, section: 1)
+        containerCellView.heightChangedPublisher
+            .sink {
+                guard let path = self.tableView.indexPath(for: $0) else { return }
+                self.tableView.reloadRows(at: [path], with: .none)
             }
-            print("rowUpdated")
-            self.tableView.reloadRows(at: [indexPath], with: .none)
-        }
+            .store(in: &cancellables)
     }
 
     private func configureActivityTotal(to config: ActivityTotalConfig) {

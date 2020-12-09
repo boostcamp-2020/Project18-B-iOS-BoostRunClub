@@ -5,10 +5,11 @@
 //  Created by 김신우 on 2020/12/09.
 //
 
+import Combine
 import UIKit
 
 class ActivityCollectionView: UICollectionView {
-    var didContentSizeChanged: ((CGSize) -> Void)?
+    var heightPublisher = PassthroughSubject<CGSize, Never>()
 
     init(frame _: CGRect = .zero) {
         let layout = ActivityCollectionView.makeLayout()
@@ -26,7 +27,7 @@ class ActivityCollectionView: UICollectionView {
 
         if bounds.size != intrinsicContentSize {
             invalidateIntrinsicContentSize()
-            didContentSizeChanged?(intrinsicContentSize)
+            heightPublisher.send(intrinsicContentSize)
         }
     }
 
@@ -37,7 +38,7 @@ class ActivityCollectionView: UICollectionView {
     private func commonInit() {
         register(ActivityCellView.self, forCellWithReuseIdentifier: "\(ActivityCellView.self)")
         layoutMargins = UIEdgeInsets.zero
-        backgroundColor = .blue
+        backgroundColor = .clear
         isScrollEnabled = false
         layer.masksToBounds = false
         showsHorizontalScrollIndicator = false
@@ -47,7 +48,7 @@ class ActivityCollectionView: UICollectionView {
     static func makeLayout() -> UICollectionViewCompositionalLayout {
         let size = NSCollectionLayoutSize(
             widthDimension: NSCollectionLayoutDimension.fractionalWidth(1),
-            heightDimension: NSCollectionLayoutDimension.estimated(100)
+            heightDimension: NSCollectionLayoutDimension.estimated(80)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])

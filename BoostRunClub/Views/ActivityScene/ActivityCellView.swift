@@ -113,9 +113,9 @@ extension ActivityCellView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
-            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
         ])
     }
 

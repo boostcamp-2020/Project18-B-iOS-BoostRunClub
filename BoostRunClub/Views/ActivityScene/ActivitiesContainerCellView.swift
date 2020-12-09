@@ -5,11 +5,14 @@
 //  Created by 김신우 on 2020/12/09.
 //
 
+import Combine
 import UIKit
 
 class ActivitiesContainerCellView: UITableViewCell {
     lazy var collectionView = ActivityCollectionView()
-    var didChangeCellSize: ((CGSize) -> Void)?
+
+    var heightChangedPublisher = PassthroughSubject<UITableViewCell, Never>()
+    var cancellables = Set<AnyCancellable>()
 
     init() {
         super.init(style: .default, reuseIdentifier: "\(Self.self)")
@@ -23,13 +26,15 @@ class ActivitiesContainerCellView: UITableViewCell {
 
     private func commonInit() {
         backgroundColor = .clear
-        contentView.backgroundColor = .red
-        collectionView.didContentSizeChanged = { [weak self] size in
-            if size != self?.frame.size {
-                self?.frame.size = size
-                self?.didChangeCellSize?(size)
+        contentView.backgroundColor = .clear
+
+        collectionView.heightPublisher
+            .sink {
+                self.bounds.size = $0
+                self.heightChangedPublisher.send(self)
             }
-        }
+            .store(in: &cancellables)
+
         contentView.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
