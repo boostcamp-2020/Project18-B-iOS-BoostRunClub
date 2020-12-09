@@ -24,7 +24,8 @@ final class RunningMapCoordinator: BasicCoordinator, RunningMapCoordinatorProtoc
     }
 
     func showRunningMapViewController() {
-        let runningMapVC = RunningMapViewController()
+        let runningMapVM = factory.makeRunningMapVM()
+        let runningMapVC = factory.makeRunningMapVC(with: runningMapVM)
         navigationController.pushViewController(runningMapVC, animated: true)
     }
 }

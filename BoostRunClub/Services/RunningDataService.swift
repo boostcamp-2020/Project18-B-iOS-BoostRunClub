@@ -17,6 +17,7 @@ protocol RunningDataServiceable {
     var calorie: CurrentValueSubject<Int, Never> { get }
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var cadence: CurrentValueSubject<Int, Never> { get }
+    var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
 
     var isRunning: Bool { get }
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
@@ -50,6 +51,7 @@ class RunningDataService: RunningDataServiceable {
     var avgPace = CurrentValueSubject<Int, Never>(0)
     var cadence = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
+    var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
     var locations = [CLLocation]()
 
     var runningSplits = [RunningSplit]()
@@ -134,6 +136,7 @@ class RunningDataService: RunningDataServiceable {
         let activity = Activity(avgPace: avgPace.value,
                                 distance: distance.value,
                                 duration: runningTime.value,
+                                elevation: 0, // TODO: elevation 값 저장
                                 thumbnail: nil,
                                 createdAt: startTime,
                                 uuid: uuid)
@@ -178,6 +181,7 @@ class RunningDataService: RunningDataServiceable {
     func addSplit() {
         addSlice()
         runningSplits.append(currentRunningSplit)
+        newSplitSubject.send(currentRunningSplit)
 
         currentRunningSplit = RunningSplit()
     }

@@ -29,7 +29,6 @@ protocol PausedRunningViewModelOutputs {
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
 }
@@ -89,10 +88,6 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     }
 
     // Outputs
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
-        runningDataProvider.currentLocation
-            .eraseToAnyPublisher()
-    }
 
     var runInfoData: [RunningInfo]
     var pathCoordinates: [CLLocationCoordinate2D]

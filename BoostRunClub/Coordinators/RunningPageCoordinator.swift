@@ -13,7 +13,10 @@ protocol RunningPageCoordinatorProtocol {}
 final class RunningPageCoordinator: BasicCoordinator, RunningPageCoordinatorProtocol {
     let factory: RunningPageContainerFactory
 
-    init(navigationController: UINavigationController, factory: RunningPageContainerFactory = DependencyFactory.shared) {
+    init(
+        navigationController: UINavigationController,
+        factory: RunningPageContainerFactory = DependencyFactory.shared
+    ) {
         self.factory = factory
         super.init(navigationController: navigationController)
     }

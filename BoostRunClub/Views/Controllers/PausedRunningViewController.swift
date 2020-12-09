@@ -47,13 +47,6 @@ class PausedRunningViewController: UIViewController {
 
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
-        viewModel.outputs.userLocation
-            .receive(on: RunLoop.main)
-            .sink { [weak self] coordinate in
-                let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                self?.mapView.setRegion(viewRegion, animated: false)
-            }
-            .store(in: &cancellables)
 
         viewModel.outputs.showRunningInfoAnimationSignal
             .receive(on: RunLoop.main)
@@ -264,10 +257,14 @@ extension PausedRunningViewController {
     private func makeMapView() -> MKMapView {
         let view = MKMapView()
         view.showsUserLocation = true
-        view.mapType = MKMapType.standard
-        view.userTrackingMode = MKUserTrackingMode.follow
+        view.mapType = .standard
         view.isUserInteractionEnabled = false
         view.delegate = self
+        view.region = MKCoordinateRegion(
+            center: view.userLocation.coordinate,
+            span: view.region.span
+        )
+        view.userTrackingMode = .follow
         return view
     }
 

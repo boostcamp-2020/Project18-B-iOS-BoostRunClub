@@ -41,7 +41,7 @@ extension ZActivityDetail {
         locations = try? JSONEncoder().encode(activityDetail.locations)
     }
 
-    var activityDetail: ActivityDetail {
+    var activityDetail: ActivityDetail? {
         var location: [Location] = []
         if
             let data = locations,

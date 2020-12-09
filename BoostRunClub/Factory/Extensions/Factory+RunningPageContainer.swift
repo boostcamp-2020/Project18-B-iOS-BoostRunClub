@@ -8,7 +8,11 @@
 import UIKit
 
 protocol RunningPageContainerFactory {
-    func makeRunningPageVC(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController
+    func makeRunningPageVC(
+        with viewModel: RunningPageViewModelTypes,
+        viewControllers: [UIViewController]
+    )
+        -> UIViewController
     func makeRunningPageVM() -> RunningPageViewModelTypes
 }
 

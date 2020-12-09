@@ -255,7 +255,7 @@ extension PrepareRunViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         let profileItem = UIBarButtonItem(
-            image: UIImage(systemName: "person.circle.fill"),
+            image: UIImage.SFSymbol(name: "person.circle.fill", color: .systemGray),
             style: .plain,
             target: self,
             action: #selector(showProfileViewController)
