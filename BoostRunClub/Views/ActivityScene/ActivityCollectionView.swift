@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 class ActivityCollectionView: UICollectionView {
-    var heightPublisher = PassthroughSubject<CGSize, Never>()
+    var heightPublisher = PassthroughSubject<CGFloat, Never>()
 
     init(frame _: CGRect = .zero) {
         let layout = ActivityCollectionView.makeLayout()
@@ -27,12 +27,12 @@ class ActivityCollectionView: UICollectionView {
 
         if bounds.size != intrinsicContentSize {
             invalidateIntrinsicContentSize()
-            heightPublisher.send(intrinsicContentSize)
+            heightPublisher.send(intrinsicContentSize.height)
         }
     }
 
     override var intrinsicContentSize: CGSize {
-        return collectionViewLayout.collectionViewContentSize
+        collectionViewLayout.collectionViewContentSize
     }
 
     private func commonInit() {

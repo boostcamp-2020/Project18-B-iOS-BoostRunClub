@@ -10,7 +10,7 @@ import UIKit
 class ActivityCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     private var activities = [Activity]()
 
-    func loadDatas(_ activities: [Activity]) {
+    func loadData(_ activities: [Activity]) {
         self.activities = activities
     }
 

@@ -44,6 +44,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
             }
             .store(in: &cancellables)
 
+        activityVM.outputs.showActivityListScene
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.showActivityListScene() }
+            .store(in: &cancellables)
+
         navigationController.pushViewController(activityVC, animated: true)
     }
 
@@ -71,5 +76,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
                 (activityDateFilterVC as? ActivityDateFilterViewController)?.closeWithAnimation()
             })
             .eraseToAnyPublisher()
+    }
+
+    func showActivityListScene() {
+        let activityListCoordinator = ActivityListCoordinator(navigationController: navigationController)
+        childCoordinators.append(activityListCoordinator)
+        activityListCoordinator.start()
     }
 }

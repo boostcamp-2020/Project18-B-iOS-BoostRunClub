@@ -37,6 +37,10 @@ final class ActivityViewController: UIViewController {
         super.init(coder: coder)
     }
 
+    deinit {
+        print("activity scene deinit")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -56,7 +60,7 @@ final class ActivityViewController: UIViewController {
         viewModel.outputs.recentActivitiesSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.activityDataSource.loadDatas($0)
+                self?.activityDataSource.loadData($0)
                 self?.collectionView.reloadData()
                 self?.tableView.reloadData()
             }
@@ -121,7 +125,7 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return statisticHeaderTitle.isEmpty ? 1 : 2
+        statisticHeaderTitle.isEmpty ? 1 : 2
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -147,7 +151,7 @@ extension ActivityViewController: UITableViewDataSource {
 
 extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 60
+        60
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -162,7 +166,7 @@ extension ActivityViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 }
 
@@ -202,7 +206,6 @@ extension ActivityViewController {
         activityTotalView.selfResizing()
         tableView.tableHeaderView = activityTotalView
         tableView.tableFooterView = activityFooterView
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
     }
 

@@ -30,7 +30,7 @@ class ActivitiesContainerCellView: UITableViewCell {
 
         collectionView.heightPublisher
             .sink {
-                self.bounds.size = $0
+                self.bounds.size.height = $0
                 self.heightChangedPublisher.send(self)
             }
             .store(in: &cancellables)
