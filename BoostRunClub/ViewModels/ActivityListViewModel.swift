@@ -15,12 +15,13 @@ protocol ActivityListViewModelTypes {
 
 protocol ActivityListViewModelInputs {
     func didTapBackItem()
+    func didTapActivity(section: Int, row: Int)
 }
 
 protocol ActivityListViewModelOutputs {
     var activityListItemSubject: CurrentValueSubject<[ActivityListItem], Never> { get }
 
-    var showActivityDetails: PassthroughSubject<UUID, Never> { get }
+    var showActivityDetails: PassthroughSubject<Activity, Never> { get }
     var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
 }
 
@@ -54,10 +55,15 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
         goBackToSceneSignal.send()
     }
 
+    func didTapActivity(section: Int, row: Int) {
+        let activity = activityListItemSubject.value[section].items[row]
+        showActivityDetails.send(activity)
+    }
+
     // Outputs
     var activityListItemSubject = CurrentValueSubject<[ActivityListItem], Never>([])
 
-    var showActivityDetails = PassthroughSubject<UUID, Never>()
+    var showActivityDetails = PassthroughSubject<Activity, Never>()
     var goBackToSceneSignal = PassthroughSubject<Void, Never>()
 }
 

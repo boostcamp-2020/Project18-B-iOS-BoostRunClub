@@ -56,26 +56,10 @@ extension ActivityListViewController {
 
 // MARK: - UICollectionViewDelegate Implementation
 
-extension ActivityListViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        layout _: UICollectionViewLayout,
-//        referenceSizeForHeaderInSection section: Int
-//    ) -> CGSize {
-//        let indexPath = IndexPath(row: 0, section: section)
-//        let headerView = collectionView.supplementaryView(
-//            forElementKind: UICollectionView.elementKindSectionHeader,
-//            at: indexPath
-//        )
-//        let size = CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height)
-//        let newSize = headerView?.systemLayoutSizeFitting(
-//            size,
-//            withHorizontalFittingPriority: .required,
-//            verticalFittingPriority: .fittingSizeLevel
-//        )
-//
-//        return newSize ?? .zero
-//    }
+extension ActivityListViewController: UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel?.inputs.didTapActivity(section: indexPath.section, row: indexPath.row)
+    }
 }
 
 // MARK: - Configure
