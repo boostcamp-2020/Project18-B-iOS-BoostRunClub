@@ -17,6 +17,7 @@ final class SplitsCoordinator: BasicCoordinator, SplitsCoordinatorProtocol {
     init(navigationController: UINavigationController, factory: SplitSceneFactory = DependencyFactory.shared) {
         self.factory = factory
         super.init(navigationController: navigationController)
+        navigationController.setNavigationBarHidden(false, animated: false)
     }
 
     override func start() {
@@ -24,7 +25,8 @@ final class SplitsCoordinator: BasicCoordinator, SplitsCoordinatorProtocol {
     }
 
     func showSplitsViewController() {
-        let splitsVC = SplitsViewController()
+        let splitsVM = factory.makeSplitVM()
+        let splitsVC = factory.makeSplitVC(with: splitsVM)
         navigationController.pushViewController(splitsVC, animated: true)
     }
 }

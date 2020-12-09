@@ -10,7 +10,7 @@ import UIKit
 extension UIStackView {
     static func make(
         with subviews: [UIView],
-        axis: NSLayoutConstraint.Axis,
+        axis: NSLayoutConstraint.Axis = .horizontal,
         alignment: Alignment = .fill,
         distribution: Distribution = .fill,
         spacing: CGFloat = 0
