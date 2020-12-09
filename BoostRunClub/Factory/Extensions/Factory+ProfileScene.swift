@@ -8,8 +8,16 @@
 import UIKit
 
 protocol ProfileSceneFactory {
-    //    func makeProfileVC(with viewModel: ProfileViewModelTypes) -> UIViewController
-    //    func makeProfileVM() -> ProfileViewModelTypes
+    func makeProfileVC(with viewModel: ProfileViewModelTypes) -> UIViewController
+    func makeProfileVM() -> ProfileViewModelTypes
 }
 
-extension DependencyFactory: ProfileSceneFactory {}
+extension DependencyFactory: ProfileSceneFactory {
+    func makeProfileVC(with viewModel: ProfileViewModelTypes) -> UIViewController {
+        ProfileViewController(with: viewModel)
+    }
+
+    func makeProfileVM() -> ProfileViewModelTypes {
+        ProfileViewModel()
+    }
+}
