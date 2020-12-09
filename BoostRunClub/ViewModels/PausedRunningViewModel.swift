@@ -29,28 +29,39 @@ protocol PausedRunningViewModelOutputs {
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
     let runningDataProvider: RunningDataServiceable
+    private var cancellables = Set<AnyCancellable>()
 
     // TODO: RunningDataProvicer Protocol 구현
     init(runningDataProvider: RunningDataServiceable) {
         self.runningDataProvider = runningDataProvider
         let avgPace = runningDataProvider.avgPace.value
         let pace = runningDataProvider.pace.value
+        let cadence = runningDataProvider.cadence.value
+        let calorie = runningDataProvider.calorie.value
         pathCoordinates = runningDataProvider.locations.map { $0.coordinate }
         runInfoData = [
             RunningInfo(type: .time, value: runningDataProvider.runningTime.value.formattedString),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", avgPace / 60, avgPace % 60)),
             RunningInfo(type: .pace, value: String(format: "%d'%d\"", pace / 60, pace % 60)),
             RunningInfo(type: .kilometer, value: String(format: "%.2f", runningDataProvider.distance.value / 1000)),
-            RunningInfo(type: .calorie, value: String(Int(runningDataProvider.calorie.value))),
-            RunningInfo(type: .cadence, value: String(runningDataProvider.cadence.value)),
+            RunningInfo(type: .calorie, value: calorie <= 0 ? "--" : String(calorie)),
+            RunningInfo(type: .cadence, value: cadence <= 0 ? "--" : String(cadence)),
         ]
+
+        runningDataProvider.currentMotionType
+            .throttle(for: .seconds(1), scheduler: RunLoop.main, latest: true)
+            .sink { [weak self] motion in
+                if motion.running || motion.walking, motion.confidence == .high {
+                    print("###### tap resume")
+                    self?.didTapResumeButton()
+                }
+            }.store(in: &cancellables)
     }
 
     // Inputs
@@ -77,10 +88,6 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     }
 
     // Outputs
-    var userLocation: AnyPublisher<CLLocationCoordinate2D, Never> {
-        runningDataProvider.currentLocation
-            .eraseToAnyPublisher()
-    }
 
     var runInfoData: [RunningInfo]
     var pathCoordinates: [CLLocationCoordinate2D]

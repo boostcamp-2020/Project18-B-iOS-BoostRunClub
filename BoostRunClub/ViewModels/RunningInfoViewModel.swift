@@ -88,7 +88,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             }.store(in: &cancellables)
 
         runningDataProvider.calorie
-            .map { String(Int($0)) }
+            .map { $0 <= 0 ? "--" : String($0) }
             .sink { [weak self] calorie in
                 self?.possibleTypes[.calorie] = calorie
                 self?.runningInfoObservables.forEach {
@@ -98,8 +98,18 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
+        runningDataProvider.currentMotionType
+            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+            .sink { [weak self] currentMotionType in
+                if currentMotionType.stationary {
+                    self?.didTapPauseButton()
+                }
+            }.store(in: &cancellables)
+
         runningDataProvider.cadence
-            .map { String($0) }
+            .map { $0 <= 0 ? "--" :
+                String($0)
+            }
             .sink { [weak self] cadence in
                 self?.possibleTypes[.cadence] = cadence
                 self?.runningInfoObservables.forEach {

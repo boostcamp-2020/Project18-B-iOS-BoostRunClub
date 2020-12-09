@@ -16,11 +16,14 @@
 		4C3E7AC4256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */; };
 		4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AC8256F43440061244F /* GoalValueView.swift */; };
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
+		4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5874F5257FD7EB00185B4C /* RunningSplitCell.swift */; };
+		4C5874FA257FD88D00185B4C /* RunningSplitCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */; };
+		4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */; };
+		4C587510258014C000185B4C /* UIView+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58750F258014C000185B4C /* UIView+identifier.swift */; };
 		4C7046002577821D009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C7046032577862A009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
-		4C7133D4257B57540083ECD3 /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295D25791BEF007BD24F /* MotionType.swift */; };
-		4C9B985325788547000A6447 /* UIView+otificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */; };
+		4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
@@ -39,7 +42,6 @@
 		714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */; };
 		718729422578DA63007BD24F /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		7187295525791A70007BD24F /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
-		7187295E25791BEF007BD24F /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295D25791BEF007BD24F /* MotionType.swift */; };
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
 		71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
@@ -79,7 +81,6 @@
 		960A14E6257DD8D1008D2BD3 /* ActivityFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */; };
 		960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */; };
 		960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */; };
-		960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A14FF257E057B008D2BD3 /* ActivityCellView.swift */; };
 		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
 		960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */; };
 		960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */; };
@@ -91,7 +92,6 @@
 		9635817025726EF800B8BE6B /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
 		963581762572705200B8BE6B /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B46F4256CD4E0006138DF /* LocationProvider.swift */; };
 		9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635817B2572707C00B8BE6B /* LocationProviderMock.swift */; };
-		963865F4257E7A71003EEE4B /* ActivityStatisticCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963865F3257E7A71003EEE4B /* ActivityStatisticCellView.swift */; };
 		963865F8257E858D003EEE4B /* ActivityFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963865F7257E858D003EEE4B /* ActivityFooterView.swift */; };
 		963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B46F4256CD4E0006138DF /* LocationProvider.swift */; };
 		963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */; };
@@ -106,6 +106,8 @@
 		964A0C5825802B05008D7FD7 /* Factory+AllActivitiesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964A0C5725802B05008D7FD7 /* Factory+AllActivitiesScene.swift */; };
 		964A0C5C25802D04008D7FD7 /* ActivityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964A0C5B25802D04008D7FD7 /* ActivityCollectionView.swift */; };
 		964A0C6025803018008D7FD7 /* ActivitiesContainerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964A0C5F25803018008D7FD7 /* ActivitiesContainerCellView.swift */; };
+		964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6D52580CA0F00A69A82 /* ActivityStatisticCellView.swift */; };
+		964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6D62580CA0F00A69A82 /* ActivityCellView.swift */; };
 		967780292577905400DA2454 /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967780282577905400DA2454 /* CountDownView.swift */; };
 		967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A15D25763CC800DED689 /* PausedRunningViewController.swift */; };
@@ -166,8 +168,12 @@
 		4C3E7AC3256EC2620061244F /* Futura LT Condensed Extra Bold Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura LT Condensed Extra Bold Oblique.ttf"; sourceTree = "<group>"; };
 		4C3E7AC8256F43440061244F /* GoalValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueView.swift; sourceTree = "<group>"; };
 		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
+		4C5874F5257FD7EB00185B4C /* RunningSplitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitCell.swift; sourceTree = "<group>"; };
+		4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitCellViewModel.swift; sourceTree = "<group>"; };
+		4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitHeaderView.swift; sourceTree = "<group>"; };
+		4C58750F258014C000185B4C /* UIView+identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+identifier.swift"; sourceTree = "<group>"; };
 		4C7045FF2577821D009C39A2 /* EventTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimer.swift; sourceTree = "<group>"; };
-		4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+otificationFeedback.swift"; sourceTree = "<group>"; };
+		4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+notificationFeedback.swift"; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
@@ -186,7 +192,6 @@
 		714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageCoordinator.swift; sourceTree = "<group>"; };
 		718729412578DA63007BD24F /* RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplit.swift; sourceTree = "<group>"; };
 		7187295425791A70007BD24F /* MotionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionProvider.swift; sourceTree = "<group>"; };
-		7187295D25791BEF007BD24F /* MotionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionType.swift; sourceTree = "<group>"; };
 		71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModel.swift; sourceTree = "<group>"; };
 		71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModel.swift; sourceTree = "<group>"; };
 		71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeCell.swift; sourceTree = "<group>"; };
@@ -228,7 +233,6 @@
 		960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFilterType.swift; sourceTree = "<group>"; };
 		960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalConfig.swift; sourceTree = "<group>"; };
 		960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableView.swift; sourceTree = "<group>"; };
-		960A14FF257E057B008D2BD3 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
 		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
 		960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalView.swift; sourceTree = "<group>"; };
 		960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSegmentControl.swift; sourceTree = "<group>"; };
@@ -239,12 +243,13 @@
 		9635816125726EAB00B8BE6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9635816925726ECC00B8BE6B /* PrepareRunViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModelTest.swift; sourceTree = "<group>"; };
 		9635817B2572707C00B8BE6B /* LocationProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProviderMock.swift; sourceTree = "<group>"; };
-		963865F3257E7A71003EEE4B /* ActivityStatisticCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatisticCellView.swift; sourceTree = "<group>"; };
 		963865F7257E858D003EEE4B /* ActivityFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFooterView.swift; sourceTree = "<group>"; };
 		963B46F4256CD4E0006138DF /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		964A0C5725802B05008D7FD7 /* Factory+AllActivitiesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+AllActivitiesScene.swift"; sourceTree = "<group>"; };
 		964A0C5B25802D04008D7FD7 /* ActivityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCollectionView.swift; sourceTree = "<group>"; };
 		964A0C5F25803018008D7FD7 /* ActivitiesContainerCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesContainerCellView.swift; sourceTree = "<group>"; };
+		964BC6D52580CA0F00A69A82 /* ActivityStatisticCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityStatisticCellView.swift; sourceTree = "<group>"; };
+		964BC6D62580CA0F00A69A82 /* ActivityCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
 		967780282577905400DA2454 /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
 		967FFAA3257602A200F3340C /* TimerInterval+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+String.swift"; sourceTree = "<group>"; };
 		9689A15D25763CC800DED689 /* PausedRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningViewController.swift; sourceTree = "<group>"; };
@@ -328,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */,
+				4C5874F5257FD7EB00185B4C /* RunningSplitCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -348,6 +354,7 @@
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
 				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
+				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 			);
 			path = ViewModels;
@@ -363,6 +370,7 @@
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
 				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
+				4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */,
 				4C3E7AD0256F63230061244F /* Cells */,
 				4C3E7ACE256F63080061244F /* Controllers */,
 				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
@@ -402,20 +410,20 @@
 		71FBAAD2257D2319005C8D30 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				71FBAAD3257D2341005C8D30 /* Factory+RunningInfoScene.swift */,
-				71FBAADD257D23AF005C8D30 /* Factory+TabBarContainer.swift */,
-				71FBAAE1257D23C1005C8D30 /* Factory+RunningPageContainer.swift */,
-				71FBAAE5257D23DB005C8D30 /* Factory+LoginScene.swift */,
-				71FBAAE9257D23F0005C8D30 /* Factory+ActivityScene.swift */,
 				71FBAAED257D2418005C8D30 /* Factory+ActivityDetailScene.swift */,
-				71FBAAF1257D244F005C8D30 /* Factory+PrepareRunScene.swift */,
-				71FBAAF5257D246A005C8D30 /* Factory+PausedRunningScene.swift */,
-				71FBAAF9257D2488005C8D30 /* Factory+SplitScene.swift */,
-				71FBAAFD257D24A9005C8D30 /* Factory+ProfileScene.swift */,
+				71FBAAE9257D23F0005C8D30 /* Factory+ActivityScene.swift */,
 				71FBAB01257D24BB005C8D30 /* Factory+GoalTypeScene.swift */,
-				71FBAB05257D24E3005C8D30 /* Factory+RunningMapScene.swift */,
 				71FBAB09257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift */,
+				71FBAAE5257D23DB005C8D30 /* Factory+LoginScene.swift */,
+				71FBAAF5257D246A005C8D30 /* Factory+PausedRunningScene.swift */,
+				71FBAAF1257D244F005C8D30 /* Factory+PrepareRunScene.swift */,
+				71FBAAFD257D24A9005C8D30 /* Factory+ProfileScene.swift */,
+				71FBAAD3257D2341005C8D30 /* Factory+RunningInfoScene.swift */,
+				71FBAB05257D24E3005C8D30 /* Factory+RunningMapScene.swift */,
 				964A0C5725802B05008D7FD7 /* Factory+AllActivitiesScene.swift */,
+				71FBAAE1257D23C1005C8D30 /* Factory+RunningPageContainer.swift */,
+				71FBAAF9257D2488005C8D30 /* Factory+SplitScene.swift */,
+				71FBAADD257D23AF005C8D30 /* Factory+TabBarContainer.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -520,7 +528,6 @@
 				4C1EDBF52578E22C004302C5 /* RunningSlice.swift */,
 				96ED4034257C768A007DB3DF /* Activity.swift */,
 				4CF009C5257CADC300EC928A /* Location.swift */,
-				7187295D25791BEF007BD24F /* MotionType.swift */,
 				960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */,
 				96C468B0257F51020062AAA4 /* DateRange.swift */,
 			);
@@ -536,8 +543,9 @@
 				967FFAA3257602A200F3340C /* TimerInterval+String.swift */,
 				71EFCCA52577D3E6007998AD /* UIButton+setSFSymbol.swift */,
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
-				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
+				4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */,
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
+				4C58750F258014C000185B4C /* UIView+identifier.swift */,
 				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
 				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
 				96C468C4257F6D900062AAA4 /* Date+String.swift */,
@@ -567,8 +575,8 @@
 		96F105B1258040CB0005F66C /* ActivityScene */ = {
 			isa = PBXGroup;
 			children = (
-				960A14FF257E057B008D2BD3 /* ActivityCellView.swift */,
-				963865F3257E7A71003EEE4B /* ActivityStatisticCellView.swift */,
+				964BC6D62580CA0F00A69A82 /* ActivityCellView.swift */,
+				964BC6D52580CA0F00A69A82 /* ActivityStatisticCellView.swift */,
 				964A0C5F25803018008D7FD7 /* ActivitiesContainerCellView.swift */,
 				960A14F9257DFFE4008D2BD3 /* ActivityTableView.swift */,
 				960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */,
@@ -752,7 +760,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7187295525791A70007BD24F /* MotionProvider.swift in Sources */,
-				4C9B985325788547000A6447 /* UIView+otificationFeedback.swift in Sources */,
+				4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */,
 				4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */,
 				71FBAAE2257D23C1005C8D30 /* Factory+RunningPageContainer.swift in Sources */,
 				960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */,
@@ -760,14 +768,16 @@
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */,
 				96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */,
+				4C587510258014C000185B4C /* UIView+identifier.swift in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
 				960A14FA257DFFE4008D2BD3 /* ActivityTableView.swift in Sources */,
 				96C468B5257F58600062AAA4 /* Date+DateRange.swift in Sources */,
 				963865F8257E858D003EEE4B /* ActivityFooterView.swift in Sources */,
+				4C5874FA257FD88D00185B4C /* RunningSplitCellViewModel.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
-				960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */,
+				4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
@@ -783,11 +793,12 @@
 				96ED403F257C7947007DB3DF /* ActivityProvider.swift in Sources */,
 				71FBAAEE257D2418005C8D30 /* Factory+ActivityDetailScene.swift in Sources */,
 				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
-				7187295E25791BEF007BD24F /* MotionType.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
+				964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
+				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
 				96B90635257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */,
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
@@ -831,6 +842,7 @@
 				71FBAAF2257D244F005C8D30 /* Factory+PrepareRunScene.swift in Sources */,
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
+				4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
 				960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */,
 				71FBAAEA257D23F0005C8D30 /* Factory+ActivityScene.swift in Sources */,
@@ -841,7 +853,6 @@
 				967780292577905400DA2454 /* CountDownView.swift in Sources */,
 				96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */,
 				960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */,
-				963865F4257E7A71003EEE4B /* ActivityStatisticCellView.swift in Sources */,
 				96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
@@ -879,7 +890,6 @@
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
 				964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
-				4C7133D4257B57540083ECD3 /* MotionType.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,

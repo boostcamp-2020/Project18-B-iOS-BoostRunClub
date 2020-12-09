@@ -47,7 +47,12 @@ class LocationProvider: NSObject, LocationProvidable {
 
 extension LocationProvider: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
+        guard let location = locations.last,
+              location.horizontalAccuracy.sign == .plus,
+              location.verticalAccuracy.sign == .plus,
+              location.speedAccuracy.sign == .plus,
+              location.courseAccuracy.sign == .plus
+        else { return }
 
         locationSubject.send(location)
     }
