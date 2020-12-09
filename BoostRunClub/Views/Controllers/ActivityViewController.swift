@@ -12,7 +12,8 @@ final class ActivityViewController: UIViewController {
     private var tableView = ActivityTableView()
     private var activityTotalView = ActivityTotalView()
     private let activityFooterView = ActivityFooterView()
-    private var activitiyCells: [ActivityCellView] = []
+    private lazy var containerCellView = ActivitiesContainerCellView()
+    private lazy var collectionView = { containerCellView.collectionView }()
     private var activityStatisticCells: [ActivityStatisticCellView] = [
         ActivityStatisticCellView(),
         ActivityStatisticCellView(),
@@ -21,7 +22,8 @@ final class ActivityViewController: UIViewController {
         ActivityStatisticCellView(),
     ]
 
-    var statisticHeaderTitle: String = ""
+    private var statisticHeaderTitle: String = ""
+    private var activityDataSource = ActivityCollectionViewDataSource()
 
     private var viewModel: ActivityViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
@@ -41,6 +43,7 @@ final class ActivityViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .systemBackground
         configureNavigationItems()
         configureTableView()
+        configureCollectionView()
         configureLayout()
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
@@ -53,12 +56,8 @@ final class ActivityViewController: UIViewController {
         viewModel.outputs.recentActivitiesSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.activitiyCells.removeAll()
-                $0.forEach {
-                    let cell = ActivityCellView()
-                    cell.configure(with: $0)
-                    self?.activitiyCells.append(cell)
-                }
+                self?.activityDataSource.loadDatas($0)
+                self?.collectionView.reloadData()
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
@@ -81,6 +80,18 @@ final class ActivityViewController: UIViewController {
 
         activityTotalView.didTapShowDateFilter = { [weak viewModel] in
             viewModel?.inputs.didTapShowDateFilter()
+        }
+
+        containerCellView.didChangeCellSize = { [weak self] _ in
+            guard let self = self else { return }
+            let indexPath: IndexPath
+            if self.statisticHeaderTitle.isEmpty {
+                indexPath = IndexPath(row: 0, section: 0)
+            } else {
+                indexPath = IndexPath(row: 0, section: 1)
+            }
+            print("rowUpdated")
+            self.tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
 
@@ -115,7 +126,7 @@ extension ActivityViewController {
 
 extension ActivityViewController: UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return activitiyCells.count + (statisticHeaderTitle.isEmpty ? 0 : 1)
+        return statisticHeaderTitle.isEmpty ? 1 : 2
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -132,7 +143,7 @@ extension ActivityViewController: UITableViewDataSource {
         {
             return activityStatisticCells[indexPath.row]
         } else {
-            return activitiyCells[indexPath.section - (statisticHeaderTitle.isEmpty ? 0 : 1)]
+            return containerCellView
         }
     }
 }
@@ -140,36 +151,30 @@ extension ActivityViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate Implementation
 
 extension ActivityViewController: UITableViewDelegate {
-    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if !statisticHeaderTitle.isEmpty {
-            return section < 2 ? 50 : 5
-        } else {
-            return section < 1 ? 50 : 5
-        }
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
+        return 80
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if !statisticHeaderTitle.isEmpty {
-            switch section {
-            case 0:
-                let label = UILabel()
-                label.text = statisticHeaderTitle
-                return label
-            case 1:
-                let label = UILabel()
-                label.text = "최근 활동"
-                return label
-            default:
-                return nil
-            }
-        }
-
-        if section == 0 {
-            let label = UILabel()
+        let label = UILabel()
+        if !statisticHeaderTitle.isEmpty, section == 0 {
+            label.text = statisticHeaderTitle
+        } else {
             label.text = "최근 활동"
-            return label
         }
-        return nil
+        return label
+    }
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
+// MARK: - UICollectionViewDelegate Implementation
+
+extension ActivityViewController: UICollectionViewDelegate {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel?.inputs.didSelectActivity(at: indexPath.row)
     }
 }
 
@@ -190,12 +195,19 @@ extension ActivityViewController {
         navigationItem.setLeftBarButton(profileItem, animated: true)
     }
 
+    private func configureCollectionView() {
+        collectionView.dataSource = activityDataSource
+        collectionView.delegate = self
+    }
+
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         activityTotalView.selfResizing()
         tableView.tableHeaderView = activityTotalView
         tableView.tableFooterView = activityFooterView
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
     }
 
     private func configureLayout() {
