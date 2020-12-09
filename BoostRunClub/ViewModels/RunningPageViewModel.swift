@@ -13,11 +13,23 @@ protocol RunningPageViewModelTypes {
     var outputs: RunningPageViewModelOutputs { get }
 }
 
-protocol RunningPageViewModelInputs {}
+protocol RunningPageViewModelInputs {
+    func scrollViewWillBeginDragging()
+    func scrollViewDidEndDragging()
+}
 
-protocol RunningPageViewModelOutputs {}
+protocol RunningPageViewModelOutputs {
+    //	var isDraggingSubject: CurrentValueSubject<Bool, Never> { get }
+    var buttonScaleSubject: CurrentValueSubject<Double, Never> { get }
+}
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
+    var buttonScaleSubject = CurrentValueSubject<Double, Never>(0)
+
+    func scrollViewDidEndDragging() {}
+
+    func scrollViewWillBeginDragging() {}
+
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }

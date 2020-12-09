@@ -5,61 +5,152 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import MapKit
 import UIKit
 
+extension RunningPageViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = view.bounds.width
+        let value = (scrollView.contentOffset.x + width * CGFloat(currPageIdx - 2))
+        buttonScale = abs(value / width)
+    }
+
+    func scrollViewWillBeginDragging(_: UIScrollView) {
+        isDragging = true
+    }
+
+    func scrollViewDidEndDragging(_: UIScrollView, willDecelerate _: Bool) {
+        isDragging = false
+    }
+}
+
+extension RunningPageViewController {
+	func transformBackButton() {
+		backButton.transform = CGAffineTransform(scaleX: buttonScale, y: buttonScale)
+//		backButton.transform = CGAffineTransform(translationX: buttonScale, y: buttonScale)
+	}
+	
+	func goBackToMainPage() {
+		let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
+
+		setViewControllers([pages[1]], direction: direction, animated: true) { _ in
+			self.currPageIdx = 1
+		}
+	}
+}
+
+
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
-        case map, runningInfo, splits
+        case map, info, splits
     }
 
     private var pages = [UIViewController]()
-    private var pageControl = UIPageControl()
+    private lazy var pageControl = makePageControl()
+    private lazy var backButton = makeBackButton()
+
+    var viewModel: RunningPageViewModelTypes?
+    var cancellables = Set<AnyCancellable>()
+
+    var currPageIdx = 1
+    var isDragging = false
+    var buttonScale: CGFloat = 0 {
+        didSet {
+			if buttonScale > 1 {
+				buttonScale = 1
+				return
+			}
+			if isDragging { return }
+			self.transformBackButton()
+        }
+    }
+
+
+    init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        self.viewModel = viewModel
+        pages = viewControllers
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        configurePageViewController()
+        configureSubViews()
+		buttonScale = 0
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
+}
+
+extension RunningPageViewController {
+    @objc func didTabBackButton() {
+		goBackToMainPage()
+	}
+
+    @objc func panGestureAction() {
+		transformBackButton()
+	}
+}
+
+extension RunningPageViewController {
+    func configurePageViewController() {
         dataSource = self
         delegate = self
         setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
 
-        pageControl.pageIndicatorTintColor = UIColor.gray
-        pageControl.currentPageIndicatorTintColor = UIColor.black
-        pageControl.numberOfPages = Pages.allCases.count
-        pageControl.currentPage = 1
-        pageControl.addTarget(self,
-                              action: #selector(pageControlSelectionAction),
-                              for: .valueChanged)
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction))
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
 
+        view.subviews.forEach { view in
+            if let scrollView = view as? UIScrollView {
+//                self.scrollView = scrollView
+                scrollView.delegate = self
+            }
+        }
+    }
+
+    func configureSubViews() {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
+
+        view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 100),
+            backButton.heightAnchor.constraint(equalToConstant: 100),
+        ])
     }
 
-    // TODO: 뷰 전환 벼튼 클릭 이벤트로 대체, 애니메이션 적용
-    @objc func pageControlSelectionAction(_ sender: UIPageControl) {
-        guard
-            let viewControllers = viewControllers,
-            let prevIdx = pages.firstIndex(of: viewControllers[0])
-        else { return }
-
-        let currIdx = sender.currentPage
-        DispatchQueue.main.async {
-            self.setViewControllers([self.pages[currIdx]],
-                                    direction: currIdx > prevIdx ? .forward : .reverse,
-                                    animated: true,
-                                    completion: nil)
-        }
+    func makePageControl() -> UIPageControl {
+        let pageControl = UIPageControl()
+        pageControl.pageIndicatorTintColor = .gray
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.numberOfPages = Pages.allCases.count
+        pageControl.currentPage = 1
+		pageControl.isUserInteractionEnabled = false
+        return pageControl
     }
 
-    func setPages(_ viewControllers: [UIViewController]) {
-        pages.append(contentsOf: viewControllers)
-    }
-
-    deinit {
-        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    func makeBackButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .systemGreen
+        button.addTarget(self, action: #selector(didTabBackButton), for: .touchUpInside)
+        return button
     }
 }
 
@@ -73,6 +164,7 @@ extension RunningPageViewController: UIPageViewControllerDelegate {
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
                 pageControl.currentPage = viewControllerIndex
+				currPageIdx = viewControllerIndex
             }
         }
     }
@@ -109,5 +201,16 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
             }
         }
         return nil
+    }
+}
+
+extension RunningPageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer
+    )
+        -> Bool
+    {
+        true
     }
 }
