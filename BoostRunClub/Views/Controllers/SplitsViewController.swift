@@ -78,6 +78,7 @@ extension SplitsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setup(viewModel: viewModel)
         }
 
+        cell.isUserInteractionEnabled = false
         return cell
     }
 }

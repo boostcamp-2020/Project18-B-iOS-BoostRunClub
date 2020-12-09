@@ -152,22 +152,14 @@ extension PausedRunningViewController {
 
 extension PausedRunningViewController: MKMapViewDelegate {
     func showRoutesOnMap(routes: [CLLocationCoordinate2D], slices: [RunningSlice]) {
+		if routes.isEmpty { return }
         slices.forEach { slice in
             let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex
-            if slice.isRunning {
-                print("slice isRunning \(slice.startIndex)~\(endIdx)")
-                color = UIColor.systemBlue.withAlphaComponent(0.9)
-                mapView.addOverlay(MKPolyline(
-                    coordinates: Array(routes[slice.startIndex ... endIdx]),
-                    count: endIdx - slice.startIndex + 1
-                ))
-            } else {
-                color = UIColor.systemRed.withAlphaComponent(0.9)
-                mapView.addOverlay(MKPolyline(
-                    coordinates: Array(routes[slice.startIndex ... endIdx]),
-                    count: endIdx - slice.startIndex + 1
-                ))
-            }
+			color = [UIColor.systemBlue, .systemRed][slice.isRunning ? 0 : 1].withAlphaComponent(0.9)
+			mapView.addOverlay(MKPolyline(
+				coordinates: Array(routes[slice.startIndex ... endIdx]),
+				count: endIdx - slice.startIndex + 1
+			))
         }
     }
 
