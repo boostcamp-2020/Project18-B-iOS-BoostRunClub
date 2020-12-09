@@ -14,7 +14,7 @@ final class MotionProvider {
     private let pedometer = CMPedometer()
     private var isActive = false
 
-    var currentMotionType = CurrentValueSubject<MotionType, Never>(MotionType.unknown)
+    var currentMotionType = CurrentValueSubject<CMMotionActivity, Never>(.init())
     var cadence = CurrentValueSubject<Int, Never>(0)
 
     func startTrackingActivityType() {
@@ -28,11 +28,7 @@ final class MotionProvider {
                 let activity = activity
             else { return }
 
-            let motionType = activity.motionType
-
-            if self.currentMotionType.value != motionType {
-                self.currentMotionType.send(motionType)
-            }
+            self.currentMotionType.send(activity)
         }
     }
 
@@ -60,24 +56,24 @@ final class MotionProvider {
                 error == nil
             else { return }
 
-            self.cadence.value = Int(truncating: cadence)
+            self.cadence.value = Int(truncating: cadence) * 60
         }
     }
 }
 
 extension CMMotionActivity {
-    var motionType: MotionType {
-        if stationary {
-            return .stationary
-        } else if walking {
-            return .walking
-        } else if running {
-            return .running
-        } else if cycling {
-            return .cycling
-        } else if automotive {
-            return .automotive
+    var METFactor: Double {
+        switch self {
+        case _ where running:
+            return 1.035
+        case _ where walking:
+            return 0.655
+        case _ where cycling:
+            return 0.450
+        case _ where unknown:
+            return 0
+        default:
+            return 0
         }
-        return .unknown
     }
 }
