@@ -57,9 +57,7 @@ class ActivityTotalView: UIView {
         layoutIfNeeded()
 
         let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var newFrame = frame
-        newFrame.size.height = height
-        frame = newFrame
+        frame.size.height = height
     }
 }
 

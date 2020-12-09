@@ -147,11 +147,12 @@ extension ActivityViewController: UITableViewDataSource {
 
 extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 80
+        return 60
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         if !statisticHeaderTitle.isEmpty, section == 0 {
             label.text = statisticHeaderTitle
         } else {
