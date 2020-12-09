@@ -23,7 +23,7 @@ final class ActivityViewController: UIViewController {
     ]
 
     private var statisticHeaderTitle: String = ""
-    private var activityDataSource = ActivityCollectionViewDataSource()
+    private var activityDataSource = ActivityDataSource()
 
     private var viewModel: ActivityViewModelTypes?
     private var cancellables = Set<AnyCancellable>()

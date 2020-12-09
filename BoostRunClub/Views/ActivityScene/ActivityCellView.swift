@@ -28,6 +28,18 @@ class ActivityCellView: UICollectionViewCell {
         commonInit()
     }
 
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes
+    ) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
+
     func configure(with activity: Activity) {
         dateLabel.text = activity.weekOfDayText
         titleLabel.text = activity.title
@@ -51,6 +63,7 @@ extension ActivityCellView {
     }
 
     private func configureLayout() {
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             thumbnailImage.widthAnchor.constraint(equalToConstant: 50),

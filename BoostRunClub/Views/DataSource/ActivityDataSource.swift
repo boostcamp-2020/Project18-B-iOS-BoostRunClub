@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ActivityCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-    private var activities = [Activity]()
+class ActivityDataSource: NSObject, UICollectionViewDataSource {
+    var activities = [Activity]()
 
     func loadData(_ activities: [Activity]) {
         self.activities = activities

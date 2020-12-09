@@ -25,7 +25,6 @@
 		4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
 		4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
-		4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
 		4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */; };
 		4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */; };
@@ -84,6 +83,10 @@
 		960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A1503257E0896008D2BD3 /* UIStackView+Make.swift */; };
 		960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */; };
 		960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */; };
+		960F9E3A2580FE51008FDA89 /* GoalTypeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */; };
+		960F9E432581050B008FDA89 /* ActivityListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960F9E422581050B008FDA89 /* ActivityListHeaderView.swift */; };
+		961840D92580EE0000069FDA /* ActivityListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961840D82580EE0000069FDA /* ActivityListDataSource.swift */; };
+		961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961840E32580F6A200069FDA /* ActivityListItem.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -239,6 +242,9 @@
 		960A1503257E0896008D2BD3 /* UIStackView+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Make.swift"; sourceTree = "<group>"; };
 		960A150C257E22FF008D2BD3 /* ActivityTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTotalView.swift; sourceTree = "<group>"; };
 		960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSegmentControl.swift; sourceTree = "<group>"; };
+		960F9E422581050B008FDA89 /* ActivityListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListHeaderView.swift; sourceTree = "<group>"; };
+		961840D82580EE0000069FDA /* ActivityListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListDataSource.swift; sourceTree = "<group>"; };
+		961840E32580F6A200069FDA /* ActivityListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListItem.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -510,6 +516,7 @@
 			isa = PBXGroup;
 			children = (
 				960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */,
+				961840E32580F6A200069FDA /* ActivityListItem.swift */,
 			);
 			path = CellConfigurable;
 			sourceTree = "<group>";
@@ -577,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				96F105AB25803D890005F66C /* ActivityDataSource.swift */,
+				961840D82580EE0000069FDA /* ActivityListDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -592,6 +600,7 @@
 				963865F7257E858D003EEE4B /* ActivityFooterView.swift */,
 				96C468A6257F426F0062AAA4 /* DateFilterSheetView.swift */,
 				964A0C5B25802D04008D7FD7 /* ActivityCollectionView.swift */,
+				960F9E422581050B008FDA89 /* ActivityListHeaderView.swift */,
 			);
 			path = ActivityScene;
 			sourceTree = "<group>";
@@ -809,6 +818,7 @@
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
+				961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */,
 				96B90635257CBDE00081E8BF /* ZRunningSplit+RunningSplit.swift in Sources */,
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
@@ -816,6 +826,7 @@
 				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
 				96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
+				961840D92580EE0000069FDA /* ActivityListDataSource.swift in Sources */,
 				71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */,
 				964A0C5C25802D04008D7FD7 /* ActivityCollectionView.swift in Sources */,
 				4CF009C6257CADC300EC928A /* Location.swift in Sources */,
@@ -856,6 +867,7 @@
 				4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
 				960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */,
+				960F9E432581050B008FDA89 /* ActivityListHeaderView.swift in Sources */,
 				71FBAAEA257D23F0005C8D30 /* Factory+ActivityScene.swift in Sources */,
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
@@ -894,7 +906,6 @@
 				96B9064A257CE22A0081E8BF /* ZActivityDetail+ActivityDetail.swift in Sources */,
 				4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */,
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
-				4CB8FA3325729F56000B90ED /* GoalTypeViewModelTest.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityProvider.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
@@ -908,6 +919,7 @@
 				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
 				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
+				960F9E3A2580FE51008FDA89 /* GoalTypeViewModelTest.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
 				964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */,
 				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
@@ -995,6 +1007,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1049,6 +1062,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

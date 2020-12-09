@@ -5,11 +5,14 @@
 //  Created by 김신우 on 2020/12/09.
 //
 
+import Combine
 import UIKit
 
 class ActivityListViewController: UIViewController {
-    private var collectionView = ActivityCollectionView()
+    private lazy var collectionView = makeCollectionView()
 
+    private var dataSource = ActivityListDataSource()
+    private var cancellables = Set<AnyCancellable>()
     private var viewModel: ActivityListViewModelTypes?
 
     init(with viewModel: ActivityListViewModelTypes) {
@@ -23,13 +26,22 @@ class ActivityListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         configureNavigationItems()
-        view.backgroundColor = .black
+        configureLayout()
         bindViewModel()
     }
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
+
+        viewModel.outputs.activityListItemSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.dataSource.loadData($0)
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -42,12 +54,34 @@ extension ActivityListViewController {
     }
 }
 
-// MARK: - Config
+// MARK: - UICollectionViewDelegate Implementation
+
+extension ActivityListViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout _: UICollectionViewLayout,
+//        referenceSizeForHeaderInSection section: Int
+//    ) -> CGSize {
+//        let indexPath = IndexPath(row: 0, section: section)
+//        let headerView = collectionView.supplementaryView(
+//            forElementKind: UICollectionView.elementKindSectionHeader,
+//            at: indexPath
+//        )
+//        let size = CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height)
+//        let newSize = headerView?.systemLayoutSizeFitting(
+//            size,
+//            withHorizontalFittingPriority: .required,
+//            verticalFittingPriority: .fittingSizeLevel
+//        )
+//
+//        return newSize ?? .zero
+//    }
+}
+
+// MARK: - Configure
 
 extension ActivityListViewController {
     private func configureNavigationItems() {
-        guard let viewModel = viewModel else { return }
-
         navigationItem.hidesBackButton = true
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = "모든 활동"
@@ -60,5 +94,38 @@ extension ActivityListViewController {
         )
         backItem.image = UIImage.SFSymbol(name: "chevron.left", color: .label)
         navigationItem.setLeftBarButton(backItem, animated: true)
+    }
+
+    private func makeCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - 40
+        layout.headerReferenceSize = CGSize(width: width, height: 100)
+        layout.estimatedItemSize = CGSize(width: width, height: 100)
+        layout.sectionHeadersPinToVisibleBounds = true
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .systemGroupedBackground
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
+        collectionView.register(
+            ActivityCellView.self,
+            forCellWithReuseIdentifier: "\(ActivityCellView.self)"
+        )
+        collectionView.register(
+            ActivityListHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(ActivityListHeaderView.self)"
+        )
+        return collectionView
+    }
+
+    func configureLayout() {
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
     }
 }
