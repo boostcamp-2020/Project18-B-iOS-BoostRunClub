@@ -22,6 +22,6 @@ extension DependencyFactory: RunningPageContainerFactory {
     }
 
     func makeRunningPageVM() -> RunningPageViewModelTypes {
-        RunningPageViewModel()
+        RunningPageViewModel(runningDataProvider: runningDataProvider)
     }
 }

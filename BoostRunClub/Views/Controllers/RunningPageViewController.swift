@@ -84,25 +84,23 @@ final class RunningPageViewController: UIPageViewController {
         super.init(coder: coder)
     }
 
+    func bindViewModel() {
+        viewModel?.outputs.runningTimeSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
+            .store(in: &cancellables)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configurePageViewController()
         configureSubViews()
+        bindViewModel()
         buttonScale = 0
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(view.bounds.height)
-        print(pageControl.center.y)
-        print(buttonHeight)
+        view.layoutIfNeeded()
         distance = view.bounds.height - pageControl.center.y - buttonHeight / 2 - 30
-        print(distance)
     }
 
     deinit {
@@ -132,7 +130,6 @@ extension RunningPageViewController {
 
         view.subviews.forEach { view in
             if let scrollView = view as? UIScrollView {
-//                self.scrollView = scrollView
                 scrollView.delegate = self
             }
         }

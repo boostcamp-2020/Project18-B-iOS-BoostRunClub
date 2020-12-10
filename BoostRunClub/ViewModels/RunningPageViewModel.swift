@@ -21,10 +21,20 @@ protocol RunningPageViewModelInputs {
 protocol RunningPageViewModelOutputs {
     //	var isDraggingSubject: CurrentValueSubject<Bool, Never> { get }
     var buttonScaleSubject: CurrentValueSubject<Double, Never> { get }
+    var runningTimeSubject: AnyPublisher<String, Never> { get }
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
+    private let runningDataProvider: RunningDataServiceable
+
     var buttonScaleSubject = CurrentValueSubject<Double, Never>(0)
+    var runningTimeSubject: AnyPublisher<String, Never> {
+        runningDataProvider.runningTime.map { $0.formattedString }.eraseToAnyPublisher()
+    }
+
+    init(runningDataProvider: RunningDataServiceable) {
+        self.runningDataProvider = runningDataProvider
+    }
 
     func scrollViewDidEndDragging() {}
 
