@@ -37,6 +37,7 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
     // inputs
     func viewWillAppear() {
         userTrackingModeOnWithAnimatedSignal.send(false)
+        if runningDataProvider.locations.isEmpty { return }
         routesSubject.send(runningDataProvider.locations[lastRouteIdx...].map { $0.coordinate })
         lastRouteIdx = runningDataProvider.locations.count - 1
     }
