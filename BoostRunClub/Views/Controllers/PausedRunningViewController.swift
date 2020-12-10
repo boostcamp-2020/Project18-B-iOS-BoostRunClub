@@ -152,7 +152,7 @@ extension PausedRunningViewController {
 
 extension PausedRunningViewController: MKMapViewDelegate {
     func showRoutesOnMap(routes: [CLLocationCoordinate2D], slices: [RunningSlice]) {
-		if routes.isEmpty { return }
+        if routes.isEmpty { return }
         slices.forEach { slice in
             if routes.isEmpty { return }
             let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex
