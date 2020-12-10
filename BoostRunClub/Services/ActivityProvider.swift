@@ -5,6 +5,7 @@
 //  Created by 김신우 on 2020/12/06.
 //
 
+import Combine
 import CoreData
 import Foundation
 
@@ -14,6 +15,8 @@ protocol ActivityWritable {
 }
 
 protocol ActivityReadable {
+    var activityChangeSignal: PassthroughSubject<Void, Never> { get }
+
     func fetchActivities() -> [Activity]
     func fetchActivityDetail(activityId: UUID) -> ActivityDetail?
     func fetchSplits(activityId: UUID) -> [RunningSplit]
@@ -38,6 +41,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
 
         do {
             try coreDataService.context.save()
+            activityChangeSignal.send()
         } catch {
             print(error.localizedDescription)
         }
@@ -90,6 +94,8 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
         }
         return []
     }
+
+    var activityChangeSignal = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityProvider: ActivityManageable {
