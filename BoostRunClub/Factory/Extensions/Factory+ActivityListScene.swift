@@ -14,10 +14,10 @@ protocol ActivityListSceneFactory {
 
 extension DependencyFactory: ActivityListSceneFactory {
     func makeActivityListVC(with viewModel: ActivityListViewModelTypes) -> UIViewController {
-        return ActivityListViewController(with: viewModel)
+        ActivityListViewController(with: viewModel)
     }
 
     func makeActivityListVM() -> ActivityListViewModelTypes {
-        return ActivityListViewModel(activityProvider: activityProvider)
+        ActivityListViewModel(activityProvider: activityProvider)
     }
 }

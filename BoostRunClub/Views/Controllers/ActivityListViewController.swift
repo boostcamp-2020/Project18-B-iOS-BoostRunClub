@@ -86,6 +86,7 @@ extension ActivityListViewController {
         layout.headerReferenceSize = CGSize(width: width, height: 100)
         layout.estimatedItemSize = CGSize(width: width, height: 100)
         layout.sectionHeadersPinToVisibleBounds = true
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemGroupedBackground
         collectionView.dataSource = dataSource
