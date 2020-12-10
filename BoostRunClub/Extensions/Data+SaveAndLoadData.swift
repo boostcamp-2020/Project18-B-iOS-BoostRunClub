@@ -1,5 +1,5 @@
 //
-//  Data+loadImageFromDocumentsDirectory.swift
+//  Data+SaveAndLoadData.swift
 //  BoostRunClub
 //
 //  Created by Imho Jang on 2020/12/10.

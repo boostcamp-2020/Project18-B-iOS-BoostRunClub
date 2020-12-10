@@ -26,7 +26,6 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
 
     func showProfileViewController() {
         let profileVM = factory.makeProfileVM()
-
         profileVM.outputs.showEditProfileSceneSignal
             .receive(on: RunLoop.main)
             .compactMap { [weak self] in self?.showEditProfileScene() }
@@ -48,7 +47,6 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
         return editProfileVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .map { [weak editProfileVC] (profile: Profile) -> Profile in
-                // TODO: save profile to user defaults
                 editProfileVC?.dismiss(animated: true, completion: nil)
                 return profile
             }

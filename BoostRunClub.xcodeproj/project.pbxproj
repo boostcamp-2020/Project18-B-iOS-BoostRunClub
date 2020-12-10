@@ -75,6 +75,8 @@
 		71FBAB66257FCD84005C8D30 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */; };
 		71FBAB6C257FD091005C8D30 /* Factory+EditProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBAB6B257FD091005C8D30 /* Factory+EditProfileScene.swift */; };
 		71FBAB77257FDED8005C8D30 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBAB76257FDED8005C8D30 /* Profile.swift */; };
+		71FBAB8D2581EC2B005C8D30 /* URL+Documents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBAB8C2581EC2B005C8D30 /* URL+Documents.swift */; };
+		71FBAB962581FB3C005C8D30 /* Data+SaveAndLoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBAB952581FB3C005C8D30 /* Data+SaveAndLoadData.swift */; };
 		9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB512566AA4400183CB9 /* AppDelegate.swift */; };
 		9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9600DB532566AA4400183CB9 /* SceneDelegate.swift */; };
 		9600DB5B2566AA4700183CB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9600DB5A2566AA4700183CB9 /* Assets.xcassets */; };
@@ -210,6 +212,8 @@
 		71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		71FBAB6B257FD091005C8D30 /* Factory+EditProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+EditProfileScene.swift"; sourceTree = "<group>"; };
 		71FBAB76257FDED8005C8D30 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		71FBAB8C2581EC2B005C8D30 /* URL+Documents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Documents.swift"; sourceTree = "<group>"; };
+		71FBAB952581FB3C005C8D30 /* Data+SaveAndLoadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+SaveAndLoadData.swift"; sourceTree = "<group>"; };
 		8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoostRunClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB4E2566AA4400183CB9 /* BoostRunClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoostRunClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9600DB512566AA4400183CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -527,6 +531,8 @@
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
 				4C9B985225788547000A6447 /* UIView+otificationFeedback.swift */,
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
+				71FBAB8C2581EC2B005C8D30 /* URL+Documents.swift */,
+				71FBAB952581FB3C005C8D30 /* Data+SaveAndLoadData.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -741,6 +747,7 @@
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				71FBAB02257D24BB005C8D30 /* Factory+GoalTypeScene.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
+				71FBAB962581FB3C005C8D30 /* Data+SaveAndLoadData.swift in Sources */,
 				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
 				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
 				96ED403F257C7947007DB3DF /* ActivityProvider.swift in Sources */,
@@ -776,6 +783,7 @@
 				967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */,
 				71FBAAF6257D246A005C8D30 /* Factory+PausedRunningScene.swift in Sources */,
 				4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */,
+				71FBAB8D2581EC2B005C8D30 /* URL+Documents.swift in Sources */,
 				714C03982574F794006B81E3 /* RunningMapCoordinator.swift in Sources */,
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71FBAB06257D24E3005C8D30 /* Factory+RunningMapScene.swift in Sources */,

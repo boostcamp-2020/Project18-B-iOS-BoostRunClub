@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import UIKit
 
 protocol ProfileViewModelTypes: AnyObject {
     var inputs: ProfileViewModelInputs { get }
@@ -14,24 +15,46 @@ protocol ProfileViewModelTypes: AnyObject {
 }
 
 protocol ProfileViewModelInputs {
+    func viewDidLoad()
     func didTapEditProfileButton()
     func didEditProfile(_ profile: Profile)
 }
 
 protocol ProfileViewModelOutputs {
     var showEditProfileSceneSignal: PassthroughSubject<Void, Never> { get }
+    var profileSignal: PassthroughSubject<Profile, Never> { get }
 }
 
-class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
+final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
+    private var defaults: UserDefaults
+    private lazy var profile = Profile(image: Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png"),
+                                       lastName: defaults.string(forKey: "LastName") ?? "",
+                                       firstName: defaults.string(forKey: "FirstName") ?? "",
+                                       hometown: defaults.string(forKey: "Hometown") ?? "",
+                                       bio: defaults.string(forKey: "Bio") ?? "")
+
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+    }
+
     // inputs
+
+    func viewDidLoad() {
+        profileSignal.send(profile)
+    }
+
     func didTapEditProfileButton() {
         showEditProfileSceneSignal.send()
     }
 
-    func didEditProfile(_: Profile) {}
+    func didEditProfile(_ profile: Profile) {
+        profileSignal.send(profile)
+    }
 
     // outputs
+
     var showEditProfileSceneSignal = PassthroughSubject<Void, Never>()
+    var profileSignal = PassthroughSubject<Profile, Never>()
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")

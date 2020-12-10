@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 protocol EditProfileViewModelTypes {
     var inputs: EditProfileViewModelInputs { get }
@@ -13,8 +14,10 @@ protocol EditProfileViewModelTypes {
 }
 
 protocol EditProfileViewModelInputs {
+    // view did load view controller에서 바인딩하기
+    func viewDidLoad()
     func didTapApplyButton()
-    func didEditProfilePicture(to image: String)
+    func didEditProfilePicture(to imageData: Data)
     func didEditLastName(to text: String)
     func didEditFirstName(to text: String)
     func didEditHometown(to text: String)
@@ -23,50 +26,89 @@ protocol EditProfileViewModelInputs {
 
 protocol EditProfileViewModelOutputs {
     var closeSignal: PassthroughSubject<Profile, Never> { get }
+    var imageDataObservable: CurrentValueSubject<Data?, Never> { get }
+    var lastNameTextObservable: CurrentValueSubject<String, Never> { get }
+    var firstNameTextObservable: CurrentValueSubject<String, Never> { get }
+    var hometownTextObservable: CurrentValueSubject<String, Never> { get }
+    var bioTextObservable: CurrentValueSubject<String, Never> { get }
 }
 
 final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewModelOutputs {
+    private var defaults: UserDefaults
+
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+    }
+
     // inputs
-    var lastName: String = ""
-    var firstName: String = ""
-    var hometown: String = ""
-    var bio: String = ""
+
+    func viewDidLoad() {
+        imageDataObservable.value = Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png")
+        lastNameTextObservable.value = defaults.string(forKey: "LastName") ?? ""
+        firstNameTextObservable.value = defaults.string(forKey: "FirstName") ?? ""
+        hometownTextObservable.value = defaults.string(forKey: "Hometown") ?? ""
+        bioTextObservable.value = defaults.string(forKey: "Bio") ?? ""
+    }
 
     func didTapApplyButton() {
-        print("did tap apply")
-        // create profile struct and send it inside close signal
-        let profile = Profile(image: nil,
-                              lastName: lastName,
-                              firstName: firstName,
-                              hometown: hometown,
-                              bio: bio)
-        print(profile)
+        let profile = Profile(image: imageDataObservable.value,
+                              lastName: lastNameTextObservable.value,
+                              firstName: firstNameTextObservable.value,
+                              hometown: hometownTextObservable.value,
+                              bio: bioTextObservable.value)
+
+        if let imageData = profile.image {
+            Data.saveImageDataToDocumentsDirectory(fileName: "profile.png",
+                                                   imageData: imageData)
+        }
+        saveProfileTextsToUserDefaults(profile: profile)
         closeSignal.send(profile)
     }
 
-    func didEditProfilePicture(to _: String) {}
+    func didEditProfilePicture(to imageData: Data) {
+        imageDataObservable.value = imageData
+    }
 
     func didEditLastName(to text: String) {
-        lastName = text
+        lastNameTextObservable.value = text
     }
 
     func didEditFirstName(to text: String) {
-        firstName = text
+        firstNameTextObservable.value = text
     }
 
     func didEditHometown(to text: String) {
-        hometown = text
+        hometownTextObservable.value = text
     }
 
     func didEditBio(to text: String) {
-        bio = text
+        bioTextObservable.value = text
     }
 
     // ouputs
+
     var closeSignal = PassthroughSubject<Profile, Never>()
+    lazy var imageDataObservable = CurrentValueSubject<Data?, Never>(nil)
+    lazy var lastNameTextObservable = CurrentValueSubject<String, Never>("")
+    lazy var firstNameTextObservable = CurrentValueSubject<String, Never>("")
+    lazy var hometownTextObservable = CurrentValueSubject<String, Never>("")
+    lazy var bioTextObservable = CurrentValueSubject<String, Never>("")
+
+    deinit {
+        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
 }
 
 extension EditProfileViewModel: EditProfileViewModelTypes {
     var inputs: EditProfileViewModelInputs { self }
     var outputs: EditProfileViewModelOutputs { self }
+}
+
+extension EditProfileViewModel {
+    func saveProfileTextsToUserDefaults(profile: Profile) {
+        defaults.set(profile.firstName, forKey: "FirstName")
+        defaults.set(profile.lastName, forKey: "LastName")
+        defaults.set(profile.hometown, forKey: "Hometown")
+        defaults.set(profile.bio, forKey: "Bio")
+    }
 }

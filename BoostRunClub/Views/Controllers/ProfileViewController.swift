@@ -5,6 +5,7 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import UIKit
 
 final class ProfileViewController: UIViewController {
@@ -15,6 +16,7 @@ final class ProfileViewController: UIViewController {
     private lazy var editProfileButton: UIButton = makeEditProfileButton()
 
     private var viewModel: ProfileViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
 
     init(with viewModel: ProfileViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
@@ -23,6 +25,27 @@ final class ProfileViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    func bindViewModel() {
+        guard let viewModel = viewModel else { return }
+
+        viewModel.outputs.profileSignal
+            .receive(on: RunLoop.main)
+            .sink { profile in
+                if let imageData = profile.image {
+                    self.imageView.image = UIImage(data: imageData)
+                } else {
+                    self.imageView.image = UIImage.SFSymbol(name: "person.circle", color: .gray)
+                }
+                self.nameLabel.text = "\(profile.firstName) \(profile.lastName)"
+                self.hometownLabel.text = profile.hometown
+                self.bioLabel.text = profile.bio
+            }.store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 
@@ -33,6 +56,8 @@ extension ProfileViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureLayout()
+        bindViewModel()
+        viewModel?.inputs.viewDidLoad()
     }
 }
 
@@ -45,6 +70,61 @@ extension ProfileViewController {
     }
 }
 
+// MARK: - Make Views
+
+extension ProfileViewController {
+    func makeImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.frame.size = CGSize(width: 80, height: 80)
+        imageView.layer.cornerRadius = imageView.frame.height / 2
+        imageView.image = UIImage.SFSymbol(name: "person.circle", color: .gray)
+        imageView.clipsToBounds = true
+        return imageView
+    }
+
+    func makeNameLabel() -> UILabel {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .label
+        label.font = UIFont(name: "DIN Condensed Bold", size: 20)
+        return label
+    }
+
+    func makeHometownLabel() -> UILabel {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }
+
+    func makeBioLabel() -> UILabel {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }
+
+    func makeEditProfileButton() -> UIButton {
+        let button = UIButton()
+        button.layer.borderWidth = CGFloat(1)
+        button.layer.borderColor = UIColor.systemGray3.cgColor
+        button.setTitle("EDIT PROFILE", for: .normal)
+        button.setTitleColor(.systemGray, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 8,
+                                                left: 70,
+                                                bottom: 5,
+                                                right: 70)
+        button.titleLabel?.font = UIFont(name: "DIN Condensed Bold", size: 14)
+        button.addTarget(self,
+                         action: #selector(didTapEditProfileButton),
+                         for: .touchUpInside)
+        return button
+    }
+}
+
 // MARK: - Configure
 
 extension ProfileViewController {
@@ -52,8 +132,8 @@ extension ProfileViewController {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 100),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.widthAnchor.constraint(equalToConstant: 80),
+            imageView.heightAnchor.constraint(equalToConstant: 80),
             imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
         ])
@@ -61,6 +141,7 @@ extension ProfileViewController {
         view.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            nameLabel.heightAnchor.constraint(equalToConstant: 25),
             nameLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 25),
         ])
@@ -85,47 +166,5 @@ extension ProfileViewController {
             editProfileButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             editProfileButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
         ])
-    }
-
-    func makeImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.image = UIImage.SFSymbol(name: "person.crop.square", color: .label)
-        return imageView
-    }
-
-    func makeNameLabel() -> UILabel {
-        let label = UILabel()
-        label.text = "IMHO JANG"
-        label.textColor = .label
-        label.font = UIFont(name: "DIN Condensed Bold", size: 20)
-        return label
-    }
-
-    func makeHometownLabel() -> UILabel {
-        let label = UILabel()
-        label.text = "Seoul"
-        label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 12)
-        return label
-    }
-
-    func makeBioLabel() -> UILabel {
-        let label = UILabel()
-        label.text = "Run for your life!"
-        label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 12)
-        return label
-    }
-
-    func makeEditProfileButton() -> UIButton {
-        let button = UIButton()
-        button.layer.borderWidth = CGFloat(1)
-        button.layer.borderColor = UIColor.systemGray3.cgColor
-        button.setTitle("EDIT PROFILE", for: .normal)
-        button.setTitleColor(.systemGray, for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 70, bottom: 5, right: 70)
-        button.titleLabel?.font = UIFont(name: "DIN Condensed Bold", size: 14)
-        button.addTarget(self, action: #selector(didTapEditProfileButton), for: .touchUpInside)
-        return button
     }
 }
