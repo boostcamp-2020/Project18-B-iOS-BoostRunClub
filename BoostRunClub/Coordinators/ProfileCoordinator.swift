@@ -48,7 +48,8 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
         return editProfileVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .map { [weak editProfileVC] (profile: Profile) -> Profile in
-                editProfileVC?.navigationController?.popViewController(animated: false)
+                // TODO: save profile to user defaults
+                editProfileVC?.dismiss(animated: true, completion: nil)
                 return profile
             }
             .eraseToAnyPublisher()
