@@ -34,7 +34,7 @@ protocol RunningDataServiceable {
 
 class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
-
+    var mapSnapShotService: MapSnapShotServiceable
     var activityWriter: ActivityWritable
 
     var cancellables = Set<AnyCancellable>()
@@ -70,13 +70,15 @@ class RunningDataService: RunningDataServiceable {
         eventTimer: EventTimerProtocol = EventTimer(),
         locationProvider: LocationProvidable,
         motionProvider: MotionProvider,
-        activityWriter: ActivityWritable
+        activityWriter: ActivityWritable,
+        mapSnapShotService: MapSnapShotServiceable
     ) {
         motionProvider.startUpdating()
 
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         self.activityWriter = activityWriter
+        self.mapSnapShotService = mapSnapShotService
 
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
@@ -133,7 +135,7 @@ class RunningDataService: RunningDataServiceable {
         eventTimer.stop()
         endTime = Date()
 
-        MapSnapShotService().takeSnapShot(from: locations)
+        mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
             .receive(on: RunLoop.main)
             .replaceError(with: nil)
             .first()

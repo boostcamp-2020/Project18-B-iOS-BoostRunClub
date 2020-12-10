@@ -100,6 +100,11 @@
 		963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */; };
 		963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D5F1B256FC48000DD11AB /* String+Regex.swift */; };
 		963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA7DF52570177C00090999 /* CaseIterable+.swift */; };
+		96461B362582BA6000E665B0 /* RouteSnapShotProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22A425823284000D67C4 /* RouteSnapShotProcessor.swift */; };
+		96461B372582BA6000E665B0 /* RouteDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22AA258233BC000D67C4 /* RouteDrawer.swift */; };
+		96461B382582BA6000E665B0 /* MapSnapShotSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */; };
+		96461B392582BA6000E665B0 /* MapSnapShotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB229A25822FE2000D67C4 /* MapSnapShotService.swift */; };
+		96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */; };
 		964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468B4257F58600062AAA4 /* Date+DateRange.swift */; };
 		964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
 		964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */; };
@@ -934,22 +939,27 @@
 				96B9064A257CE22A0081E8BF /* ZActivityDetail+ActivityDetail.swift in Sources */,
 				4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */,
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
+				96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityProvider.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
 				964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */,
+				96461B382582BA6000E665B0 /* MapSnapShotSubscription.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
+				96461B362582BA6000E665B0 /* RouteSnapShotProcessor.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
 				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
 				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
 				960F9E3A2580FE51008FDA89 /* GoalTypeViewModelTest.swift in Sources */,
+				96461B372582BA6000E665B0 /* RouteDrawer.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
 				964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */,
+				96461B392582BA6000E665B0 /* MapSnapShotService.swift in Sources */,
 				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
 			);

@@ -10,17 +10,18 @@ import Foundation
 import MapKit
 
 protocol MapSnapShotServiceable {
-    func takeSnapShot(from locations: [CLLocation], size: CGSize) -> AnyPublisher<Data?, Error>
+    func takeSnapShot(from locations: [CLLocation], dimension: Double) -> AnyPublisher<Data?, Error>
 }
 
 class MapSnapShotService: MapSnapShotServiceable {
     func takeSnapShot(
         from locations: [CLLocation],
-        size: CGSize = CGSize(width: 100, height: 100)
+        dimension: Double
     ) -> AnyPublisher<Data?, Error> {
         let region = MKCoordinateRegion.make(from: locations)
         let drawable = RouteDrawer(style: .init(lineWidth: 3, lineColors: [.label]))
         let processor = RouteSnapShotProcessor(locations: locations, drawable: drawable)
+        let size = CGSize(width: dimension, height: dimension)
         return MKMapSnapshotter.Publisher(region: region, size: size, processor: processor)
             .eraseToAnyPublisher()
     }
