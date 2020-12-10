@@ -26,20 +26,26 @@ extension RunningPageViewController: UIScrollViewDelegate {
 }
 
 extension RunningPageViewController {
-	func transformBackButton() {
-		backButton.transform = CGAffineTransform(scaleX: buttonScale, y: buttonScale)
-//		backButton.transform = CGAffineTransform(translationX: buttonScale, y: buttonScale)
-	}
-	
-	func goBackToMainPage() {
-		let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
+    func transformBackButton() {
+        backButton.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: buttonScale * distance)
+            .scaledBy(x: buttonScale, y: buttonScale)
+        pageControl.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: buttonScale * distance)
 
-		setViewControllers([pages[1]], direction: direction, animated: true) { _ in
-			self.currPageIdx = 1
-		}
-	}
+        UIView.animate(withDuration: 0) {
+            self.pageControl.alpha = 1 - self.buttonScale * 3
+        }
+    }
+
+    func goBackToMainPage() {
+        let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
+
+        setViewControllers([pages[1]], direction: direction, animated: true) { _ in
+            self.currPageIdx = 1
+        }
+    }
 }
-
 
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
@@ -53,19 +59,20 @@ final class RunningPageViewController: UIPageViewController {
     var viewModel: RunningPageViewModelTypes?
     var cancellables = Set<AnyCancellable>()
 
+    var distance: CGFloat = 0
+    let buttonHeight: CGFloat = 40
     var currPageIdx = 1
     var isDragging = false
     var buttonScale: CGFloat = 0 {
         didSet {
-			if buttonScale > 1 {
-				buttonScale = 1
-				return
-			}
-			if isDragging { return }
-			self.transformBackButton()
+            if buttonScale > 1 {
+                buttonScale = 1
+                return
+            }
+            if isDragging { return }
+            transformBackButton()
         }
     }
-
 
     init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -82,7 +89,20 @@ final class RunningPageViewController: UIPageViewController {
 
         configurePageViewController()
         configureSubViews()
-		buttonScale = 0
+        buttonScale = 0
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print(view.bounds.height)
+        print(pageControl.center.y)
+        print(buttonHeight)
+        distance = view.bounds.height - pageControl.center.y - buttonHeight / 2 - 30
+        print(distance)
     }
 
     deinit {
@@ -92,12 +112,12 @@ final class RunningPageViewController: UIPageViewController {
 
 extension RunningPageViewController {
     @objc func didTabBackButton() {
-		goBackToMainPage()
-	}
+        goBackToMainPage()
+    }
 
     @objc func panGestureAction() {
-		transformBackButton()
-	}
+        transformBackButton()
+    }
 }
 
 extension RunningPageViewController {
@@ -122,7 +142,7 @@ extension RunningPageViewController {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
 
@@ -132,7 +152,7 @@ extension RunningPageViewController {
             backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
             backButton.widthAnchor.constraint(equalToConstant: 100),
-            backButton.heightAnchor.constraint(equalToConstant: 100),
+            backButton.heightAnchor.constraint(equalToConstant: buttonHeight),
         ])
     }
 
@@ -142,7 +162,7 @@ extension RunningPageViewController {
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.numberOfPages = Pages.allCases.count
         pageControl.currentPage = 1
-		pageControl.isUserInteractionEnabled = false
+        pageControl.isUserInteractionEnabled = false
         return pageControl
     }
 
@@ -164,7 +184,7 @@ extension RunningPageViewController: UIPageViewControllerDelegate {
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
                 pageControl.currentPage = viewControllerIndex
-				currPageIdx = viewControllerIndex
+                currPageIdx = viewControllerIndex
             }
         }
     }
