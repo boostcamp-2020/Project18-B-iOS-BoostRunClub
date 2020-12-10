@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditProfileViewController: UIViewController {
+final class EditProfileViewController: UIViewController, UINavigationControllerDelegate {
     private lazy var navBar: UINavigationBar = makeNavigationBar()
     private lazy var navItem: UINavigationItem = makeNavigationItem()
     private lazy var imageView: UIImageView = makeImageView()
@@ -17,9 +17,12 @@ final class EditProfileViewController: UIViewController {
     private lazy var bioLabel: UILabel = makeBioLabel()
     private lazy var firstNameTextField: UITextField = makeTextField(placeHolder: "이름")
     private lazy var lastNameTextField: UITextField = makeTextField(placeHolder: "성")
-    private lazy var hometownTextField: UITextField = makeTextField(placeHolder: "시/도, 주")
+    private lazy var hometownTextField: UITextField = makeTextField(placeHolder: "시/도, 주",
+                                                                    borderStyle: .roundedRect)
     private lazy var bioTextView: UITextView = makeBioTextView()
     private lazy var nameTextFieldView: UIView = makeNameTextField()
+    private lazy var imagePicker = makeImagePicker()
+    private lazy var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImageView))
 
     private var viewModel: EditProfileViewModelTypes?
 
@@ -39,7 +42,6 @@ extension EditProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "customBackground")
-        bioTextView.delegate = self
         configureLayout()
     }
 }
@@ -55,6 +57,13 @@ extension EditProfileViewController {
     @objc
     func didTapApplyButton() {
         viewModel?.inputs.didTapApplyButton()
+    }
+
+    @objc
+    func didTapImageView(tapGestureRecognizer _: UITapGestureRecognizer) {
+//        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        print("did tap image view")
+        present(imagePicker, animated: true, completion: nil)
     }
 }
 
@@ -188,6 +197,8 @@ extension EditProfileViewController {
     func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage.SFSymbol(name: "person.crop.square", color: .label)
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
         return imageView
     }
 
@@ -204,12 +215,6 @@ extension EditProfileViewController {
     }
 
     func makeNameTextField() -> UIView {
-        let lastNameTextField = makeTextField(placeHolder: "성", borderStyle: .none)
-        lastNameTextField.layer.borderWidth = 1
-        lastNameTextField.layer.borderColor = UIColor.systemGray5.cgColor
-
-        let firstNameTextField = makeTextField(placeHolder: "이름", borderStyle: .none)
-
         let stackView = UIStackView(arrangedSubviews: [lastNameTextField, firstNameTextField])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -218,16 +223,20 @@ extension EditProfileViewController {
         stackView.layer.borderColor = UIColor.systemGray5.cgColor
         stackView.clipsToBounds = true
 
+        lastNameTextField.layer.borderWidth = 1
+        lastNameTextField.layer.borderColor = UIColor.systemGray5.cgColor
+
         return stackView
     }
 
     func makeTextField(
         placeHolder: String,
-        borderStyle: UITextField.BorderStyle = .roundedRect
+        borderStyle: UITextField.BorderStyle = .none
     )
         -> UITextField
     {
         let textField = CustomPaddedTextField()
+        textField.delegate = self
         textField.placeholder = placeHolder
         textField.borderStyle = borderStyle
         return textField
@@ -247,14 +256,52 @@ extension EditProfileViewController {
 
     func makeBioTextView() -> UITextView {
         let bioTextView = UITextView()
+        bioTextView.delegate = self
         bioTextView.text = "150자"
         bioTextView.textColor = UIColor.lightGray
         bioTextView.layer.borderWidth = 1
         bioTextView.layer.borderColor = UIColor.systemGray5.cgColor
         bioTextView.layer.cornerRadius = 5
-        bioTextView.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 0, right: 15)
         bioTextView.font = UIFont.systemFont(ofSize: 14)
+        bioTextView.textContainerInset = UIEdgeInsets(top: 15,
+                                                      left: 10,
+                                                      bottom: 0,
+                                                      right: 15)
         return bioTextView
+    }
+
+    func makeImagePicker() -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .savedPhotosAlbum
+        imagePicker.allowsEditing = false
+        return imagePicker
+    }
+}
+
+extension EditProfileViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(picker _: UIImagePickerController!,
+                               didFinishPickingImage image: UIImage!,
+                               editingInfo _: NSDictionary!)
+    {
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension EditProfileViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print(textField)
+        switch textField {
+        case lastNameTextField:
+            viewModel?.inputs.didEditLastName(to: textField.text ?? "")
+        case firstNameTextField:
+            viewModel?.inputs.didEditFirstName(to: textField.text ?? "")
+        case hometownTextField:
+            viewModel?.inputs.didEditHometown(to: textField.text ?? "")
+        default:
+            return
+        }
     }
 }
 
@@ -272,6 +319,10 @@ extension EditProfileViewController: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
     }
+
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel?.inputs.didEditBio(to: textView.text ?? "")
+    }
 }
 
 class EditProfileSceneLabel: UILabel {
@@ -287,7 +338,10 @@ class EditProfileSceneLabel: UILabel {
 }
 
 class CustomPaddedTextField: UITextField {
-    let padding = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+    let padding = UIEdgeInsets(top: 0,
+                               left: 15,
+                               bottom: 0,
+                               right: 15)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
