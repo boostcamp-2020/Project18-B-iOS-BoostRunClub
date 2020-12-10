@@ -16,8 +16,8 @@ enum ActivityFilterType: Int {
         if self == .all {
             return [
                 DateRange(
-                    start: activities.first!.createdAt,
-                    end: activities.last?.createdAt ?? activities.first!.createdAt
+                    start: activities.last?.createdAt ?? activities.first!.createdAt,
+                    end: activities.first!.createdAt
                 ),
             ]
         }
