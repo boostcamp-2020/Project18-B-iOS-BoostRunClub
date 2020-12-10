@@ -104,7 +104,6 @@ extension ActivityDateFilterViewModel {
         currentRange: DateRange
     ) {
         var pickerList: [[String]]
-
         switch filterType {
         case .all:
             dateRanges = []
@@ -120,16 +119,6 @@ extension ActivityDateFilterViewModel {
                     selectedRow[0] = idx
                 }
             }
-//        case .year:
-//            dateRanges = [[]]
-//            pickerList = [[]]
-//            for (idx, range) in ranges.enumerated() {
-//                dateRanges[0].append(range)
-//                pickerList[0].append(filterType.rangeDescription(at: range))
-//                if range == currentRange {
-//                    selectedRow[0] = idx
-//                }
-//            }
         case .month:
             dateRanges = []
             pickerList = [[], ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]]
