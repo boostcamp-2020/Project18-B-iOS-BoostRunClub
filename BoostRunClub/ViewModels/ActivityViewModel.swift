@@ -48,6 +48,8 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-02 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-03 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")!),

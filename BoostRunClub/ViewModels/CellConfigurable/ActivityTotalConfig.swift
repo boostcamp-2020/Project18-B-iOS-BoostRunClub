@@ -89,7 +89,7 @@ struct ActivityTotalConfig {
         }
         self.filterType = filterType
         selectedRange = filterRange
-        period = filterType.rangeDescription(from: filterRange)
+        period = filterType.rangeDescription(at: filterRange)
         avgPace = sumAvgPace / activities.count
         totalDistance = sumDistance
         totalRunningTime = sumDuration
