@@ -137,6 +137,9 @@
 		96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C468C4257F6D900062AAA4 /* Date+String.swift */; };
 		96CB229B25822FE2000D67C4 /* MapSnapShotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB229A25822FE2000D67C4 /* MapSnapShotService.swift */; };
 		96CB22A12582301C000D67C4 /* MKCoordinateRegion+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */; };
+		96CB22A525823284000D67C4 /* RouteSnapShotProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22A425823284000D67C4 /* RouteSnapShotProcessor.swift */; };
+		96CB22AB258233BC000D67C4 /* RouteDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22AA258233BC000D67C4 /* RouteDrawer.swift */; };
+		96CB22B525823B02000D67C4 /* MapSnapShotSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */; };
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */; };
@@ -279,6 +282,9 @@
 		96C468C4257F6D900062AAA4 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		96CB229A25822FE2000D67C4 /* MapSnapShotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapShotService.swift; sourceTree = "<group>"; };
 		96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Make.swift"; sourceTree = "<group>"; };
+		96CB22A425823284000D67C4 /* RouteSnapShotProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSnapShotProcessor.swift; sourceTree = "<group>"; };
+		96CB22AA258233BC000D67C4 /* RouteDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDrawer.swift; sourceTree = "<group>"; };
+		96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapShotSubscription.swift; sourceTree = "<group>"; };
 		96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewController.swift; sourceTree = "<group>"; };
 		96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewModel.swift; sourceTree = "<group>"; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
@@ -579,6 +585,9 @@
 			isa = PBXGroup;
 			children = (
 				96CB229A25822FE2000D67C4 /* MapSnapShotService.swift */,
+				96CB22A425823284000D67C4 /* RouteSnapShotProcessor.swift */,
+				96CB22AA258233BC000D67C4 /* RouteDrawer.swift */,
+				96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */,
 			);
 			path = MapSnapShotService;
 			sourceTree = "<group>";
@@ -810,11 +819,13 @@
 				4C5874FA257FD88D00185B4C /* RunningSplitCellViewModel.swift in Sources */,
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
+				96CB22A525823284000D67C4 /* RouteSnapShotProcessor.swift in Sources */,
 				4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
 				71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */,
+				96CB22B525823B02000D67C4 /* MapSnapShotSubscription.swift in Sources */,
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
@@ -829,6 +840,7 @@
 				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */,
+				96CB22AB258233BC000D67C4 /* RouteDrawer.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
