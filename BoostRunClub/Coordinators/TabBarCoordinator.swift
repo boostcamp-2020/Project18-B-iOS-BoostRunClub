@@ -12,9 +12,19 @@ enum TabBarPage: Int {
     case running
     case profile
 
-    // TODO:
-    // Add tab icon value
-    // Add tab icon selected / deselected color
+    var selectIcon: UIImage? {
+        switch self {
+        case .activity:
+            return UIImage(named: "activity")
+        case .running:
+            return UIImage(named: "running")
+        case .profile:
+            return UIImage(named: "profile")
+        }
+    }
+
+    static var selectColor: UIColor { .black }
+    static var unselectColor: UIColor { .gray }
 }
 
 protocol MainTabBarCoordinatorProtocol {}
