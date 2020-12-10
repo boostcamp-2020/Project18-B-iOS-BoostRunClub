@@ -50,7 +50,11 @@ enum ActivityFilterType: Int {
             {
                 return "저번 주"
             }
-            return range.start.toMDString + "~" + range.end.toMDString
+
+            if Date.isSameYear(date: range.start, dateOfYear: date) {
+                return range.start.toMDString + "~" + range.end.toMDString
+            }
+            return range.start.toYMDString + "~" + range.end.toYMDString
         case .month:
             return range.end.toYMString
         case .year:

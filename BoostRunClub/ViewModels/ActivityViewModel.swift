@@ -41,6 +41,14 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     // ERASE!: DummyData
     let dummyActivity = [
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-21 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-22 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-23 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-24 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-10 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-11 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-12 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-12-02 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")!),
