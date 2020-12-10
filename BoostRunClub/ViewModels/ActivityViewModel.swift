@@ -33,6 +33,7 @@ protocol ActivityViewModelOutputs {
 
     var showProfileScene: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
+    var showActivityListScene: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
@@ -101,7 +102,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didSelectActivity(at _: Int) {}
 
-    func didTapShowAllActivities() {}
+    func didTapShowAllActivities() {
+        showActivityListScene.send()
+    }
 
     func didTapShowProfileButton() {}
 
@@ -117,6 +120,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     var showProfileScene = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
+    var showActivityListScene = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

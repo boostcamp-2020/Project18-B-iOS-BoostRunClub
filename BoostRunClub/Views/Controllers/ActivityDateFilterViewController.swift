@@ -89,7 +89,7 @@ extension ActivityDateFilterViewController {
             options: .curveEaseInOut,
             animations: {
                 self.view.layoutIfNeeded()
-                self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+                self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
             },
             completion: nil
         )
@@ -114,7 +114,7 @@ extension ActivityDateFilterViewController {
             options: .curveEaseInOut,
             animations: {
                 self.view.layoutIfNeeded()
-                self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+                self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
             },
             completion: { _ in
                 self.dismiss(animated: false, completion: nil)
