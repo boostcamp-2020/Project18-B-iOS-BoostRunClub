@@ -31,8 +31,6 @@ class ActivityCellView: UICollectionViewCell {
     override func preferredLayoutAttributesFitting(
         _ layoutAttributes: UICollectionViewLayoutAttributes
     ) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
         let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
         var newFrame = layoutAttributes.frame
         newFrame.size.height = ceil(size.height)
@@ -46,6 +44,8 @@ class ActivityCellView: UICollectionViewCell {
         distanceValueLabel.text = activity.distanceText
         avgPaceValueLabel.text = activity.avgPaceText
         runningTimeValueLabel.text = activity.runningTimeText
+        guard let data = activity.thumbnail else { return }
+        thumbnailImage.image = UIImage(data: data)
     }
 }
 

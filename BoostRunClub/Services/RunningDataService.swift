@@ -133,20 +133,24 @@ class RunningDataService: RunningDataServiceable {
         eventTimer.stop()
         endTime = Date()
         let uuid = UUID()
-        let activity = Activity(avgPace: avgPace.value,
-                                distance: distance.value,
-                                duration: runningTime.value,
-                                elevation: 0, // TODO: elevation 값 저장
-                                thumbnail: nil,
-                                createdAt: startTime,
-                                uuid: uuid)
+        let activity = Activity(
+            avgPace: avgPace.value,
+            distance: distance.value,
+            duration: runningTime.value,
+            elevation: 0, // TODO: elevation 값 저장
+            thumbnail: nil,
+            createdAt: startTime,
+            uuid: uuid
+        )
 
-        let activityDetail = ActivityDetail(activityUUID: uuid,
-                                            avgBPM: 0,
-                                            cadence: cadence.value,
-                                            calorie: Int(calorie.value),
-                                            elevation: 0,
-                                            locations: locations.map { Location(clLocation: $0) })
+        let activityDetail = ActivityDetail(
+            activityUUID: uuid,
+            avgBPM: 0,
+            cadence: cadence.value,
+            calorie: Int(calorie.value),
+            elevation: 0,
+            locations: locations.map { Location(clLocation: $0) }
+        )
         let splits: [RunningSplit] = runningSplits.map {
             var split = $0
             split.activityUUID = uuid

@@ -7,7 +7,7 @@
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="elevation" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="ZActivityDetail" representedClassName="ZActivityDetail" syncable="YES">
         <attribute name="activityUUID" attributeType="UUID" usesScalarValueType="NO"/>
@@ -16,7 +16,6 @@
         <attribute name="calorie" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="elevation" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="locations" attributeType="Binary"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="ZRunningSplit" representedClassName="ZRunningSplit" syncable="YES">
         <attribute name="activityUUID" attributeType="UUID" usesScalarValueType="NO"/>
@@ -28,7 +27,7 @@
     </entity>
     <elements>
         <element name="ZActivity" positionX="-63" positionY="-18" width="128" height="134"/>
-        <element name="ZActivityDetail" positionX="-63" positionY="27" width="128" height="134"/>
+        <element name="ZActivityDetail" positionX="-63" positionY="27" width="128" height="119"/>
         <element name="ZRunningSplit" positionX="-63" positionY="54" width="128" height="119"/>
     </elements>
 </model>

@@ -70,7 +70,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         self.activityProvider = activityProvider
 
         // ERASE! : dummy Data
-        activities = dummyActivity.sorted(by: { $0 > $1 })
+        activities = activityProvider.fetchActivities().sorted(by: { $0 > $1 })
 
         ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
 
