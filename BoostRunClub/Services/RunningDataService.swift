@@ -135,10 +135,9 @@ class RunningDataService: RunningDataServiceable {
 
         MapSnapShotService().takeSnapShot(from: locations)
             .receive(on: RunLoop.main)
+            .replaceError(with: nil)
             .first()
-            .sink { [weak self] _ in
-                self?.saveRunning(with: nil)
-            } receiveValue: { [weak self] data in
+            .sink { [weak self] data in
                 self?.saveRunning(with: data)
             }
             .store(in: &cancellables)
