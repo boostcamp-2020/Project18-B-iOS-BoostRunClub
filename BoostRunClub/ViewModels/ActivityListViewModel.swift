@@ -85,12 +85,17 @@ extension ActivityListViewModel {
             items[idx].append(activity)
         }
 
-        var results = [ActivityListItem]()
-        for (idx, item) in items.enumerated() {
-            let total = ActivityTotalConfig(filterType: .month, filterRange: ranges[idx], activities: item)
-            results.append(ActivityListItem(total: total, items: item))
-        }
-
-        return results.sorted(by: { $0.total.totalRange.start > $1.total.totalRange.start })
+        return items.enumerated()
+            .reduce(into: [ActivityListItem]()) {
+                let index = $1.0
+                let listItem = $1.1
+                let total = ActivityTotalConfig(
+                    filterType: .month,
+                    filterRange: ranges[index],
+                    activities: listItem
+                )
+                $0.append(ActivityListItem(total: total, items: listItem))
+            }
+            .sorted(by: { $0.total.totalRange.start > $1.total.totalRange.start })
     }
 }
