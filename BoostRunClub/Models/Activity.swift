@@ -87,6 +87,6 @@ extension Activity {
     }
 
     var runningTimeText: String {
-        TimeInterval(duration).formattedString
+        TimeInterval(duration).fullFormattedString
     }
 }

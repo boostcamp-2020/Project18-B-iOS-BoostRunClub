@@ -32,7 +32,7 @@ struct ActivityTotalConfig {
     }
 
     var totalRunningTimeText: String {
-        TimeInterval(totalRunningTime).formattedString
+        TimeInterval(totalRunningTime).fullFormattedString
     }
 
     // Statistic
@@ -48,7 +48,7 @@ struct ActivityTotalConfig {
 
     var runningTimePerRunningText: String {
         guard numRunning > 0 else { return "--" }
-        return "\(TimeInterval(totalRunningTime / Double(numRunning)).formattedString)/러닝"
+        return "\(TimeInterval(totalRunningTime / Double(numRunning)).fullFormattedString)/러닝"
     }
 
     var totalElevationText: String {
