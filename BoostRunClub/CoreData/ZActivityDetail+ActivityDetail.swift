@@ -16,7 +16,6 @@ public class ZActivityDetail: NSManagedObject {
     @NSManaged public var calorie: Int32
     @NSManaged public var elevation: Int32
     @NSManaged public var locations: Data?
-    @NSManaged public var uuid: UUID?
 }
 
 extension ZActivityDetail {

@@ -11,9 +11,13 @@ import UIKit
 
 extension RunningPageViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = view.bounds.width
-        let value = (scrollView.contentOffset.x + width * CGFloat(currPageIdx - 2))
-        buttonScale = abs(value / width)
+        viewModel?.inputs.buttonScaleShouldUpdate(
+            contentOffset: Double(scrollView.contentOffset.x),
+            screenWidth: Double(view.bounds.width)
+        )
+//        let width = view.bounds.width
+//        let value = (scrollView.contentOffset.x + width * CGFloat(currPageIdx - 2))
+//        buttonScale = abs(value / width)
     }
 
     func scrollViewWillBeginDragging(_: UIScrollView) {
@@ -26,23 +30,31 @@ extension RunningPageViewController: UIScrollViewDelegate {
 }
 
 extension RunningPageViewController {
-    func transformBackButton() {
-        backButton.transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: buttonScale * distance)
-            .scaledBy(x: buttonScale, y: buttonScale)
-        pageControl.transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: buttonScale * distance)
+    func transformBackButton(scale: CGFloat) {
+        print("scale \(scale)")
 
-        UIView.animate(withDuration: 0) {
-            self.pageControl.alpha = 1 - self.buttonScale * 3
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0) {
+                self.backButton.transform = CGAffineTransform.identity
+                    .translatedBy(x: 0, y: scale * self.distance)
+                    .scaledBy(x: scale, y: scale)
+            }
         }
+
+//        pageControl.transform = CGAffineTransform.identity
+//            .translatedBy(x: 0, y: scale * distance)
+//
+//        UIView.animate(withDuration: 0) {
+//            self.pageControl.alpha = 1 - scale * 3
+//        }
     }
 
     func goBackToMainPage() {
         let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
 
         setViewControllers([pages[1]], direction: direction, animated: true) { _ in
-            self.currPageIdx = 1
+            self.viewModel?.inputs.currentPageDidChange(idx: 1)
+//            self.currPageIdx = 1
         }
     }
 }
@@ -70,7 +82,7 @@ final class RunningPageViewController: UIPageViewController {
                 return
             }
             if isDragging { return }
-            transformBackButton()
+//            transformBackButton()
         }
     }
 
@@ -85,10 +97,24 @@ final class RunningPageViewController: UIPageViewController {
     }
 
     func bindViewModel() {
-        viewModel?.outputs.runningTimeSubject
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
-            .store(in: &cancellables)
+//        viewModel?.outputs.runningTimeSubject
+//            .receive(on: RunLoop.main)
+//            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
+//            .store(in: &cancellables)
+
+        // recieve on run loop main은 사용하면 이벤트를 user action이 끝나고 main loop에서 남은 처리를 한 후에 한번에 뭉텅이로 받게된다
+        // sink 클로저 내부에 dispatchqueue를 사용해도 안되는데...
+//        viewModel?.outputs.buttonScaleSubject
+//            .sink { [weak self] scale in
+        //				self?.transformBackButton(scale: CGFloat(scale))
+//            }
+//            .store(in: &cancellables)
+
+        viewModel?.outputs.buttonScaleSubject2
+            .receive(on: RunLoop.current)
+            .sink(receiveValue: { scale in
+                self.transformBackButton(scale: CGFloat(scale))
+            }).store(in: &cancellables)
     }
 
     override func viewDidLoad() {
@@ -114,7 +140,9 @@ extension RunningPageViewController {
     }
 
     @objc func panGestureAction() {
-        transformBackButton()
+        viewModel?.inputs.didScrollScreen()
+        //		let scale = viewModel?.outputs.buttonScaleRawSubject.value
+        //		transformBackButton(scale: CGFloat(scale!))
     }
 }
 
@@ -181,7 +209,8 @@ extension RunningPageViewController: UIPageViewControllerDelegate {
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
                 pageControl.currentPage = viewControllerIndex
-                currPageIdx = viewControllerIndex
+                viewModel?.inputs.currentPageDidChange(idx: viewControllerIndex)
+//                currPageIdx = viewControllerIndex
             }
         }
     }
@@ -223,11 +252,12 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
 
 extension RunningPageViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
-        _: UIGestureRecognizer,
+        _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer
     )
         -> Bool
     {
-        true
+        gestureRecognizer is UIPanGestureRecognizer
+//        true
     }
 }
