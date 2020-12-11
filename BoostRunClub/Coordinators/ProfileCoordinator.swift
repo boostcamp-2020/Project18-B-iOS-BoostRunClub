@@ -15,7 +15,9 @@ protocol ProfileCoordinatorProtocol {
 final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
     let factory: ProfileSceneFactory & EditProfileSceneFactory
 
-    init(navigationController: UINavigationController, factory: ProfileSceneFactory & EditProfileSceneFactory = DependencyFactory.shared) {
+    init(navigationController: UINavigationController,
+         factory: ProfileSceneFactory & EditProfileSceneFactory = DependencyFactory.shared)
+    {
         self.factory = factory
         super.init(navigationController: navigationController)
     }
