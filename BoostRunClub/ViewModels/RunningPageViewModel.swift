@@ -14,56 +14,72 @@ protocol RunningPageViewModelTypes {
 }
 
 protocol RunningPageViewModelInputs {
-    func scrollViewWillBeginDragging()
-    func scrollViewDidEndDragging()
     func buttonScaleShouldUpdate(contentOffset: Double, screenWidth: Double)
-    func currentPageDidChange(idx: Int)
-    func didScrollScreen()
+    func didChangeCurrentPage(idx: Int)
+    func didTapGoBackButton()
+    func dragging()
+    func didEndDragging()
+    func willBeginDragging()
 }
 
 protocol RunningPageViewModelOutputs {
-    //	var isDraggingSubject: CurrentValueSubject<Bool, Never> { get }
-    var buttonScaleRawSubject: CurrentValueSubject<Double, Never> { get }
-    var buttonScaleSubject: AnyPublisher<Double, Never> { get }
-    var buttonScaleSubject2: AnyPublisher<Double, Never> { get }
+    var scaleSubject: PassthroughSubject<Double, Never> { get }
+    var scaleSubjectNotDragging: AnyPublisher<Double, Never> { get }
+    var goBackToMainPageSignal: PassthroughSubject<Int, Never> { get }
     var runningTimeSubject: AnyPublisher<String, Never> { get }
-    var issueScaleValueSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
-    var buttonScaleSubject2: AnyPublisher<Double, Never> {
-        issueScaleValueSignal.zip(buttonScaleRawSubject).map { $1 }.eraseToAnyPublisher()
-    }
-
-    var issueScaleValueSignal = PassthroughSubject<Void, Never>()
-
-    func didScrollScreen() {
-//        buttonScaleRawSubject.value = buttonScaleRawSubject.value
-        issueScaleValueSignal.send()
-    }
-
     func buttonScaleShouldUpdate(contentOffset: Double, screenWidth: Double) {
         let value = (contentOffset + screenWidth * Double(currentPageIdx - 2))
-        buttonScaleRawSubject.send(value / screenWidth)
+        let result = value / screenWidth
+        if result >= 1 { return }
+        scale = result
+        print(scale)
     }
 
-    func currentPageDidChange(idx: Int) {
+    func didTapGoBackButton() {
+        goBackToMainPageSignal.send(currentPageIdx)
+    }
+
+    var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
+        $scale
+            .filter { _ in !self.isDragging }
+            .map { abs($0) }
+            .eraseToAnyPublisher()
+    }
+
+    func dragging() {
+        if isDragging {
+            scaleSubject.send(abs(scale))
+        }
+    }
+
+    func didChangeCurrentPage(idx: Int) {
         currentPageIdx = idx
     }
+
+    func didEndDragging() {
+        isDragging = false
+    }
+
+    func willBeginDragging() {
+        isDragging = true
+    }
+
+    var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+
+    var isDragging: Bool = false
+    var scaleSubject = PassthroughSubject<Double, Never>()
+    @Published var scale: Double = 0.0
 
     var currentPageIdx = 1
 
     private let runningDataProvider: RunningDataServiceable
 
-    var buttonScaleRawSubject = CurrentValueSubject<Double, Never>(0)
-    var buttonScaleSubject: AnyPublisher<Double, Never> {
-        buttonScaleRawSubject.map { min(1, abs($0)) }.eraseToAnyPublisher()
-    }
-
     var runningTimeSubject: AnyPublisher<String, Never> {
         runningDataProvider.runningTime
-            .combineLatest(buttonScaleRawSubject)
-            .receive(on: RunLoop.main)
+            .combineLatest($scale)
             .map { runningTime, buttonScale in
                 var text = runningTime.formattedString
                 if buttonScale > 0 {
@@ -78,10 +94,6 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     init(runningDataProvider: RunningDataServiceable) {
         self.runningDataProvider = runningDataProvider
     }
-
-    func scrollViewDidEndDragging() {}
-
-    func scrollViewWillBeginDragging() {}
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
