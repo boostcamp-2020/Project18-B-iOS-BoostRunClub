@@ -11,7 +11,11 @@ final class ActivityDetailCoordinator: BasicCoordinator {
     let factory: ActivityDetailSceneFactory
     let activity: Activity
 
-    init(navigationController: UINavigationController, activity: Activity, factory: ActivityDetailSceneFactory = DependencyFactory.shared) {
+    init(
+        navigationController: UINavigationController,
+        activity: Activity,
+        factory: ActivityDetailSceneFactory = DependencyFactory.shared
+    ) {
         self.factory = factory
         self.activity = activity
         super.init(navigationController: navigationController)

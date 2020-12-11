@@ -58,4 +58,3 @@ extension ActivityDetailViewController {
         navigationItem.setLeftBarButton(backItem, animated: true)
     }
 }
-

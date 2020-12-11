@@ -19,7 +19,7 @@ protocol ActivityDetailViewModelInputs {
 }
 
 protocol ActivityDetailViewModelOutputs {
-    var goBackToSceneSignal: PassthroughSubject<Void,Never> { get }
+    var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
@@ -31,14 +31,14 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
         self.activity = activity
         activityDetail = detail
     }
-    
+
     // Inputs
     func didTapBackItem() {
         goBackToSceneSignal.send()
     }
-    
+
     // Outputs
-    var goBackToSceneSignal = PassthroughSubject<Void,Never>()
+    var goBackToSceneSignal = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityDetailViewModel: ActivityDetailViewModelTypes {
