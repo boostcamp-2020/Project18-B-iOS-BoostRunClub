@@ -30,7 +30,9 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
             .receive(on: RunLoop.main)
             .compactMap { [weak self] in self?.showEditProfileScene() }
             .flatMap { $0 }
-            .sink { profileVM.inputs.didEditProfile($0) }
+            .sink { [weak profileVM] (profile: Profile) in
+                profileVM?.inputs.didEditProfile(profile)
+            }
             .store(in: &cancellables)
 
         let profileVC = factory.makeProfileVC(with: profileVM)
