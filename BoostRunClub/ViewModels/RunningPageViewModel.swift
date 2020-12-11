@@ -30,29 +30,30 @@ protocol RunningPageViewModelOutputs {
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
+    private let runningDataProvider: RunningDataServiceable
+    private var isDragging: Bool = false
+    private var currentPageIdx = 1
+    @Published private var scale: Double = 0.0
+
+    init(runningDataProvider: RunningDataServiceable) {
+        self.runningDataProvider = runningDataProvider
+    }
+
+    // Inputs
+
     func buttonScaleShouldUpdate(contentOffset: Double, screenWidth: Double) {
         let value = (contentOffset + screenWidth * Double(currentPageIdx - 2))
         let result = value / screenWidth
         if result >= 1 { return }
         scale = result
-        print(scale)
     }
 
     func didTapGoBackButton() {
         goBackToMainPageSignal.send(currentPageIdx)
     }
 
-    var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
-        $scale
-            .filter { _ in !self.isDragging }
-            .map { abs($0) }
-            .eraseToAnyPublisher()
-    }
-
     func dragging() {
-        if isDragging {
-            scaleSubject.send(abs(scale))
-        }
+        scaleSubject.send(abs(scale))
     }
 
     func didChangeCurrentPage(idx: Int) {
@@ -67,15 +68,16 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
         isDragging = true
     }
 
-    var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+    // Outputs
 
-    var isDragging: Bool = false
     var scaleSubject = PassthroughSubject<Double, Never>()
-    @Published var scale: Double = 0.0
-
-    var currentPageIdx = 1
-
-    private let runningDataProvider: RunningDataServiceable
+    var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+    var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
+        $scale
+            .filter { _ in !self.isDragging }
+            .map { abs($0) }
+            .eraseToAnyPublisher()
+    }
 
     var runningTimeSubject: AnyPublisher<String, Never> {
         runningDataProvider.runningTime
@@ -89,10 +91,6 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
                 }
                 return text
             }.eraseToAnyPublisher()
-    }
-
-    init(runningDataProvider: RunningDataServiceable) {
-        self.runningDataProvider = runningDataProvider
     }
 
     deinit {

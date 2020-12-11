@@ -9,57 +9,20 @@ import Combine
 import MapKit
 import UIKit
 
-extension RunningPageViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        viewModel?.inputs.buttonScaleShouldUpdate(
-            contentOffset: Double(scrollView.contentOffset.x),
-            screenWidth: Double(view.bounds.width)
-        )
-    }
-
-    func scrollViewDidEndDragging(_: UIScrollView, willDecelerate _: Bool) {
-        viewModel?.inputs.didEndDragging()
-    }
-
-    func scrollViewWillBeginDragging(_: UIScrollView) {
-        viewModel?.inputs.willBeginDragging()
-    }
-}
-
-extension RunningPageViewController {
-    func transformBackButton(scale: CGFloat) {
-        backButton.transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: scale * distance)
-            .scaledBy(x: scale, y: scale)
-    }
-
-    func goBackToMainPage(currPageIdx: Int) {
-        let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
-
-        setViewControllers([pages[1]], direction: direction, animated: true) { _ in
-            self.viewModel?.inputs.didChangeCurrentPage(idx: 1)
-        }
-    }
-}
-
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
         case map, info, splits
     }
 
-    var scale: CGFloat = 0
-
     private var pages = [UIViewController]()
     private lazy var pageControl = makePageControl()
     private lazy var backButton = makeBackButton()
 
-    var viewModel: RunningPageViewModelTypes?
-    var cancellables = Set<AnyCancellable>()
+    private var viewModel: RunningPageViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
 
-    var distance: CGFloat = 0
-    let buttonHeight: CGFloat = 40
-
-    var scrollView: UIScrollView?
+    private var distance: CGFloat = 0
+    private let buttonHeight: CGFloat = 40
 
     init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -71,24 +34,22 @@ final class RunningPageViewController: UIPageViewController {
         super.init(coder: coder)
     }
 
-    var scaleCancellable: AnyCancellable?
-
     func bindViewModel() {
         viewModel?.outputs.scaleSubject
-            .sink { self.transformBackButton(scale: CGFloat($0)) }
+            .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
 
         viewModel?.outputs.scaleSubjectNotDragging
-            .sink { self.transformBackButton(scale: CGFloat($0)) }
+            .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
 
         viewModel?.outputs.goBackToMainPageSignal
-            .sink { self.goBackToMainPage(currPageIdx: $0) }
+            .sink { [weak self] in self?.goBackToMainPage(currPageIdx: $0) }
             .store(in: &cancellables)
 
         viewModel?.outputs.runningTimeSubject
             .receive(on: RunLoop.main)
-            .sink { self.backButton.setTitle($0, for: .normal) }
+            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
             .store(in: &cancellables)
     }
 
@@ -108,6 +69,32 @@ final class RunningPageViewController: UIPageViewController {
     }
 }
 
+// MARK: - ViewModel Output Action
+
+extension RunningPageViewController {
+    func transformBackButton(scale: CGFloat) {
+        backButton.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: scale * distance)
+            .scaledBy(x: scale, y: scale)
+        pageControl.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: scale * distance)
+
+        UIView.animate(withDuration: 0) {
+            self.pageControl.alpha = 1 - scale * 3
+        }
+    }
+
+    func goBackToMainPage(currPageIdx: Int) {
+        let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
+
+        setViewControllers([pages[1]], direction: direction, animated: true) { _ in
+            self.viewModel?.inputs.didChangeCurrentPage(idx: 1)
+        }
+    }
+}
+
+// MARK: - Actions
+
 extension RunningPageViewController {
     @objc func didTabBackButton() {
         viewModel?.inputs.didTapGoBackButton()
@@ -117,6 +104,8 @@ extension RunningPageViewController {
         viewModel?.inputs.dragging()
     }
 }
+
+// MARK: - Configure
 
 extension RunningPageViewController {
     func configurePageViewController() {
@@ -131,7 +120,6 @@ extension RunningPageViewController {
         view.subviews.forEach { view in
             if let scrollView = view as? UIScrollView {
                 scrollView.delegate = self
-                self.scrollView = scrollView
             }
         }
     }
@@ -172,6 +160,27 @@ extension RunningPageViewController {
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
+extension RunningPageViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        viewModel?.inputs.buttonScaleShouldUpdate(
+            contentOffset: Double(scrollView.contentOffset.x),
+            screenWidth: Double(view.bounds.width)
+        )
+    }
+
+    func scrollViewDidEndDragging(_: UIScrollView, willDecelerate _: Bool) {
+        viewModel?.inputs.didEndDragging()
+    }
+
+    func scrollViewWillBeginDragging(_: UIScrollView) {
+        viewModel?.inputs.willBeginDragging()
+    }
+}
+
+// MARK: - UIPageViewControllerDelegate
+
 extension RunningPageViewController: UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
@@ -181,12 +190,13 @@ extension RunningPageViewController: UIPageViewControllerDelegate {
     ) {
         if finished, completed, let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
-                pageControl.currentPage = viewControllerIndex
                 viewModel?.inputs.didChangeCurrentPage(idx: viewControllerIndex)
             }
         }
     }
 }
+
+// MARK: - UIPageViewControllerDataSource
 
 extension RunningPageViewController: UIPageViewControllerDataSource {
     func pageViewController(
@@ -221,6 +231,8 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
         return nil
     }
 }
+
+// MARK: - UIGestureRecognizerDelegate
 
 extension RunningPageViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
