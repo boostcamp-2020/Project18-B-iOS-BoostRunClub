@@ -37,7 +37,7 @@ struct ActivityTotalConfig {
 
     // Statistic
     var numRunningPerWeekText: String {
-        let numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
+        var numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
         return String(format: "%.2f러닝/주", Double(numRunning) / Double(numberOfWeeks))
     }
 
@@ -58,7 +58,7 @@ struct ActivityTotalConfig {
     init(
         period: String = "",
         distance: Double = 0,
-        numRunning: Int = 1,
+        numRunning: Int = 0,
         avgPace: Int = 0,
         runningTime: Double = 0,
         elevation: Double = 0,
@@ -91,7 +91,8 @@ struct ActivityTotalConfig {
         self.filterType = filterType
         selectedRange = filterRange
         period = filterType.rangeDescription(at: filterRange)
-        avgPace = sumAvgPace / divider
+        avgPace = activities.count == 0 ? 0 : sumAvgPace / activities.count
+
         totalDistance = sumDistance
         totalRunningTime = sumDuration
         numRunning = activities.count

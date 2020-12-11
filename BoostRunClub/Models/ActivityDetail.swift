@@ -8,7 +8,7 @@
 import Foundation
 
 struct ActivityDetail {
-    var activityUUID: UUID?
+    var activityUUID: UUID
     var avgBPM: Int
     var cadence: Int
     var calorie: Int

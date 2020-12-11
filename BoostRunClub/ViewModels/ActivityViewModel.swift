@@ -65,19 +65,16 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
+    var cancellables = Set<AnyCancellable>()
 
     init(activityProvider: ActivityReadable) {
         self.activityProvider = activityProvider
+        activityProvider.activityChangeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.fetchActivities() }
+            .store(in: &cancellables)
 
-        // ERASE! : dummy Data
-        activities = dummyActivity.sorted(by: { $0 > $1 })
-
-        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
-
-        let numRecentActivity = activities.count < 5 ? activities.count : 5
-        if numRecentActivity > 0 {
-            recentActivitiesSubject.send(activities[0 ..< numRecentActivity].map { $0 })
-        }
+        fetchActivities()
     }
 
     // Inputs
@@ -140,6 +137,17 @@ extension ActivityViewModel: ActivityViewModelTypes {
 // MARK: - Private Functions
 
 extension ActivityViewModel {
+    private func fetchActivities() {
+        activities = activityProvider.fetchActivities().sorted(by: >)
+
+        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
+
+        let numRecentActivity = activities.count < 5 ? activities.count : 5
+        if numRecentActivity > 0 {
+            recentActivitiesSubject.send(activities[0 ..< numRecentActivity].map { $0 })
+        }
+    }
+
     private func getDateRanges(for filter: ActivityFilterType) -> [DateRange] {
         let ranges: [DateRange]
         if self.ranges.contains(where: { $0.key == filter }) {

@@ -34,7 +34,7 @@ protocol RunningDataServiceable {
 
 class RunningDataService: RunningDataServiceable {
     var locationProvider: LocationProvidable
-
+    var mapSnapShotService: MapSnapShotServiceable
     var activityWriter: ActivityWritable
 
     var cancellables = Set<AnyCancellable>()
@@ -70,13 +70,15 @@ class RunningDataService: RunningDataServiceable {
         eventTimer: EventTimerProtocol = EventTimer(),
         locationProvider: LocationProvidable,
         motionProvider: MotionProvider,
-        activityWriter: ActivityWritable
+        activityWriter: ActivityWritable,
+        mapSnapShotService: MapSnapShotServiceable
     ) {
         motionProvider.startUpdating()
 
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         self.activityWriter = activityWriter
+        self.mapSnapShotService = mapSnapShotService
 
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
@@ -132,28 +134,15 @@ class RunningDataService: RunningDataServiceable {
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
         endTime = Date()
-        let uuid = UUID()
-        let activity = Activity(avgPace: avgPace.value,
-                                distance: distance.value,
-                                duration: runningTime.value,
-                                elevation: 0, // TODO: elevation 값 저장
-                                thumbnail: nil,
-                                createdAt: startTime,
-                                uuid: uuid)
 
-        let activityDetail = ActivityDetail(activityUUID: uuid,
-                                            avgBPM: 0,
-                                            cadence: cadence.value,
-                                            calorie: Int(calorie.value),
-                                            elevation: 0,
-                                            locations: locations.map { Location(clLocation: $0) })
-        let splits: [RunningSplit] = runningSplits.map {
-            var split = $0
-            split.activityUUID = uuid
-            return split
-        }
-
-        activityWriter.addActivity(activity: activity, activityDetail: activityDetail, splits: splits)
+        mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
+            .receive(on: RunLoop.main)
+            .replaceError(with: nil)
+            .first()
+            .sink { [weak self] data in
+                self?.saveRunning(with: data)
+            }
+            .store(in: &cancellables)
 
         isRunning = false
     }
@@ -216,5 +205,35 @@ class RunningDataService: RunningDataServiceable {
 
         locations.append(location)
         avgPace.value = (avgPace.value * (locations.count - 1) + pace.value) / locations.count
+    }
+
+    private func saveRunning(with data: Data?) {
+        let uuid = UUID()
+
+        let activity = Activity(
+            avgPace: avgPace.value,
+            distance: distance.value,
+            duration: runningTime.value,
+            elevation: 0, // TODO: elevation 값 저장
+            thumbnail: data,
+            createdAt: startTime,
+            uuid: uuid
+        )
+
+        let activityDetail = ActivityDetail(
+            activityUUID: uuid,
+            avgBPM: 0,
+            cadence: cadence.value,
+            calorie: Int(calorie.value),
+            elevation: 0,
+            locations: locations.map { Location(clLocation: $0) }
+        )
+        let splits: [RunningSplit] = runningSplits.map {
+            var split = $0
+            split.activityUUID = uuid
+            return split
+        }
+
+        activityWriter.addActivity(activity: activity, activityDetail: activityDetail, splits: splits)
     }
 }

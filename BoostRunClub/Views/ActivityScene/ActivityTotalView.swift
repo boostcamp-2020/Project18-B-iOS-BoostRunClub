@@ -42,20 +42,25 @@ class ActivityTotalView: UIView {
         numRunningValueLabel.text = config.numRunningText
         avgPaceValueLabel.text = config.avgPaceText
         runningTimeValueLabel.text = config.totalRunningTimeText
+
+        let buttonEnable: Bool
         switch config.filterType {
         case .year, .month, .week:
+            buttonEnable = config.numRunning > 0 ? true : false
+        case .all:
+            buttonEnable = false
+        }
+
+        if buttonEnable {
             dateButton.setImage(dateButtonActiveIcon, for: .normal)
             actionSendable = true
-        case .all:
+        } else {
             dateButton.setImage(dateButtonDeActiveIcon, for: .normal)
             actionSendable = false
         }
     }
 
     func selfResizing() {
-        setNeedsLayout()
-        layoutIfNeeded()
-
         let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         frame.size.height = height
     }
@@ -138,6 +143,7 @@ extension ActivityTotalView {
             distribution: .fill,
             spacing: 15
         )
+
         addSubview(vStackView)
         vStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
