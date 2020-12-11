@@ -226,14 +226,10 @@ class RunningDataService: RunningDataServiceable {
             cadence: cadence.value,
             calorie: Int(calorie.value),
             elevation: 0,
-            locations: locations.map { Location(clLocation: $0) }
+            locations: locations.map { Location(clLocation: $0) },
+            splits: runningSplits
         )
-        let splits: [RunningSplit] = runningSplits.map {
-            var split = $0
-            split.activityUUID = uuid
-            return split
-        }
 
-        activityWriter.addActivity(activity: activity, activityDetail: activityDetail, splits: splits)
+        activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
     }
 }

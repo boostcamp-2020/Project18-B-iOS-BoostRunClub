@@ -14,6 +14,7 @@ struct ActivityDetail {
     var calorie: Int
     var elevation: Int
     var locations: [Location]
+    var splits: [RunningSplit]
 
     init?(
         activityUUID: UUID?,
@@ -21,7 +22,8 @@ struct ActivityDetail {
         cadence: Int,
         calorie: Int,
         elevation: Int,
-        locations: [Location]
+        locations: [Location],
+        splits: [RunningSplit]
     ) {
         guard let activityUUID = activityUUID else { return nil }
         self.activityUUID = activityUUID
@@ -30,6 +32,7 @@ struct ActivityDetail {
         self.calorie = calorie
         self.elevation = elevation
         self.locations = locations
+        self.splits = splits
     }
 
     init(
@@ -38,7 +41,8 @@ struct ActivityDetail {
         cadence: Int,
         calorie: Int,
         elevation: Int,
-        locations: [Location]
+        locations: [Location],
+        splits: [RunningSplit]
     ) {
         self.activityUUID = activityUUID
         self.avgBPM = avgBPM
@@ -46,5 +50,6 @@ struct ActivityDetail {
         self.calorie = calorie
         self.elevation = elevation
         self.locations = locations
+        self.splits = splits
     }
 }

@@ -12,6 +12,7 @@ class ActivitiesContainerCellView: UITableViewCell {
     lazy var collectionView = ActivityCollectionView()
 
     var heightChangedPublisher = PassthroughSubject<UITableViewCell, Never>()
+    var itemSelectedPublisher = PassthroughSubject<IndexPath, Never>()
     var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -28,6 +29,7 @@ class ActivitiesContainerCellView: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
+        collectionView.delegate = self
         collectionView.heightPublisher
             .sink {
                 self.bounds.size.height = $0
@@ -47,5 +49,13 @@ class ActivitiesContainerCellView: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+    }
+}
+
+// MARK: - UICollectionViewDelegate Implementation
+
+extension ActivitiesContainerCellView: UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        itemSelectedPublisher.send(indexPath)
     }
 }

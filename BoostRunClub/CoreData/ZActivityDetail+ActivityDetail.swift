@@ -16,6 +16,7 @@ public class ZActivityDetail: NSManagedObject {
     @NSManaged public var calorie: Int32
     @NSManaged public var elevation: Int32
     @NSManaged public var locations: Data?
+    @NSManaged public var splits: Data?
 }
 
 extension ZActivityDetail {
@@ -37,16 +38,27 @@ extension ZActivityDetail {
         cadence = Int32(activityDetail.cadence)
         calorie = Int32(activityDetail.calorie)
         elevation = Int32(activityDetail.elevation)
-        locations = try? JSONEncoder().encode(activityDetail.locations)
+        let encoder = JSONEncoder()
+        locations = try? encoder.encode(activityDetail.locations)
+        splits = try? encoder.encode(activityDetail.splits)
     }
 
     var activityDetail: ActivityDetail? {
         var location: [Location] = []
+        var split: [RunningSplit] = []
+        let decoder = JSONDecoder()
+
         if
-            let data = locations,
-            let locations = try? JSONDecoder().decode([Location].self, from: data)
+            let locationData = locations,
+            let locations = try? decoder.decode([Location].self, from: locationData)
         {
             location.append(contentsOf: locations)
+        }
+        if
+            let splitData = splits,
+            let splits = try? decoder.decode([RunningSplit].self, from: splitData)
+        {
+            split.append(contentsOf: splits)
         }
 
         return ActivityDetail(
@@ -55,7 +67,8 @@ extension ZActivityDetail {
             cadence: Int(cadence),
             calorie: Int(calorie),
             elevation: Int(elevation),
-            locations: location
+            locations: location,
+            splits: split
         )
     }
 }

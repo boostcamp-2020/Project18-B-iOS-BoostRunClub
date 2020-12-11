@@ -47,7 +47,7 @@ final class ActivityViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .systemBackground
         configureNavigationItems()
         configureTableView()
-        configureCollectionView()
+        collectionView.dataSource = activityDataSource
         configureLayout()
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
@@ -85,6 +85,10 @@ final class ActivityViewController: UIViewController {
         activityTotalView.didTapShowDateFilter = { [weak viewModel] in
             viewModel?.inputs.didTapShowDateFilter()
         }
+
+        containerCellView.itemSelectedPublisher
+            .sink { [weak viewModel] in viewModel?.inputs.didSelectActivity(at: $0.row) }
+            .store(in: &cancellables)
 
         containerCellView.heightChangedPublisher
             .sink {
@@ -170,14 +174,6 @@ extension ActivityViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegate Implementation
-
-extension ActivityViewController: UICollectionViewDelegate {
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel?.inputs.didSelectActivity(at: indexPath.row)
-    }
-}
-
 // MARK: - Configure
 
 extension ActivityViewController {
@@ -193,11 +189,6 @@ extension ActivityViewController {
         )
 
         navigationItem.setLeftBarButton(profileItem, animated: true)
-    }
-
-    private func configureCollectionView() {
-        collectionView.dataSource = activityDataSource
-        collectionView.delegate = self
     }
 
     private func configureTableView() {
