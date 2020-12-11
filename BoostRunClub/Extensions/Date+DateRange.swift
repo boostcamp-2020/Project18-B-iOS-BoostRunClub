@@ -71,4 +71,12 @@ extension Date {
     static func isSameYear(date: Date, dateOfYear: Date) -> Bool {
         dateOfYear.rangeOfYear?.contains(date: date) ?? false
     }
+
+    static func isSameWeek(date: Date, dateOfWeek: Date) -> Bool {
+        return dateOfWeek.rangeOfWeek?.contains(date: date) ?? false
+    }
+
+    static func isSameYear(date: Date, dateOfYear: Date) -> Bool {
+        return dateOfYear.rangeOfYear?.contains(date: date) ?? false
+    }
 }

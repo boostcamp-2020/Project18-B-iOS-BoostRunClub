@@ -5,6 +5,8 @@
 //  Created by 김신우 on 2020/12/01.
 //
 
+import Foundation
+
 class DependencyFactory {
     static let shared = DependencyFactory()
     lazy var coreDataService = CoreDataService()
@@ -18,4 +20,5 @@ class DependencyFactory {
         activityWriter: activityProvider,
         mapSnapShotService: mapSnapShotService
     )
+    lazy var defaultsProvider = DefaultsProvider()
 }
