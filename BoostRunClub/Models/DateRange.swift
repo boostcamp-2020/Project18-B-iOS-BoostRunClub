@@ -14,6 +14,6 @@ struct DateRange: Equatable {
 
 extension DateRange {
     func contains(date: Date) -> Bool {
-        (start ... end) ~= date
+        start <= date && date <= end
     }
 }

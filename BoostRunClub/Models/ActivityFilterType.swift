@@ -16,8 +16,8 @@ enum ActivityFilterType: Int {
         if self == .all {
             return [
                 DateRange(
-                    start: activities.first!.createdAt,
-                    end: activities.last?.createdAt ?? activities.first!.createdAt
+                    start: activities.last?.createdAt ?? activities.first!.createdAt,
+                    end: activities.first!.createdAt
                 ),
             ]
         }
@@ -39,10 +39,22 @@ enum ActivityFilterType: Int {
             }
     }
 
-    func rangeDescription(from range: DateRange) -> String {
+    func rangeDescription(at range: DateRange, from date: Date = Date()) -> String {
         switch self {
         case .week:
-            return range.start.toMDString + "~" + range.end.toMDString
+            if Date.isSameWeek(date: range.start, dateOfWeek: date) {
+                return "이번 주"
+            } else if
+                let lastWeekDate = Calendar.current.date(byAdding: .day, value: -7, to: date),
+                Date.isSameWeek(date: range.start, dateOfWeek: lastWeekDate)
+            {
+                return "저번 주"
+            }
+
+            if Date.isSameYear(date: range.start, dateOfYear: date) {
+                return range.start.toMDString + "~" + range.end.toMDString
+            }
+            return range.start.toYMDString + "~" + range.end.toYMDString
         case .month:
             return range.end.toYMString
         case .year:

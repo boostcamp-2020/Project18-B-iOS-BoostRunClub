@@ -76,6 +76,7 @@ struct ActivityTotalConfig {
     }
 
     init(filterType: ActivityFilterType, filterRange: DateRange, activities: [Activity]) {
+        var divider = activities.count == 0 ? activities.count : 1
         var sumAvgPace: Int = 0
         var sumDuration: Double = 0
         var sumDistance: Double = 0
@@ -89,8 +90,8 @@ struct ActivityTotalConfig {
         }
         self.filterType = filterType
         selectedRange = filterRange
-        period = filterType.rangeDescription(from: filterRange)
-        avgPace = sumAvgPace / activities.count
+        period = filterType.rangeDescription(at: filterRange)
+        avgPace = sumAvgPace / divider
         totalDistance = sumDistance
         totalRunningTime = sumDuration
         numRunning = activities.count
