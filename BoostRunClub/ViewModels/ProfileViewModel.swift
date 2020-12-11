@@ -26,15 +26,16 @@ protocol ProfileViewModelOutputs {
 }
 
 final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
-    private var defaults: UserDefaults
-    private lazy var profile = Profile(image: Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png"),
-                                       lastName: defaults.string(forKey: "LastName") ?? "",
-                                       firstName: defaults.string(forKey: "FirstName") ?? "",
-                                       hometown: defaults.string(forKey: "Hometown") ?? "",
-                                       bio: defaults.string(forKey: "Bio") ?? "")
+    private var defaults: DefaultsReadable
+    private var profile: Profile
 
-    init(defaults: UserDefaults) {
+    init(defaults: DefaultsReadable) {
         self.defaults = defaults
+        profile = Profile(image: Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png"),
+                          lastName: defaults.string(forKey: "LastName") ?? "",
+                          firstName: defaults.string(forKey: "FirstName") ?? "",
+                          hometown: defaults.string(forKey: "Hometown") ?? "",
+                          bio: defaults.string(forKey: "Bio") ?? "")
     }
 
     // inputs

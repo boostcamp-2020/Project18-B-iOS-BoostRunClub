@@ -34,9 +34,9 @@ protocol EditProfileViewModelOutputs {
 }
 
 final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewModelOutputs {
-    private var defaults: UserDefaults
+    private var defaults: DefaultsManagable
 
-    init(defaults: UserDefaults) {
+    init(defaults: DefaultsManagable) {
         self.defaults = defaults
     }
 
@@ -44,10 +44,10 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
 
     func viewDidLoad() {
         imageDataObservable.value = Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png")
-        lastNameTextObservable.value = defaults.string(forKey: "LastName") ?? ""
-        firstNameTextObservable.value = defaults.string(forKey: "FirstName") ?? ""
-        hometownTextObservable.value = defaults.string(forKey: "Hometown") ?? ""
-        bioTextObservable.value = defaults.string(forKey: "Bio") ?? ""
+        lastNameTextObservable.value = defaults.reader.string(forKey: "LastName") ?? ""
+        firstNameTextObservable.value = defaults.reader.string(forKey: "FirstName") ?? ""
+        hometownTextObservable.value = defaults.reader.string(forKey: "Hometown") ?? ""
+        bioTextObservable.value = defaults.reader.string(forKey: "Bio") ?? ""
     }
 
     func didTapApplyButton() {
@@ -104,11 +104,13 @@ extension EditProfileViewModel: EditProfileViewModelTypes {
     var outputs: EditProfileViewModelOutputs { self }
 }
 
+// MARK: - Private Functions
+
 extension EditProfileViewModel {
-    func saveProfileTextsToUserDefaults(profile: Profile) {
-        defaults.set(profile.firstName, forKey: "FirstName")
-        defaults.set(profile.lastName, forKey: "LastName")
-        defaults.set(profile.hometown, forKey: "Hometown")
-        defaults.set(profile.bio, forKey: "Bio")
+    private func saveProfileTextsToUserDefaults(profile: Profile) {
+        defaults.writer.set(profile.firstName, forKey: "FirstName")
+        defaults.writer.set(profile.lastName, forKey: "LastName")
+        defaults.writer.set(profile.hometown, forKey: "Hometown")
+        defaults.writer.set(profile.bio, forKey: "Bio")
     }
 }
