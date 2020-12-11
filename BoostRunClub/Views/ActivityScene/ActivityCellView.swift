@@ -41,8 +41,8 @@ class ActivityCellView: UICollectionViewCell {
     }
 
     func configure(with activity: Activity) {
-        dateLabel.text = activity.weekOfDayText
-        titleLabel.text = activity.title
+        dateLabel.text = activity.dateText(with: Date())
+        titleLabel.text = activity.titleText
         distanceValueLabel.text = activity.distanceText
         avgPaceValueLabel.text = activity.avgPaceText
         runningTimeValueLabel.text = activity.runningTimeText

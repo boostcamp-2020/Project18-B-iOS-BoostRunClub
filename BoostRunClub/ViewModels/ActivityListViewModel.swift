@@ -76,8 +76,7 @@ extension ActivityListViewModel: ActivityListViewModelTypes {
 
 extension ActivityListViewModel {
     private func makeActivityListItems(from data: [Activity]) -> [ActivityListItem] {
-        let dates = data.map { $0.createdAt }
-        let ranges = ActivityFilterType.month.groupDateRanges(from: dates)
+        let ranges = ActivityFilterType.month.groupDateRanges(from: data)
         var items = [[Activity]](repeating: [], count: ranges.count)
         data.forEach { activity in
             guard let idx = ranges.firstIndex(where: { $0.contains(date: activity.createdAt) })
@@ -96,6 +95,6 @@ extension ActivityListViewModel {
                 )
                 $0.append(ActivityListItem(total: total, items: listItem))
             }
-            .sorted(by: { $0.total.totalRange.start > $1.total.totalRange.start })
+            .sorted(by: { $0 > $1 })
     }
 }

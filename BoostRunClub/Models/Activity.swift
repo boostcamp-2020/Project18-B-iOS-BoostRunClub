@@ -57,6 +57,12 @@ struct Activity {
     }
 }
 
+extension Activity: Comparable {
+    static func < (lhs: Activity, rhs: Activity) -> Bool {
+        lhs.createdAt < rhs.createdAt
+    }
+}
+
 // ERASE! : dummy 데이터용
 extension Activity {
     init(date: Date) {
@@ -69,12 +75,16 @@ extension Activity {
                   uuid: UUID())
     }
 
-    var weekOfDayText: String {
-        createdAt.toDayOfWeekString
+    var titleText: String {
+        "\(createdAt.toDayOfWeekString) \(createdAt.period) 러닝 "
     }
 
-    var title: String {
-        "\(createdAt.toDayOfWeekString) \(createdAt.period) 러닝 "
+    func dateText(with date: Date) -> String {
+        if Date.isSameWeek(date: createdAt, dateOfWeek: date) {
+            return createdAt.toDayOfWeekString
+        } else {
+            return createdAt.toYMDString
+        }
     }
 
     // TODO: avgPace, distance, time 등 단위 변환이 겹치는 것 공통으로 처리하도록 하기

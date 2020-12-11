@@ -19,6 +19,10 @@ extension Date {
         DateFormatter.YMDHMFormatter.string(from: self)
     }
 
+    var toYMDString: String {
+        DateFormatter.YMDFormatter.string(from: self)
+    }
+
     var toYMString: String {
         DateFormatter.YMFormatter.string(from: self)
     }
@@ -33,7 +37,7 @@ extension Date {
 
     var yearMonthDay: YearMonthDay? {
         let str = DateFormatter.YMDFormatter.string(from: self)
-        let components = str.components(separatedBy: "-")
+        let components = str.components(separatedBy: ".")
         guard
             components.count >= 3,
             let year = Int(components[0]),

@@ -63,4 +63,8 @@ extension Date {
         let components = calendar.dateComponents([.weekOfMonth], from: range.start, to: range.end)
         return components.weekOfMonth
     }
+
+    static func isSameWeek(date: Date, dateOfWeek: Date) -> Bool {
+        return dateOfWeek.rangeOfWeek?.contains(date: date) ?? false
+    }
 }

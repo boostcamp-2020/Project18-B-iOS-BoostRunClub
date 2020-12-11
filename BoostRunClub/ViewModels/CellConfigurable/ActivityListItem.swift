@@ -11,3 +11,13 @@ struct ActivityListItem {
     let total: ActivityTotalConfig
     let items: [Activity]
 }
+
+extension ActivityListItem: Comparable {
+    static func == (lhs: ActivityListItem, rhs: ActivityListItem) -> Bool {
+        lhs.total.totalRange.start == rhs.total.totalRange.start
+    }
+
+    static func < (lhs: ActivityListItem, rhs: ActivityListItem) -> Bool {
+        lhs.total.totalRange.start < rhs.total.totalRange.start
+    }
+}

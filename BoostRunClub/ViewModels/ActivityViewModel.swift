@@ -60,10 +60,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         self.activityProvider = activityProvider
 
         // ERASE! : dummy Data
-        activities = dummyActivity
+        activities = dummyActivity.sorted(by: { $0 > $1 })
 
-        let dates = activities.map { $0.createdAt }
-        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: dates)
+        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
 
         let numRecentActivity = activities.count < 5 ? activities.count : 5
         if numRecentActivity > 0 {
@@ -80,11 +79,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         guard let filterType = ActivityFilterType(rawValue: idx) else { return }
         let ranges = getDateRanges(for: filterType)
 
-        if let latestRange = ranges.last {
+        if let firstRange = ranges.first {
             let total = ActivityTotalConfig(
                 filterType: filterType,
-                filterRange: latestRange,
-                activities: activities.filter { latestRange.contains(date: $0.createdAt) }
+                filterRange: firstRange,
+                activities: activities.filter { firstRange.contains(date: $0.createdAt) }
             )
             filterTypeSubject.send(filterType)
             totalDataSubject.send(total)
@@ -136,8 +135,7 @@ extension ActivityViewModel {
         if self.ranges.contains(where: { $0.key == filter }) {
             ranges = self.ranges[filter]!
         } else {
-            let dates = dummyActivity.compactMap { $0.createdAt }
-            ranges = filter.groupDateRanges(from: dates)
+            ranges = filter.groupDateRanges(from: activities)
             self.ranges[filter] = ranges
         }
         return ranges
