@@ -46,7 +46,7 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
         self.activityProvider = activityProvider
 
         // ERASE!: DummyData
-        let activites = activityProvider.fetchActivities()
+        let activites = activityProvider.fetchActivities().sorted(by: >)
         let listItems = makeActivityListItems(from: activites)
         activityListItemSubject.send(listItems)
     }

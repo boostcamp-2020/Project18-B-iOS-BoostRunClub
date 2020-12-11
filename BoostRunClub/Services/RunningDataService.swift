@@ -134,16 +134,16 @@ class RunningDataService: RunningDataServiceable {
         locationProvider.stopBackgroundTask()
         eventTimer.stop()
         endTime = Date()
-
-        mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
-            .receive(on: RunLoop.main)
-            .replaceError(with: nil)
-            .first()
-            .sink { [weak self] data in
-                self?.saveRunning(with: data)
-            }
-            .store(in: &cancellables)
-
+        if !locations.isEmpty {
+            mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
+                .receive(on: RunLoop.main)
+                .replaceError(with: nil)
+                .first()
+                .sink { [weak self] data in
+                    self?.saveRunning(with: data)
+                }
+                .store(in: &cancellables)
+        }
         isRunning = false
     }
 
