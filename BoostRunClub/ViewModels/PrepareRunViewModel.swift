@@ -27,7 +27,8 @@ protocol PrepareRunViewModelInputs {
 protocol PrepareRunViewModelOutputs {
     var userLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
     var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
-    var goalValueObservable: CurrentValueSubject<String, Never> { get } // TODO: - GoalType/value observable을 goalInfo로 바꿀지 생각해보기
+    // TODO: - GoalType/value observable을 goalInfo로 바꿀지 생각해보기
+    var goalValueObservable: CurrentValueSubject<String, Never> { get }
     var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
     var goalTypeSetupClosed: PassthroughSubject<Void, Never> { get }
     var showGoalTypeActionSheetSignal: PassthroughSubject<GoalType, Never> { get }

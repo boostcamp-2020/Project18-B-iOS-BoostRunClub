@@ -19,8 +19,12 @@ class ActivityTotalView: UIView {
     lazy var runningTimeValueLabel = makeValueLabel()
     lazy var runningTimeLabel = makeNormalLabel()
 
+    private var dateButtonActiveIcon: UIImage? = UIImage.SFSymbol(name: "chevron.down", color: .label)
+    private var dateButtonDeActiveIcon: UIImage? = UIImage.SFSymbol(name: "chevron.down", color: .clear)
+
     var didChangeSelectedItem: ((Int) -> Void)?
     var didTapShowDateFilter: (() -> Void)?
+    var actionSendable: Bool = false
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -32,11 +36,20 @@ class ActivityTotalView: UIView {
         commonInit()
     }
 
-    func configure(activityTotal: ActivityTotal) {
-        distanceValueLabel.text = activityTotal.distance
-        runningTimeValueLabel.text = activityTotal.runningTime
-        numRunningValueLabel.text = String(activityTotal.numRunning)
-        avgPaceValueLabel.text = activityTotal.avgPace
+    func configure(config: ActivityTotalConfig) {
+        dateButton.setTitle(config.period, for: .normal)
+        distanceValueLabel.text = config.totalDistanceText
+        numRunningValueLabel.text = config.numRunningText
+        avgPaceValueLabel.text = config.avgPaceText
+        runningTimeValueLabel.text = config.totalRunningTimeText
+        switch config.filterType {
+        case .year, .month, .week:
+            dateButton.setImage(dateButtonActiveIcon, for: .normal)
+            actionSendable = true
+        case .all:
+            dateButton.setImage(dateButtonDeActiveIcon, for: .normal)
+            actionSendable = false
+        }
     }
 
     func selfResizing() {
@@ -44,9 +57,7 @@ class ActivityTotalView: UIView {
         layoutIfNeeded()
 
         let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var newFrame = frame
-        newFrame.size.height = height
-        frame = newFrame
+        frame.size.height = height
     }
 }
 
@@ -55,7 +66,9 @@ class ActivityTotalView: UIView {
 extension ActivityTotalView {
     @objc
     func didTapDateButton() {
-        didTapShowDateFilter?()
+        if actionSendable {
+            didTapShowDateFilter?()
+        }
     }
 }
 
@@ -64,16 +77,14 @@ extension ActivityTotalView {
 extension ActivityTotalView {
     private func commonInit() {
         backgroundColor = .systemBackground
-
-        dateButton.setTitle("이번 주", for: .normal)
-        distanceValueLabel.text = "7.8"
         distancelabel.text = "킬로미터"
-        numRunningValueLabel.text = "2"
         numRunningLabel.text = "러닝"
-        avgPaceValueLabel.text = "10'39\""
         avgPaceLabel.text = "평균 페이스"
-        runningTimeValueLabel.text = "1:23:18"
         runningTimeLabel.text = "시간"
+
+        segmentedControl.didChangeSelectedItem = { [weak self] idx in
+            self?.didChangeSelectedItem?(idx)
+        }
 
         configureLayout()
     }
@@ -125,7 +136,7 @@ extension ActivityTotalView {
             axis: .vertical,
             alignment: .leading,
             distribution: .fill,
-            spacing: 10
+            spacing: 15
         )
         addSubview(vStackView)
         vStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +163,6 @@ extension ActivityTotalView {
             normalColor: .systemGray,
             borderColor: .systemGray
         )
-        control.didChangeSelectedItem = didChangeSelectedItem
         return control
     }
 
@@ -175,14 +185,10 @@ extension ActivityTotalView {
         let button = UIButton()
         button.setTitle("날짜 선택", for: .normal)
         button.setTitleColor(.systemGray, for: .normal)
-        button.setImage(dateIcon, for: .normal)
+        button.setImage(dateButtonActiveIcon, for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.imageEdgeInsets.right = -10
         button.addTarget(self, action: #selector(didTapDateButton), for: .touchUpInside)
         return button
-    }
-
-    private var dateIcon: UIImage? {
-        UIImage.SFSymbol(name: "chevron.down", color: .label)
     }
 }
