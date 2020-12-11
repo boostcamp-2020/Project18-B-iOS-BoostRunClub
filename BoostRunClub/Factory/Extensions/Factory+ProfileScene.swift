@@ -18,6 +18,6 @@ extension DependencyFactory: ProfileSceneFactory {
     }
 
     func makeProfileVM() -> ProfileViewModelTypes {
-        ProfileViewModel(defaults: defaults)
+        ProfileViewModel(defaults: defaultsProvider)
     }
 }

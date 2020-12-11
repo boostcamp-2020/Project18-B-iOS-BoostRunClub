@@ -18,5 +18,5 @@ class DependencyFactory {
         motionProvider: motionProvider,
         activityWriter: activityProvider
     )
-    lazy var defaults = UserDefaults.standard
+    lazy var defaultsProvider = DefaultsProvider()
 }

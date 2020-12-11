@@ -18,6 +18,6 @@ extension DependencyFactory: EditProfileSceneFactory {
     }
 
     func makeEditProfileVM() -> EditProfileViewModelTypes {
-        EditProfileViewModel(defaults: defaults)
+        EditProfileViewModel(defaults: defaultsProvider)
     }
 }
