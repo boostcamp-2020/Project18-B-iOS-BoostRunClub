@@ -65,7 +65,7 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     @objc
-    func didTapEditProfileButton() {
+    private func didTapEditProfileButton() {
         viewModel?.inputs.didTapEditProfileButton()
     }
 }
@@ -73,7 +73,7 @@ extension ProfileViewController {
 // MARK: - Make Views
 
 extension ProfileViewController {
-    func makeImageView() -> UIImageView {
+    private func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.frame.size = CGSize(width: 80, height: 80)
@@ -83,7 +83,7 @@ extension ProfileViewController {
         return imageView
     }
 
-    func makeNameLabel() -> UILabel {
+    private func makeNameLabel() -> UILabel {
         let label = UILabel()
         label.text = ""
         label.textColor = .label
@@ -91,7 +91,7 @@ extension ProfileViewController {
         return label
     }
 
-    func makeHometownLabel() -> UILabel {
+    private func makeHometownLabel() -> UILabel {
         let label = UILabel()
         label.text = ""
         label.textColor = .label
@@ -99,7 +99,7 @@ extension ProfileViewController {
         return label
     }
 
-    func makeBioLabel() -> UILabel {
+    private func makeBioLabel() -> UILabel {
         let label = UILabel()
         label.text = ""
         label.textColor = .systemGray
@@ -107,7 +107,7 @@ extension ProfileViewController {
         return label
     }
 
-    func makeEditProfileButton() -> UIButton {
+    private func makeEditProfileButton() -> UIButton {
         let button = UIButton()
         button.layer.borderWidth = CGFloat(1)
         button.layer.borderColor = UIColor.systemGray3.cgColor
@@ -128,7 +128,7 @@ extension ProfileViewController {
 // MARK: - Configure
 
 extension ProfileViewController {
-    func configureLayout() {
+    private func configureLayout() {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

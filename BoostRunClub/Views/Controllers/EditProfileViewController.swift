@@ -107,17 +107,17 @@ extension EditProfileViewController {
 
 extension EditProfileViewController {
     @objc
-    func didTapCancelButton() {
+    private func didTapCancelButton() {
         dismiss(animated: true, completion: nil)
     }
 
     @objc
-    func didTapApplyButton() {
+    private func didTapApplyButton() {
         viewModel?.inputs.didTapApplyButton()
     }
 
     @objc
-    func didTapOpenImagePicker(_: UITapGestureRecognizer) {
+    private func didTapOpenImagePicker(_: UITapGestureRecognizer) {
         present(imagePicker, animated: true, completion: nil)
     }
 }
@@ -125,14 +125,14 @@ extension EditProfileViewController {
 // MARK: - Make Views
 
 extension EditProfileViewController {
-    func makeNavigationBar() -> UINavigationBar {
+    private func makeNavigationBar() -> UINavigationBar {
         let navBar = UINavigationBar()
         navBar.barTintColor = UIColor(named: "customBackground")
         navBar.setItems([navItem], animated: false)
         return navBar
     }
 
-    func makeNavigationItem() -> UINavigationItem {
+    private func makeNavigationItem() -> UINavigationItem {
         let navItem = UINavigationItem()
         navItem.hidesBackButton = true
 
@@ -157,7 +157,7 @@ extension EditProfileViewController {
         return navItem
     }
 
-    func makeImageView() -> UIImageView {
+    private func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.frame.size = CGSize(width: 80, height: 80)
@@ -169,7 +169,7 @@ extension EditProfileViewController {
         return imageView
     }
 
-    func makeLabel(withText text: String, gestureRecognizer: UIGestureRecognizer? = nil) -> UILabel {
+    private func makeLabel(withText text: String, gestureRecognizer: UIGestureRecognizer? = nil) -> UILabel {
         let label = EditProfileSceneLabel()
         label.text = text
         if let gestureRecognizer = gestureRecognizer {
@@ -179,7 +179,7 @@ extension EditProfileViewController {
         return label
     }
 
-    func makeNameTextField() -> UIView {
+    private func makeNameTextField() -> UIView {
         let stackView = UIStackView(arrangedSubviews: [lastNameTextField, firstNameTextField])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -194,7 +194,7 @@ extension EditProfileViewController {
         return stackView
     }
 
-    func makeTextField(
+    private func makeTextField(
         placeHolder: String,
         borderStyle: UITextField.BorderStyle = .none
     )
@@ -207,7 +207,7 @@ extension EditProfileViewController {
         return textField
     }
 
-    func makeBioTextView() -> UITextView {
+    private func makeBioTextView() -> UITextView {
         let bioTextView = UITextView()
         bioTextView.delegate = self
         bioTextView.text = "150자"
@@ -223,18 +223,11 @@ extension EditProfileViewController {
         return bioTextView
     }
 
-    func makeImagePicker() -> UIImagePickerController {
+    private func makeImagePicker() -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = false
         return imagePicker
-    }
-
-    func makeTextViewLimit() -> UILabel {
-        let label = EditProfileSceneLabel()
-        let bioTextCount = viewModel?.outputs.bioTextObservable.value.count ?? 0
-        label.text = "\(String(bioTextCount))/150"
-        return label
     }
 }
 
@@ -296,7 +289,7 @@ extension EditProfileViewController: UITextViewDelegate {
 // MARK: - Configure
 
 extension EditProfileViewController {
-    func configureLayout() {
+    private func configureLayout() {
         // MARK: NavigationBar AutoLayout
 
         view.addSubview(navBar)
