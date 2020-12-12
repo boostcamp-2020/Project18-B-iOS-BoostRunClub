@@ -9,8 +9,8 @@ import Combine
 import UIKit
 
 final class EditProfileViewController: UIViewController, UINavigationControllerDelegate {
-    private lazy var scrollView = UIScrollView()
-    private lazy var contentView = UIView()
+    private lazy var scrollView: UIScrollView = UIScrollView()
+    private lazy var contentView: UIView = UIView()
     private lazy var navBar: UINavigationBar = makeNavigationBar()
     private lazy var navItem: UINavigationItem = makeNavigationItem()
     private lazy var imageView: UIImageView = makeImageView()
@@ -29,44 +29,44 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
                                                                          action: #selector(didTapOpenImagePicker))
     private lazy var editLabelGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                          action: #selector(didTapOpenImagePicker))
-
+    
     private var viewModel: EditProfileViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
-
+    
     init(with viewModel: EditProfileViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-
+    
     // TODO: Editprofile viewmodel input의 view did laod 함수 바인딩하기. 아래 바인딩 함수는 뭐하는 녀석인지 판단후 다시 정리하기
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
-
+        
         viewModel.outputs.firstNameTextObservable
             .receive(on: RunLoop.main)
             .sink { text in
                 self.firstNameTextField.text = text
             }
             .store(in: &cancellables)
-
+        
         viewModel.outputs.lastNameTextObservable
             .receive(on: RunLoop.main)
             .sink { text in
                 self.lastNameTextField.text = text
             }
             .store(in: &cancellables)
-
+        
         viewModel.outputs.hometownTextObservable
             .receive(on: RunLoop.main)
             .sink { text in
                 self.hometownTextField.text = text
             }
             .store(in: &cancellables)
-
+        
         viewModel.outputs.bioTextObservable
             .receive(on: RunLoop.main)
             .sink { text in
@@ -74,7 +74,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
                 if !text.isEmpty { self.bioTextView.textColor = .label }
             }
             .store(in: &cancellables)
-
+        
         viewModel.outputs.imageDataObservable
             .receive(on: RunLoop.main)
             .sink { imageData in
@@ -86,7 +86,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
             }
             .store(in: &cancellables)
     }
-
+    
     deinit {
         print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
@@ -102,8 +102,7 @@ extension EditProfileViewController {
         configureLayout()
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        registerKeyboardNotifications()
     }
 }
 
@@ -114,30 +113,48 @@ extension EditProfileViewController {
         guard let userInfo = notification.userInfo,
               var keyboardFrame: CGRect = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect
         else { return }
-
+        
         var contentInset: UIEdgeInsets = scrollView.contentInset
         contentInset.bottom = keyboardFrame.size.height
         scrollView.contentInset = contentInset
     }
-
+    
     @objc func keyboardWillHide(notification _: NSNotification) {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
-
+    
     @objc
     private func didTapCancelButton() {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @objc
     private func didTapApplyButton() {
         viewModel?.inputs.didTapApplyButton()
     }
-
+    
     @objc
     private func didTapOpenImagePicker(_: UITapGestureRecognizer) {
         present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Private Functions
+
+extension EditProfileViewController {
+    private func registerKeyboardNotifications () {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
     }
 }
 
@@ -150,11 +167,11 @@ extension EditProfileViewController {
         navBar.setItems([navItem], animated: false)
         return navBar
     }
-
+    
     private func makeNavigationItem() -> UINavigationItem {
         let navItem = UINavigationItem()
         navItem.hidesBackButton = true
-
+        
         let cancelItem = UIBarButtonItem(
             title: "취소",
             style: .plain,
@@ -163,7 +180,7 @@ extension EditProfileViewController {
         )
         cancelItem.tintColor = .label
         navItem.setLeftBarButton(cancelItem, animated: true)
-
+        
         let applyItem = UIBarButtonItem(
             title: "저장",
             style: .plain,
@@ -172,10 +189,10 @@ extension EditProfileViewController {
         )
         applyItem.tintColor = .systemGray2
         navItem.setRightBarButton(applyItem, animated: true)
-
+        
         return navItem
     }
-
+    
     private func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -187,7 +204,7 @@ extension EditProfileViewController {
         imageView.addGestureRecognizer(imageViewGestureRecognizer)
         return imageView
     }
-
+    
     private func makeLabel(withText text: String, gestureRecognizer: UIGestureRecognizer? = nil) -> UILabel {
         let label = EditProfileSceneLabel()
         label.text = text
@@ -197,7 +214,7 @@ extension EditProfileViewController {
         }
         return label
     }
-
+    
     private func makeNameTextField() -> UIView {
         let stackView = UIStackView(arrangedSubviews: [lastNameTextField, firstNameTextField])
         stackView.axis = .vertical
@@ -206,18 +223,18 @@ extension EditProfileViewController {
         stackView.layer.borderWidth = 1
         stackView.layer.borderColor = UIColor.systemGray5.cgColor
         stackView.clipsToBounds = true
-
+        
         lastNameTextField.layer.borderWidth = 1
         lastNameTextField.layer.borderColor = UIColor.systemGray5.cgColor
-
+        
         return stackView
     }
-
+    
     private func makeTextField(
         placeHolder: String,
         borderStyle: UITextField.BorderStyle = .none
     )
-        -> UITextField
+    -> UITextField
     {
         let textField = CustomPaddedTextField()
         textField.delegate = self
@@ -225,7 +242,7 @@ extension EditProfileViewController {
         textField.borderStyle = borderStyle
         return textField
     }
-
+    
     private func makeBioTextView() -> UITextView {
         let bioTextView = UITextView()
         bioTextView.delegate = self
@@ -241,7 +258,7 @@ extension EditProfileViewController {
                                                       right: 15)
         return bioTextView
     }
-
+    
     private func makeImagePicker() -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .savedPhotosAlbum
@@ -257,7 +274,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             fatalError("error while retrieving image info")
         }
-
+        
         imageView.image = selectedImage
         guard let imageData = selectedImage.pngData() else {
             fatalError("error while encoding image to png data")
@@ -289,14 +306,14 @@ extension EditProfileViewController: UITextViewDelegate {
             textView.textColor = UIColor.black
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "150자"
             textView.textColor = UIColor.lightGray
         }
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         viewModel?.inputs.didEditBio(to: textView.text ?? "")
         if !textView.text.isEmpty {
@@ -309,6 +326,8 @@ extension EditProfileViewController: UITextViewDelegate {
 
 extension EditProfileViewController {
     private func configureLayout() {
+        // MARK: ScrollView AutoLayout
+        
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -318,7 +337,9 @@ extension EditProfileViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
         ])
-
+        
+        // MARK: ContentView AutoLayout
+        
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -328,9 +349,9 @@ extension EditProfileViewController {
             contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
         ])
-
+        
         // MARK: NavigationBar AutoLayout
-
+        
         view.addSubview(navBar)
         navBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -338,9 +359,9 @@ extension EditProfileViewController {
             navBar.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             navBar.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
         ])
-
+        
         // MARK: ImageView AutoLayout
-
+        
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -349,18 +370,18 @@ extension EditProfileViewController {
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 100),
         ])
-
+        
         // MARK: EditLabel AutoLayout
-
+        
         contentView.addSubview(editLabel)
         editLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             editLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             editLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5),
         ])
-
+        
         // MARK: NameTextField AutoLayout
-
+        
         contentView.addSubview(nameTextFieldView)
         nameTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -369,18 +390,18 @@ extension EditProfileViewController {
             nameTextFieldView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             nameTextFieldView.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: 50),
         ])
-
+        
         // MARK: NameLabel AutoLayout
-
+        
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: nameTextFieldView.leadingAnchor),
             nameLabel.bottomAnchor.constraint(equalTo: nameTextFieldView.topAnchor, constant: -5),
         ])
-
+        
         // MARK: HomeTownTextField AutoLayout
-
+        
         contentView.addSubview(hometownTextField)
         hometownTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -389,18 +410,18 @@ extension EditProfileViewController {
             hometownTextField.topAnchor.constraint(equalTo: nameTextFieldView.bottomAnchor, constant: 50),
             hometownTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
-
+        
         // MARK: HomeTownLabel AutoLayout
-
+        
         contentView.addSubview(hometownLabel)
         hometownLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hometownLabel.leadingAnchor.constraint(equalTo: hometownTextField.leadingAnchor),
             hometownLabel.bottomAnchor.constraint(equalTo: hometownTextField.topAnchor, constant: -5),
         ])
-
+        
         // MARK: BioTextView AutoLayout
-
+        
         contentView.addSubview(bioTextView)
         bioTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -410,9 +431,9 @@ extension EditProfileViewController {
             bioTextView.topAnchor.constraint(equalTo: hometownTextField.bottomAnchor, constant: 50),
             bioTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
-
+        
         // MARK: BioLabel AutoLayout
-
+        
         contentView.addSubview(bioLabel)
         bioLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -428,7 +449,7 @@ class EditProfileSceneLabel: UILabel {
         font = UIFont.systemFont(ofSize: 12)
         textColor = .systemGray
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -439,24 +460,24 @@ class CustomPaddedTextField: UITextField {
                                left: 15,
                                bottom: 0,
                                right: 15)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont.systemFont(ofSize: 14)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         bounds.inset(by: padding)
     }
-
+    
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         bounds.inset(by: padding)
     }
-
+    
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         bounds.inset(by: padding)
     }
