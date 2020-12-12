@@ -40,7 +40,7 @@ class SimpleSplitViewCell: UITableViewCell {
         distance: String = "",
         pace: String = "",
         elevation: String = "",
-        paceRatio _: CGFloat = 0
+        paceRatio: CGFloat = 0
     ) {
         switch style {
         case .desc:
@@ -56,12 +56,14 @@ class SimpleSplitViewCell: UITableViewCell {
             paceLabel.text = pace
             elevationLabel.text = elevation
             paceForegroundView.backgroundColor = .systemGray6
+            setAvgProgress(to: paceRatio)
         }
     }
 
     private func setAvgProgress(to progress: CGFloat) {
+        let progress = progress == .nan ? 0 : progress
         let fullWidth = paceBackgroundView.bounds.width
-        let progressWidth = (fullWidth + Constant.paceMinWidth) * progress
+        let progressWidth = Constant.paceMinWidth + (fullWidth - Constant.paceMinWidth) * progress
         paceContainerWidthConstraint.constant = progressWidth
     }
 }

@@ -37,15 +37,15 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     }
 
     // Inputs
-    
+
     func didTapShowRouteDetail() {
         showRouteDetailSignal.send()
     }
-    
-    func didTapShowInfoDetail(){
+
+    func didTapShowInfoDetail() {
         showInfoDetailSignal.send()
     }
-    
+
     func didTapBackItem() {
         goBackToSceneSignal.send()
     }
@@ -53,7 +53,7 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     func viewDidLoad() {}
 
     // Outputs
-    
+
     var showInfoDetailSignal = PassthroughSubject<Void, Never>()
     var showRouteDetailSignal = PassthroughSubject<Void, Never>()
     var goBackToSceneSignal = PassthroughSubject<Void, Never>()

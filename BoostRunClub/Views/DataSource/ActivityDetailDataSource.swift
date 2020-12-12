@@ -36,7 +36,7 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
             let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
             let elevationText = String(split.elevation)
 
-            let paceRatio = (maxPace - CGFloat(split.avgPace)) / maxPace
+            let paceRatio = maxPace == 0 ? 0 : (maxPace - CGFloat(split.avgPace)) / maxPace
 
             cell.configure(
                 style: .value,

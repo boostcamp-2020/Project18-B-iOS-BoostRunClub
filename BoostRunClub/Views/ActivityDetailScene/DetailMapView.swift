@@ -73,25 +73,26 @@ extension DetailMapView {
     }
 
     private func configureLayout() {
-        let width = UIScreen.main.bounds.width - 40
         let height = UIScreen.main.bounds.height
-        addSubview(mapView)
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mapView.heightAnchor.constraint(equalToConstant: height / 2),
-            mapView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            mapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            mapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-        ])
 
-        addSubview(detailRouteButton)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
         detailRouteButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            mapView.heightAnchor.constraint(equalToConstant: height / 2),
             detailRouteButton.heightAnchor.constraint(equalToConstant: 60),
-            detailRouteButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
-            detailRouteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            detailRouteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            detailRouteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+        ])
+
+        let vStack = UIStackView.make(
+            with: [mapView, detailRouteButton],
+            axis: .vertical, alignment: .fill, distribution: .equalSpacing, spacing: 20
+        )
+        addSubview(vStack)
+        vStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            vStack.topAnchor.constraint(equalTo: topAnchor),
+            vStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            vStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            vStack.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 

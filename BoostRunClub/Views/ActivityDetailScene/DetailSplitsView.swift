@@ -44,10 +44,10 @@ extension DetailSplitsView {
 
 extension DetailSplitsView {
     private func commonInit() {
-        tableView.heightPublisher
-            .sink { _ in
-                self.invalidateIntrinsicContentSize()
-                self.heightChangedPublisher.send()
+        tableView.intrinsicSizeChangedSignal
+            .sink { [weak self] in
+                self?.invalidateIntrinsicContentSize()
+                self?.heightChangedPublisher.send()
             }
             .store(in: &cancellables)
 
@@ -55,29 +55,23 @@ extension DetailSplitsView {
     }
 
     private func configureLayout() {
-        addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let vStack = UIStackView.make(
+            with: [titleLabel, tableView, detailInfoButton],
+            axis: .vertical, alignment: .fill, distribution: .equalSpacing, spacing: 10
+        )
+        addSubview(vStack)
+        vStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            vStack.topAnchor.constraint(equalTo: topAnchor),
+            vStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            vStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            vStack.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
-        addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-        ])
-
-        addSubview(detailInfoButton)
         detailInfoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             detailInfoButton.heightAnchor.constraint(equalToConstant: 60),
-            detailInfoButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
-            detailInfoButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            detailInfoButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            detailInfoButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
         ])
     }
 
