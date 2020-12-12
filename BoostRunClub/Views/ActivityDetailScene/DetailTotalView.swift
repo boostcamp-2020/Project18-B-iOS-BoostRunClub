@@ -25,6 +25,10 @@ class DetailTotalView: UIView {
     private var cadenceValueLabel = UILabel.makeBold()
     private var cadenceLabel = UILabel.makeNormal(text: "케이던스")
 
+    private var distanceTarget: Double = 0
+    private var distanceCurrent: Double = 0
+    private var displayLink: CADisplayLink?
+
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         commonInit()
@@ -35,7 +39,28 @@ class DetailTotalView: UIView {
         commonInit()
     }
 
-    func configure(with _: ActivityTotalConfig) {}
+    func configure(with config: ActivityDetailConfig) {
+        distanceTarget = config.distance
+        distanceCurrent = 0
+        avgPaceValueLabel.text = config.avgPace
+        runningTimeValueLabel.text = config.runningTime
+        calorieValueLabel.text = "\(config.calorie)"
+        elevationValueLabel.text = "\(config.elevation)"
+        bpmValueLabel.text = "\(config.avgBPM)"
+        cadenceValueLabel.text = "\(config.cadence)"
+        displayLink = CADisplayLink(target: self, selector: #selector(displayFrameUpdated))
+    }
+
+    func startAppear() {
+        displayLink?.add(to: RunLoop.main, forMode: .common)
+    }
+}
+
+// MARK: - Actions
+
+extension DetailTotalView {
+    @objc
+    func displayFrameUpdated() {}
 }
 
 // MARK: - Configure

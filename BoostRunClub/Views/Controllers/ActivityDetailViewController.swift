@@ -47,6 +47,17 @@ class ActivityDetailViewController: UIViewController {
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
+        viewModel.outputs.detailConfigSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] config in
+                self?.titleView.configure(dateText: config.titleDate, title: config.title)
+                self?.totalView.configure(with: config)
+                self?.mapContainerView.configure(locations: config.locations, splits: config.splits)
+                self?.dataSource.loadData(config.splits)
+                self?.splitsView.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+
         splitsView.heightChangedPublisher
             .sink { self.contentStack.layoutIfNeeded() }
             .store(in: &cancellables)

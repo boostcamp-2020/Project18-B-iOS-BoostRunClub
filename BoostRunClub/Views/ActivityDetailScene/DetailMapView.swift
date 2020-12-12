@@ -5,6 +5,7 @@
 //  Created by 김신우 on 2020/12/12.
 //
 
+import CoreLocation.CLLocation
 import MapKit
 import UIKit
 
@@ -22,7 +23,7 @@ class DetailMapView: UIView {
         commonInit()
     }
 
-    func configure(with _: [CLCoordinator2d]) {}
+    func configure(locations _: [CLLocationCoordinate2D], splits _: [RunningSplit]) {}
 }
 
 // MARK: - Actions

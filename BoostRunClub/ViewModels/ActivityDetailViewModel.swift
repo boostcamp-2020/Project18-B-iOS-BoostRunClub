@@ -21,14 +21,15 @@ protocol ActivityDetailViewModelInputs {
 
 protocol ActivityDetailViewModelOutputs {
     var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
+    var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never> { get }
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
-    let detailConfig: ActivityDetailConfig
-
     init?(activity: Activity, activityProvider: ActivityReadable) {
         guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
-        detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
+
+        let detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
+        detailConfigSubject = CurrentValueSubject<ActivityDetailConfig, Never>(detailConfig)
     }
 
     // Inputs
@@ -40,6 +41,7 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
 
     // Outputs
     var goBackToSceneSignal = PassthroughSubject<Void, Never>()
+    var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never>
 }
 
 extension ActivityDetailViewModel: ActivityDetailViewModelTypes {

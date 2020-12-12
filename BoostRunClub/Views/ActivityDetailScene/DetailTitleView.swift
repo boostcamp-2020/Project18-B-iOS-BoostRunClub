@@ -22,7 +22,10 @@ class DetailTitleView: UIView {
         commonInit()
     }
 
-    func configure(with _: ActivityTotalConfig) {}
+    func configure(dateText: String, title: String) {
+        dateLabel.text = dateText
+        titleLabel.text = title
+    }
 }
 
 // MARK: - Configure
