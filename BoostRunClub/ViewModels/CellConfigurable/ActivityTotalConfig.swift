@@ -32,12 +32,12 @@ struct ActivityTotalConfig {
     }
 
     var totalRunningTimeText: String {
-        TimeInterval(totalRunningTime).formattedString
+        TimeInterval(totalRunningTime).fullFormattedString
     }
 
     // Statistic
     var numRunningPerWeekText: String {
-        let numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
+        var numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
         return String(format: "%.2f러닝/주", Double(numRunning) / Double(numberOfWeeks))
     }
 
@@ -48,7 +48,7 @@ struct ActivityTotalConfig {
 
     var runningTimePerRunningText: String {
         guard numRunning > 0 else { return "--" }
-        return "\(TimeInterval(totalRunningTime / Double(numRunning)).formattedString)/러닝"
+        return "\(TimeInterval(totalRunningTime / Double(numRunning)).fullFormattedString)/러닝"
     }
 
     var totalElevationText: String {
@@ -58,7 +58,7 @@ struct ActivityTotalConfig {
     init(
         period: String = "",
         distance: Double = 0,
-        numRunning: Int = 1,
+        numRunning: Int = 0,
         avgPace: Int = 0,
         runningTime: Double = 0,
         elevation: Double = 0,
@@ -76,6 +76,7 @@ struct ActivityTotalConfig {
     }
 
     init(filterType: ActivityFilterType, filterRange: DateRange, activities: [Activity]) {
+        var divider = activities.count == 0 ? activities.count : 1
         var sumAvgPace: Int = 0
         var sumDuration: Double = 0
         var sumDistance: Double = 0
@@ -89,8 +90,9 @@ struct ActivityTotalConfig {
         }
         self.filterType = filterType
         selectedRange = filterRange
-        period = filterType.rangeDescription(from: filterRange)
-        avgPace = sumAvgPace / activities.count
+        period = filterType.rangeDescription(at: filterRange)
+        avgPace = activities.count == 0 ? 0 : sumAvgPace / activities.count
+
         totalDistance = sumDistance
         totalRunningTime = sumDuration
         numRunning = activities.count

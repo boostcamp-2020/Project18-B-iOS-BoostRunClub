@@ -61,6 +61,14 @@ extension Date {
     static func numberOfWeeks(range: DateRange) -> Int? {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.weekOfMonth], from: range.start, to: range.end)
-        return components.weekOfMonth
+        return components.weekOfMonth == 0 ? 1 : components.weekOfMonth
+    }
+
+    static func isSameWeek(date: Date, dateOfWeek: Date) -> Bool {
+        dateOfWeek.rangeOfWeek?.contains(date: date) ?? false
+    }
+
+    static func isSameYear(date: Date, dateOfYear: Date) -> Bool {
+        dateOfYear.rangeOfYear?.contains(date: date) ?? false
     }
 }

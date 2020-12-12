@@ -43,7 +43,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
         self.runningDataProvider = runningDataProvider
 
         runningDataProvider.runningTime
-            .map { $0.formattedString }
+            .map { $0.simpleFormattedString }
             .sink { [weak self] timeString in
                 self?.possibleTypes[.time] = timeString
 

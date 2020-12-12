@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActivityCellView: UITableViewCell {
+class ActivityCellView: UICollectionViewCell {
     private lazy var thumbnailImage = UIImageView(image: UIImage.SFSymbol(name: "person.circle.fill"))
     private lazy var dateLabel = makeValueLabel()
     private lazy var titleLabel = makeNormalLabel()
@@ -23,17 +23,29 @@ class ActivityCellView: UITableViewCell {
         commonInit()
     }
 
-    init() {
-        super.init(style: .default, reuseIdentifier: String(describing: Self.self))
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
         commonInit()
     }
 
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes
+    ) -> UICollectionViewLayoutAttributes {
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
+
     func configure(with activity: Activity) {
-        dateLabel.text = activity.weekOfDayText
-        titleLabel.text = activity.title
+        dateLabel.text = activity.dateText(with: Date())
+        titleLabel.text = activity.titleText
         distanceValueLabel.text = activity.distanceText
         avgPaceValueLabel.text = activity.avgPaceText
         runningTimeValueLabel.text = activity.runningTimeText
+        guard let data = activity.thumbnail else { return }
+        thumbnailImage.image = UIImage(data: data)
     }
 }
 
@@ -41,14 +53,17 @@ class ActivityCellView: UITableViewCell {
 
 extension ActivityCellView {
     private func commonInit() {
-        selectionStyle = .none
         configureLayout()
         distanceLabel.text = "Km"
         avgPaceLabel.text = "평균 페이스"
         runningTimeLabel.text = "시간"
+        contentView.backgroundColor = .systemBackground
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
 
     private func configureLayout() {
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             thumbnailImage.widthAnchor.constraint(equalToConstant: 50),
@@ -95,7 +110,7 @@ extension ActivityCellView {
             with: [distanceStackView, avgPaceStackView, runningTimeStackView],
             axis: .horizontal,
             alignment: .leading,
-            distribution: .fill,
+            distribution: .equalSpacing,
             spacing: 50
         )
 
@@ -112,8 +127,8 @@ extension ActivityCellView {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
         ])
     }
 

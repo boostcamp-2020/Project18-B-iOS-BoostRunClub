@@ -5,6 +5,7 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import UIKit
 
 protocol ProfileCoordinatorProtocol {
@@ -12,9 +13,11 @@ protocol ProfileCoordinatorProtocol {
 }
 
 final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
-    let factory: ProfileSceneFactory
+    let factory: ProfileSceneFactory & EditProfileSceneFactory
 
-    init(navigationController: UINavigationController, factory: ProfileSceneFactory = DependencyFactory.shared) {
+    init(navigationController: UINavigationController,
+         factory: ProfileSceneFactory & EditProfileSceneFactory = DependencyFactory.shared)
+    {
         self.factory = factory
         super.init(navigationController: navigationController)
     }
@@ -24,8 +27,34 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
     }
 
     func showProfileViewController() {
-        let profileVC = ProfileViewController()
+        let profileVM = factory.makeProfileVM()
+        profileVM.outputs.showEditProfileSceneSignal
+            .receive(on: RunLoop.main)
+            .compactMap { [weak self] in self?.showEditProfileScene() }
+            .flatMap { $0 }
+            .sink { [weak profileVM] (profile: Profile) in
+                profileVM?.inputs.didEditProfile(profile)
+            }
+            .store(in: &cancellables)
+
+        let profileVC = factory.makeProfileVC(with: profileVM)
         navigationController.pushViewController(profileVC, animated: true)
+    }
+
+    func showEditProfileScene() -> AnyPublisher<Profile, Never> {
+        let editProfileVM = factory.makeEditProfileVM()
+        let editProfileVC = factory.makeEditProfileVC(with: editProfileVM)
+
+        editProfileVC.modalPresentationStyle = .overFullScreen
+        navigationController.present(editProfileVC, animated: true, completion: nil)
+
+        return editProfileVM.outputs.closeSignal
+            .receive(on: RunLoop.main)
+            .map { [weak editProfileVC] (profile: Profile) -> Profile in
+                editProfileVC?.dismiss(animated: true, completion: nil)
+                return profile
+            }
+            .eraseToAnyPublisher()
     }
 
     deinit {

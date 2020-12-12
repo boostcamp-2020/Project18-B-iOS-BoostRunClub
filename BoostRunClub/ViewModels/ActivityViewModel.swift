@@ -33,6 +33,7 @@ protocol ActivityViewModelOutputs {
 
     var showProfileScene: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
+    var showActivityListScene: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
@@ -40,6 +41,14 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     // ERASE!: DummyData
     let dummyActivity = [
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-21 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-22 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-23 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-24 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-10 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-11 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-12 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-12-02 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")!),
@@ -47,6 +56,8 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-02 13:00")!),
+        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-03 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")!),
         Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")!),
@@ -54,20 +65,16 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
+    var cancellables = Set<AnyCancellable>()
 
     init(activityProvider: ActivityReadable) {
         self.activityProvider = activityProvider
+        activityProvider.activityChangeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.fetchActivities() }
+            .store(in: &cancellables)
 
-        // ERASE! : dummy Data
-        activities = dummyActivity
-
-        let dates = activities.map { $0.createdAt }
-        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: dates)
-
-        let numRecentActivity = activities.count < 5 ? activities.count : 5
-        if numRecentActivity > 0 {
-            recentActivitiesSubject.send(activities[0 ..< numRecentActivity].map { $0 })
-        }
+        fetchActivities()
     }
 
     // Inputs
@@ -79,11 +86,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         guard let filterType = ActivityFilterType(rawValue: idx) else { return }
         let ranges = getDateRanges(for: filterType)
 
-        if let latestRange = ranges.last {
+        if let firstRange = ranges.first {
             let total = ActivityTotalConfig(
                 filterType: filterType,
-                filterRange: latestRange,
-                activities: activities.filter { latestRange.contains(date: $0.createdAt) }
+                filterRange: firstRange,
+                activities: activities.filter { firstRange.contains(date: $0.createdAt) }
             )
             filterTypeSubject.send(filterType)
             totalDataSubject.send(total)
@@ -101,7 +108,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didSelectActivity(at _: Int) {}
 
-    func didTapShowAllActivities() {}
+    func didTapShowAllActivities() {
+        showActivityListScene.send()
+    }
 
     func didTapShowProfileButton() {}
 
@@ -117,6 +126,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     var showProfileScene = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
+    var showActivityListScene = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {
@@ -127,13 +137,23 @@ extension ActivityViewModel: ActivityViewModelTypes {
 // MARK: - Private Functions
 
 extension ActivityViewModel {
+    private func fetchActivities() {
+        activities = activityProvider.fetchActivities().sorted(by: >)
+
+        ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
+
+        let numRecentActivity = activities.count < 5 ? activities.count : 5
+        if numRecentActivity > 0 {
+            recentActivitiesSubject.send(activities[0 ..< numRecentActivity].map { $0 })
+        }
+    }
+
     private func getDateRanges(for filter: ActivityFilterType) -> [DateRange] {
         let ranges: [DateRange]
         if self.ranges.contains(where: { $0.key == filter }) {
             ranges = self.ranges[filter]!
         } else {
-            let dates = dummyActivity.compactMap { $0.createdAt }
-            ranges = filter.groupDateRanges(from: dates)
+            ranges = filter.groupDateRanges(from: activities)
             self.ranges[filter] = ranges
         }
         return ranges

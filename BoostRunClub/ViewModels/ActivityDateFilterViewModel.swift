@@ -104,28 +104,17 @@ extension ActivityDateFilterViewModel {
         currentRange: DateRange
     ) {
         var pickerList: [[String]]
-
         switch filterType {
         case .all:
             dateRanges = []
             pickerList = []
-        case .week:
+        case .week, .year:
             dateRanges = [[]]
             pickerList = [[]]
 
             for (idx, range) in ranges.enumerated() {
                 dateRanges[0].append(range)
-                pickerList[0].append(range.start.toMDString + "~" + range.end.toMDString)
-                if range == currentRange {
-                    selectedRow[0] = idx
-                }
-            }
-        case .year:
-            dateRanges = [[]]
-            pickerList = [[]]
-            for (idx, range) in ranges.enumerated() {
-                dateRanges[0].append(range)
-                pickerList[0].append(range.start.toYString)
+                pickerList[0].append(filterType.rangeDescription(at: range))
                 if range == currentRange {
                     selectedRow[0] = idx
                 }

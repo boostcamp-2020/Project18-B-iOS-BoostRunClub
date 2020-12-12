@@ -34,7 +34,7 @@ extension DateFormatter {
 
     static var YMDFormatter: DateFormatter = {
         let fmt = DateFormatter()
-        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.dateFormat = "yyyy.MM.dd"
         return fmt
     }()
 

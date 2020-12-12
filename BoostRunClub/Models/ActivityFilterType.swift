@@ -10,35 +10,51 @@ import Foundation
 enum ActivityFilterType: Int {
     case week, month, year, all
 
-    func groupDateRanges(from dates: [Date]) -> [DateRange] {
-        guard !dates.isEmpty else { return [] }
+    func groupDateRanges(from activities: [Activity]) -> [DateRange] {
+        guard !activities.isEmpty else { return [] }
 
         if self == .all {
-            return [DateRange(start: dates.first!, end: dates.last ?? dates.first!)]
+            return [
+                DateRange(
+                    start: activities.last?.createdAt ?? activities.first!.createdAt,
+                    end: activities.first!.createdAt
+                ),
+            ]
         }
 
-        var results = [DateRange]()
-        dates.forEach {
-            if
-                results.isEmpty,
-                let range = $0.rangeOf(type: self)
-            {
-                results.append(range)
-            } else if
-                let lastRange = results.last,
-                !lastRange.contains(date: $0),
-                let newRange = $0.rangeOfWeek
-            {
-                results.append(newRange)
+        return activities
+            .reduce(into: [DateRange]()) { result, activity in
+                if
+                    result.isEmpty,
+                    let range = activity.createdAt.rangeOf(type: self)
+                {
+                    result.append(range)
+                } else if
+                    let lastRange = result.last,
+                    !lastRange.contains(date: activity.createdAt),
+                    let newRange = activity.createdAt.rangeOf(type: self)
+                {
+                    result.append(newRange)
+                }
             }
-        }
-        return results
     }
 
-    func rangeDescription(from range: DateRange) -> String {
+    func rangeDescription(at range: DateRange, from date: Date = Date()) -> String {
         switch self {
         case .week:
-            return range.start.toMDString + "~" + range.end.toMDString
+            if Date.isSameWeek(date: range.start, dateOfWeek: date) {
+                return "이번 주"
+            } else if
+                let lastWeekDate = Calendar.current.date(byAdding: .day, value: -7, to: date),
+                Date.isSameWeek(date: range.start, dateOfWeek: lastWeekDate)
+            {
+                return "저번 주"
+            }
+
+            if Date.isSameYear(date: range.start, dateOfYear: date) {
+                return range.start.toMDString + "~" + range.end.toMDString
+            }
+            return range.start.toYMDString + "~" + range.end.toYMDString
         case .month:
             return range.end.toYMString
         case .year:
