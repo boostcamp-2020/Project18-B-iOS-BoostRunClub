@@ -9,6 +9,8 @@ import Combine
 import UIKit
 
 final class EditProfileViewController: UIViewController, UINavigationControllerDelegate {
+    private lazy var scrollView = UIScrollView()
+    private lazy var contentView = UIView()
     private lazy var navBar: UINavigationBar = makeNavigationBar()
     private lazy var navItem: UINavigationItem = makeNavigationItem()
     private lazy var imageView: UIImageView = makeImageView()
@@ -100,12 +102,29 @@ extension EditProfileViewController {
         configureLayout()
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 // MARK: - Action
 
 extension EditProfileViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              var keyboardFrame: CGRect = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect
+        else { return }
+
+        var contentInset: UIEdgeInsets = scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification _: NSNotification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+    }
+
     @objc
     private func didTapCancelButton() {
         dismiss(animated: true, completion: nil)
@@ -290,50 +309,70 @@ extension EditProfileViewController: UITextViewDelegate {
 
 extension EditProfileViewController {
     private func configureLayout() {
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+        ])
+
+        scrollView.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+        ])
+
         // MARK: NavigationBar AutoLayout
 
         view.addSubview(navBar)
         navBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            navBar.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            navBar.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            navBar.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
         ])
 
         // MARK: ImageView AutoLayout
 
-        view.addSubview(imageView)
+        contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: 80),
             imageView.heightAnchor.constraint(equalToConstant: 80),
-            imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 100),
         ])
 
         // MARK: EditLabel AutoLayout
 
-        view.addSubview(editLabel)
+        contentView.addSubview(editLabel)
         editLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            editLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            editLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             editLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5),
         ])
 
         // MARK: NameTextField AutoLayout
 
-        view.addSubview(nameTextFieldView)
+        contentView.addSubview(nameTextFieldView)
         nameTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nameTextFieldView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -40),
+            nameTextFieldView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -40),
             nameTextFieldView.heightAnchor.constraint(equalToConstant: 80),
-            nameTextFieldView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            nameTextFieldView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             nameTextFieldView.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: 50),
         ])
 
         // MARK: NameLabel AutoLayout
 
-        view.addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: nameTextFieldView.leadingAnchor),
@@ -342,18 +381,18 @@ extension EditProfileViewController {
 
         // MARK: HomeTownTextField AutoLayout
 
-        view.addSubview(hometownTextField)
+        contentView.addSubview(hometownTextField)
         hometownTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hometownTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
             hometownTextField.heightAnchor.constraint(equalToConstant: 40),
             hometownTextField.topAnchor.constraint(equalTo: nameTextFieldView.bottomAnchor, constant: 50),
-            hometownTextField.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            hometownTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
 
         // MARK: HomeTownLabel AutoLayout
 
-        view.addSubview(hometownLabel)
+        contentView.addSubview(hometownLabel)
         hometownLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hometownLabel.leadingAnchor.constraint(equalTo: hometownTextField.leadingAnchor),
@@ -362,18 +401,19 @@ extension EditProfileViewController {
 
         // MARK: BioTextView AutoLayout
 
-        view.addSubview(bioTextView)
+        contentView.addSubview(bioTextView)
         bioTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             bioTextView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
             bioTextView.heightAnchor.constraint(equalToConstant: 120),
-            bioTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            bioTextView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             bioTextView.topAnchor.constraint(equalTo: hometownTextField.bottomAnchor, constant: 50),
+            bioTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
 
         // MARK: BioLabel AutoLayout
 
-        view.addSubview(bioLabel)
+        contentView.addSubview(bioLabel)
         bioLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             bioLabel.leadingAnchor.constraint(equalTo: bioTextView.leadingAnchor),
