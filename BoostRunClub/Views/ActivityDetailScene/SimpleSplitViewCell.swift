@@ -35,7 +35,13 @@ class SimpleSplitViewCell: UITableViewCell {
         commonInit()
     }
 
-    func configure(style: Style = .value) {
+    func configure(
+        style: Style = .value,
+        distance: String = "",
+        pace: String = "",
+        elevation: String = "",
+        paceRatio _: CGFloat = 0
+    ) {
         switch style {
         case .desc:
             distanceLabel.textColor = .systemGray
@@ -46,8 +52,17 @@ class SimpleSplitViewCell: UITableViewCell {
             distanceLabel.textColor = .label
             paceLabel.textColor = .label
             elevationLabel.textColor = .label
+            distanceLabel.text = distance
+            paceLabel.text = pace
+            elevationLabel.text = elevation
             paceForegroundView.backgroundColor = .systemGray6
         }
+    }
+
+    private func setAvgProgress(to progress: CGFloat) {
+        let fullWidth = paceBackgroundView.bounds.width
+        let progressWidth = (fullWidth + Constant.paceMinWidth) * progress
+        paceContainerWidthConstraint.constant = progressWidth
     }
 }
 

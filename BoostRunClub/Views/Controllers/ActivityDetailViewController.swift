@@ -14,13 +14,13 @@ class ActivityDetailViewController: UIViewController {
     private var totalView = DetailTotalView()
     private var mapContainerView = DetailMapView()
     private var splitsView = DetailSplitsView()
-
     private lazy var contentStack = UIStackView.make(
         with: [titleView, totalView, mapContainerView, splitsView],
         axis: .vertical, alignment: .fill, distribution: .fillProportionally, spacing: 10
     )
 
-    private lazy var dataSource = DetailDataSource()
+    private var dataSource = ActivityDetailDataSource()
+
     private var cancellables = Set<AnyCancellable>()
     private var viewModel: ActivityDetailViewModelTypes?
 
@@ -37,20 +37,18 @@ class ActivityDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.backgroundColor = .systemBackground
-        configureNavigationItems()
+        configureNavigations()
+        splitsView.tableView.dataSource = dataSource
         configureLayout()
-        splitsView.tableView.dataSource = self
         bindViewModel()
+        viewModel?.inputs.viewDidLoad()
     }
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
         splitsView.heightChangedPublisher
-            .sink {
-                self.contentStack.layoutIfNeeded()
-            }
+            .sink { self.contentStack.layoutIfNeeded() }
             .store(in: &cancellables)
     }
 }
@@ -64,24 +62,13 @@ extension ActivityDetailViewController {
     }
 }
 
-// MARK: - UITableViewDelegate Implementation
-
-extension ActivityDetailViewController: UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        5
-    }
-
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = SimpleSplitViewCell()
-        cell.configure(style: indexPath.row == 0 ? .desc : .value)
-        return cell
-    }
-}
-
 // MARK: - Configure
 
 extension ActivityDetailViewController {
-    private func configureNavigationItems() {
+    private func configureNavigations() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+
         navigationItem.hidesBackButton = true
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = ""

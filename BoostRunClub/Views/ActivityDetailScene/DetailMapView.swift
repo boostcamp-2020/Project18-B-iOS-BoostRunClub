@@ -23,7 +23,6 @@ class DetailMapView: UIView {
     }
 
     func configure(with _: ActivityTotalConfig) {}
-
 }
 
 // MARK: - Actions

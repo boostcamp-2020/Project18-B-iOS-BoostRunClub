@@ -19,7 +19,7 @@ final class ActivityDetailCoordinator: BasicCoordinator {
         self.factory = factory
         self.activity = activity
         super.init(navigationController: navigationController)
-        navigationController.view.backgroundColor = .systemBackground
+
         navigationController.setNavigationBarHidden(false, animated: true)
     }
 
@@ -31,6 +31,12 @@ final class ActivityDetailCoordinator: BasicCoordinator {
         // TODO: detailVM 생성 실패시 처리가 필요함!!!
         guard let detailVM = factory.makeActivityDetailVM(activity: activity) else { return }
         let detailVC = factory.makeActivityDetailVC(with: detailVM)
+
+        detailVM.outputs.goBackToSceneSignal
+            .first()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.navigationController.popViewController(animated: true) }
+            .store(in: &cancellables)
 
         navigationController.pushViewController(detailVC, animated: true)
     }

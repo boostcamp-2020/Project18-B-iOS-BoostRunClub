@@ -126,6 +126,7 @@
 		964BC6DC2580CFB200A69A82 /* ActivityListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6DB2580CFB200A69A82 /* ActivityListCoordinator.swift */; };
 		964BC6E02580CFDA00A69A82 /* ActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */; };
 		964BC6E42580CFEE00A69A82 /* ActivityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */; };
+		9651ABE925854A2C00DF73C3 /* ActivityDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */; };
 		967252FC2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967252FB2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift */; };
 		967253002583D8C600B4BBC6 /* ActivityDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967252FF2583D8C600B4BBC6 /* ActivityDetailCoordinator.swift */; };
 		967253042583DA1500B4BBC6 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */; };
@@ -295,6 +296,7 @@
 		964BC6DB2580CFB200A69A82 /* ActivityListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListCoordinator.swift; sourceTree = "<group>"; };
 		964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListViewController.swift; sourceTree = "<group>"; };
 		964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListViewModel.swift; sourceTree = "<group>"; };
+		9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailDataSource.swift; sourceTree = "<group>"; };
 		967252FB2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+ActivityDetailScene.swift"; sourceTree = "<group>"; };
 		967252FF2583D8C600B4BBC6 /* ActivityDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailCoordinator.swift; sourceTree = "<group>"; };
 		967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 			children = (
 				96F105AB25803D890005F66C /* ActivityDataSource.swift */,
 				961840D82580EE0000069FDA /* ActivityListDataSource.swift */,
+				9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				96FA7E0425701CB800090999 /* SplitsViewController.swift in Sources */,
 				71FBAAD4257D2341005C8D30 /* Factory+RunningInfoScene.swift in Sources */,
 				4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */,
+				9651ABE925854A2C00DF73C3 /* ActivityDetailDataSource.swift in Sources */,
 				71FBAB62257FCD78005C8D30 /* EditProfileViewController.swift in Sources */,
 				967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */,
 				96B2DC23258488BC00A95DD0 /* DetailMapView.swift in Sources */,

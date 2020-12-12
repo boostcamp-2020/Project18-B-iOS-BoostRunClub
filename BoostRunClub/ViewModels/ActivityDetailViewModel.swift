@@ -16,6 +16,7 @@ protocol ActivityDetailViewModelTypes {
 
 protocol ActivityDetailViewModelInputs {
     func didTapBackItem()
+    func viewDidLoad()
 }
 
 protocol ActivityDetailViewModelOutputs {
@@ -36,6 +37,8 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     func didTapBackItem() {
         goBackToSceneSignal.send()
     }
+
+    func viewDidLoad() {}
 
     // Outputs
     var goBackToSceneSignal = PassthroughSubject<Void, Never>()
