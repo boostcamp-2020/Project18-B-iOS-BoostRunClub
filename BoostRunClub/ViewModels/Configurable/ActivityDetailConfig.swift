@@ -20,7 +20,7 @@ struct ActivityDetailConfig {
     let avgBPM: Int
     let cadence: Int
 
-    let locations: [CLLocationCoordinate2D]
+    let locations: [Location]
     let splits: [RunningSplit]
 
     init(activity: Activity, detail: ActivityDetail) {
@@ -37,7 +37,7 @@ struct ActivityDetailConfig {
         avgBPM = detail.avgBPM
         cadence = detail.cadence
 
-        locations = detail.locations.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        locations = detail.locations
         splits = detail.splits
     }
 }

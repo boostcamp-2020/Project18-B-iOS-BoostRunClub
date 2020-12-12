@@ -23,7 +23,12 @@ class DetailMapView: UIView {
         commonInit()
     }
 
-    func configure(locations _: [CLLocationCoordinate2D], splits _: [RunningSplit]) {}
+    func configure(locations: [Location], splits _: [RunningSplit]) {
+        let coords = locations.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        let region = MKCoordinateRegion.make(from: coords, offsetRatio: 0.3)
+        mapView.setRegion(region, animated: false)
+        mapView.addOverlay(MKPolyline(coordinates: coords, count: locations.count))
+    }
 }
 
 // MARK: - Actions
@@ -33,10 +38,26 @@ extension DetailMapView {
     func didTapDetailRouteButton() {}
 }
 
+// MARK: - MKMapViewDelegate
+
+extension DetailMapView: MKMapViewDelegate {
+    func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        guard let routePolyline = overlay as? MKPolyline
+        else { return MKOverlayRenderer() }
+
+        let renderer = MKPolylineRenderer(polyline: routePolyline)
+        renderer.strokeColor = .black
+        renderer.lineWidth = 7
+
+        return renderer
+    }
+}
+
 // MARK: - Configure
 
 extension DetailMapView {
     private func commonInit() {
+        mapView.delegate = self
         configureLayout()
     }
 
