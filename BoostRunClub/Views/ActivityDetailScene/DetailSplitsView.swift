@@ -1,5 +1,5 @@
 //
-//  DetailSplitsContainerCellView.swift
+//  DetailSplitsView.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/12/12.
@@ -8,8 +8,8 @@
 import Combine
 import UIKit
 
-class DetailSplitsContainerCellView: UICollectionViewCell {
-    var heightChangedPublisher = PassthroughSubject<UICollectionViewCell, Never>()
+class DetailSplitsView: UIView {
+    var heightChangedPublisher = PassthroughSubject<Void, Never>()
     var tabInfoButtonSignal = PassthroughSubject<IndexPath, Never>()
 
     private var titleLabel = UILabel.makeBold(text: "구간", size: 30)
@@ -29,33 +29,23 @@ class DetailSplitsContainerCellView: UICollectionViewCell {
         super.init(coder: coder)
         commonInit()
     }
-
-    override func preferredLayoutAttributesFitting(
-        _ layoutAttributes: UICollectionViewLayoutAttributes
-    ) -> UICollectionViewLayoutAttributes {
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
 }
 
 // MARK: - Actions
 
-extension DetailSplitsContainerCellView {
+extension DetailSplitsView {
     @objc
     func didTapInfoButton() {}
 }
 
 // MARK: - Configure
 
-extension DetailSplitsContainerCellView {
+extension DetailSplitsView {
     private func commonInit() {
         tableView.heightPublisher
-            .sink {
-                self.tableHeightConstraint.constant = $0
-                self.heightChangedPublisher.send(self)
+            .sink { _ in
+                self.invalidateIntrinsicContentSize()
+                self.heightChangedPublisher.send()
             }
             .store(in: &cancellables)
 
@@ -63,29 +53,29 @@ extension DetailSplitsContainerCellView {
     }
 
     private func configureLayout() {
-        contentView.addSubview(titleLabel)
+        addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
         ])
 
-        contentView.addSubview(tableView)
+        addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
         ])
 
-        contentView.addSubview(detailInfoButton)
+        addSubview(detailInfoButton)
         detailInfoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             detailInfoButton.heightAnchor.constraint(equalToConstant: 60),
             detailInfoButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
-            detailInfoButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            detailInfoButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            detailInfoButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            detailInfoButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            detailInfoButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            detailInfoButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
         ])
     }
 

@@ -1,5 +1,5 @@
 //
-//  DetailTotalCellView.swift
+//  DetailTotalView.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/12/12.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailTotalCellView: UICollectionViewCell {
+class DetailTotalView: UIView {
     private var distanceValueLabel = NikeLabel(with: 80)
     private var distancelabel = UILabel.makeNormal(text: "킬로미터")
     private var avgPaceValueLabel = UILabel.makeBold()
@@ -36,21 +36,11 @@ class DetailTotalCellView: UICollectionViewCell {
     }
 
     func configure(with _: ActivityTotalConfig) {}
-
-    override func preferredLayoutAttributesFitting(
-        _ layoutAttributes: UICollectionViewLayoutAttributes
-    ) -> UICollectionViewLayoutAttributes {
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
 }
 
 // MARK: - Configure
 
-extension DetailTotalCellView {
+extension DetailTotalView {
     private func commonInit() {
         distanceValueLabel.text = "Value"
         configureLayout()
@@ -117,13 +107,13 @@ extension DetailTotalCellView {
             axis: .vertical, alignment: .fill, distribution: .equalSpacing, spacing: 20
         )
 
-        contentView.addSubview(mainVStack)
+        addSubview(mainVStack)
         mainVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainVStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            mainVStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            mainVStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            mainVStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            mainVStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            mainVStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            mainVStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            mainVStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
         ])
     }
 }

@@ -5,14 +5,24 @@
 //  Created by 김신우 on 2020/12/12.
 //
 
+import Combine
 import UIKit
 
 class ActivityDetailViewController: UIViewController {
-    private lazy var collectionView = makeCollectionView()
-    private var splitContainerView = DetailSplitsContainerCellView()
+    private var scrollView = UIScrollView()
+    private var titleView = DetailTitleView()
+    private var totalView = DetailTotalView()
+    private var mapContainerView = DetailMapView()
+    private var splitsView = DetailSplitsView()
+
+    private lazy var contentStack = UIStackView.make(
+        with: [titleView, totalView, mapContainerView, splitsView],
+        axis: .vertical, alignment: .fill, distribution: .fillProportionally, spacing: 10
+    )
 
     private lazy var dataSource = DetailDataSource()
-    var viewModel: ActivityDetailViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
+    private var viewModel: ActivityDetailViewModelTypes?
 
     init(with viewModel: ActivityDetailViewModelTypes) {
         super.init(nibName: nil, bundle: nil)
@@ -30,12 +40,18 @@ class ActivityDetailViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .systemBackground
         configureNavigationItems()
         configureLayout()
-        splitContainerView.tableView.dataSource = dataSource
+        splitsView.tableView.dataSource = self
         bindViewModel()
     }
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
+
+        splitsView.heightChangedPublisher
+            .sink {
+                self.contentStack.layoutIfNeeded()
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -45,6 +61,20 @@ extension ActivityDetailViewController {
     @objc
     func didTapBackItem() {
         viewModel?.inputs.didTapBackItem()
+    }
+}
+
+// MARK: - UITableViewDelegate Implementation
+
+extension ActivityDetailViewController: UITableViewDataSource {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        5
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SimpleSplitViewCell()
+        cell.configure(style: indexPath.row == 0 ? .desc : .value)
+        return cell
     }
 }
 
@@ -66,36 +96,24 @@ extension ActivityDetailViewController {
         navigationItem.setLeftBarButton(backItem, animated: true)
     }
 
-    private func makeCollectionView() -> UICollectionView {
-        let size = NSCollectionLayoutSize(
-            widthDimension: NSCollectionLayoutDimension.fractionalWidth(1),
-            heightDimension: NSCollectionLayoutDimension.estimated(80)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: size)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
-        let layout = UICollectionViewCompositionalLayout(section: section)
-
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = .systemBackground
-        view.dataSource = dataSource
-        view.register(DetailTotalCellView.self, forCellWithReuseIdentifier: "\(DetailTotalCellView.self)")
-        view.register(DetailTitleCellView.self, forCellWithReuseIdentifier: "\(DetailTitleCellView.self)")
-        view.register(DetailMapCellView.self, forCellWithReuseIdentifier: "\(DetailMapCellView.self)")
-        view.register(DetailSplitsContainerCellView.self, forCellWithReuseIdentifier: "\(DetailSplitsContainerCellView.self)")
-
-        return view
-    }
-
     private func configureLayout() {
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentStack)
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentStack.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+            contentStack.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
+            contentStack.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentStack.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+        ])
+
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 }

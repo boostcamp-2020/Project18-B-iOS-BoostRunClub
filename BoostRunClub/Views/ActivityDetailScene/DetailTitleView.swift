@@ -1,5 +1,5 @@
 //
-//  DetailTitleCellView.swift
+//  DetailTitleView.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/12/12.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailTitleCellView: UICollectionViewCell {
+class DetailTitleView: UIView {
     private var dateLabel = UILabel.makeNormal()
     private var titleLabel = UILabel.makeBold()
     private var dividerView = UIView()
@@ -23,21 +23,11 @@ class DetailTitleCellView: UICollectionViewCell {
     }
 
     func configure(with _: ActivityTotalConfig) {}
-
-    override func preferredLayoutAttributesFitting(
-        _ layoutAttributes: UICollectionViewLayoutAttributes
-    ) -> UICollectionViewLayoutAttributes {
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
 }
 
 // MARK: - Configure
 
-extension DetailTitleCellView {
+extension DetailTitleView {
     private func commonInit() {
         dividerView.backgroundColor = .systemGray
         configureLayout()
@@ -54,13 +44,13 @@ extension DetailTitleCellView {
             axis: .vertical, alignment: .leading, distribution: .fill, spacing: 10
         )
 
-        contentView.addSubview(titleVStack)
+        addSubview(titleVStack)
         titleVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleVStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            titleVStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            titleVStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            titleVStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            titleVStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            titleVStack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            titleVStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            titleVStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
         ])
     }
 }

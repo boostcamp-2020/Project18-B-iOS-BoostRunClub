@@ -1,5 +1,5 @@
 //
-//  DetailMapCellView.swift
+//  DetailMapView.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/12/12.
@@ -8,7 +8,7 @@
 import MapKit
 import UIKit
 
-class DetailMapCellView: UICollectionViewCell {
+class DetailMapView: UIView {
     private lazy var mapView = makeMapView()
     private lazy var detailRouteButton = makeDetailRouteButton()
 
@@ -24,27 +24,18 @@ class DetailMapCellView: UICollectionViewCell {
 
     func configure(with _: ActivityTotalConfig) {}
 
-    override func preferredLayoutAttributesFitting(
-        _ layoutAttributes: UICollectionViewLayoutAttributes
-    ) -> UICollectionViewLayoutAttributes {
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
 }
 
 // MARK: - Actions
 
-extension DetailMapCellView {
+extension DetailMapView {
     @objc
     func didTapDetailRouteButton() {}
 }
 
 // MARK: - Configure
 
-extension DetailMapCellView {
+extension DetailMapView {
     private func commonInit() {
         configureLayout()
     }
@@ -52,23 +43,23 @@ extension DetailMapCellView {
     private func configureLayout() {
         let width = UIScreen.main.bounds.width - 40
         let height = UIScreen.main.bounds.height
-        contentView.addSubview(mapView)
+        addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mapView.heightAnchor.constraint(equalToConstant: height / 2),
-            mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            mapView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            mapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            mapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
         ])
 
-        contentView.addSubview(detailRouteButton)
+        addSubview(detailRouteButton)
         detailRouteButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             detailRouteButton.heightAnchor.constraint(equalToConstant: 60),
             detailRouteButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
-            detailRouteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            detailRouteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            detailRouteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            detailRouteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            detailRouteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            detailRouteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
         ])
     }
 
