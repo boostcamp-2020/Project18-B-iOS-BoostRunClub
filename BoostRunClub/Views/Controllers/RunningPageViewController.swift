@@ -9,6 +9,13 @@ import Combine
 import MapKit
 import UIKit
 
+extension UIImage {
+    func toString() -> String? {
+        let data: Data? = pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
+    }
+}
+
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
         case map, info, splits
@@ -22,7 +29,7 @@ final class RunningPageViewController: UIPageViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private var distance: CGFloat = 0
-    private let buttonHeight: CGFloat = 40
+    private let buttonHeight: CGFloat = 50
 
     init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -39,6 +46,7 @@ final class RunningPageViewController: UIPageViewController {
             .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
 
+
         viewModel?.outputs.scaleSubjectNotDragging
             .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
@@ -48,8 +56,15 @@ final class RunningPageViewController: UIPageViewController {
             .store(in: &cancellables)
 
         viewModel?.outputs.runningTimeSubject
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
+            .sink { [weak self] in
+                guard let button = self?.backButton else { return }
+
+                //				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+                button.setTitle($0, for: .normal)
+                //				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
             .store(in: &cancellables)
     }
 
@@ -134,10 +149,11 @@ extension RunningPageViewController {
 
         view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = backButton.widthAnchor.constraint(equalToConstant: 44)
         NSLayoutConstraint.activate([
             backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 100),
+//            backButton.widthAnchor.constraint(equalToConstant: 100),
             backButton.heightAnchor.constraint(equalToConstant: buttonHeight),
         ])
     }
@@ -154,7 +170,11 @@ extension RunningPageViewController {
 
     func makeBackButton() -> UIButton {
         let button = UIButton()
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
+        button.setTitleColor(.label, for: .normal)
+        button.contentEdgeInsets.left = 20
+        button.contentEdgeInsets.right = 20
+        button.layer.cornerRadius = buttonHeight / 2
         button.addTarget(self, action: #selector(didTabBackButton), for: .touchUpInside)
         return button
     }
