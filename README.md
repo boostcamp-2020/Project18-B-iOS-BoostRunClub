@@ -1,14 +1,20 @@
+<p align="center">🏃‍♀️🏃‍♂️🏃<br><br>
+
+
+<span align="center"><h2>18-B-iOS 팀의  <span style="color:orange">Nike Run Club</span> 클론 프로젝트 <span style="color:orange">Boost Run Club</span><h2></span>
+
 
 <img align="center" src="https://i.imgur.com/cGnIJrd.png">
 
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
-## <p style="text-align:center">🏃‍♀️🏃‍♂️🏃<br><br>18-B-iOS 팀의  <span style="color:orange">Nike Run Club</span> 클론 프로젝트 <span style="color:orange">Boost Run Club</span><br><br>🏃‍♀️🏃‍♂️🏃</p>
-
 <br>
 
 ## TL;DR
-<p style="text-align:center; width: ">사용자의 러닝을 측정하여 데이터를 수집하고, 정제한 러닝 데이터를 바탕으로 생성한 활동내역을 확인할 수 있는 iOS 애플리케이션 입니다.</p>
+<div style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 76%;">사용자의 러닝을 측정하여 데이터를 수집하고, 정제한 러닝 데이터를 바탕으로 생성한 활동내역을 확인할 수 있는 iOS 애플리케이션 입니다.</div>
 <br>
 
 
@@ -33,11 +39,11 @@
 >부런클 앱의 미리보기 화면입니다 ✨
 
 | <img src="https://user-images.githubusercontent.com/34773827/101919696-34531180-3c0e-11eb-802f-46d75562746e.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101919701-36b56b80-3c0e-11eb-9f02-a30b4cb32856.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101921009-d58e9780-3c0f-11eb-9f16-d1236e3102a7.gif" width="400px"> | 
-| :-: | :-: | :-: | :-: | 
+| :-: | :-: | :-: | 
 | **목표 설정 (시간)** | **러닝** |  **러닝 일시정지** |  
 
 | <img src="https://user-images.githubusercontent.com/34773827/101919663-2b624000-3c0e-11eb-91fb-6df70ccdfbc7.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101919689-31f0b780-3c0e-11eb-998c-6644eb9133b0.gif" width="400px">  | <img src="https://i.imgur.com/oFOie99.gif" width="400px"> | 
-| :-: | :-: | :-: | :-: | 
+| :-: | :-: | :-: | 
 | **활동** | **모든 활동** |  **프로필** | 
 
 <br>
@@ -74,7 +80,7 @@
 
 ![](https://i.imgur.com/Lh3fTL5.jpg)
 
-
+<br>
 
 ## 🏗 Framework
 >부런클 제작에 사용한 핵심 프레임워크들을 모아보았습니다 ✨
@@ -94,19 +100,16 @@
 <details> 
  <summary style="color:blue">👈 더보기</summary>
  <br> 
+
 크게 두 가지 상황으로 구분하여 다음과 같은 방식으로 이를 구현해내었습니다.
   1. 뷰모델과 코디네이터 바인딩
   하나의 코디네이터 객체를 통해 뷰를 전환하고, 뷰간 데이터를 전달하는 경우에는 코디네이터와 각 뷰모델 간에 바인딩을 통해 이를 처리할 수 있게 구현했습니다.
   2. NotificationCenter 
   코디네이터를 트리 구조로 표현할 때, 하위 코디네이터에서 다른 노드의 하위 코디네이터로 이동하는 경우가 있습니다. 이때, 경로에 있는 모든 코디네이터를 바인딩 하거나 델리게이트를 사용하지 않고 노티피케이션으로 알려주어, 이를 옵저빙 하는 곳에서 바로 처리할 수 있게 구현하였습니다.
+
+ <br> 
+
   </details>
-
-
-<!--
-### singleton 지향? 지양?
-### MVVM -> MVVM-C
-### Combine Framework?
-### 처음 사용해보는 프레임워크들을 단시간 내로  -->
 
 
 ### 2. 러닝 데이터 처리를 위한 데이터 구조 설계(running split, slice)
@@ -126,6 +129,9 @@ RunningSplit을 통해 사용자는 자신이 뛴 경로와 정보를 볼 수 �
 
 Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위치 끝 위치를 가지고 있으며
 이를 통해서 Running Split 경로를 그릴 때 RunningSlice 배열 정보를 통해 어색하지 않은 경로를 그릴 수 있게 되었고, 더 나아가 러닝상태에서의 경로와 러닝상태가 아닐 때의 경로를 모두 표시하고 색으로 구분하여 더 나은 사용성을 제공할 수 있게 되었습니다.
+
+ <br> 
+
 </details>
 
 
@@ -142,6 +148,9 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 
 이 문제에 대한 해결 방안으로
 일정 주기로 `timeIntervalSinceReferenceDate` 이벤트를 전달하는 객체와 `lastUpdated` 라는 업데이트된 시간을 유지하는 객체를 만들어 Location과 이벤트 객체에서 발생하는 이벤트를 받아 최근 업데이트 시간과의 차이를 누적시키고 업데이트 시간을 갱신 해주도록 하여 러닝시간을 정교하게 계산할 수 있으면서 일정하게 정보를 받을 수 있도록 해주었습니다.
+
+<br> 
+
 </details>
 
 
@@ -158,8 +167,9 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 
 이에 대한 고민과 토론은 개발 2주차까지 이어지게 되었고, 애플리케이션의 상위구조에서 하위구조까지 차례로 전달해주는 방법은 의존성을 필요로 하지 않는 중간객체가 주입 받게 된다는 단점이 있다는 것을 깨닫게 되었습니다. 중간객체가 단순히 하위구조에 의존성을 전달하기 위해 가지고 있으면, 중간객체는 자신과는 아무런 관련이 없는 의존성 컨테이너를 알고 있게되어 객체의 책임이 불분명해지기 때문에 구현 방법을 변경하기로 결정하였습니다. 의존성을 주입 받는 객체는 싱글턴으로 구현된 의존성 컨테이너를 주입받도록 하면서, 필요한 의존성만 주입받을 수 있도록 알맞은 인터페이스를 추가해주는 방식으로 리팩터링을 하게되었습니다. 
 
-</details>
+ <br> 
 
+</details>
 
 
 <br>
@@ -179,3 +189,5 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 </div>
+
+<p align="center"><br><br>🏃‍♀️🏃‍♂️🏃</p>
