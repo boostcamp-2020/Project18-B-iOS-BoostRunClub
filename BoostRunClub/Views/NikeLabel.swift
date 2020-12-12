@@ -24,7 +24,15 @@ class NikeLabel: UILabel {
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.width += font.pointSize
+
+        if
+            let length = text?.count,
+            length > 0
+        {
+            let adder = size.width / CGFloat(length) / 5
+            size.width += adder
+        }
+
         return size
     }
 }
