@@ -22,7 +22,7 @@ class DetailMapView: UIView {
         commonInit()
     }
 
-    func configure(with _: ActivityTotalConfig) {}
+    func configure(with _: [CLCoordinator2d]) {}
 }
 
 // MARK: - Actions

@@ -127,6 +127,7 @@
 		964BC6E02580CFDA00A69A82 /* ActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */; };
 		964BC6E42580CFEE00A69A82 /* ActivityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */; };
 		9651ABE925854A2C00DF73C3 /* ActivityDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */; };
+		9651ABED25854FB200DF73C3 /* ActivityDetailConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651ABEC25854FB200DF73C3 /* ActivityDetailConfig.swift */; };
 		967252FC2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967252FB2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift */; };
 		967253002583D8C600B4BBC6 /* ActivityDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967252FF2583D8C600B4BBC6 /* ActivityDetailCoordinator.swift */; };
 		967253042583DA1500B4BBC6 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */; };
@@ -297,6 +298,7 @@
 		964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListViewController.swift; sourceTree = "<group>"; };
 		964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListViewModel.swift; sourceTree = "<group>"; };
 		9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailDataSource.swift; sourceTree = "<group>"; };
+		9651ABEC25854FB200DF73C3 /* ActivityDetailConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailConfig.swift; sourceTree = "<group>"; };
 		967252FB2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+ActivityDetailScene.swift"; sourceTree = "<group>"; };
 		967252FF2583D8C600B4BBC6 /* ActivityDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailCoordinator.swift; sourceTree = "<group>"; };
 		967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
@@ -406,7 +408,7 @@
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				96386604257E9BD2003EEE4B /* CellConfigurable */,
+				96386604257E9BD2003EEE4B /* Configurable */,
 				71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */,
 				4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */,
 				4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */,
@@ -570,13 +572,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		96386604257E9BD2003EEE4B /* CellConfigurable */ = {
+		96386604257E9BD2003EEE4B /* Configurable */ = {
 			isa = PBXGroup;
 			children = (
 				960A14F4257DF9D1008D2BD3 /* ActivityTotalConfig.swift */,
 				961840E32580F6A200069FDA /* ActivityListItem.swift */,
+				9651ABEC25854FB200DF73C3 /* ActivityDetailConfig.swift */,
 			);
-			path = CellConfigurable;
+			path = Configurable;
 			sourceTree = "<group>";
 		};
 		963B46F3256CD440006138DF /* Services */ = {
@@ -918,6 +921,7 @@
 				964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */,
 				96CB22AB258233BC000D67C4 /* RouteDrawer.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
+				9651ABED25854FB200DF73C3 /* ActivityDetailConfig.swift in Sources */,
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,

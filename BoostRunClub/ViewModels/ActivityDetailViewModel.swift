@@ -24,13 +24,11 @@ protocol ActivityDetailViewModelOutputs {
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
-    let activity: Activity
-    let activityDetail: ActivityDetail
+    let detailConfig: ActivityDetailConfig
 
     init?(activity: Activity, activityProvider: ActivityReadable) {
         guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
-        self.activity = activity
-        activityDetail = detail
+        detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
     }
 
     // Inputs
