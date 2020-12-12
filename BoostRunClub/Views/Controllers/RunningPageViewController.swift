@@ -9,12 +9,6 @@ import Combine
 import MapKit
 import UIKit
 
-extension UIImage {
-    func toString() -> String? {
-        let data: Data? = pngData()
-        return data?.base64EncodedString(options: .endLineWithLineFeed)
-    }
-}
 
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
@@ -46,7 +40,6 @@ final class RunningPageViewController: UIPageViewController {
             .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
 
-
         viewModel?.outputs.scaleSubjectNotDragging
             .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
@@ -59,11 +52,12 @@ final class RunningPageViewController: UIPageViewController {
             .sink { [weak self] in
                 guard let button = self?.backButton else { return }
 
-                //				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
                 button.setTitle($0, for: .normal)
-                //				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                //				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+				// TODO: 페이지 상태에 따른 화살표 표시 처리
+//				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+//				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
             .store(in: &cancellables)
     }
@@ -149,11 +143,9 @@ extension RunningPageViewController {
 
         view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = backButton.widthAnchor.constraint(equalToConstant: 44)
         NSLayoutConstraint.activate([
             backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
-//            backButton.widthAnchor.constraint(equalToConstant: 100),
             backButton.heightAnchor.constraint(equalToConstant: buttonHeight),
         ])
     }

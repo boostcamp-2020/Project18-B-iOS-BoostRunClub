@@ -85,19 +85,6 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
             .eraseToAnyPublisher()
     }
 
-//    var runningTimeSubject: AnyPublisher<String, Never> {
-//        runningDataProvider.runningTime
-//            .combineLatest($scale)
-//            .map { runningTime, buttonScale in
-//                var text = runningTime.formattedString
-//                if buttonScale > 0 {
-//                    text = "<- " + text
-//                } else {
-//                    text += "-> "
-//                }
-//                return text
-//            }.eraseToAnyPublisher()
-//    }
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
