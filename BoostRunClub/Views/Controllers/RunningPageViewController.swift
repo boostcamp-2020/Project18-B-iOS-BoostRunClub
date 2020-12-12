@@ -9,7 +9,6 @@ import Combine
 import MapKit
 import UIKit
 
-
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
         case map, info, splits
@@ -53,11 +52,11 @@ final class RunningPageViewController: UIPageViewController {
                 guard let button = self?.backButton else { return }
 
                 button.setTitle($0, for: .normal)
-				// TODO: 페이지 상태에 따른 화살표 표시 처리
-//				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
-//				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                // TODO: 페이지 상태에 따른 화살표 표시 처리
+                //				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+                //				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
             .store(in: &cancellables)
     }

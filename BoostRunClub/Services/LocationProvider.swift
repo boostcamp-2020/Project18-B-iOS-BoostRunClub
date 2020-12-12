@@ -47,7 +47,6 @@ class LocationProvider: NSObject, LocationProvidable {
 
 extension LocationProvider: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
         guard let location = locations.last,
               location.horizontalAccuracy.sign == .plus,
 //              location.verticalAccuracy.sign == .plus,

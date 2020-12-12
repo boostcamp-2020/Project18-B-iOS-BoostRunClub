@@ -81,10 +81,9 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
 
     var runningTimeSubject: AnyPublisher<String, Never> {
         runningDataProvider.runningTime
-            .map { $0.formattedString }
+            .map { $0.fullFormattedString }
             .eraseToAnyPublisher()
     }
-
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
