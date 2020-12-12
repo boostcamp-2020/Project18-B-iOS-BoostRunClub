@@ -9,8 +9,8 @@ import Combine
 import UIKit
 
 class DetailSplitsView: UIView {
-    var heightChangedPublisher = PassthroughSubject<Void, Never>()
-    var tabInfoButtonSignal = PassthroughSubject<IndexPath, Never>()
+    private(set) var heightChangedPublisher = PassthroughSubject<Void, Never>()
+    private(set) var tapInfoButtonSignal = PassthroughSubject<Void, Never>()
 
     private var titleLabel = UILabel.makeBold(text: "구간", size: 30)
     private(set) var tableView = DetailSplitsTableView()
@@ -35,7 +35,9 @@ class DetailSplitsView: UIView {
 
 extension DetailSplitsView {
     @objc
-    func didTapInfoButton() {}
+    func didTapInfoButton() {
+        tapInfoButtonSignal.send()
+    }
 }
 
 // MARK: - Configure

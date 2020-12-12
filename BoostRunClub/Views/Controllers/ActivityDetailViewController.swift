@@ -61,6 +61,15 @@ class ActivityDetailViewController: UIViewController {
         splitsView.heightChangedPublisher
             .sink { self.contentStack.layoutIfNeeded() }
             .store(in: &cancellables)
+        
+        splitsView.tapInfoButtonSignal
+            .sink { self.viewModel?.inputs.didTapShowInfoDetail() }
+            .store(in: &cancellables)
+        
+        mapContainerView.didTapShowDetailMapSignal
+            .sink { self.viewModel?.inputs.didTapShowRouteDetail() }
+            .store(in: &cancellables)
+        
     }
 }
 

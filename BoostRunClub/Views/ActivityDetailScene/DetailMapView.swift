@@ -5,6 +5,7 @@
 //  Created by 김신우 on 2020/12/12.
 //
 
+import Combine
 import CoreLocation.CLLocation
 import MapKit
 import UIKit
@@ -12,6 +13,8 @@ import UIKit
 class DetailMapView: UIView {
     private lazy var mapView = makeMapView()
     private lazy var detailRouteButton = makeDetailRouteButton()
+
+    private(set) var didTapShowDetailMapSignal = PassthroughSubject<Void, Never>()
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
@@ -35,7 +38,14 @@ class DetailMapView: UIView {
 
 extension DetailMapView {
     @objc
-    func didTapDetailRouteButton() {}
+    func didTapDetailRouteButton() {
+        didTapShowDetailMapSignal.send()
+    }
+
+    @objc
+    func didTapMap() {
+        didTapShowDetailMapSignal.send()
+    }
 }
 
 // MARK: - MKMapViewDelegate
@@ -58,6 +68,7 @@ extension DetailMapView: MKMapViewDelegate {
 extension DetailMapView {
     private func commonInit() {
         mapView.delegate = self
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMap)))
         configureLayout()
     }
 
