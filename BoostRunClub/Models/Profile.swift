@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Profile {
+struct Profile: Equatable {
     var image: Data?
     var lastName: String
     var firstName: String

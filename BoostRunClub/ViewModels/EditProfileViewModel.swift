@@ -31,10 +31,13 @@ protocol EditProfileViewModelOutputs {
     var firstNameTextObservable: CurrentValueSubject<String, Never> { get }
     var hometownTextObservable: CurrentValueSubject<String, Never> { get }
     var bioTextObservable: CurrentValueSubject<String, Never> { get }
+    var changeInContentSignal: PassthroughSubject<Bool, Never> { get }
 }
 
 final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewModelOutputs {
     private var defaults: DefaultsManagable
+    private var initialProfile: Profile?
+    private var currentProfile: Profile?
 
     init(defaults: DefaultsManagable) {
         self.defaults = defaults
@@ -48,6 +51,14 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
         firstNameTextObservable.value = defaults.reader.string(forKey: "FirstName") ?? ""
         hometownTextObservable.value = defaults.reader.string(forKey: "Hometown") ?? ""
         bioTextObservable.value = defaults.reader.string(forKey: "Bio") ?? ""
+
+        initialProfile = Profile(image: imageDataObservable.value,
+                                 lastName: lastNameTextObservable.value,
+                                 firstName: firstNameTextObservable.value,
+                                 hometown: hometownTextObservable.value,
+                                 bio: bioTextObservable.value)
+
+        currentProfile = initialProfile
     }
 
     func didTapApplyButton() {
@@ -67,32 +78,43 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
 
     func didEditProfilePicture(to imageData: Data) {
         imageDataObservable.value = imageData
+        currentProfile?.image = imageData
+        compareChanges()
     }
 
     func didEditLastName(to text: String) {
         lastNameTextObservable.value = text
+        currentProfile?.lastName = text
+        compareChanges()
     }
 
     func didEditFirstName(to text: String) {
         firstNameTextObservable.value = text
+        currentProfile?.firstName = text
+        compareChanges()
     }
 
     func didEditHometown(to text: String) {
         hometownTextObservable.value = text
+        currentProfile?.hometown = text
+        compareChanges()
     }
 
     func didEditBio(to text: String) {
         bioTextObservable.value = text
+        currentProfile?.bio = text
+        compareChanges()
     }
 
     // ouputs
 
     var closeSignal = PassthroughSubject<Profile, Never>()
-    lazy var imageDataObservable = CurrentValueSubject<Data?, Never>(nil)
-    lazy var lastNameTextObservable = CurrentValueSubject<String, Never>("")
-    lazy var firstNameTextObservable = CurrentValueSubject<String, Never>("")
-    lazy var hometownTextObservable = CurrentValueSubject<String, Never>("")
-    lazy var bioTextObservable = CurrentValueSubject<String, Never>("")
+    var imageDataObservable = CurrentValueSubject<Data?, Never>(nil)
+    var lastNameTextObservable = CurrentValueSubject<String, Never>("")
+    var firstNameTextObservable = CurrentValueSubject<String, Never>("")
+    var hometownTextObservable = CurrentValueSubject<String, Never>("")
+    var bioTextObservable = CurrentValueSubject<String, Never>("")
+    var changeInContentSignal = PassthroughSubject<Bool, Never>()
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
@@ -112,5 +134,9 @@ extension EditProfileViewModel {
         defaults.writer.set(profile.lastName, forKey: "LastName")
         defaults.writer.set(profile.hometown, forKey: "Hometown")
         defaults.writer.set(profile.bio, forKey: "Bio")
+    }
+
+    private func compareChanges() {
+        changeInContentSignal.send(currentProfile != initialProfile)
     }
 }
