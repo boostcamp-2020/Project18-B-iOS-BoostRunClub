@@ -51,7 +51,13 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
             let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
             let elevationText = String(split.elevation)
 
-            let paceRatio = maxPace == 0 ? 0 : (maxPace - CGFloat(split.avgPace)) / (maxPace - minPace)
+            let paceRatio: CGFloat
+            if maxPace - minPace > 0 {
+                paceRatio = (maxPace - CGFloat(split.avgPace)) / (maxPace - minPace)
+            } else {
+                paceRatio = 0
+            }
+
             cell.configure(
                 style: .value,
                 distance: distanceText,
