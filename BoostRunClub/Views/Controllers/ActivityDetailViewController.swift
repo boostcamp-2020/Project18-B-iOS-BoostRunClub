@@ -46,7 +46,7 @@ class ActivityDetailViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        totalView.startAppear()
+        viewModel?.inputs.viewDidAppear()
     }
 
     private func bindViewModel() {
@@ -60,6 +60,13 @@ class ActivityDetailViewController: UIViewController {
                 self?.mapContainerView.configure(locations: config.locations, splits: config.splits)
                 self?.dataSource.loadData(config.splits)
                 self?.splitsView.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel.outputs.initialAnimationSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.totalView.startAppear()
             }
             .store(in: &cancellables)
 
