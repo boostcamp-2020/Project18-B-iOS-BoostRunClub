@@ -12,7 +12,7 @@ import UIKit
 class PausedRunningViewController: UIViewController {
     private lazy var mapView: MKMapView = makeMapView()
     private lazy var resumeButton: UIButton = makeResumeButton()
-    private lazy var endRunningButton: UIButton = makeEndRunningButton()
+    private lazy var endRunningButton = CircleLongPressButton(with: .stop, scaleRatio: 1.3, duration: 1)
     private lazy var subRunDataStackViews: [UIStackView] = [makeRunDataStackView(), makeRunDataStackView()]
     private var runDataViews: [RunDataView] = [
         RunDataView(),
@@ -71,6 +71,11 @@ class PausedRunningViewController: UIViewController {
         }
 
         showRoutesOnMap(routes: viewModel.outputs.pathCoordinates, slices: viewModel.outputs.slices)
+
+        endRunningButton.didTapButton
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.viewModel?.inputs.didLongHoldStopRunningButton() }
+            .store(in: &cancellables)
     }
 
     deinit {
@@ -101,28 +106,6 @@ extension PausedRunningViewController {
     func didTapResumeButton() {
         viewModel?.inputs.didTapResumeButton()
         view.notificationFeedback()
-    }
-
-    @objc func didTouchDownRunningButton(_ button: UIButton) {
-        pressed = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] _ in
-            self?.view.notificationFeedback()
-            self?.viewModel?.inputs.didLongHoldStopRunningButton()
-        })
-
-        UIView.animate(withDuration: 0.2) {
-            button.transform = button.transform.scaledBy(x: 1.1, y: 1.1)
-        }
-    }
-
-    @objc func didTouchReleaseRunningButton(_ button: UIButton) {
-        pressed = false
-        timer?.invalidate()
-
-        button.layer.removeAllAnimations()
-        UIView.animate(withDuration: 0.2) {
-            button.transform = .identity
-        }
     }
 
     func beginAnimation() {
@@ -264,14 +247,6 @@ extension PausedRunningViewController {
     private func makeResumeButton() -> UIButton {
         let button = CircleButton(with: .resume)
         button.addTarget(self, action: #selector(didTapResumeButton), for: .touchUpInside)
-        return button
-    }
-
-    private func makeEndRunningButton() -> UIButton {
-        let button = CircleButton(with: .stop)
-        button.addTarget(self, action: #selector(didTouchDownRunningButton), for: .touchDown)
-        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpInside)
-        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpOutside)
         return button
     }
 }
