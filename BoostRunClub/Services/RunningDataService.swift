@@ -160,7 +160,7 @@ class RunningDataService: RunningDataServiceable {
     func addSlice() {
         if locations.isEmpty { return }
         currentRunningSlice.isRunning = isRunning
-        currentRunningSlice.endIndex = locations.count - 1
+        currentRunningSlice.setupSlice(with: locations)
         currentRunningSplit.runningSlices.append(currentRunningSlice)
 
         currentRunningSlice = RunningSlice()
@@ -169,6 +169,8 @@ class RunningDataService: RunningDataServiceable {
 
     func addSplit() {
         addSlice()
+        // TODO: bpm, elevation 값 설정해주기
+        currentRunningSplit.setupSplit(bpm: 0, avgPace: avgPace.value, elevation: 0)
         runningSplits.append(currentRunningSplit)
         newSplitSubject.send(currentRunningSplit)
 

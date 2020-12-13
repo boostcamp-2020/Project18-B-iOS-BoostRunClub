@@ -44,6 +44,11 @@ class ActivityDetailViewController: UIViewController {
         viewModel?.inputs.viewDidLoad()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.inputs.viewDidAppear()
+    }
+
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
@@ -53,9 +58,14 @@ class ActivityDetailViewController: UIViewController {
                 self?.titleView.configure(dateText: config.titleDate, title: config.title)
                 self?.totalView.configure(with: config)
                 self?.mapContainerView.configure(locations: config.locations, splits: config.splits)
-                self?.dataSource.loadData(config.splits)
+                self?.dataSource.loadData(splits: config.splits, distance: config.distance)
                 self?.splitsView.tableView.reloadData()
             }
+            .store(in: &cancellables)
+
+        viewModel.outputs.initialAnimationSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.initialAnimation() }
             .store(in: &cancellables)
 
         splitsView.heightChangedPublisher
@@ -75,6 +85,27 @@ class ActivityDetailViewController: UIViewController {
 // MARK: - Actions
 
 extension ActivityDetailViewController {
+    func initialAnimation() {
+        let initialTransform = CGAffineTransform(translationX: 0, y: 30)
+        contentStack.alpha = 1
+        contentStack.arrangedSubviews.enumerated().forEach {
+            let view = $0.element
+            $0.element.transform = initialTransform
+            $0.element.alpha = 0.4
+            UIView.animate(
+                withDuration: 0.4,
+                delay: Double($0.offset) * 0.2,
+                options: .curveEaseIn,
+                animations: {
+                    view.transform = .identity
+                    view.alpha = 1
+                }
+            )
+        }
+
+        totalView.startAppear()
+    }
+
     @objc
     func didTapBackItem() {
         viewModel?.inputs.didTapBackItem()
@@ -121,5 +152,7 @@ extension ActivityDetailViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+
+        contentStack.alpha = 0
     }
 }
