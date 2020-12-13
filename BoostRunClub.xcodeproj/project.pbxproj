@@ -165,6 +165,8 @@
 		96CB22B525823B02000D67C4 /* MapSnapShotSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */; };
 		96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		96D713422579178800D3D99E /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
+		96DE093325860FAC0055213C /* CircleLongPressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE093225860FAC0055213C /* CircleLongPressButton.swift */; };
+		96DE09372586170E0055213C /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE09362586170E0055213C /* Clamp.swift */; };
 		96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */; };
 		96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */; };
 		96E13212257680B100656476 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E13211257680B100656476 /* DependencyFactory.swift */; };
@@ -327,6 +329,8 @@
 		96CB22A425823284000D67C4 /* RouteSnapShotProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSnapShotProcessor.swift; sourceTree = "<group>"; };
 		96CB22AA258233BC000D67C4 /* RouteDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDrawer.swift; sourceTree = "<group>"; };
 		96CB22B425823B02000D67C4 /* MapSnapShotSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapShotSubscription.swift; sourceTree = "<group>"; };
+		96DE093225860FAC0055213C /* CircleLongPressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLongPressButton.swift; sourceTree = "<group>"; };
+		96DE09362586170E0055213C /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
 		96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewController.swift; sourceTree = "<group>"; };
 		96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDateFilterViewModel.swift; sourceTree = "<group>"; };
 		96E13211257680B100656476 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
@@ -446,6 +450,7 @@
 				4C3E7AD0256F63230061244F /* Cells */,
 				4C3E7ACE256F63080061244F /* Controllers */,
 				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
+				96DE093225860FAC0055213C /* CircleLongPressButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 				96C468C4257F6D900062AAA4 /* Date+String.swift */,
 				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
 				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
+				96DE09362586170E0055213C /* Clamp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -873,6 +879,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				967253082583DA5E00B4BBC6 /* ActivityDetailViewController.swift in Sources */,
+				96DE09372586170E0055213C /* Clamp.swift in Sources */,
 				7187295525791A70007BD24F /* MotionProvider.swift in Sources */,
 				4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */,
 				4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */,
@@ -923,6 +930,7 @@
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
 				9651ABED25854FB200DF73C3 /* ActivityDetailConfig.swift in Sources */,
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
+				96DE093325860FAC0055213C /* CircleLongPressButton.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
 				961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */,

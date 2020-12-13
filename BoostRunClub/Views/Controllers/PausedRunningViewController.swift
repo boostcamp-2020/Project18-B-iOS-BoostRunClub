@@ -12,7 +12,7 @@ import UIKit
 class PausedRunningViewController: UIViewController {
     private lazy var mapView: MKMapView = makeMapView()
     private lazy var resumeButton: UIButton = makeResumeButton()
-    private lazy var endRunningButton: UIButton = makeEndRunningButton()
+    private lazy var endRunningButton: UIButton = CircleLongPressButton(with: .stop, scaleRatio: 1.3, duration: 1)
     private lazy var subRunDataStackViews: [UIStackView] = [makeRunDataStackView(), makeRunDataStackView()]
     private var runDataViews: [RunDataView] = [
         RunDataView(),
@@ -267,11 +267,11 @@ extension PausedRunningViewController {
         return button
     }
 
-    private func makeEndRunningButton() -> UIButton {
-        let button = CircleButton(with: .stop)
-        button.addTarget(self, action: #selector(didTouchDownRunningButton), for: .touchDown)
-        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpInside)
-        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpOutside)
-        return button
-    }
+//    private func makeEndRunningButton() -> UIButton {
+//        let button = CircleButton(with: .stop)
+//        button.addTarget(self, action: #selector(didTouchDownRunningButton), for: .touchDown)
+//        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(didTouchReleaseRunningButton), for: .touchUpOutside)
+//        return button
+//    }
 }
