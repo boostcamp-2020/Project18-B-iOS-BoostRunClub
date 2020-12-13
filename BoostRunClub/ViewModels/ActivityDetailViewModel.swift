@@ -24,7 +24,7 @@ protocol ActivityDetailViewModelInputs {
 
 protocol ActivityDetailViewModelOutputs {
     var showInfoDetailSignal: PassthroughSubject<Void, Never> { get }
-    var showRouteDetailSignal: PassthroughSubject<Void, Never> { get }
+    var showRouteDetailSignal: PassthroughSubject<ActivityDetailConfig, Never> { get }
     var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
     var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never> { get }
 
@@ -42,7 +42,7 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     // Inputs
 
     func didTapShowRouteDetail() {
-        showRouteDetailSignal.send()
+        showRouteDetailSignal.send(detailConfigSubject.value)
     }
 
     func didTapShowInfoDetail() {
@@ -63,7 +63,7 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     var initialAnimationSignal = PassthroughSubject<Void, Never>()
 
     var showInfoDetailSignal = PassthroughSubject<Void, Never>()
-    var showRouteDetailSignal = PassthroughSubject<Void, Never>()
+    var showRouteDetailSignal = PassthroughSubject<ActivityDetailConfig, Never>()
     var goBackToSceneSignal = PassthroughSubject<Void, Never>()
     var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never>
 }

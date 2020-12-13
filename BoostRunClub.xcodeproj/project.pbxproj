@@ -46,6 +46,9 @@
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
 		71BBFC882582FDE800BC01B7 /* DefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */; };
 		71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
+		71D309382586420A0092AB05 /* Factory+RouteDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D309372586420A0092AB05 /* Factory+RouteDetailScene.swift */; };
+		71D3093C258642230092AB05 /* RouteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3093B258642230092AB05 /* RouteDetailViewModel.swift */; };
+		71D309402586423B0092AB05 /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3093F2586423B0092AB05 /* RouteDetailViewController.swift */; };
 		71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288E256B9320004A1F30 /* AppCoordinator.swift */; };
 		71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82891256B9468004A1F30 /* LoginCoordinator.swift */; };
 		71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82894256B9581004A1F30 /* LoginViewController.swift */; };
@@ -230,6 +233,9 @@
 		71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModel.swift; sourceTree = "<group>"; };
 		71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeCell.swift; sourceTree = "<group>"; };
 		71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsProvider.swift; sourceTree = "<group>"; };
+		71D309372586420A0092AB05 /* Factory+RouteDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+RouteDetailScene.swift"; sourceTree = "<group>"; };
+		71D3093B258642230092AB05 /* RouteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewModel.swift; sourceTree = "<group>"; };
+		71D3093F2586423B0092AB05 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
 		71E8288E256B9320004A1F30 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		71E82891256B9468004A1F30 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		71E82894256B9581004A1F30 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -392,6 +398,7 @@
 				96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */,
 				964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */,
 				967253072583DA5E00B4BBC6 /* ActivityDetailViewController.swift */,
+				71D3093F2586423B0092AB05 /* RouteDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +434,7 @@
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
 				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
+				71D3093B258642230092AB05 /* RouteDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -499,6 +507,7 @@
 				71FBAADD257D23AF005C8D30 /* Factory+TabBarContainer.swift */,
 				71FBAB6B257FD091005C8D30 /* Factory+EditProfileScene.swift */,
 				967252FB2583D88A00B4BBC6 /* Factory+ActivityDetailScene.swift */,
+				71D309372586420A0092AB05 /* Factory+RouteDetailScene.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -971,7 +980,9 @@
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
 				4CF009C0257CAC1E00EC928A /* ActivityDetail.swift in Sources */,
 				964A0C5825802B05008D7FD7 /* Factory+ActivityListScene.swift in Sources */,
+				71D309402586423B0092AB05 /* RouteDetailViewController.swift in Sources */,
 				71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */,
+				71D309382586420A0092AB05 /* Factory+RouteDetailScene.swift in Sources */,
 				96F105AC25803D890005F66C /* ActivityDataSource.swift in Sources */,
 				714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */,
 				964A0C6025803018008D7FD7 /* ActivitiesContainerCellView.swift in Sources */,
@@ -980,6 +991,7 @@
 				9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */,
 				71FBAAF2257D244F005C8D30 /* Factory+PrepareRunScene.swift in Sources */,
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
+				71D3093C258642230092AB05 /* RouteDetailViewModel.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
 				4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
