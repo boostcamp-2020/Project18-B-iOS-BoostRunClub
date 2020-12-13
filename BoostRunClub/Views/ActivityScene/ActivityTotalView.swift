@@ -94,6 +94,7 @@ extension ActivityTotalView {
         configureLayout()
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

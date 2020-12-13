@@ -25,7 +25,8 @@ class SimpleSplitViewCell: UITableViewCell {
     private var elevationLabel = UILabel.makeBold(text: "고도")
     private var elevationBackgroundView = UIView()
 
-    private lazy var paceContainerWidthConstraint = paceForegroundView.widthAnchor.constraint(equalToConstant: Constant.paceMinWidth)
+    private lazy var paceContainerWidthConstraint
+        = paceForegroundView.widthAnchor.constraint(equalToConstant: Constant.paceMinWidth)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: style, reuseIdentifier: "\(SimpleSplitViewCell.self)")
@@ -81,6 +82,7 @@ extension SimpleSplitViewCell {
         configureLayout()
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
         contentView.addSubview(distanceBackgroundView)
         contentView.addSubview(paceBackgroundView)

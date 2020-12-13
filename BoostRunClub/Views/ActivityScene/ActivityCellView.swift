@@ -62,6 +62,7 @@ extension ActivityCellView {
         contentView.layer.masksToBounds = true
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
 //        contentView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImage.translatesAutoresizingMaskIntoConstraints = false

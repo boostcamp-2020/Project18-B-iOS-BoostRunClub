@@ -81,6 +81,7 @@ extension DetailTotalView {
         configureLayout()
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
         let distanceVStack = UIStackView.make(
             with: [distanceValueLabel, distancelabel],
