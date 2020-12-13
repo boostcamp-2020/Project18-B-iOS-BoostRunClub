@@ -55,7 +55,6 @@ extension DetailSplitsView {
     }
 
     private func configureLayout() {
-        
         let vStack = UIStackView.make(
             with: [titleLabel, tableView, detailInfoButton],
             axis: .vertical, alignment: .fill, distribution: .equalSpacing, spacing: 10

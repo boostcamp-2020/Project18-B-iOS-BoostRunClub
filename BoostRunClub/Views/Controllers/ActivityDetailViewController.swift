@@ -44,6 +44,11 @@ class ActivityDetailViewController: UIViewController {
         viewModel?.inputs.viewDidLoad()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        totalView.startAppear()
+    }
+
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
