@@ -22,7 +22,7 @@ protocol RouteDetailViewModelInputs {
 
 protocol RouteDetailViewModelOutputs {
     var closeSignal: PassthroughSubject<Void, Never> { get }
-    var regionSignal: PassthroughSubject<MKCoordinateRegion, Never> { get }
+    var detailConfigSignal: PassthroughSubject<ActivityDetailConfig, Never> { get }
 }
 
 final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewModelOutputs {
@@ -34,16 +34,7 @@ final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewMod
 
     // inputs
     func viewDidLoad() {
-        let locationCoordinates: [CLLocationCoordinate2D] = activityDetailConfig
-            .locations
-            .map {
-                (location: Location) in
-                CLLocationCoordinate2D(latitude: location.latitude,
-                                       longitude: location.longitude)
-            }
-
-        let region = MKCoordinateRegion.make(from: locationCoordinates)
-        regionSignal.send(region)
+        detailConfigSignal.send(activityDetailConfig)
     }
 
     func didTapCloseButton() {
@@ -52,7 +43,7 @@ final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewMod
 
     // outputs
     var closeSignal = PassthroughSubject<Void, Never>()
-    var regionSignal = PassthroughSubject<MKCoordinateRegion, Never>()
+    var detailConfigSignal = PassthroughSubject<ActivityDetailConfig, Never>()
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")

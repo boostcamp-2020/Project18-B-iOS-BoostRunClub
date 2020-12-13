@@ -49,6 +49,8 @@
 		71D309382586420A0092AB05 /* Factory+RouteDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D309372586420A0092AB05 /* Factory+RouteDetailScene.swift */; };
 		71D3093C258642230092AB05 /* RouteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3093B258642230092AB05 /* RouteDetailViewModel.swift */; };
 		71D309402586423B0092AB05 /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3093F2586423B0092AB05 /* RouteDetailViewController.swift */; };
+		71D3094B258648D00092AB05 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3094A258648D00092AB05 /* GradientPathRenderer.swift */; };
+		71D3095625865D870092AB05 /* UIImage+CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */; };
 		71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288E256B9320004A1F30 /* AppCoordinator.swift */; };
 		71E82892256B9468004A1F30 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82891256B9468004A1F30 /* LoginCoordinator.swift */; };
 		71E82895256B9581004A1F30 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82894256B9581004A1F30 /* LoginViewController.swift */; };
@@ -236,6 +238,8 @@
 		71D309372586420A0092AB05 /* Factory+RouteDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+RouteDetailScene.swift"; sourceTree = "<group>"; };
 		71D3093B258642230092AB05 /* RouteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewModel.swift; sourceTree = "<group>"; };
 		71D3093F2586423B0092AB05 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
+		71D3094A258648D00092AB05 /* GradientPathRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPathRenderer.swift; sourceTree = "<group>"; };
+		71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CustomAnnotation.swift"; sourceTree = "<group>"; };
 		71E8288E256B9320004A1F30 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		71E82891256B9468004A1F30 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		71E82894256B9581004A1F30 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -439,6 +443,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		71D30949258648C00092AB05 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				71D3094A258648D00092AB05 /* GradientPathRenderer.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		71E82887256B9184004A1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +547,7 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
+				71D30949258648C00092AB05 /* Utilities */,
 				71EFCC68257750C8007998AD /* Factory */,
 				96ED402E257C7633007DB3DF /* CoreData */,
 				963B46F3256CD440006138DF /* Services */,
@@ -655,6 +668,7 @@
 				96C468C4257F6D900062AAA4 /* Date+String.swift */,
 				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
 				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
+				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -970,6 +984,7 @@
 				4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */,
 				96B2DC312584D40A00A95DD0 /* SimpleSplitViewCell.swift in Sources */,
 				71FBAB8D2581EC2B005C8D30 /* URL+Documents.swift in Sources */,
+				71D3095625865D870092AB05 /* UIImage+CustomAnnotation.swift in Sources */,
 				96725317258487B600B4BBC6 /* DetailSplitsTableView.swift in Sources */,
 				96C468A7257F426F0062AAA4 /* DateFilterSheetView.swift in Sources */,
 				714C03982574F794006B81E3 /* RunningMapCoordinator.swift in Sources */,
@@ -1016,6 +1031,7 @@
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
 				71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */,
 				96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */,
+				71D3094B258648D00092AB05 /* GradientPathRenderer.swift in Sources */,
 				4CEB6BF5256F661700FA7E88 /* GoalValueSetupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
