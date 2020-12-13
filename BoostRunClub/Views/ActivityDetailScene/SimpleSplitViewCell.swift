@@ -9,7 +9,7 @@ import UIKit
 
 class SimpleSplitViewCell: UITableViewCell {
     enum Style {
-        case desc, value
+        case description, value
     }
 
     enum Constant {
@@ -43,10 +43,13 @@ class SimpleSplitViewCell: UITableViewCell {
         paceRatio: CGFloat = 0
     ) {
         switch style {
-        case .desc:
+        case .description:
             distanceLabel.textColor = .systemGray
             paceLabel.textColor = .systemGray
             elevationLabel.textColor = .systemGray
+            distanceLabel.text = "Km"
+            paceLabel.text = "평균 페이스"
+            elevationLabel.text = "고도"
             paceForegroundView.backgroundColor = .clear
         case .value:
             distanceLabel.textColor = .label

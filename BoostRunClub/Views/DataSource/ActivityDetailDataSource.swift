@@ -27,7 +27,7 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SimpleSplitViewCell()
         if indexPath.row == 0 {
-            cell.configure(style: .desc)
+            cell.configure(style: .description)
         } else {
             let idx = indexPath.row - 1
             let split = splits[idx]
