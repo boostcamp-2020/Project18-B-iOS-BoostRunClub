@@ -99,6 +99,7 @@ extension DetailMapView {
     private func makeMapView() -> MKMapView {
         let view = MKMapView()
         view.isScrollEnabled = false
+        view.isZoomEnabled = false
         view.layer.cornerRadius = 10
         return view
     }

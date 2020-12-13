@@ -37,7 +37,10 @@ final class ActivityDetailCoordinator: BasicCoordinator {
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.navigationController.popViewController(animated: true) }
             .store(in: &cancellables)
+        
+        detailVM.outputs.showRouteDetailSignal
 
         navigationController.pushViewController(detailVC, animated: true)
     }
+    
 }
