@@ -58,7 +58,7 @@ class ActivityDetailViewController: UIViewController {
                 self?.titleView.configure(dateText: config.titleDate, title: config.title)
                 self?.totalView.configure(with: config)
                 self?.mapContainerView.configure(locations: config.locations, splits: config.splits)
-                self?.dataSource.loadData(config.splits)
+                self?.dataSource.loadData(splits: config.splits, distance: config.distance)
                 self?.splitsView.tableView.reloadData()
             }
             .store(in: &cancellables)

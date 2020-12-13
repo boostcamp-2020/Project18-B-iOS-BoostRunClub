@@ -10,9 +10,10 @@ import UIKit
 class ActivityDetailDataSource: NSObject, UITableViewDataSource {
     private var maxPace: CGFloat = 0
     private var splits = [RunningSplit]()
-
-    func loadData(_ splits: [RunningSplit]) {
+    private var totalDistance: Double = 0
+    func loadData(splits: [RunningSplit], distance: Double) {
         self.splits = splits
+        totalDistance = distance
         maxPace = splits.reduce(into: 0) { $0 = max($0, CGFloat($1.avgPace)) }
     }
 
@@ -32,7 +33,7 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
             let idx = indexPath.row - 1
             let split = splits[idx]
 
-            let distanceText = String(format: "%.2f", split.distance / 1000)
+            let distanceText = idx < splits.count - 1 ? "\(idx + 1)" : String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
             let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
             let elevationText = String(split.elevation)
 
