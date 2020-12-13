@@ -38,6 +38,15 @@ final class ActivityDetailCoordinator: BasicCoordinator {
             .sink { [weak self] in self?.navigationController.popViewController(animated: true) }
             .store(in: &cancellables)
 
+        detailVM.outputs.showInfoDetailSignal
+            .sink { [weak self] in self?.showSplitInfoDetailScene() }
+            .store(in: &cancellables)
+
         navigationController.pushViewController(detailVC, animated: true)
+    }
+
+    func showSplitInfoDetailScene() {
+        let vc = factory.makeSplitInfoDetailVC()
+        navigationController.pushViewController(vc, animated: true)
     }
 }

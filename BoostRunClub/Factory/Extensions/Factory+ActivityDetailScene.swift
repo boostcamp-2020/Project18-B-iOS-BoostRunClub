@@ -10,6 +10,9 @@ import UIKit
 protocol ActivityDetailSceneFactory {
     func makeActivityDetailVM(activity: Activity) -> ActivityDetailViewModelTypes?
     func makeActivityDetailVC(with: ActivityDetailViewModelTypes) -> UIViewController
+
+    func makeSplitInfoDetailVM()
+    func makeSplitInfoDetailVC() -> UIViewController
 }
 
 extension DependencyFactory: ActivityDetailSceneFactory {
@@ -19,5 +22,11 @@ extension DependencyFactory: ActivityDetailSceneFactory {
 
     func makeActivityDetailVC(with viewModel: ActivityDetailViewModelTypes) -> UIViewController {
         ActivityDetailViewController(with: viewModel)
+    }
+
+    func makeSplitInfoDetailVM() {}
+
+    func makeSplitInfoDetailVC() -> UIViewController {
+        SplitInfoDetailViewController()
     }
 }
