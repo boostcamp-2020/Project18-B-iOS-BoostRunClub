@@ -14,8 +14,6 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>사진에 대한 접근이 필요합니다.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -28,6 +26,8 @@
 	<string>사용자 위치 정보를 확인합니다.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>케이던스 및 모션 정보를 가져오기 위해 만보기에 대한 접근이 필요합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진에 대한 접근이 필요합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Futura LT Condensed Extra Bold Oblique.ttf</string>
@@ -64,8 +64,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

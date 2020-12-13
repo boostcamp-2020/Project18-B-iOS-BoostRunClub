@@ -98,13 +98,13 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-//        runningDataProvider.currentMotionType
-//            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
-//            .sink { [weak self] currentMotionType in
-//                if currentMotionType.stationary {
-//                    self?.didTapPauseButton()
-//                }
-//            }.store(in: &cancellables)
+        runningDataProvider.currentMotionType
+            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+            .sink { [weak self] currentMotionType in
+                if currentMotionType.stationary {
+                    self?.didTapPauseButton()
+                }
+            }.store(in: &cancellables)
 
         runningDataProvider.cadence
             .map { $0 <= 0 ? "--" :

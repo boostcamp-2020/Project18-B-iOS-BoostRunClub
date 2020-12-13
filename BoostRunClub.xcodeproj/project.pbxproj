@@ -356,7 +356,6 @@
 		4C3E7ACE256F63080061244F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-
 				71E8289A256B9B08004A1F30 /* ActivityViewController.swift */,
 				4CCD6E7E256BEA1200195EDA /* GoalTypeViewController.swift */,
 				4CEB6BF1256F657A00FA7E88 /* GoalValueSetupViewController.swift */,
@@ -366,15 +365,11 @@
 				71E828A0256B9B1E004A1F30 /* ProfileViewController.swift */,
 				96FA7E0025701C9200090999 /* RunningInfoViewController.swift */,
 				96FA7DFD25701C7700090999 /* RunningMapViewController.swift */,
-
 				71E8289D256B9B13004A1F30 /* RunningPageViewController.swift */,
-
 				96FA7E0325701CB800090999 /* SplitsViewController.swift */,
 				71FBAB61257FCD78005C8D30 /* EditProfileViewController.swift */,
 				96E0A6A0257EEA79008D81EC /* ActivityDateFilterViewController.swift */,
-
 				964BC6DF2580CFDA00A69A82 /* ActivityListViewController.swift */,
-
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -403,17 +398,12 @@
 				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
 				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
-
-				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
-				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
-
 				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
 				71FBAB4E257FA267005C8D30 /* ProfileViewModel.swift */,
 				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
-
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -609,17 +599,13 @@
 				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
 				4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */,
 				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
-
 				71FBAB8C2581EC2B005C8D30 /* URL+Documents.swift */,
 				71FBAB952581FB3C005C8D30 /* Data+SaveAndLoadData.swift */,
-
 				4C58750F258014C000185B4C /* UIView+identifier.swift */,
 				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
 				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
 				96C468C4257F6D900062AAA4 /* Date+String.swift */,
-
 				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
-
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -866,7 +852,6 @@
 				714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */,
 				96ED4035257C768A007DB3DF /* Activity.swift in Sources */,
 				96CB22A525823284000D67C4 /* RouteSnapShotProcessor.swift in Sources */,
-				960A1500257E057B008D2BD3 /* ActivityCellView.swift in Sources */,
 				71FBAB77257FDED8005C8D30 /* Profile.swift in Sources */,
 				4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
