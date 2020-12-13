@@ -65,9 +65,7 @@ class ActivityDetailViewController: UIViewController {
 
         viewModel.outputs.initialAnimationSignal
             .receive(on: RunLoop.main)
-            .sink { [weak self] in
-                self?.totalView.startAppear()
-            }
+            .sink { [weak self] in self?.initialAnimation() }
             .store(in: &cancellables)
 
         splitsView.heightChangedPublisher
@@ -87,6 +85,27 @@ class ActivityDetailViewController: UIViewController {
 // MARK: - Actions
 
 extension ActivityDetailViewController {
+    func initialAnimation() {
+        let initialTransform = CGAffineTransform(translationX: 0, y: 30)
+        contentStack.alpha = 1
+        contentStack.arrangedSubviews.enumerated().forEach {
+            let view = $0.element
+            $0.element.transform = initialTransform
+            $0.element.alpha = 0.4
+            UIView.animate(
+                withDuration: 0.4,
+                delay: Double($0.offset) * 0.2,
+                options: .curveEaseIn,
+                animations: {
+                    view.transform = .identity
+                    view.alpha = 1
+                }
+            )
+        }
+
+        totalView.startAppear()
+    }
+
     @objc
     func didTapBackItem() {
         viewModel?.inputs.didTapBackItem()
@@ -133,5 +152,7 @@ extension ActivityDetailViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+
+        contentStack.alpha = 0
     }
 }
