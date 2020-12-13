@@ -54,7 +54,7 @@ class CircleLongPressButton: CircleButton {
 
         if newProgress >= 1 {
             direction = -1
-            print("finished")
+            didTapButton.send()
         }
 
         if newProgress <= 0 {
