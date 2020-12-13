@@ -15,7 +15,7 @@ extension Date {
         DateFormatter.MDFormatter.string(from: self)
     }
 
-    var toYMDHString: String {
+    var toYMDHMString: String {
         DateFormatter.YMDHMFormatter.string(from: self)
     }
 

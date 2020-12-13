@@ -34,34 +34,11 @@ protocol ActivityViewModelOutputs {
     var showProfileScene: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
     var showActivityListScene: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailScene: PassthroughSubject<Activity, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     let activityProvider: ActivityReadable
-
-    // ERASE!: DummyData
-    let dummyActivity = [
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-21 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-22 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-23 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-10-24 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-10 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-11 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-11-12 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2019-12-02 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-24 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-02 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-03 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")!),
-    ]
 
     private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
@@ -106,7 +83,10 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         totalDataSubject.send(total)
     }
 
-    func didSelectActivity(at _: Int) {}
+    func didSelectActivity(at index: Int) {
+        guard recentActivitiesSubject.value.count > index else { return }
+        showActivityDetailScene.send(recentActivitiesSubject.value[index])
+    }
 
     func didTapShowAllActivities() {
         showActivityListScene.send()
@@ -127,6 +107,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     var showProfileScene = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
     var showActivityListScene = PassthroughSubject<Void, Never>()
+    var showActivityDetailScene = PassthroughSubject<Activity, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

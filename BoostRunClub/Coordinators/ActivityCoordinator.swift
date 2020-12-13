@@ -49,6 +49,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
             .sink { [weak self] in self?.showActivityListScene() }
             .store(in: &cancellables)
 
+        activityVM.outputs.showActivityDetailScene
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.showActivityDetailScene(activity: $0) }
+            .store(in: &cancellables)
+
         navigationController.pushViewController(activityVC, animated: true)
     }
 
@@ -82,5 +87,14 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
         let activityListCoordinator = ActivityListCoordinator(navigationController: navigationController)
         childCoordinators.append(activityListCoordinator)
         activityListCoordinator.start()
+    }
+
+    func showActivityDetailScene(activity: Activity) {
+        let activityDetailCoordinator = ActivityDetailCoordinator(
+            navigationController: navigationController,
+            activity: activity
+        )
+        childCoordinators.append(activityDetailCoordinator)
+        activityDetailCoordinator.start()
     }
 }
