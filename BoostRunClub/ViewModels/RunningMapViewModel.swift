@@ -37,6 +37,7 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
     // inputs
     func viewWillAppear() {
         userTrackingModeOnWithAnimatedSignal.send(false)
+
         guard
             !runningDataProvider.locations.isEmpty,
             lastRouteIdx + 1 < runningDataProvider.locations.count

@@ -5,57 +5,71 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import MapKit
 import UIKit
 
 final class RunningPageViewController: UIPageViewController {
     enum Pages: CaseIterable {
-        case map, runningInfo, splits
+        case map, info, splits
     }
 
     private var pages = [UIViewController]()
-    private var pageControl = UIPageControl()
+    private lazy var pageControl = makePageControl()
+    private lazy var backButton = makeBackButton()
+
+    private var viewModel: RunningPageViewModelTypes?
+    private var cancellables = Set<AnyCancellable>()
+
+    private var distance: CGFloat = 0
+    private let buttonHeight: CGFloat = 50
+
+    init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        self.viewModel = viewModel
+        pages = viewControllers
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    func bindViewModel() {
+        viewModel?.outputs.scaleSubject
+            .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
+            .store(in: &cancellables)
+
+        viewModel?.outputs.scaleSubjectNotDragging
+            .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
+            .store(in: &cancellables)
+
+        viewModel?.outputs.goBackToMainPageSignal
+            .sink { [weak self] in self?.goBackToMainPage(currPageIdx: $0) }
+            .store(in: &cancellables)
+
+        viewModel?.outputs.runningTimeSubject
+            .sink { [weak self] in
+                guard let button = self?.backButton else { return }
+
+                button.setTitle($0, for: .normal)
+                // TODO: 페이지 상태에 따른 화살표 표시 처리
+                //				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+                //				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            .store(in: &cancellables)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
-        delegate = self
-        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
 
-        pageControl.pageIndicatorTintColor = UIColor.gray
-        pageControl.currentPageIndicatorTintColor = UIColor.black
-        pageControl.numberOfPages = Pages.allCases.count
-        pageControl.currentPage = 1
-        pageControl.addTarget(self,
-                              action: #selector(pageControlSelectionAction),
-                              for: .valueChanged)
+        configurePageViewController()
+        configureSubViews()
+        bindViewModel()
 
-        view.addSubview(pageControl)
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
-    }
-
-    // TODO: 뷰 전환 벼튼 클릭 이벤트로 대체, 애니메이션 적용
-    @objc func pageControlSelectionAction(_ sender: UIPageControl) {
-        guard
-            let viewControllers = viewControllers,
-            let prevIdx = pages.firstIndex(of: viewControllers[0])
-        else { return }
-
-        let currIdx = sender.currentPage
-        DispatchQueue.main.async {
-            self.setViewControllers([self.pages[currIdx]],
-                                    direction: currIdx > prevIdx ? .forward : .reverse,
-                                    animated: true,
-                                    completion: nil)
-        }
-    }
-
-    func setPages(_ viewControllers: [UIViewController]) {
-        pages.append(contentsOf: viewControllers)
+        view.layoutIfNeeded()
+        distance = view.bounds.height - pageControl.center.y - buttonHeight / 2 - 30
     }
 
     deinit {
@@ -63,20 +77,137 @@ final class RunningPageViewController: UIPageViewController {
     }
 }
 
+// MARK: - ViewModel Output Action
+
+extension RunningPageViewController {
+    func transformBackButton(scale: CGFloat) {
+        backButton.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: scale * distance)
+            .scaledBy(x: scale, y: scale)
+        pageControl.transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: scale * distance)
+
+        UIView.animate(withDuration: 0) {
+            self.pageControl.alpha = 1 - scale * 3
+        }
+    }
+
+    func goBackToMainPage(currPageIdx: Int) {
+        let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
+
+        setViewControllers([pages[1]], direction: direction, animated: true) { _ in
+            self.viewModel?.inputs.didChangeCurrentPage(idx: 1)
+        }
+    }
+}
+
+// MARK: - Actions
+
+extension RunningPageViewController {
+    @objc func didTabBackButton() {
+        viewModel?.inputs.didTapGoBackButton()
+    }
+
+    @objc func panGestureAction() {
+        viewModel?.inputs.dragging()
+    }
+}
+
+// MARK: - Configure
+
+extension RunningPageViewController {
+    func configurePageViewController() {
+        dataSource = self
+        delegate = self
+        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
+
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction))
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
+
+        view.subviews.forEach { view in
+            if let scrollView = view as? UIScrollView {
+                scrollView.delegate = self
+            }
+        }
+    }
+
+    func configureSubViews() {
+        view.addSubview(pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+
+        view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
+            backButton.heightAnchor.constraint(equalToConstant: buttonHeight),
+        ])
+    }
+
+    func makePageControl() -> UIPageControl {
+        let pageControl = UIPageControl()
+        pageControl.pageIndicatorTintColor = .gray
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.numberOfPages = Pages.allCases.count
+        pageControl.currentPage = 1
+        pageControl.isUserInteractionEnabled = false
+        return pageControl
+    }
+
+    func makeBackButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
+        button.setTitleColor(.label, for: .normal)
+        button.contentEdgeInsets.left = 20
+        button.contentEdgeInsets.right = 20
+        button.layer.cornerRadius = buttonHeight / 2
+        button.addTarget(self, action: #selector(didTabBackButton), for: .touchUpInside)
+        return button
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension RunningPageViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        viewModel?.inputs.buttonScaleShouldUpdate(
+            contentOffset: Double(scrollView.contentOffset.x),
+            screenWidth: Double(view.bounds.width)
+        )
+    }
+
+    func scrollViewDidEndDragging(_: UIScrollView, willDecelerate _: Bool) {
+        viewModel?.inputs.didEndDragging()
+    }
+
+    func scrollViewWillBeginDragging(_: UIScrollView) {
+        viewModel?.inputs.willBeginDragging()
+    }
+}
+
+// MARK: - UIPageViewControllerDelegate
+
 extension RunningPageViewController: UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
-        didFinishAnimating _: Bool,
+        didFinishAnimating finished: Bool,
         previousViewControllers _: [UIViewController],
-        transitionCompleted _: Bool
+        transitionCompleted completed: Bool
     ) {
-        if let viewControllers = pageViewController.viewControllers {
+        if finished, completed, let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
-                pageControl.currentPage = viewControllerIndex
+                viewModel?.inputs.didChangeCurrentPage(idx: viewControllerIndex)
             }
         }
     }
 }
+
+// MARK: - UIPageViewControllerDataSource
 
 extension RunningPageViewController: UIPageViewControllerDataSource {
     func pageViewController(
@@ -109,5 +240,18 @@ extension RunningPageViewController: UIPageViewControllerDataSource {
             }
         }
         return nil
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension RunningPageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer
+    )
+        -> Bool
+    {
+        true
     }
 }
