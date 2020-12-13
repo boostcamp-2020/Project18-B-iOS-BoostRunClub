@@ -162,5 +162,9 @@ extension RunningInfoViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 100),
             pauseButton.widthAnchor.constraint(equalTo: pauseButton.heightAnchor, multiplier: 1),
         ])
+
+        view.subviews.forEach {
+            $0.alpha = 0
+        }
     }
 }
