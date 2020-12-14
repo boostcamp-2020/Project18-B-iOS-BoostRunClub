@@ -54,6 +54,10 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         fetchActivities()
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // Inputs
     func viewDidLoad() {
         didFilterChanged(to: 0)

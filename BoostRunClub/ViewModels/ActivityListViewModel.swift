@@ -28,27 +28,16 @@ protocol ActivityListViewModelOutputs {
 class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelOutputs {
     let activityProvider: ActivityReadable
 
-    // ERASE!: DummyData
-    let dummyActivity = [
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-21 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-22 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-23 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-10-24 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-10 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-11 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-11-12 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-08 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-09 13:00")!),
-        Activity(date: DateFormatter.YMDHMFormatter.date(from: "2020-12-10 13:00")!),
-    ]
-
     init(activityProvider: ActivityReadable) {
         self.activityProvider = activityProvider
 
-        // ERASE!: DummyData
         let activites = activityProvider.fetchActivities().sorted(by: >)
         let listItems = makeActivityListItems(from: activites)
         activityListItemSubject.send(listItems)
+    }
+
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }
 
     // Inputs

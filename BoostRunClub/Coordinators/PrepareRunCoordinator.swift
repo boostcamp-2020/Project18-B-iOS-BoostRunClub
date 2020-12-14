@@ -8,13 +8,11 @@
 import Combine
 import UIKit
 
-protocol PrepareRunCoordinatorProtocol {
-    func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
-    func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never>
-    func showRunningScene(goalInfo: GoalInfo)
+enum PrepareRunCoordinationResult {
+    case run(GoalInfo)
 }
 
-final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtocol {
+final class PrepareRunCoordinator: BasicCoordinator<PrepareRunCoordinationResult> {
     let factory: PrepareRunSceneFactory
 
     init(navigationController: UINavigationController, factory: PrepareRunSceneFactory = DependencyFactory.shared) {
@@ -33,7 +31,10 @@ final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtoc
 
         prepareRunVM.outputs.showRunningSceneSignal
             .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.showRunningScene(goalInfo: $0) }
+            .sink { [weak self] in
+                let result = PrepareRunCoordinationResult.run($0)
+                self?.closeSignal.send(result)
+            }
             .store(in: &cancellables)
 
         prepareRunVM.outputs.showGoalTypeActionSheetSignal
@@ -70,7 +71,7 @@ final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtoc
 
     func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never> {
         // TODO: goalType, goalValue -> GoalInfo 타입으로 변경
-        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let goalValueSetupVC = GoalValueSetupViewController(with: goalValueSetupVM)
         navigationController.pushViewController(goalValueSetupVC, animated: false)
 
@@ -81,17 +82,5 @@ final class PrepareRunCoordinator: BasicCoordinator, PrepareRunCoordinatorProtoc
                 return $0
             }
             .eraseToAnyPublisher()
-    }
-
-    func showRunningScene(goalInfo: GoalInfo) {
-        // TODO: goalType, goalValue -> GoalInfo 타입으로 변경
-        NotificationCenter.default.post(
-            name: .showRunningScene,
-            object: self,
-            userInfo: [
-                "goalType": goalInfo.goalType,
-                "goalValue": goalInfo.goalValue,
-            ]
-        )
     }
 }

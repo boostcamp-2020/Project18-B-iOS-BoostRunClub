@@ -5,6 +5,7 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import Combine
 import UIKit
 
 enum TabBarPage: Int {
@@ -27,9 +28,11 @@ enum TabBarPage: Int {
     static var unselectColor: UIColor { .gray }
 }
 
-protocol MainTabBarCoordinatorProtocol {}
+enum MainTabCoordinationResult {
+    case running(GoalInfo)
+}
 
-final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtocol {
+final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
     let factory: TabBarContainerFactory
 
     init(navigationController: UINavigationController, factory: TabBarContainerFactory = DependencyFactory.shared) {
@@ -38,22 +41,56 @@ final class MainTabBarCoordinator: BasicCoordinator, MainTabBarCoordinatorProtoc
     }
 
     override func start() {
-        prepareTabBarController()
+        showTabBarController()
     }
 
-    private func prepareTabBarController() {
-        childCoordinators = [
-            ActivityCoordinator(navigationController: UINavigationController()),
-            PrepareRunCoordinator(navigationController: UINavigationController()),
-            ProfileCoordinator(navigationController: UINavigationController()),
-        ]
+    func start(activity: Activity, detail: ActivityDetail) {
+        showTabBarController(activity: activity, detail: detail)
+    }
 
-        childCoordinators.forEach { $0.start() }
+    private func showTabBarController(activity: Activity? = nil, detail: ActivityDetail? = nil) {
+        let activityCoordinator = ActivityCoordinator(navigationController: UINavigationController())
+        let prepareRunCoordinator = PrepareRunCoordinator(navigationController: UINavigationController())
+        let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
+
+        let startPage: TabBarPage
+        if
+            let activity = activity,
+            let detail = detail
+        {
+            childCoordinators[activityCoordinator.identifier] = activityCoordinator
+            activityCoordinator.startDetail(activity: activity, detail: detail)
+            startPage = .activity
+        } else {
+            coordinate(coordinator: activityCoordinator)
+            startPage = .running
+        }
+
+        coordinate(coordinator: profileCoordinator)
+        let closablePublisher = coordinate(coordinator: prepareRunCoordinator)
 
         let tabBarController = factory.makeTabBarVC(
-            with: childCoordinators.map { $0.navigationController },
-            selectedIndex: TabBarPage.running.rawValue
+            with: [
+                activityCoordinator.navigationController,
+                prepareRunCoordinator.navigationController,
+                profileCoordinator.navigationController,
+            ],
+            selectedIndex: startPage.rawValue
         )
         navigationController.viewControllers = [tabBarController]
+
+        let uuid = prepareRunCoordinator.identifier
+        closeSubscription[uuid] = closablePublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                switch $0 {
+                case let .run(info):
+                    let result = MainTabCoordinationResult.running(info)
+                    self?.closeSignal.send(result)
+                }
+                self?.release(coordinator: activityCoordinator)
+                self?.release(coordinator: prepareRunCoordinator)
+                self?.release(coordinator: profileCoordinator)
+            }
     }
 }

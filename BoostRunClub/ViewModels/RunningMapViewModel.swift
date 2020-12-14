@@ -34,6 +34,10 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
         self.runningDataProvider = runningDataProvider
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // inputs
     func viewWillAppear() {
         userTrackingModeOnWithAnimatedSignal.send(false)
@@ -58,10 +62,6 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
     var routesSubject = PassthroughSubject<[CLLocationCoordinate2D], Never>()
     var userTrackingModeOnWithAnimatedSignal = PassthroughSubject<Bool, Never>()
     var userTrackingModeOffSignal = PassthroughSubject<Void, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 extension RunningMapViewModel: RunningMapViewModelTypes {

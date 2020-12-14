@@ -5,9 +5,10 @@
 //  Created by 김신우 on 2020/12/09.
 //
 
+import Combine
 import UIKit
 
-final class ActivityListCoordinator: BasicCoordinator {
+final class ActivityListCoordinator: BasicCoordinator<Void> {
     let factory: ActivityListSceneFactory
 
     init(navigationController: UINavigationController, factory: ActivityListSceneFactory = DependencyFactory.shared) {
@@ -27,11 +28,31 @@ final class ActivityListCoordinator: BasicCoordinator {
 
         listVM.outputs.goBackToSceneSignal
             .receive(on: RunLoop.main)
-            .sink { [weak listVC] in
+            .sink { [weak self, weak listVC] in
                 listVC?.navigationController?.popViewController(animated: true)
+                self?.closeSignal.send()
+            }
+            .store(in: &cancellables)
+
+        listVM.outputs.showActivityDetails
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.showActivityDetailScene(activity: $0)
             }
             .store(in: &cancellables)
 
         navigationController.pushViewController(listVC, animated: true)
+    }
+
+    func showActivityDetailScene(activity: Activity) {
+        let activityDetailCoordinator = ActivityDetailCoordinator(
+            navigationController: navigationController,
+            activity: activity
+        )
+
+        let uuid = activityDetailCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: activityDetailCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityDetailCoordinator) }
     }
 }

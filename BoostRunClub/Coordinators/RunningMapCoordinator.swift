@@ -5,13 +5,10 @@
 //  Created by Imho Jang on 2020/11/30.
 //
 
+import Combine
 import UIKit
 
-protocol RunningMapCoordinatorProtocol {
-    func showRunningMapViewController()
-}
-
-final class RunningMapCoordinator: BasicCoordinator, RunningMapCoordinatorProtocol {
+final class RunningMapCoordinator: BasicCoordinator<Void> {
     let factory: RunningMapSceneFactory
 
     init(navigationController: UINavigationController, factory: RunningMapSceneFactory = DependencyFactory.shared) {

@@ -37,12 +37,12 @@ class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
             .store(in: &cancellables)
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // outputs
     var rowViewModelSubject = CurrentValueSubject<[RunningSplitCellViewModelType], Never>([])
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 extension SplitsViewModel {

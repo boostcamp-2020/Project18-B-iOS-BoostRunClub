@@ -41,6 +41,10 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
         configurePickerList(filterType: filterType, ranges: dateRanges, currentRange: currentRange)
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // Inputs
     func viewDidLoad() {
         switch filterType {

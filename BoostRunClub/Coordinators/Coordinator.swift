@@ -9,10 +9,10 @@ import Combine
 import UIKit
 
 protocol Coordinator: AnyObject {
+    var identifier: UUID { get }
     var navigationController: UINavigationController { get set }
-    var childCoordinators: [Coordinator] { get set }
+    var childCoordinators: [UUID: Coordinator] { get set }
     func start()
-    func clear()
 }
 
 extension Coordinator {
@@ -22,19 +22,48 @@ extension Coordinator {
     }
 }
 
-class BasicCoordinator: Coordinator {
+class BasicCoordinator<ResultType>: Coordinator {
+    typealias CoordinationResult = ResultType
+
+    let identifier = UUID()
     var navigationController: UINavigationController
-    var childCoordinators = [Coordinator]()
+
+    var childCoordinators = [UUID: Coordinator]()
+    var closeSubscription = [UUID: AnyCancellable]()
+
+    var closeSignal = PassthroughSubject<CoordinationResult, Never>()
+
     var cancellables = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(true, animated: true)
+        print("[Memory \(Date())] 🌈Coordinator🌈 \(Self.self) started")
     }
 
-    func start() {}
+    private func store<T>(coordinator: BasicCoordinator<T>) {
+        childCoordinators[coordinator.identifier] = coordinator
+    }
+
+    @discardableResult
+    func coordinate<T>(coordinator: BasicCoordinator<T>) -> AnyPublisher<T, Never> {
+        childCoordinators[coordinator.identifier] = coordinator
+        coordinator.start()
+        return coordinator.closeSignal.eraseToAnyPublisher()
+    }
+
+    func release<T>(coordinator: BasicCoordinator<T>) {
+        let uuid = coordinator.identifier
+        childCoordinators[uuid] = nil
+        closeSubscription[uuid]?.cancel()
+        closeSubscription.removeValue(forKey: uuid)
+    }
+
+    func start() {
+        fatalError("start() method must be implemented")
+    }
 
     deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🌈Coordinator💀 \(Self.self) deallocated.")
     }
 }

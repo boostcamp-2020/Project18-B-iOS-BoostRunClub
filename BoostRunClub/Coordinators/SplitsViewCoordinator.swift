@@ -5,13 +5,10 @@
 //  Created by Imho Jang on 2020/11/30.
 //
 
+import Combine
 import UIKit
 
-protocol SplitsCoordinatorProtocol {
-    func showSplitsViewController()
-}
-
-final class SplitsCoordinator: BasicCoordinator, SplitsCoordinatorProtocol {
+final class SplitsCoordinator: BasicCoordinator<Void> {
     let factory: SplitSceneFactory
 
     init(navigationController: UINavigationController, factory: SplitSceneFactory = DependencyFactory.shared) {

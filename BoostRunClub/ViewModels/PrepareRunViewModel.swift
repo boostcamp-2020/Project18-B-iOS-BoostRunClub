@@ -43,8 +43,8 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var cancellables = Set<AnyCancellable>()
     private var goalInfo: GoalInfo {
         GoalInfo(
-            goalType: goalTypeObservable.value,
-            goalValue: goalValueObservable.value
+            type: goalTypeObservable.value,
+            value: goalValueObservable.value
         )
     }
 
@@ -54,6 +54,10 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
             .compactMap { $0.coordinate }
             .sink { [weak self] in self?.userLocation.send($0) }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }
 
     // MARK: Inputs
@@ -107,10 +111,6 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
     var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()
     var showRunningSceneSignal = PassthroughSubject<GoalInfo, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 // MARK: - Types
