@@ -23,14 +23,18 @@ protocol PausedRunningViewModelInputs {
 }
 
 protocol PausedRunningViewModelOutputs {
-    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
-    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
     var runInfoData: [RunningInfo] { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
+
+    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
+
+    var showLoadingViewSignal: PassthroughSubject<Void, Never> { get }
+
+    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
@@ -73,7 +77,8 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
 
     func didLongHoldStopRunningButton() {
         runningDataProvider.stop()
-        showPrepareRunningSignal.send()
+//        showPrepareRunningSignal.send()
+        showLoadingViewSignal.send()
     }
 
     func viewDidAppear() {
@@ -98,6 +103,8 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     }
 
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()
+    var showLoadingViewSignal = PassthroughSubject<Void, Never>()
+
     var showRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()

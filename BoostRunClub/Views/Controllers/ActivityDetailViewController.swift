@@ -16,7 +16,7 @@ class ActivityDetailViewController: UIViewController {
     private var splitsView = DetailSplitsView()
     private lazy var contentStack = UIStackView.make(
         with: [titleView, totalView, mapContainerView, splitsView],
-        axis: .vertical, alignment: .fill, distribution: .fillProportionally, spacing: 10
+        axis: .vertical, alignment: .fill, distribution: .fillProportionally, spacing: 20
     )
 
     private var dataSource = ActivityDetailDataSource()

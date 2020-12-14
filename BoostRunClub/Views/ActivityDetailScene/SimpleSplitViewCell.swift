@@ -139,8 +139,5 @@ extension SimpleSplitViewCell {
             paceLabel.leadingAnchor.constraint(equalTo: paceForegroundView.leadingAnchor, constant: 20),
             paceLabel.centerYAnchor.constraint(equalTo: paceForegroundView.centerYAnchor),
         ])
-
-        let centerHuggingP = paceBackgroundView.contentHuggingPriority(for: .horizontal)
-        elevationBackgroundView.setContentHuggingPriority(.init(centerHuggingP.rawValue - 1), for: .horizontal)
     }
 }
