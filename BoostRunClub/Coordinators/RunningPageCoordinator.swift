@@ -61,6 +61,9 @@ final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResu
                     let result = RunningPageCoordinationResult.prepareRun
                     self?.closeSignal.send(result)
                 }
+                self?.release(coordinator: mapCoordinator)
+                self?.release(coordinator: runningCoordinator)
+                self?.release(coordinator: splitsCoordinator)
             }
     }
 }

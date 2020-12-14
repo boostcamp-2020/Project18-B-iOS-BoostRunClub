@@ -26,11 +26,13 @@ final class PausedRunningCoordinator: BasicCoordinator<PausedRunCoordinationResu
 
     func showPausedRunningViewController() {
         let pausedRunningVM = factory.makePausedRunningVM()
+
         pausedRunningVM.outputs.showRunningInfoSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 let result = PausedRunCoordinationResult.runInfo
                 self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
             }
             .store(in: &cancellables)
 
@@ -40,6 +42,7 @@ final class PausedRunningCoordinator: BasicCoordinator<PausedRunCoordinationResu
                 // TODO: PrepareRun으로, ActivityDetail로 이동 구분하기
                 let result = PausedRunCoordinationResult.prepareRun
                 self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
             }
             .store(in: &cancellables)
 

@@ -15,7 +15,6 @@ final class AppCoordinator: BasicCoordinator<Void> {
 
     func showMainFlow() {
         let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController)
-        mainTabBarCoordinator.start()
 
         let uuid = mainTabBarCoordinator.identifier
         closeSubscription[uuid] = coordinate(coordinator: mainTabBarCoordinator)

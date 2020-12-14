@@ -38,6 +38,7 @@ class BasicCoordinator<ResultType>: Coordinator {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(true, animated: true)
+        print("[Memory \(Date())] 🌈Coordinator🌈 \(Self.self) started")
     }
 
     private func store<T>(coordinator: BasicCoordinator<T>) {
@@ -48,17 +49,14 @@ class BasicCoordinator<ResultType>: Coordinator {
     func coordinate<T>(coordinator: BasicCoordinator<T>) -> AnyPublisher<T, Never> {
         childCoordinators[coordinator.identifier] = coordinator
         coordinator.start()
-        return coordinator.closeSignal
-            .handleEvents(
-                receiveOutput: { [weak self] _ in
-                    self?.release(coordinator: coordinator)
-                })
-            .eraseToAnyPublisher()
+        return coordinator.closeSignal.eraseToAnyPublisher()
     }
 
     func release<T>(coordinator: BasicCoordinator<T>) {
         let uuid = coordinator.identifier
         childCoordinators[uuid] = nil
+        closeSubscription[uuid]?.cancel()
+        closeSubscription.removeValue(forKey: uuid)
     }
 
     func start() {
@@ -66,6 +64,6 @@ class BasicCoordinator<ResultType>: Coordinator {
     }
 
     deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🌈Coordinator💀 \(Self.self) deallocated.")
     }
 }

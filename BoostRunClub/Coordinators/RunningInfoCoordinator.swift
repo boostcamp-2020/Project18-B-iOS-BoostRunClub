@@ -32,6 +32,7 @@ final class RunningInfoCoordinator: BasicCoordinator<RunningInfoCoordinationResu
             .sink { [weak self] in
                 let result = RunningInfoCoordinationResult.pausedRun
                 self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
             }
             .store(in: &cancellables)
 

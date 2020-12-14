@@ -101,7 +101,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
     }
 
     deinit {
-        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

@@ -67,15 +67,14 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
         closeSubscription[uuid] = closablePublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.release(coordinator: activityCoordinator)
-                self?.release(coordinator: prepareRunCoordinator)
-                self?.release(coordinator: profileCoordinator)
-
                 switch $0 {
                 case let .run(info):
                     let result = MainTabCoordinationResult.running(info)
                     self?.closeSignal.send(result)
                 }
+                self?.release(coordinator: activityCoordinator)
+                self?.release(coordinator: prepareRunCoordinator)
+                self?.release(coordinator: profileCoordinator)
             }
     }
 }

@@ -37,10 +37,6 @@ final class ActivityViewController: UIViewController {
         super.init(coder: coder)
     }
 
-    deinit {
-        print("activity scene deinit")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -113,6 +109,10 @@ final class ActivityViewController: UIViewController {
             activityStatisticCells[4].configure(title: "고도 상승", value: config.totalElevationText)
         }
         tableView.reloadData()
+    }
+
+    deinit {
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

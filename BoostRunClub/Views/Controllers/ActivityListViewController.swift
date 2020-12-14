@@ -43,6 +43,10 @@ class ActivityListViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+
+    deinit {
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Actions

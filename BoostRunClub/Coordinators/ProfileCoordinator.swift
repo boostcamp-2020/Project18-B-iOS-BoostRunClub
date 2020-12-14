@@ -52,8 +52,4 @@ final class ProfileCoordinator: BasicCoordinator<Void> {
             }
             .eraseToAnyPublisher()
     }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
-    }
 }

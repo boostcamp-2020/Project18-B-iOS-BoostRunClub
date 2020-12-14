@@ -28,9 +28,8 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
                 switch $0 {
                 case .pausedRun:
                     self?.showPausedRunningScene()
-
-                    self?.release(coordinator: runInfoCoordinator)
                 }
+                self?.release(coordinator: runInfoCoordinator)
             }
     }
 
@@ -41,7 +40,6 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
         closeSubscription[uuid] = coordinate(coordinator: pausedRunningCoordinator)
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.release(coordinator: pausedRunningCoordinator)
                 switch $0 {
                 case .runInfo:
                     self?.showRunningInfoScene()
@@ -52,6 +50,8 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
                     let result = RunningCoordinationResult.activityDetail(uuid)
                     self?.closeSignal.send(result)
                 }
+
+                self?.release(coordinator: pausedRunningCoordinator)
             }
     }
 }
