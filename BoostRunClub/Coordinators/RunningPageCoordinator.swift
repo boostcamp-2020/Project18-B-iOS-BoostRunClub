@@ -10,7 +10,7 @@ import UIKit
 
 enum RunningPageCoordinationResult {
     case prepareRun
-    case detail(UUID)
+    case activityDetail(activity: Activity, detail: ActivityDetail)
 }
 
 final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResult> {
@@ -54,8 +54,8 @@ final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResu
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 switch $0 {
-                case let .activityDetail(uuid):
-                    let result = RunningPageCoordinationResult.detail(uuid)
+                case let .activityDetail(activity, detail):
+                    let result = RunningPageCoordinationResult.activityDetail(activity: activity, detail: detail)
                     self?.closeSignal.send(result)
                 case .prepareRun:
                     let result = RunningPageCoordinationResult.prepareRun

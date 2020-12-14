@@ -28,6 +28,7 @@ protocol PausedRunningViewModelOutputs {
     var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
     var runInfoData: [RunningInfo] { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
@@ -76,7 +77,16 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
 
     func didLongHoldStopRunningButton() {
         runningDataProvider.stop()
-        showPrepareRunningSignal.send()
+        runningDataProvider.stopRunningResponse
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                if let info = $0 {
+                    self?.showActivityDetailSignal.send((info.activity, info.detail))
+                } else {
+                    self?.showPrepareRunningSignal.send()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     func viewDidAppear() {
@@ -105,6 +115,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var showPrepareRunningSignal = PassthroughSubject<Void, Never>()
+    var showActivityDetailSignal = PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never>()
 }
 
 extension PausedRunningViewModel: PausedRunningViewModelTypes {

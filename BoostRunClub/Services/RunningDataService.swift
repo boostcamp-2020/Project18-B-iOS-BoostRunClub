@@ -27,6 +27,7 @@ protocol RunningDataServiceable {
     var currentRunningSlice: RunningSlice { get }
     var routes: [RunningSlice] { get }
     var currentMotionType: CurrentValueSubject<CMMotionActivity, Never> { get }
+    var stopRunningResponse: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
     func start()
     func stop()
     func pause()
@@ -45,6 +46,7 @@ class RunningDataService: RunningDataServiceable {
     var lastUpdatedTime: TimeInterval = 0
 
     var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
+    var stopRunningResponse = PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never>()
 
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
     var calorie = CurrentValueSubject<Int, Never>(0)
@@ -147,6 +149,8 @@ class RunningDataService: RunningDataServiceable {
                     self?.saveRunning(with: data)
                 }
                 .store(in: &cancellables)
+        } else {
+            stopRunningResponse.send(nil)
         }
         isRunning = false
     }
@@ -237,7 +241,7 @@ class RunningDataService: RunningDataServiceable {
             locations: locations.map { Location(clLocation: $0) },
             splits: runningSplits
         )
-
+        stopRunningResponse.send((activity, activityDetail))
         activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
     }
 }

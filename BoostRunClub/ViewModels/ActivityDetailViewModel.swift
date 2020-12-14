@@ -32,10 +32,15 @@ protocol ActivityDetailViewModelOutputs {
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
-    init?(activity: Activity, activityProvider: ActivityReadable) {
-        guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+    init?(activity: Activity, detail: ActivityDetail?, activityProvider: ActivityReadable) {
+        let detailConfig: ActivityDetailConfig
+        if let detail = detail {
+            detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
+        } else {
+            guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+            detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
+        }
 
-        let detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
         detailConfigSubject = CurrentValueSubject<ActivityDetailConfig, Never>(detailConfig)
     }
 
