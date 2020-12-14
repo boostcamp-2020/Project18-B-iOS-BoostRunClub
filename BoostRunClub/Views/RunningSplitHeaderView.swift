@@ -29,7 +29,7 @@ class RunningSplitHeaderView: UIView {
             label.text = title
             label.font = label.font.withSize(17)
             label.textColor = .lightGray
-            label.textAlignment = [.left, .center, .right][idx == 0 ? 0 : 1 + (idx + 1) / titles.count]
+            label.setTextAlignment(idx: idx, total: titles.count)
             return label
         }
 

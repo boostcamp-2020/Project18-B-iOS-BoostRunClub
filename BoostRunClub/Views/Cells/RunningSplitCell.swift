@@ -74,7 +74,7 @@ class RunningSplitCell: UITableViewCell, CellConfigurable {
         labels.enumerated().forEach { idx, label in
             label.font = UIFont.boldSystemFont(ofSize: 20)
             label.textColor = .lightGray
-            label.textAlignment = [.left, .center, .right][idx == 0 ? 0 : 1 + (idx + 1) / labels.count]
+            label.setTextAlignment(idx: idx, total: labels.count)
         }
 
         let stackView = UIStackView.make(with: labels, distribution: .fillEqually, spacing: 20)
