@@ -9,6 +9,7 @@
 import Combine
 import XCTest
 
+// swiftlint:disable:next type_body_length
 class GoalValueSetupViewModelTest: XCTestCase {
     override func setUp() {}
 
@@ -475,4 +476,6 @@ class GoalValueSetupViewModelTest: XCTestCase {
             cancel.cancel()
         }
     }
+
+    // swiftlint:disable:next file_length
 }

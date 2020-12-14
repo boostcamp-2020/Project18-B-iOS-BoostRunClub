@@ -162,6 +162,7 @@ extension PausedRunningViewController: MKMapViewDelegate {
 // MARK: - Configure
 
 extension PausedRunningViewController {
+    // swiftlint:disable:next function_body_length
     func configureLayout() {
         view.addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false

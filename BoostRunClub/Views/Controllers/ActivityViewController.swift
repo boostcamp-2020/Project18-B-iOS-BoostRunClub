@@ -12,18 +12,10 @@ final class ActivityViewController: UIViewController {
     private var tableView = ActivityTableView()
     private var activityTotalView = ActivityTotalView()
     private let activityFooterView = ActivityFooterView()
-    private lazy var containerCellView = ActivitiesContainerCellView()
-    private lazy var collectionView = { containerCellView.collectionView }()
-    private var activityStatisticCells: [ActivityStatisticCellView] = [
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-        ActivityStatisticCellView(),
-    ]
 
-    private var statisticHeaderTitle: String = ""
     private var activityDataSource = ActivityDataSource()
+    private lazy var containerCellView = { activityDataSource.containerCellView }()
+    private lazy var collectionView = { containerCellView.collectionView }()
 
     private var viewModel: ActivityViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
@@ -60,7 +52,7 @@ final class ActivityViewController: UIViewController {
         viewModel.outputs.recentActivitiesSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.activityDataSource.loadData($0)
+                self?.activityDataSource.loadActivities($0)
                 self?.collectionView.reloadData()
                 self?.tableView.reloadData()
             }
@@ -69,7 +61,9 @@ final class ActivityViewController: UIViewController {
         viewModel.outputs.totalDataSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                self?.configureActivityTotal(to: $0)
+                self?.activityTotalView.configure(config: $0)
+                self?.activityDataSource.loadActivityTotal($0)
+                self?.tableView.reloadData()
             }
             .store(in: &cancellables)
 
@@ -93,26 +87,9 @@ final class ActivityViewController: UIViewController {
         containerCellView.heightChangedPublisher
             .sink {
                 guard let path = self.tableView.indexPath(for: $0) else { return }
-                self.tableView.reloadRows(at: [path], with: .none)
+                self.tableView.reloadRows(at: [path], with: .top)
             }
             .store(in: &cancellables)
-    }
-
-    private func configureActivityTotal(to config: ActivityTotalConfig) {
-        activityTotalView.configure(config: config)
-
-        switch config.filterType {
-        case .week, .month:
-            statisticHeaderTitle = ""
-        case .all, .year:
-            statisticHeaderTitle = config.filterType == .all ? "총 활동 통계" : config.period + " 통계"
-            activityStatisticCells[0].configure(title: "러닝", value: config.numRunningPerWeekText)
-            activityStatisticCells[1].configure(title: "킬로미터", value: config.distancePerRunningText)
-            activityStatisticCells[2].configure(title: "러닝페이스", value: config.avgPaceText)
-            activityStatisticCells[3].configure(title: "시간", value: config.runningTimePerRunningText)
-            activityStatisticCells[4].configure(title: "고도 상승", value: config.totalElevationText)
-        }
-        tableView.reloadData()
     }
 }
 
@@ -122,32 +99,6 @@ extension ActivityViewController {
     @objc
     func showProfileViewController() {
         viewModel?.inputs.didTapShowProfileButton()
-    }
-}
-
-// MARK: - UITableViewDataSource Implementation
-
-extension ActivityViewController: UITableViewDataSource {
-    func numberOfSections(in _: UITableView) -> Int {
-        statisticHeaderTitle.isEmpty ? 1 : 2
-    }
-
-    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if statisticHeaderTitle.isEmpty {
-            return 1
-        } else {
-            return section == 0 ? 5 : 1
-        }
-    }
-
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !statisticHeaderTitle.isEmpty,
-           indexPath.section == 0
-        {
-            return activityStatisticCells[indexPath.row]
-        } else {
-            return containerCellView
-        }
     }
 }
 
@@ -161,8 +112,9 @@ extension ActivityViewController: UITableViewDelegate {
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        if !statisticHeaderTitle.isEmpty, section == 0 {
-            label.text = statisticHeaderTitle
+        let title = activityDataSource.statisticHeaderTitle
+        if !title.isEmpty, section == 0 {
+            label.text = title
         } else {
             label.text = "최근 활동"
         }
@@ -192,7 +144,7 @@ extension ActivityViewController {
     }
 
     private func configureTableView() {
-        tableView.dataSource = self
+        tableView.dataSource = activityDataSource
         tableView.delegate = self
         activityTotalView.selfResizing()
         tableView.tableHeaderView = activityTotalView
