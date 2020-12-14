@@ -34,6 +34,25 @@ final class ActivityListCoordinator: BasicCoordinator<Void> {
             }
             .store(in: &cancellables)
 
+        listVM.outputs.showActivityDetails
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.showActivityDetailScene(activity: $0)
+            }
+            .store(in: &cancellables)
+
         navigationController.pushViewController(listVC, animated: true)
+    }
+
+    func showActivityDetailScene(activity: Activity) {
+        let activityDetailCoordinator = ActivityDetailCoordinator(
+            navigationController: navigationController,
+            activity: activity
+        )
+
+        let uuid = activityDetailCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: activityDetailCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityDetailCoordinator) }
     }
 }
