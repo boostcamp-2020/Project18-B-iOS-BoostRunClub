@@ -41,15 +41,31 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
     }
 
     override func start() {
-        return showTabBarController()
+        showTabBarController()
     }
 
-    private func showTabBarController() {
+    func start(activity: Activity, detail: ActivityDetail) {
+        showTabBarController(activity: activity, detail: detail)
+    }
+
+    private func showTabBarController(activity: Activity? = nil, detail: ActivityDetail? = nil) {
         let activityCoordinator = ActivityCoordinator(navigationController: UINavigationController())
         let prepareRunCoordinator = PrepareRunCoordinator(navigationController: UINavigationController())
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
 
-        coordinate(coordinator: activityCoordinator)
+        let startPage: TabBarPage
+        if
+            let activity = activity,
+            let detail = detail
+        {
+            childCoordinators[activityCoordinator.identifier] = activityCoordinator
+            activityCoordinator.startDetail(activity: activity, detail: detail)
+            startPage = .activity
+        } else {
+            coordinate(coordinator: activityCoordinator)
+            startPage = .running
+        }
+
         coordinate(coordinator: profileCoordinator)
         let closablePublisher = coordinate(coordinator: prepareRunCoordinator)
 
@@ -59,7 +75,7 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
                 prepareRunCoordinator.navigationController,
                 profileCoordinator.navigationController,
             ],
-            selectedIndex: TabBarPage.running.rawValue
+            selectedIndex: startPage.rawValue
         )
         navigationController.viewControllers = [tabBarController]
 

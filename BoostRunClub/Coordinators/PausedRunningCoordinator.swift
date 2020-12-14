@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 enum PausedRunCoordinationResult {
-    case runInfo, prepareRun, activityDetail(UUID)
+    case runInfo, prepareRun, activityDetail(activity: Activity, detail: ActivityDetail)
 }
 
 final class PausedRunningCoordinator: BasicCoordinator<PausedRunCoordinationResult> {
@@ -39,8 +39,16 @@ final class PausedRunningCoordinator: BasicCoordinator<PausedRunCoordinationResu
         pausedRunningVM.outputs.showPrepareRunningSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                // TODO: PrepareRun으로, ActivityDetail로 이동 구분하기
                 let result = PausedRunCoordinationResult.prepareRun
+                self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
+            }
+            .store(in: &cancellables)
+
+        pausedRunningVM.outputs.showActivityDetailSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                let result = PausedRunCoordinationResult.activityDetail(activity: $0.activity, detail: $0.detail)
                 self?.closeSignal.send(result)
                 self?.navigationController.popViewController(animated: false)
             }

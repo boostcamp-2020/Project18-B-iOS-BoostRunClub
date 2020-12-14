@@ -22,6 +22,11 @@ final class ActivityCoordinator: BasicCoordinator<Void> {
         showActivityViewController()
     }
 
+    func startDetail(activity: Activity, detail: ActivityDetail) {
+        showActivityViewController()
+        showActivityDetailScene(activity: activity, detail: detail)
+    }
+
     func showActivityViewController() {
         let activityVM = factory.makeActivityVM()
         let activityVC = factory.makeActivityVC(with: activityVM)
@@ -90,10 +95,11 @@ final class ActivityCoordinator: BasicCoordinator<Void> {
             .sink { [weak self] in self?.release(coordinator: activityListCoordinator) }
     }
 
-    func showActivityDetailScene(activity: Activity) {
+    func showActivityDetailScene(activity: Activity, detail: ActivityDetail? = nil) {
         let activityDetailCoordinator = ActivityDetailCoordinator(
             navigationController: navigationController,
-            activity: activity
+            activity: activity,
+            detail: detail
         )
 
         let uuid = activityDetailCoordinator.identifier

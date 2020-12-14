@@ -28,6 +28,22 @@ final class AppCoordinator: BasicCoordinator<Void> {
             }
     }
 
+    func showActivityDetail(activity: Activity, detail: ActivityDetail) {
+        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController)
+        mainTabBarCoordinator.start(activity: activity, detail: detail)
+
+        let uuid = mainTabBarCoordinator.identifier
+        closeSubscription[uuid] = mainTabBarCoordinator.closeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                switch $0 {
+                case let .running(info):
+                    self?.showRunningScene(goalType: info.type, goalValue: info.value)
+                }
+                self?.release(coordinator: mainTabBarCoordinator)
+            }
+    }
+
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
         let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController)
 
@@ -36,8 +52,8 @@ final class AppCoordinator: BasicCoordinator<Void> {
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 switch $0 {
-                case .detail:
-                    self?.showMainFlow()
+                case let .detail(activity, detail):
+                    self?.showActivityDetail(activity: activity, detail: detail)
                 case .prepareRun:
                     self?.showMainFlow()
                 }

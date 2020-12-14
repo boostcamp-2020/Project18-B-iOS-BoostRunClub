@@ -10,7 +10,7 @@ import UIKit
 
 enum RunningCoordinationResult {
     case prepareRun
-    case activityDetail(UUID)
+    case activityDetail(activity: Activity, detail: ActivityDetail)
 }
 
 final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
@@ -51,8 +51,8 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
                 case .prepareRun:
                     let result = RunningCoordinationResult.prepareRun
                     self?.closeSignal.send(result)
-                case let .activityDetail(uuid):
-                    let result = RunningCoordinationResult.activityDetail(uuid)
+                case let .activityDetail(activity, detail):
+                    let result = RunningCoordinationResult.activityDetail(activity: activity, detail: detail)
                     self?.closeSignal.send(result)
                 }
 
