@@ -59,7 +59,6 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
             .debounce(for: .seconds(1), scheduler: RunLoop.main)
             .sink { [weak self] motion in
                 if motion.running || motion.walking, motion.confidence == .high {
-                    print("###### tap resume")
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)

@@ -46,6 +46,8 @@
 		71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */; };
 		71BBFC882582FDE800BC01B7 /* DefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */; };
 		71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */; };
+		71CC3F322587989200CE969B /* RunningEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC3F312587989200CE969B /* RunningEvent.swift */; };
+		71CC3F3A2587A89400CE969B /* RunningEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC3F312587989200CE969B /* RunningEvent.swift */; };
 		71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8288E256B9320004A1F30 /* AppCoordinator.swift */; };
 		71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E82897256B9788004A1F30 /* TabBarCoordinator.swift */; };
 		71E8289B256B9B08004A1F30 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8289A256B9B08004A1F30 /* ActivityViewController.swift */; };
@@ -230,6 +232,7 @@
 		71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModel.swift; sourceTree = "<group>"; };
 		71A58D1E256D3FF80012FF51 /* GoalTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeCell.swift; sourceTree = "<group>"; };
 		71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsProvider.swift; sourceTree = "<group>"; };
+		71CC3F312587989200CE969B /* RunningEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningEvent.swift; sourceTree = "<group>"; };
 		71E8288E256B9320004A1F30 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		71E82897256B9788004A1F30 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		71E8289A256B9B08004A1F30 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
@@ -622,6 +625,7 @@
 				960A14E5257DD8D1008D2BD3 /* ActivityFilterType.swift */,
 				71FBAB76257FDED8005C8D30 /* Profile.swift */,
 				96C468B0257F51020062AAA4 /* DateRange.swift */,
+				71CC3F312587989200CE969B /* RunningEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1003,6 +1007,7 @@
 				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
 				71E828B3256BADFA004A1F30 /* ActivityCoordinator.swift in Sources */,
+				71CC3F322587989200CE969B /* RunningEvent.swift in Sources */,
 				96FA7DFE25701C7700090999 /* RunningMapViewController.swift in Sources */,
 				4CEB6BF5256F661700FA7E88 /* GoalValueSetupViewModel.swift in Sources */,
 			);
@@ -1024,6 +1029,7 @@
 				96B9064A257CE22A0081E8BF /* ZActivityDetail+ActivityDetail.swift in Sources */,
 				4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */,
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
+				71CC3F3A2587A89400CE969B /* RunningEvent.swift in Sources */,
 				96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityProvider.swift in Sources */,
