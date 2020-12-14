@@ -25,8 +25,8 @@ class DetailTotalView: UIView {
     private var cadenceValueLabel = UILabel.makeBold()
     private var cadenceLabel = UILabel.makeNormal(text: "케이던스")
 
-    private var distanceTarget: Double = 0
-    private var distanceCurrent: Double = 0
+    private var distanceValue: Double = 0
+    private var startTime: TimeInterval = 0
     private var displayLink: CADisplayLink?
 
     override init(frame: CGRect = .zero) {
@@ -40,8 +40,7 @@ class DetailTotalView: UIView {
     }
 
     func configure(with config: ActivityDetailConfig) {
-        distanceTarget = config.distance
-        distanceCurrent = 0
+        distanceValue = config.distance
         avgPaceValueLabel.text = config.avgPace
         runningTimeValueLabel.text = config.runningTime
         calorieValueLabel.text = "\(config.calorie)"
@@ -52,7 +51,8 @@ class DetailTotalView: UIView {
     }
 
     func startAppear() {
-        displayLink?.add(to: RunLoop.main, forMode: .common)
+        startTime = Date.timeIntervalSinceReferenceDate
+        displayLink?.add(to: RunLoop.main, forMode: .default)
     }
 }
 
@@ -60,17 +60,28 @@ class DetailTotalView: UIView {
 
 extension DetailTotalView {
     @objc
-    func displayFrameUpdated() {}
+    func displayFrameUpdated() {
+        var elapsedTime = Date.timeIntervalSinceReferenceDate - startTime
+
+        if elapsedTime > 2 {
+            displayLink?.invalidate()
+            elapsedTime = 2
+        }
+
+        let newValue = distanceValue * (elapsedTime / 2)
+        distanceValueLabel.text = String(format: "%.2f", newValue / 1000)
+    }
 }
 
 // MARK: - Configure
 
 extension DetailTotalView {
     private func commonInit() {
-        distanceValueLabel.text = "Value"
+        distanceValueLabel.text = "0.00"
         configureLayout()
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
         let distanceVStack = UIStackView.make(
             with: [distanceValueLabel, distancelabel],

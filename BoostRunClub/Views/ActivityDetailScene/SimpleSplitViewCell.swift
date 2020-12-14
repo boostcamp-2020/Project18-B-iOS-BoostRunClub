@@ -9,7 +9,7 @@ import UIKit
 
 class SimpleSplitViewCell: UITableViewCell {
     enum Style {
-        case desc, value
+        case description, value
     }
 
     enum Constant {
@@ -18,12 +18,15 @@ class SimpleSplitViewCell: UITableViewCell {
     }
 
     private var distanceLabel = UILabel.makeBold(text: "Km")
+    private var distanceBackgroundView = UIView()
     private var paceForegroundView = UIView()
     private var paceBackgroundView = UIView()
     private var paceLabel = UILabel.makeBold(text: "평균 페이스")
     private var elevationLabel = UILabel.makeBold(text: "고도")
+    private var elevationBackgroundView = UIView()
 
-    private lazy var paceContainerWidthConstraint = paceForegroundView.widthAnchor.constraint(equalToConstant: Constant.paceMinWidth)
+    private lazy var paceContainerWidthConstraint
+        = paceForegroundView.widthAnchor.constraint(equalToConstant: Constant.paceMinWidth)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: style, reuseIdentifier: "\(SimpleSplitViewCell.self)")
@@ -43,10 +46,13 @@ class SimpleSplitViewCell: UITableViewCell {
         paceRatio: CGFloat = 0
     ) {
         switch style {
-        case .desc:
+        case .description:
             distanceLabel.textColor = .systemGray
             paceLabel.textColor = .systemGray
             elevationLabel.textColor = .systemGray
+            distanceLabel.text = "Km"
+            paceLabel.text = "평균 페이스"
+            elevationLabel.text = "고도"
             paceForegroundView.backgroundColor = .clear
         case .value:
             distanceLabel.textColor = .label
@@ -62,6 +68,7 @@ class SimpleSplitViewCell: UITableViewCell {
 
     private func setAvgProgress(to progress: CGFloat) {
         let progress = progress == .nan ? 0 : progress
+        layoutIfNeeded()
         let fullWidth = paceBackgroundView.bounds.width
         let progressWidth = Constant.paceMinWidth + (fullWidth - Constant.paceMinWidth) * progress
         paceContainerWidthConstraint.constant = progressWidth
@@ -76,40 +83,64 @@ extension SimpleSplitViewCell {
         configureLayout()
     }
 
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
-        let hStack = UIStackView.make(
-            with: [distanceLabel, paceBackgroundView, elevationLabel],
-            axis: .horizontal, alignment: .center, distribution: .fill, spacing: 20
-        )
+        contentView.addSubview(distanceBackgroundView)
+        contentView.addSubview(paceBackgroundView)
+        contentView.addSubview(elevationBackgroundView)
 
-        contentView.addSubview(hStack)
-        hStack.translatesAutoresizingMaskIntoConstraints = false
+        distanceBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        elevationBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        paceBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            hStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            hStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            hStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            hStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            distanceBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            distanceBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            distanceBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
+            distanceBackgroundView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
+
+            paceBackgroundView.leadingAnchor.constraint(equalTo: distanceBackgroundView.trailingAnchor),
+            paceBackgroundView.trailingAnchor.constraint(equalTo: elevationBackgroundView.leadingAnchor),
+            paceBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            paceBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
+
+            elevationBackgroundView.leadingAnchor.constraint(equalTo: paceBackgroundView.trailingAnchor),
+            elevationBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            elevationBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            elevationBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
+            elevationBackgroundView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15),
+        ])
+
+        distanceBackgroundView.addSubview(distanceLabel)
+        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            distanceLabel.leadingAnchor.constraint(equalTo: distanceBackgroundView.leadingAnchor),
+            distanceLabel.centerYAnchor.constraint(equalTo: distanceBackgroundView.centerYAnchor),
+        ])
+
+        elevationBackgroundView.addSubview(elevationLabel)
+        elevationLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            elevationLabel.trailingAnchor.constraint(equalTo: elevationBackgroundView.trailingAnchor),
+            elevationLabel.centerYAnchor.constraint(equalTo: elevationBackgroundView.centerYAnchor),
         ])
 
         paceBackgroundView.addSubview(paceForegroundView)
         paceForegroundView.addSubview(paceLabel)
-        paceBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            paceBackgroundView.heightAnchor.constraint(equalToConstant: Constant.cellHeight),
-        ])
-
         paceForegroundView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            paceForegroundView.topAnchor.constraint(equalTo: paceBackgroundView.topAnchor, constant: 5),
-            paceForegroundView.bottomAnchor.constraint(equalTo: paceBackgroundView.bottomAnchor, constant: -5),
-            paceForegroundView.leadingAnchor.constraint(equalTo: paceBackgroundView.leadingAnchor),
-            paceContainerWidthConstraint,
-        ])
-
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            paceLabel.leadingAnchor.constraint(equalTo: paceForegroundView.leadingAnchor, constant: 10),
+            paceForegroundView.leadingAnchor.constraint(equalTo: paceBackgroundView.leadingAnchor),
+            paceForegroundView.topAnchor.constraint(equalTo: paceBackgroundView.topAnchor),
+            paceForegroundView.bottomAnchor.constraint(equalTo: paceBackgroundView.bottomAnchor),
+            paceContainerWidthConstraint,
+
+            paceLabel.leadingAnchor.constraint(equalTo: paceForegroundView.leadingAnchor, constant: 20),
             paceLabel.centerYAnchor.constraint(equalTo: paceForegroundView.centerYAnchor),
         ])
+
+        let centerHuggingP = paceBackgroundView.contentHuggingPriority(for: .horizontal)
+        elevationBackgroundView.setContentHuggingPriority(.init(centerHuggingP.rawValue - 1), for: .horizontal)
     }
 }

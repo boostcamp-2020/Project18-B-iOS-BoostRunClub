@@ -37,7 +37,7 @@ struct ActivityTotalConfig {
 
     // Statistic
     var numRunningPerWeekText: String {
-        var numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
+        let numberOfWeeks = Date.numberOfWeeks(range: totalRange) ?? 1
         return String(format: "%.2f러닝/주", Double(numRunning) / Double(numberOfWeeks))
     }
 
@@ -76,7 +76,6 @@ struct ActivityTotalConfig {
     }
 
     init(filterType: ActivityFilterType, filterRange: DateRange, activities: [Activity]) {
-        var divider = activities.count == 0 ? activities.count : 1
         var sumAvgPace: Int = 0
         var sumDuration: Double = 0
         var sumDistance: Double = 0

@@ -124,7 +124,7 @@ extension EditProfileViewController {
 extension EditProfileViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-              var keyboardFrame: CGRect = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect
+              let keyboardFrame: CGRect = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect
         else { return }
 
         var contentInset: UIEdgeInsets = scrollView.contentInset
@@ -353,6 +353,7 @@ extension EditProfileViewController: UITextViewDelegate {
 // MARK: - Configure
 
 extension EditProfileViewController {
+    // swiftlint:disable:next function_body_length
     private func configureLayout() {
         // MARK: ScrollView AutoLayout
 

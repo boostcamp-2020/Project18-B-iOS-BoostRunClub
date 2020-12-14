@@ -108,6 +108,7 @@ extension RunningInfoViewController {
     }
 
     private func startResumeAnimation() {
+        view.subviews.forEach { $0.alpha = 1 }
         let targetView = runDataViews[0]
         targetView.alpha = 0
         targetView.transform = targetView.transform.scaledBy(x: 0.9, y: 0.9)
@@ -162,5 +163,9 @@ extension RunningInfoViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 100),
             pauseButton.widthAnchor.constraint(equalTo: pauseButton.heightAnchor, multiplier: 1),
         ])
+
+        view.subviews.forEach {
+            $0.alpha = 0
+        }
     }
 }

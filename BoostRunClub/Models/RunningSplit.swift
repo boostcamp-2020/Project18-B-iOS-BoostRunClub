@@ -13,4 +13,11 @@ struct RunningSplit: Codable {
     var distance: Double = 0
     var elevation: Int = 0
     var runningSlices = [RunningSlice]()
+
+    mutating func setupSplit(bpm: Int, avgPace: Int, elevation: Int) {
+        avgBPM = bpm
+        self.avgPace = avgPace
+        self.elevation = elevation
+        distance = runningSlices.reduce(into: Double(0)) { $0 += $1.distance }
+    }
 }
