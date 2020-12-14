@@ -50,6 +50,8 @@
 		714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */; };
 		717878492587E0E1004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */; };
 		717878522587E1C4004EF8EA /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717878512587E1C4004EF8EA /* MotionType.swift */; };
+		717878642587E7FE004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */; };
+		717878672587E81C004EF8EA /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717878512587E1C4004EF8EA /* MotionType.swift */; };
 		718729422578DA63007BD24F /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		7187295525791A70007BD24F /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
@@ -1081,6 +1083,7 @@
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
 				964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */,
+				717878642587E7FE004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */,
 				4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */,
 				96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */,
 				96B90647257CE1DD0081E8BF /* CoreDataService.swift in Sources */,
@@ -1093,6 +1096,7 @@
 				96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityProvider.swift in Sources */,
+				717878672587E81C004EF8EA /* MotionType.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
