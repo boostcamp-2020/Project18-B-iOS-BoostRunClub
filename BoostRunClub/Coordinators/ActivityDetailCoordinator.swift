@@ -48,13 +48,9 @@ final class ActivityDetailCoordinator: BasicCoordinator<Void> {
             }
             .store(in: &cancellables)
 
-
         detailVM.outputs.showInfoDetailSignal
             .sink { [weak self] in self?.showSplitInfoDetailScene() }
             .store(in: &cancellables)
-
-        navigationController.pushViewController(detailVC, animated: true)
-
     }
 
     func showSplitInfoDetailScene() {
