@@ -55,7 +55,6 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
                     let result = RunningCoordinationResult.activityDetail(activity: activity, detail: detail)
                     self?.closeSignal.send(result)
                 }
-
                 self?.release(coordinator: pausedRunningCoordinator)
             }
     }

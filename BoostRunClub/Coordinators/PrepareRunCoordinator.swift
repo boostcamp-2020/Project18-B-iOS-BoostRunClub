@@ -8,12 +8,6 @@
 import Combine
 import UIKit
 
-protocol PrepareRunCoordinatorProtocol {
-    func showGoalTypeActionSheet(goalType: GoalType) -> AnyPublisher<GoalType, Never>
-    func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never>
-    func showRunningScene(goalInfo: GoalInfo)
-}
-
 enum PrepareRunCoordinationResult {
     case run(GoalInfo)
 }

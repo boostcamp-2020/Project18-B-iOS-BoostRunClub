@@ -52,7 +52,7 @@ final class AppCoordinator: BasicCoordinator<Void> {
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 switch $0 {
-                case let .detail(activity, detail):
+                case let .activityDetail(activity, detail):
                     self?.showActivityDetail(activity: activity, detail: detail)
                 case .prepareRun:
                     self?.showMainFlow()
