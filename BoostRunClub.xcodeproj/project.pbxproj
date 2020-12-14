@@ -48,6 +48,10 @@
 		714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */; };
 		714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */; };
 		714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */; };
+		717878492587E0E1004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */; };
+		717878522587E1C4004EF8EA /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717878512587E1C4004EF8EA /* MotionType.swift */; };
+		717878642587E7FE004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */; };
+		717878672587E81C004EF8EA /* MotionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717878512587E1C4004EF8EA /* MotionType.swift */; };
 		718729422578DA63007BD24F /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		7187295525791A70007BD24F /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
 		71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */; };
@@ -244,6 +248,8 @@
 		714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoCoordinator.swift; sourceTree = "<group>"; };
 		714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewCoordinator.swift; sourceTree = "<group>"; };
 		714ECA762574F41B00809CBE /* RunningPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningPageCoordinator.swift; sourceTree = "<group>"; };
+		717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = BRCActivityClassifierA.mlmodel; sourceTree = "<group>"; };
+		717878512587E1C4004EF8EA /* MotionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionType.swift; sourceTree = "<group>"; };
 		718729412578DA63007BD24F /* RunningSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplit.swift; sourceTree = "<group>"; };
 		7187295425791A70007BD24F /* MotionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionProvider.swift; sourceTree = "<group>"; };
 		71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepareRunViewModel.swift; sourceTree = "<group>"; };
@@ -438,6 +444,14 @@
 			path = SplitInfoDetailScene;
 			sourceTree = "<group>";
 		};
+		717878472587E0D8004EF8EA /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				717878482587E0E0004EF8EA /* BRCActivityClassifierA.mlmodel */,
+			);
+			path = CoreML;
+			sourceTree = "<group>";
+		};
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +574,7 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
+				717878472587E0D8004EF8EA /* CoreML */,
 				71EFCC68257750C8007998AD /* Factory */,
 				96ED402E257C7633007DB3DF /* CoreData */,
 				963B46F3256CD440006138DF /* Services */,
@@ -658,6 +673,7 @@
 				71FBAB76257FDED8005C8D30 /* Profile.swift */,
 				96C468B0257F51020062AAA4 /* DateRange.swift */,
 				71CC3F312587989200CE969B /* RunningEvent.swift */,
+				717878512587E1C4004EF8EA /* MotionType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -681,11 +697,8 @@
 				96C468C4257F6D900062AAA4 /* Date+String.swift */,
 				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
 				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
-
 				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
-
 				96DE09362586170E0055213C /* Clamp.swift */,
-
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -922,6 +935,7 @@
 				71FBAAE2257D23C1005C8D30 /* Factory+RunningPageContainer.swift in Sources */,
 				960A150D257E22FF008D2BD3 /* ActivityTotalView.swift in Sources */,
 				4C3E7AC9256F43440061244F /* GoalValueView.swift in Sources */,
+				717878522587E1C4004EF8EA /* MotionType.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */,
 				4C587510258014C000185B4C /* UIView+identifier.swift in Sources */,
@@ -946,6 +960,7 @@
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
 				96B2DC2B258489CF00A95DD0 /* UILabel+Make.swift in Sources */,
 				967253002583D8C600B4BBC6 /* ActivityDetailCoordinator.swift in Sources */,
+				717878492587E0E1004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */,
 				71FBAB6C257FD091005C8D30 /* Factory+EditProfileScene.swift in Sources */,
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
@@ -1068,6 +1083,7 @@
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
 				964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */,
+				717878642587E7FE004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */,
 				4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */,
 				96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */,
 				96B90647257CE1DD0081E8BF /* CoreDataService.swift in Sources */,
@@ -1080,6 +1096,7 @@
 				96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityProvider.swift in Sources */,
+				717878672587E81C004EF8EA /* MotionType.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				963581762572705200B8BE6B /* LocationProvider.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
