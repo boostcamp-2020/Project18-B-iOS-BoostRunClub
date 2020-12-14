@@ -39,6 +39,10 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
         detailConfigSubject = CurrentValueSubject<ActivityDetailConfig, Never>(detailConfig)
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // Inputs
 
     func didTapShowRouteDetail() {

@@ -59,7 +59,7 @@ class ActivityDateFilterViewController: UIViewController {
     }
 
     deinit {
-        print("\(Self.self) deinit")
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

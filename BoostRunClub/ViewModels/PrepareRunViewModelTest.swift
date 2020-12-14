@@ -65,7 +65,7 @@ class PrepareRunViewModelTest: XCTestCase {
                 if $0.0 == goalType,
                    $0.1 == goalType.initialValue
                 {
-                    results.append(GoalInfo(goalType: $0.0, goalValue: $0.1))
+                    results.append(GoalInfo(type: $0.0, value: $0.1))
                     receivedSignal.fulfill()
                 }
             }
@@ -76,7 +76,7 @@ class PrepareRunViewModelTest: XCTestCase {
 
         XCTAssertEqual(allCases.count, results.count)
         allCases.enumerated().forEach { index, goalType in
-            XCTAssertEqual(GoalInfo(goalType: goalType, goalValue: goalType.initialValue), results[index])
+            XCTAssertEqual(GoalInfo(type: goalType, value: goalType.initialValue), results[index])
         }
     }
 

@@ -38,6 +38,10 @@ final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
                           bio: defaults.string(forKey: "Bio") ?? "")
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // inputs
 
     func viewDidLoad() {
@@ -56,10 +60,6 @@ final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
 
     var showEditProfileSceneSignal = PassthroughSubject<Void, Never>()
     var profileSignal = PassthroughSubject<Profile, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 extension ProfileViewModel: ProfileViewModelTypes {

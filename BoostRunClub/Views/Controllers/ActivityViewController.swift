@@ -29,10 +29,6 @@ final class ActivityViewController: UIViewController {
         super.init(coder: coder)
     }
 
-    deinit {
-        print("activity scene deinit")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground

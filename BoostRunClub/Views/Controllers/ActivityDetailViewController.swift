@@ -80,6 +80,10 @@ class ActivityDetailViewController: UIViewController {
             .sink { [weak self] in self?.viewModel?.inputs.didTapShowRouteDetail() }
             .store(in: &cancellables)
     }
+
+    deinit {
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Actions

@@ -39,6 +39,10 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
         self.runningDataProvider = runningDataProvider
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // Inputs
 
     func buttonScaleShouldUpdate(contentOffset: Double, screenWidth: Double) {
@@ -83,10 +87,6 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
         runningDataProvider.runningTime
             .map { $0.fullFormattedString }
             .eraseToAnyPublisher()
-    }
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }
 }
 
