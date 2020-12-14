@@ -14,6 +14,11 @@ enum RunningCoordinationResult {
 }
 
 final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
+    override init(navigationController: UINavigationController) {
+        super.init(navigationController: navigationController)
+        navigationController.pushViewController(UIViewController(), animated: false)
+    }
+
     override func start() {
         showRunningInfoScene()
     }
