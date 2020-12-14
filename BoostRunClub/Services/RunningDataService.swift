@@ -217,6 +217,7 @@ class RunningDataService: RunningDataServiceable {
             elevation: 0, // TODO: elevation 값 저장
             thumbnail: data,
             createdAt: startTime,
+            finishedAt: Date(),
             uuid: uuid
         )
 

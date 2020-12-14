@@ -2,7 +2,7 @@
 //  SplitsViewController.swift
 //  BoostRunClub
 //
-//  Created by 김신우 on 2020/11/27.
+//  Created by 조기현 on 2020/11/27.
 //
 
 import Combine
@@ -27,14 +27,14 @@ class SplitsViewController: UIViewController {
     func bindViewModel() {
         viewModel?.outputs.rowViewModelSubject
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] in
                 guard
                     let self = self,
-                    let viewModel = self.viewModel
+                    !$0.isEmpty
                 else { return }
 
                 self.tableView.reloadData()
-                let indexPath = IndexPath(row: viewModel.outputs.rowViewModelSubject.value.count - 1, section: 0)
+                let indexPath = IndexPath(row: $0.count - 1, section: 0)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             }
             .store(in: &cancellabls)

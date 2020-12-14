@@ -18,8 +18,10 @@ protocol SplitInfoDetailViewModelInputs {
 }
 
 protocol SplitInfoDetailViewModelOutputs {
+    typealias DateType = (date: String, time: String)
     var splitInfoSubject: CurrentValueSubject<[SplitInfo], Never> { get }
     var splitSubject: CurrentValueSubject<[SplitRow], Never> { get }
+    var dateSubject: CurrentValueSubject<DateType, Never> { get }
 }
 
 class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailViewModelOutputs {
@@ -34,6 +36,7 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
             first.runningSlices[0].startIndex < second.runningSlices[0].startIndex
         }
 
+        dateSubject.send(transformDate())
         splitInfoSubject.value = makeSplitInfo()
         splitSubject.value = makeSplitRows()
     }
@@ -42,6 +45,7 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
 
     var splitInfoSubject = CurrentValueSubject<[SplitInfo], Never>([])
     var splitSubject = CurrentValueSubject<[SplitRow], Never>([])
+    var dateSubject = CurrentValueSubject<DateType, Never>(("", ""))
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
@@ -54,6 +58,12 @@ extension SplitInfoDetailViewModel: SplitInfoDetailViewModelType {
 }
 
 extension SplitInfoDetailViewModel {
+    func transformDate() -> DateType {
+        let start = activity.createdAt
+        let end = activity.finishedAt
+        return (start.toMDEString, start.toPHM + " - " + end.toPHM)
+    }
+
     func makeSplitInfo() -> [SplitInfo] {
         // TODO: 수정 필요
         var splitInfo: [SplitInfo] = [

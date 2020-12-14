@@ -30,7 +30,7 @@ class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
         self.factory = factory
 
 //        RunningSplit.sampleData.forEach { self.newSplitAction(split: $0) }
-        runningDataProvider.runningSplits.forEach { self.newSplitAction(split: $0) }
+//        runningDataProvider.runningSplits.forEach { self.newSplitAction(split: $0) }
         runningDataProvider.newSplitSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.newSplitAction(split: $0) }

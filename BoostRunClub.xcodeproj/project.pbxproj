@@ -424,20 +424,9 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		4C4D348025874EE700E70189 /* DataSource */ = {
-			isa = PBXGroup;
-			children = (
-				4C4D3483258750E200E70189 /* SplitInfoDetailDataSource.swift */,
-				4C4D3487258751ED00E70189 /* SplitDatailSplitDataSource.swift */,
-			);
-			path = DataSource;
-			sourceTree = "<group>";
-		};
 		4C9DA8E12586645B00B86F57 /* SplitInfoDetailScene */ = {
 			isa = PBXGroup;
 			children = (
-				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
-				4C4D348025874EE700E70189 /* DataSource */,
 				4C4D347525874B2400E70189 /* SplitDatailSplitCell.swift */,
 				4C587502257FFF1D00185B4C /* SplitHeaderView.swift */,
 				4C6904F625873589007425C6 /* SplitDetailInfoCell.swift */,
@@ -469,6 +458,7 @@
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
 				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
+				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -717,6 +707,8 @@
 		96F105AA25803D7B0005F66C /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				4C4D3483258750E200E70189 /* SplitInfoDetailDataSource.swift */,
+				4C4D3487258751ED00E70189 /* SplitDatailSplitDataSource.swift */,
 				96F105AB25803D890005F66C /* ActivityDataSource.swift */,
 				961840D82580EE0000069FDA /* ActivityListDataSource.swift */,
 				9651ABE825854A2C00DF73C3 /* ActivityDetailDataSource.swift */,

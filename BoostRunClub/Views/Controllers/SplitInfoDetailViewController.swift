@@ -35,6 +35,13 @@ class SplitInfoDetailViewController: UIViewController {
     }
 
     func bindViewModel() {
+        viewModel?.outputs.dateSubject
+            .sink { [weak self] in
+                self?.dateInfoView.dateLabel.text = $0.date
+                self?.dateInfoView.timeLabel.text = $0.time
+            }
+            .store(in: &cancellables)
+
         viewModel?.outputs.splitInfoSubject
             .sink { [weak self] in
                 self?.infoDataSource.update($0)
