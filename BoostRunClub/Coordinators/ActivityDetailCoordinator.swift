@@ -46,7 +46,8 @@ final class ActivityDetailCoordinator: BasicCoordinator {
     }
 
     func showSplitInfoDetailScene() {
-        let vc = factory.makeSplitInfoDetailVC()
-        navigationController.pushViewController(vc, animated: true)
+        guard let splitInfoVM = factory.makeSplitInfoDetailVM(activity: activity) else { return }
+        let splitInfoVC = factory.makeSplitInfoDetailVC(with: splitInfoVM)
+        navigationController.pushViewController(splitInfoVC, animated: true)
     }
 }

@@ -113,7 +113,7 @@ extension SplitsViewController {
 //            headerView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
 //            headerView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
             headerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            headerView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: -80),
+            headerView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: -40),
             topAnchor,
             headerView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: rowHeight),
@@ -131,6 +131,6 @@ extension SplitsViewController {
     }
 
     private func makeHeaderView() -> UIView {
-        RunningSplitHeaderView(titles: ["킬로미터", "페이스", "편차"])
+        SplitHeaderView(titles: ["킬로미터", "페이스", "편차"])
     }
 }

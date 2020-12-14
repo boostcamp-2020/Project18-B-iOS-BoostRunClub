@@ -5,16 +5,54 @@
 //  Created by 조기현 on 2020/12/13.
 //
 
+import Combine
 import UIKit
 
 class SplitInfoDetailViewController: UIViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<SplitDtailSection, AnyHashable>
-
     var statusBarView: UIView?
-    lazy var collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-    lazy var dataSource = createDataSource()
+    var dateInfoView = SplitDetailDateInfoView()
+    var lowerViewHeader = SplitDetailSplitHeaderView()
+    lazy var upperView = makeUpperTableView()
+    lazy var lowerView = makeLowerTableView()
 
-    let splitInfo = SpliInfo()
+    let infoDataSource = SplitInfoDetailDataSource()
+    let splitDataSource = SplitDatailSplitDataSource()
+
+    var upperViewHeight: NSLayoutConstraint?
+    var lowerViewHeight: NSLayoutConstraint?
+
+    var viewModel: SplitInfoDetailViewModelType?
+    var cancellables = Set<AnyCancellable>()
+
+    init(with viewModel: SplitInfoDetailViewModelType) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        bindViewModel()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    func bindViewModel() {
+        viewModel?.outputs.splitInfoSubject
+            .sink { [weak self] in
+                self?.infoDataSource.update($0)
+                self?.upperView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel?.outputs.splitSubject
+            .sink { [weak self] in
+                self?.splitDataSource.update($0)
+                self?.lowerView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+    }
 }
 
 // MARK: - Life Cycles
@@ -25,17 +63,21 @@ extension SplitInfoDetailViewController {
         view.backgroundColor = .systemBackground
         configureNavigationBar()
         configureLayout()
-        configureDataSource()
+    }
 
-        var snapshot = NSDiffableDataSourceSnapshot<SplitDtailSection, AnyHashable>()
-        snapshot.appendSections([.total])
-        snapshot.appendItems(splitInfo.list)
-        dataSource.apply(snapshot, animatingDifferences: true)
+    override func updateViewConstraints() {
+        upperViewHeight?.constant = upperView.contentSize.height
+        lowerViewHeight?.constant = lowerView.contentSize.height
+        super.updateViewConstraints()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         statusBarView?.removeFromSuperview()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 }
 
@@ -43,108 +85,76 @@ extension SplitInfoDetailViewController {
 
 extension SplitInfoDetailViewController {
     @objc
-    func didTapBackButton() {}
+    func didTapBackButton() {
+        // TODO: Coordinator로 연결?
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension SplitInfoDetailViewController: UITableViewDelegate {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 60
+    }
 }
 
 // MARK: - Configure Layout
 
 extension SplitInfoDetailViewController {
     private func configureLayout() {
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let scrollView = UIScrollView()
+        scrollView.alwaysBounceVertical = true
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
-        collectionView.backgroundColor = .systemBackground
 
-        collectionView.register(SplitInfoViewCell.self, forCellWithReuseIdentifier: SplitInfoViewCell.identifier)
+        let stackView = UIStackView(arrangedSubviews: [dateInfoView, upperView, lowerViewHeader, lowerView])
+        stackView.axis = .vertical
+        scrollView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+        ])
+
+        configureArrangedViews(stackView: stackView)
     }
 
-    func configureDataSource() {
-        let headerReg = UICollectionView.SupplementaryRegistration
-        <SplitDetailTotalHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { view, _, _ in
-            view.dateLabel.text = "수요일"
-            view.timeLabel.text = "11:36pm"
-        }
+    private func configureArrangedViews(stackView: UIStackView) {
+        dateInfoView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            dateInfoView.centerXAnchor.constraint(equalTo: upperView.centerXAnchor),
+            dateInfoView.widthAnchor.constraint(equalTo: upperView.widthAnchor),
+            dateInfoView.heightAnchor.constraint(equalToConstant: 100),
+        ])
 
-        dataSource.supplementaryViewProvider = { view, kind, index in
-            if kind == UICollectionView.elementKindSectionHeader {
-                return view.dequeueConfiguredReusableSupplementary(using: headerReg, for: index)
-            }
-            return view.dequeueConfiguredReusableSupplementary(using: headerReg, for: index)
-        }
-    }
+        upperView.translatesAutoresizingMaskIntoConstraints = false
+        upperViewHeight = upperView.heightAnchor.constraint(equalToConstant: 0)
+        NSLayoutConstraint.activate([
+            upperViewHeight!,
+            upperView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+        ])
 
-    func createDataSource() -> DataSource {
-        DataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SplitInfoViewCell.identifier,
-                                                          for: indexPath)
-            if let cell = cell as? CellConfigurable,
-               let item = item as? CellViewModelTypeBase
-            {
-                cell.setup(viewModel: item)
-            }
-            return cell
-        }
-    }
+        lowerViewHeader.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lowerViewHeader.centerXAnchor.constraint(equalTo: lowerView.centerXAnchor),
+            lowerViewHeader.widthAnchor.constraint(equalTo: lowerView.widthAnchor),
+            lowerViewHeader.heightAnchor.constraint(equalToConstant: 100),
+        ])
 
-    enum SplitDtailSection: Int {
-        case total, splits
-    }
-
-    private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
-            guard let type = SplitDtailSection(rawValue: idx) else { return nil }
-            return self?.createLayoutSection(type: type, env: env)
-        }
-
-        return layout
-    }
-
-    private func createLayoutSection(type: SplitDtailSection, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let section: NSCollectionLayoutSection
-
-        switch type {
-        case .total:
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                  heightDimension: .fractionalHeight(1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                   heightDimension: .estimated(50))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            //            section = NSCollectionLayoutSection(group: group)
-
-            var configuration: UICollectionLayoutListConfiguration
-            configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-            configuration.headerMode = .supplementary
-            configuration.footerMode = .none
-
-            section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: env)
-
-        case .splits:
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(40))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.9))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            section = NSCollectionLayoutSection(group: group)
-//            section.interGroupSpacing = 10
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                     elementKind: UICollectionView.elementKindSectionHeader,
-                                                                     alignment: .top)
-            let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                     elementKind: UICollectionView.elementKindSectionFooter,
-                                                                     alignment: .bottom)
-            section.boundarySupplementaryItems = [header]
-        }
-
-        return section
+        lowerView.translatesAutoresizingMaskIntoConstraints = false
+        lowerViewHeight = lowerView.heightAnchor.constraint(equalToConstant: 0)
+        NSLayoutConstraint.activate([
+            lowerViewHeight!,
+            lowerView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+        ])
     }
 
     private func configureNavigationBar() {
@@ -159,5 +169,34 @@ extension SplitInfoDetailViewController {
         )
         backButtonItem.image = UIImage.SFSymbol(name: "chevron.left", color: .label)
         navigationItem.setLeftBarButton(backButtonItem, animated: true)
+    }
+
+    private func makeUpperTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
+        tableView.estimatedRowHeight = 60
+        tableView.delegate = self
+        tableView.dataSource = infoDataSource
+
+        tableView.tableFooterView = UIView()
+        tableView.tableFooterView?.frame.size.height = 1
+        tableView.register(SplitDetailInfoCell.self,
+                           forCellReuseIdentifier: SplitDetailInfoCell.identifier)
+        return tableView
+    }
+
+    private func makeLowerTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
+        tableView.estimatedRowHeight = 60
+        tableView.delegate = self
+        tableView.dataSource = splitDataSource
+        tableView.separatorStyle = .none
+
+        tableView.register(SplitDatailSplitCell.self,
+                           forCellReuseIdentifier: SplitDatailSplitCell.identifier)
+        return tableView
     }
 }

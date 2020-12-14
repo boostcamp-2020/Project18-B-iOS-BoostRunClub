@@ -8,6 +8,31 @@
 import Combine
 import UIKit
 
+extension UILabel {
+    func applyChange(_ valueChange: ValueChange?) {
+        guard let valueChange = valueChange else {
+            text = ""
+            return
+        }
+        let color: UIColor
+        let prefix: String
+        switch valueChange.status {
+        case .decreased:
+            color = .systemGreen
+            prefix = "-"
+        case .equal:
+            color = .lightGray
+            prefix = ""
+        case .incresed:
+            color = .systemRed
+            prefix = "+"
+        }
+
+        textColor = color
+        text = prefix + valueChange.value
+    }
+}
+
 protocol CellConfigurable {
     func setup(viewModel: CellViewModelTypeBase)
 }
@@ -81,10 +106,12 @@ class RunningSplitCell: UITableViewCell, CellConfigurable {
         contentView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.widthAnchor.constraint(equalTo: widthAnchor, constant: -80),
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -80),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
 }

@@ -18,17 +18,22 @@
 		4C3E7ACC256F46A00061244F /* GoalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7ACB256F46A00061244F /* GoalType.swift */; };
 		4C41B40B25861801001C4713 /* SplitInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41B40A25861801001C4713 /* SplitInfoDetailViewController.swift */; };
 		4C41B41425862D29001C4713 /* UINavigationController+setStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */; };
+		4C4D34722587430E00E70189 /* SplitDetailSplitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D34712587430E00E70189 /* SplitDetailSplitHeaderView.swift */; };
+		4C4D347625874B2400E70189 /* SplitDatailSplitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D347525874B2400E70189 /* SplitDatailSplitCell.swift */; };
+		4C4D3484258750E200E70189 /* SplitInfoDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D3483258750E200E70189 /* SplitInfoDetailDataSource.swift */; };
+		4C4D3488258751ED00E70189 /* SplitDatailSplitDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D3487258751ED00E70189 /* SplitDatailSplitDataSource.swift */; };
+		4C4D348C2587547100E70189 /* SplitInfoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */; };
 		4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5874F5257FD7EB00185B4C /* RunningSplitCell.swift */; };
 		4C5874FA257FD88D00185B4C /* RunningSplitCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */; };
-		4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */; };
+		4C587503257FFF1E00185B4C /* SplitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C587502257FFF1D00185B4C /* SplitHeaderView.swift */; };
 		4C587510258014C000185B4C /* UIView+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58750F258014C000185B4C /* UIView+identifier.swift */; };
-		4C6904EB25868FFF007425C6 /* SplitDetailTotalHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6904EA25868FFF007425C6 /* SplitDetailTotalHeaderView.swift */; };
+		4C6904EB25868FFF007425C6 /* SplitDetailDateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6904EA25868FFF007425C6 /* SplitDetailDateInfoView.swift */; };
+		4C6904F725873589007425C6 /* SplitDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6904F625873589007425C6 /* SplitDetailInfoCell.swift */; };
 		4C7046002577821D009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C7046032577862A009C39A2 /* EventTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7045FF2577821D009C39A2 /* EventTimer.swift */; };
 		4C7133D1257B57500083ECD3 /* MotionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7187295425791A70007BD24F /* MotionProvider.swift */; };
 		4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
-		4C9DA8E32586649900B86F57 /* SplitInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9DA8E22586649900B86F57 /* SplitInfoViewCell.swift */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
 		4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */; };
 		4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */; };
@@ -208,15 +213,20 @@
 		4C3E7ACB256F46A00061244F /* GoalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalType.swift; path = BoostRunClub/Models/GoalType.swift; sourceTree = SOURCE_ROOT; };
 		4C41B40A25861801001C4713 /* SplitInfoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitInfoDetailViewController.swift; sourceTree = "<group>"; };
 		4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+setStatusBar.swift"; sourceTree = "<group>"; };
+		4C4D34712587430E00E70189 /* SplitDetailSplitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDetailSplitHeaderView.swift; sourceTree = "<group>"; };
+		4C4D347525874B2400E70189 /* SplitDatailSplitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDatailSplitCell.swift; sourceTree = "<group>"; };
+		4C4D3483258750E200E70189 /* SplitInfoDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitInfoDetailDataSource.swift; sourceTree = "<group>"; };
+		4C4D3487258751ED00E70189 /* SplitDatailSplitDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDatailSplitDataSource.swift; sourceTree = "<group>"; };
+		4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitInfoDetailViewModel.swift; sourceTree = "<group>"; };
 		4C5874F5257FD7EB00185B4C /* RunningSplitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitCell.swift; sourceTree = "<group>"; };
 		4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitCellViewModel.swift; sourceTree = "<group>"; };
-		4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSplitHeaderView.swift; sourceTree = "<group>"; };
+		4C587502257FFF1D00185B4C /* SplitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitHeaderView.swift; sourceTree = "<group>"; };
 		4C58750F258014C000185B4C /* UIView+identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+identifier.swift"; sourceTree = "<group>"; };
-		4C6904EA25868FFF007425C6 /* SplitDetailTotalHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDetailTotalHeaderView.swift; sourceTree = "<group>"; };
+		4C6904EA25868FFF007425C6 /* SplitDetailDateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDetailDateInfoView.swift; sourceTree = "<group>"; };
+		4C6904F625873589007425C6 /* SplitDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitDetailInfoCell.swift; sourceTree = "<group>"; };
 		4C7045FF2577821D009C39A2 /* EventTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimer.swift; sourceTree = "<group>"; };
 		4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+notificationFeedback.swift"; sourceTree = "<group>"; };
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		4C9DA8E22586649900B86F57 /* SplitInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitInfoViewCell.swift; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
 		4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunViewController.swift; sourceTree = "<group>"; };
@@ -414,11 +424,25 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		4C4D348025874EE700E70189 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				4C4D3483258750E200E70189 /* SplitInfoDetailDataSource.swift */,
+				4C4D3487258751ED00E70189 /* SplitDatailSplitDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		4C9DA8E12586645B00B86F57 /* SplitInfoDetailScene */ = {
 			isa = PBXGroup;
 			children = (
-				4C9DA8E22586649900B86F57 /* SplitInfoViewCell.swift */,
-				4C6904EA25868FFF007425C6 /* SplitDetailTotalHeaderView.swift */,
+				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
+				4C4D348025874EE700E70189 /* DataSource */,
+				4C4D347525874B2400E70189 /* SplitDatailSplitCell.swift */,
+				4C587502257FFF1D00185B4C /* SplitHeaderView.swift */,
+				4C6904F625873589007425C6 /* SplitDetailInfoCell.swift */,
+				4C6904EA25868FFF007425C6 /* SplitDetailDateInfoView.swift */,
+				4C4D34712587430E00E70189 /* SplitDetailSplitHeaderView.swift */,
 			);
 			path = SplitInfoDetailScene;
 			sourceTree = "<group>";
@@ -460,7 +484,6 @@
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
 				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
-				4C587502257FFF1D00185B4C /* RunningSplitHeaderView.swift */,
 				4C3E7AD0256F63230061244F /* Cells */,
 				4C9DA8E12586645B00B86F57 /* SplitInfoDetailScene */,
 				4C3E7ACE256F63080061244F /* Controllers */,
@@ -916,7 +939,7 @@
 				967253042583DA1500B4BBC6 /* ActivityDetailViewModel.swift in Sources */,
 				96CB22A525823284000D67C4 /* RouteSnapShotProcessor.swift in Sources */,
 				71FBAB77257FDED8005C8D30 /* Profile.swift in Sources */,
-				4C587503257FFF1E00185B4C /* RunningSplitHeaderView.swift in Sources */,
+				4C587503257FFF1E00185B4C /* SplitHeaderView.swift in Sources */,
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
@@ -929,8 +952,8 @@
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				4C41B40B25861801001C4713 /* SplitInfoDetailViewController.swift in Sources */,
-				4C9DA8E32586649900B86F57 /* SplitInfoViewCell.swift in Sources */,
 				71FBAB02257D24BB005C8D30 /* Factory+GoalTypeScene.swift in Sources */,
+				4C6904F725873589007425C6 /* SplitDetailInfoCell.swift in Sources */,
 				96C468BD257F61DA0062AAA4 /* DateFormatter+Common.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				71FBAB962581FB3C005C8D30 /* Data+SaveAndLoadData.swift in Sources */,
@@ -940,18 +963,22 @@
 				964BC6DC2580CFB200A69A82 /* ActivityListCoordinator.swift in Sources */,
 				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
+				4C4D347625874B2400E70189 /* SplitDatailSplitCell.swift in Sources */,
 				964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */,
 				96CB22AB258233BC000D67C4 /* RouteDrawer.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
+				4C4D3484258750E200E70189 /* SplitInfoDetailDataSource.swift in Sources */,
 				9651ABED25854FB200DF73C3 /* ActivityDetailConfig.swift in Sources */,
 				71FBAB0A257D24F8005C8D30 /* Factory+GoalValueSetupScene.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
 				961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */,
+				4C4D348C2587547100E70189 /* SplitInfoDetailViewModel.swift in Sources */,
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,
 				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
+				4C4D3488258751ED00E70189 /* SplitDatailSplitDataSource.swift in Sources */,
 				96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
 				961840D92580EE0000069FDA /* ActivityListDataSource.swift in Sources */,
@@ -964,7 +991,7 @@
 				964BC6E42580CFEE00A69A82 /* ActivityListViewModel.swift in Sources */,
 				71FBAAFA257D2488005C8D30 /* Factory+SplitScene.swift in Sources */,
 				96CB22A12582301C000D67C4 /* MKCoordinateRegion+Make.swift in Sources */,
-				4C6904EB25868FFF007425C6 /* SplitDetailTotalHeaderView.swift in Sources */,
+				4C6904EB25868FFF007425C6 /* SplitDetailDateInfoView.swift in Sources */,
 				4CCD6E7F256BEA1200195EDA /* GoalTypeViewController.swift in Sources */,
 				4C41B41425862D29001C4713 /* UINavigationController+setStatusBar.swift in Sources */,
 				4CF009CA257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift in Sources */,
@@ -1006,6 +1033,7 @@
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
 				4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */,
+				4C4D34722587430E00E70189 /* SplitDetailSplitHeaderView.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
 				71FBAB66257FCD84005C8D30 /* EditProfileViewModel.swift in Sources */,
 				967253132584878A00B4BBC6 /* DetailTitleView.swift in Sources */,
