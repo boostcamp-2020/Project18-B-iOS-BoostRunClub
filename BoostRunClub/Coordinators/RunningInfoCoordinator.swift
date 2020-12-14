@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol RunningInfoCoordinatorProtocol {
-    func showRunningInfoViewController()
+    func showRunningInfoViewController(resume: Bool)
 }
 
 final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProtocol {
@@ -21,10 +21,14 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
     }
 
     override func start() {
-        showRunningInfoViewController()
+        showRunningInfoViewController(resume: false)
     }
 
-    func showRunningInfoViewController() {
+    func resumeRunning() {
+        showRunningInfoViewController(resume: true)
+    }
+
+    func showRunningInfoViewController(resume: Bool = false) {
         let runningInfoVM = factory.makeRunningInfoVM()
 
         runningInfoVM.outputs.showPausedRunningSignal
@@ -34,7 +38,7 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
             }
             .store(in: &cancellables)
 
-        let runningInfoVC = factory.makeRunningInfoVC(with: runningInfoVM)
+        let runningInfoVC = factory.makeRunningInfoVC(with: runningInfoVM, resume: resume)
         navigationController.pushViewController(runningInfoVC, animated: false)
     }
 }

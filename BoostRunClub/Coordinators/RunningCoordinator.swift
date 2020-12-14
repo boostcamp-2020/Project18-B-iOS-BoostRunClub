@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol RunningCoordinatorProtocol {
-    func showRunningInfoScene()
+    func showRunningInfoScene(resume: Bool)
     func showPausedRunningScene()
 }
 
@@ -21,7 +21,7 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
             .publisher(for: .showRunningInfoScene)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.showRunningInfoScene()
+                self.showRunningInfoScene(resume: true)
             }
             .store(in: &cancellables)
 
@@ -35,14 +35,14 @@ final class RunningCoordinator: BasicCoordinator, RunningCoordinatorProtocol {
     }
 
     override func start() {
-        showRunningInfoScene()
+        showRunningInfoScene(resume: false)
     }
 
-    func showRunningInfoScene() {
+    func showRunningInfoScene(resume: Bool) {
         clear()
         let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController)
         childCoordinators.append(runInfoCoordinator)
-        runInfoCoordinator.start()
+        resume ? runInfoCoordinator.resumeRunning() : runInfoCoordinator.start()
     }
 
     func showPausedRunningScene() {

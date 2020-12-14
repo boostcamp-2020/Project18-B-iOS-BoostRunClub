@@ -5,6 +5,7 @@
 //  Created by 김신우 on 2020/11/27.
 //
 
+import AVFoundation
 import Combine
 import UIKit
 
@@ -18,12 +19,15 @@ final class RunningInfoViewController: UIViewController {
         RunDataView(),
     ]
 
+    private var resumeWorkout: Bool = false
+    private let synthesizer = AVSpeechSynthesizer()
     private var viewModel: RunningInfoViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
 
-    init(with runningViewModel: RunningInfoViewModelTypes?) {
+    init(with runningViewModel: RunningInfoViewModelTypes?, resume: Bool) {
         super.init(nibName: nil, bundle: nil)
         viewModel = runningViewModel
+        resumeWorkout = resume
     }
 
     required init?(coder: NSCoder) {
@@ -77,6 +81,8 @@ extension RunningInfoViewController {
         view.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
         configureLayout()
         bindViewModel()
+
+        resumeWorkout ? speech(on: .resume) : speech(on: .start)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +96,7 @@ extension RunningInfoViewController {
 extension RunningInfoViewController {
     @objc
     func didTapPauseButton() {
+        speech(on: .pause)
         viewModel?.inputs.didTapPauseButton()
         view.notificationFeedback()
     }
@@ -167,5 +174,34 @@ extension RunningInfoViewController {
         view.subviews.forEach {
             $0.alpha = 0
         }
+    }
+}
+
+// MARK: - Private Methods
+
+extension RunningInfoViewController {
+    enum SpeechType: String {
+        case start, resume, pause
+
+        var text: String {
+            switch self {
+            case .start:
+                return "부스트 런클럽에 오신 것을 환영합니다. 운동을 시작합니다."
+            case .resume:
+                return "운동을 다시 시작합니다"
+            case .pause:
+                return "운동을 일시정지 합니다."
+            }
+        }
+    }
+
+    private func speech(on speechType: SpeechType) {
+        var speechText = speechType.text
+        
+        let utterance = AVSpeechUtterance(string: speechText)
+        utterance.voice = AVSpeechSynthesisVoice(language: "ko-KR")
+        utterance.rate = 0.5
+
+        synthesizer.speak(utterance)
     }
 }
