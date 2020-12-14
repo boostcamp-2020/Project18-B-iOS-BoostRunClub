@@ -56,10 +56,8 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         ]
 
         runningDataProvider.currentMotionType
-            .throttle(for: .seconds(0.3), scheduler: RunLoop.main, latest: true)
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .sink { [weak self] motion in
-                if motion.running || motion.walking, motion.confidence == .high {
+            .sink { [weak self] currentMotionType in
+                if currentMotionType == .running {
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)

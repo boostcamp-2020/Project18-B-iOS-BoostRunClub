@@ -26,7 +26,7 @@ protocol RunningDataServiceable {
     var runningSplits: [RunningSplit] { get }
     var currentRunningSlice: RunningSlice { get }
     var routes: [RunningSlice] { get }
-    var currentMotionType: CurrentValueSubject<CMMotionActivity, Never> { get }
+    var currentMotionType: CurrentValueSubject<MotionType, Never> { get }
     var stopRunningResponse: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
     func start()
     func stop()
@@ -65,7 +65,7 @@ class RunningDataService: RunningDataServiceable {
         runningSplits.flatMap { $0.runningSlices } + currentRunningSplit.runningSlices + [currentRunningSlice]
     }
 
-    var currentMotionType = CurrentValueSubject<CMMotionActivity, Never>(.init())
+    var currentMotionType = CurrentValueSubject<MotionType, Never>(.standing)
 
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol

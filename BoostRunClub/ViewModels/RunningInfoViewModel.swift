@@ -99,9 +99,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             }.store(in: &cancellables)
 
         runningDataProvider.currentMotionType
-            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+//            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .sink { [weak self] currentMotionType in
-                if currentMotionType.stationary {
+                if currentMotionType == .standing {
                     self?.didTapPauseButton()
                 }
             }.store(in: &cancellables)
