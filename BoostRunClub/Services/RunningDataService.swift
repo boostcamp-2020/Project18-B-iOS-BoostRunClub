@@ -18,6 +18,7 @@ protocol RunningDataServiceable {
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var cadence: CurrentValueSubject<Int, Never> { get }
     var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
+    var runningEvent: PassthroughSubject<RunningEvent, Never> { get }
 
     var isRunning: Bool { get }
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
@@ -52,6 +53,7 @@ class RunningDataService: RunningDataServiceable {
     var cadence = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
     var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
+    var runningEvent = PassthroughSubject<RunningEvent, Never>()
     var locations = [CLLocation]()
 
     var runningSplits = [RunningSplit]()
@@ -127,6 +129,7 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
+        runningEvent.send(RunningEvent.start)
     }
 
     func stop() {
@@ -135,6 +138,7 @@ class RunningDataService: RunningDataServiceable {
         eventTimer.stop()
         endTime = Date()
         if !locations.isEmpty {
+            runningEvent.send(RunningEvent.stop)
             mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
                 .receive(on: RunLoop.main)
                 .replaceError(with: nil)
@@ -150,11 +154,13 @@ class RunningDataService: RunningDataServiceable {
     func pause() {
         addSlice()
         isRunning = false
+        runningEvent.send(RunningEvent.pause)
     }
 
     func resume() {
         addSlice()
         isRunning = true
+        runningEvent.send(RunningEvent.resume)
     }
 
     func addSlice() {

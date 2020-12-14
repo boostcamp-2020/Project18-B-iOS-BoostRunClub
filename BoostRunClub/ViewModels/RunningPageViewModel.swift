@@ -23,6 +23,7 @@ protocol RunningPageViewModelInputs {
 }
 
 protocol RunningPageViewModelOutputs {
+    var speechSignal: PassthroughSubject<String, Never> { get }
     var scaleSubject: PassthroughSubject<Double, Never> { get }
     var scaleSubjectNotDragging: AnyPublisher<Double, Never> { get }
     var goBackToMainPageSignal: PassthroughSubject<Int, Never> { get }
@@ -33,10 +34,17 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     private let runningDataProvider: RunningDataServiceable
     private var isDragging: Bool = false
     private var currentPageIdx = 1
+    private var cancellables = Set<AnyCancellable>()
+
     @Published private var scale: Double = 0.0
 
     init(runningDataProvider: RunningDataServiceable) {
         self.runningDataProvider = runningDataProvider
+
+        runningDataProvider.runningEvent
+            .sink { [weak self] event in
+                self?.speechSignal.send(event.text)
+            }.store(in: &cancellables)
     }
 
     // Inputs
@@ -70,6 +78,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
 
     // Outputs
 
+    var speechSignal = PassthroughSubject<String, Never>()
     var scaleSubject = PassthroughSubject<Double, Never>()
     var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
     var scaleSubjectNotDragging: AnyPublisher<Double, Never> {

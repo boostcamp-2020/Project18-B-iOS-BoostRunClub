@@ -8,13 +8,13 @@
 import UIKit
 
 protocol RunningInfoSceneFactory {
-    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes, resume: Bool) -> UIViewController
+    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes) -> UIViewController
     func makeRunningInfoVM() -> RunningInfoViewModelTypes
 }
 
 extension DependencyFactory: RunningInfoSceneFactory {
-    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes, resume: Bool) -> UIViewController {
-        RunningInfoViewController(with: viewModel, resume: resume)
+    func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes) -> UIViewController {
+        RunningInfoViewController(with: viewModel)
     }
 
     func makeRunningInfoVM() -> RunningInfoViewModelTypes {
