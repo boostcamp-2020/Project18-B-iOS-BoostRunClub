@@ -87,7 +87,7 @@ final class ActivityViewController: UIViewController {
         containerCellView.heightChangedPublisher
             .sink {
                 guard let path = self.tableView.indexPath(for: $0) else { return }
-                self.tableView.reloadRows(at: [path], with: .top)
+                self.tableView.reloadRows(at: [path], with: .none)
             }
             .store(in: &cancellables)
     }
