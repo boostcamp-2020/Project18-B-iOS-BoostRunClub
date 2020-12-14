@@ -8,61 +8,41 @@
 import Combine
 import UIKit
 
-protocol AppCoordinatorProtocol {
-    func showLoginFlow()
-    func showMainFlow()
-    func showRunningScene(goalType: GoalType, goalValue: String)
-}
-
-final class AppCoordinator: BasicCoordinator, AppCoordinatorProtocol {
-    override init(navigationController: UINavigationController) {
-        super.init(navigationController: navigationController)
-
-        NotificationCenter.default
-            .publisher(for: .showRunningScene)
-            .sink { [weak self] notification in
-                guard
-                    let self = self,
-                    let goalType = notification.userInfo?["goalType"] as? GoalType,
-                    let goalValue = notification.userInfo?["goalValue"] as? String
-                else { return }
-
-                self.clear()
-                self.showRunningScene(goalType: goalType, goalValue: goalValue)
-            }.store(in: &cancellables)
-
-        NotificationCenter.default
-            .publisher(for: .showPrepareRunningScene)
-            .sink { [weak self] _ in
-                guard
-                    let self = self
-                else { return }
-
-                self.clear()
-                self.showMainFlow()
-            }.store(in: &cancellables)
-    }
-
+final class AppCoordinator: BasicCoordinator<Void> {
     override func start() {
-        showMainFlow()
-    }
-
-    func showLoginFlow() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
-        childCoordinators.append(loginCoordinator)
-        loginCoordinator.start()
+        return showMainFlow()
     }
 
     func showMainFlow() {
         let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController)
-        childCoordinators.append(mainTabBarCoordinator)
         mainTabBarCoordinator.start()
+
+        let uuid = mainTabBarCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: mainTabBarCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                switch $0 {
+                case let .running(info):
+                    self?.showRunningScene(goalType: info.type, goalValue: info.value)
+                }
+                self?.release(coordinator: mainTabBarCoordinator)
+            }
     }
 
     func showRunningScene(goalType _: GoalType, goalValue _: String) {
         let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController)
 
-        childCoordinators.append(runningPageCoordinator)
-        runningPageCoordinator.start()
+        let uuid = runningPageCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: runningPageCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                switch $0 {
+                case .detail:
+                    self?.showMainFlow()
+                case .prepareRun:
+                    self?.showMainFlow()
+                }
+                self?.release(coordinator: runningPageCoordinator)
+            }
     }
 }

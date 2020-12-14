@@ -5,9 +5,10 @@
 //  Created by 김신우 on 2020/12/09.
 //
 
+import Combine
 import UIKit
 
-final class ActivityListCoordinator: BasicCoordinator {
+final class ActivityListCoordinator: BasicCoordinator<Void> {
     let factory: ActivityListSceneFactory
 
     init(navigationController: UINavigationController, factory: ActivityListSceneFactory = DependencyFactory.shared) {
@@ -27,8 +28,9 @@ final class ActivityListCoordinator: BasicCoordinator {
 
         listVM.outputs.goBackToSceneSignal
             .receive(on: RunLoop.main)
-            .sink { [weak listVC] in
+            .sink { [weak self, weak listVC] in
                 listVC?.navigationController?.popViewController(animated: true)
+                self?.closeSignal.send()
             }
             .store(in: &cancellables)
 

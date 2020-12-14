@@ -43,8 +43,8 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var cancellables = Set<AnyCancellable>()
     private var goalInfo: GoalInfo {
         GoalInfo(
-            goalType: goalTypeObservable.value,
-            goalValue: goalValueObservable.value
+            type: goalTypeObservable.value,
+            value: goalValueObservable.value
         )
     }
 

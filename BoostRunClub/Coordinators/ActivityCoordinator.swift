@@ -8,9 +8,7 @@
 import Combine
 import UIKit
 
-protocol ActivityCoordinatorProtocol {}
-
-final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
+final class ActivityCoordinator: BasicCoordinator<Void> {
     let factory: ActivitySceneFactory
 
     init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
@@ -85,8 +83,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
 
     func showActivityListScene() {
         let activityListCoordinator = ActivityListCoordinator(navigationController: navigationController)
-        childCoordinators.append(activityListCoordinator)
         activityListCoordinator.start()
+        let uuid = activityListCoordinator.identifier
+        closeSubscription[uuid] = activityListCoordinator.closeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityListCoordinator) }
     }
 
     func showActivityDetailScene(activity: Activity) {
@@ -94,7 +95,10 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
             navigationController: navigationController,
             activity: activity
         )
-        childCoordinators.append(activityDetailCoordinator)
-        activityDetailCoordinator.start()
+
+        let uuid = activityDetailCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: activityDetailCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityDetailCoordinator) }
     }
 }

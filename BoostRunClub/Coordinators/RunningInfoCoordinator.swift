@@ -8,11 +8,11 @@
 import Combine
 import UIKit
 
-protocol RunningInfoCoordinatorProtocol {
-    func showRunningInfoViewController()
+enum RunningInfoCoordinationResult {
+    case pausedRun
 }
 
-final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProtocol {
+final class RunningInfoCoordinator: BasicCoordinator<RunningInfoCoordinationResult> {
     let factory: RunningInfoSceneFactory
 
     init(navigationController: UINavigationController, factory: RunningInfoSceneFactory = DependencyFactory.shared) {
@@ -30,7 +30,8 @@ final class RunningInfoCoordinator: BasicCoordinator, RunningInfoCoordinatorProt
         runningInfoVM.outputs.showPausedRunningSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                NotificationCenter.default.post(name: .showPausedRunningScene, object: self)
+                let result = RunningInfoCoordinationResult.pausedRun
+                self?.closeSignal.send(result)
             }
             .store(in: &cancellables)
 
