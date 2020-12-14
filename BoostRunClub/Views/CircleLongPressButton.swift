@@ -47,7 +47,9 @@ class CircleLongPressButton: CircleButton {
 
     func updateProgress(_ progress: CGFloat) {
         let iProgress = 1 - progress
-        let newProgress = 3 * progress * iProgress * iProgress + 3 * progress * progress * iProgress + progress * progress * progress
+        let newProgress = 3 * progress * iProgress * iProgress
+            + 3 * progress * progress * iProgress
+            + progress * progress * progress
 
         let newScaleRatio = 1 + (targetScaleRatio - 1) * newProgress
         transform = CGAffineTransform(scaleX: newScaleRatio, y: newScaleRatio)

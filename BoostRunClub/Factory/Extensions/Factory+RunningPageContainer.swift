@@ -17,7 +17,10 @@ protocol RunningPageContainerFactory {
 }
 
 extension DependencyFactory: RunningPageContainerFactory {
-    func makeRunningPageVC(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) -> UIViewController {
+    func makeRunningPageVC(
+        with viewModel: RunningPageViewModelTypes,
+        viewControllers: [UIViewController]
+    ) -> UIViewController {
         RunningPageViewController(with: viewModel, viewControllers: viewControllers)
     }
 
