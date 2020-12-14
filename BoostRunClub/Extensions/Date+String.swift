@@ -31,8 +31,20 @@ extension Date {
         DateFormatter.YFormatter.string(from: self)
     }
 
+    var toHMString: String {
+        DateFormatter.HMFormatter.string(from: self)
+    }
+
     var toDayOfWeekString: String {
         DateFormatter.KRDayOfWeekFormatter.string(from: self)
+    }
+
+    var toMDEString: String {
+        DateFormatter.MDEFormatter.string(from: self)
+    }
+
+    var toPHM: String {
+        period + " " + toHMString
     }
 
     var yearMonthDay: YearMonthDay? {

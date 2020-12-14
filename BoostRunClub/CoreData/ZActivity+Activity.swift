@@ -12,6 +12,7 @@ import Foundation
 public class ZActivity: NSManagedObject {
     @NSManaged public var avgPace: Int32
     @NSManaged public var createdAt: Date?
+    @NSManaged public var finishedAt: Date?
     @NSManaged public var distance: Double
     @NSManaged public var duration: Double
     @NSManaged public var thumbnail: Data?
@@ -32,6 +33,7 @@ extension ZActivity {
         uuid = activity.uuid
         thumbnail = activity.thumbnail
         createdAt = activity.createdAt
+        finishedAt = activity.finishedAt
         duration = activity.duration
     }
 
@@ -43,6 +45,7 @@ extension ZActivity {
             elevation: elevation,
             thumbnail: thumbnail,
             createdAt: createdAt,
+            finishedAt: finishedAt,
             uuid: uuid
         )
     }
