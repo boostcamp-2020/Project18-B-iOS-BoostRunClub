@@ -1,5 +1,5 @@
 //
-//  SpeechType.swift
+//  RunningEvent.swift
 //  BoostRunClub
 //
 //  Created by Imho Jang on 2020/12/14.
