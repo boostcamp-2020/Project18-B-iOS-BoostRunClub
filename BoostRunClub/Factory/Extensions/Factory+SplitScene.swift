@@ -23,6 +23,6 @@ extension DependencyFactory: SplitSceneFactory {
     }
 
     func makeSplitVM() -> SplitsViewModelTypes {
-        SplitsViewModel(runningDataProvider: runningDataProvider)
+        SplitsViewModel(runningDataProvider: runningDataService)
     }
 }

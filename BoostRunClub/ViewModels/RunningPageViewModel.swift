@@ -32,7 +32,7 @@ protocol RunningPageViewModelOutputs {
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
-    private let runningDataProvider: RunningDataServiceable
+    private let runningDataProvider: RunningServiceType
     private var isDragging: Bool = false
     private var currentPageIdx = 1
     private var cancellables = Set<AnyCancellable>()
@@ -40,7 +40,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
 
     @Published private var scale: Double = 0.0
 
-    init(runningDataProvider: RunningDataServiceable) {
+    init(runningDataProvider: RunningServiceType) {
         self.runningDataProvider = runningDataProvider
 
         runningDataProvider.runningEvent
@@ -102,7 +102,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     var runningTimeSubject: AnyPublisher<String, Never> {
-        runningDataProvider.runningTime
+        runningDataProvider.dashBoard.runningTime
             .map { $0.fullFormattedString }
             .eraseToAnyPublisher()
     }

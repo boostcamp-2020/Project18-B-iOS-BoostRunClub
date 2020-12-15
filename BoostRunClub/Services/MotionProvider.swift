@@ -10,11 +10,16 @@ import CoreML
 import CoreMotion
 import Foundation
 
-final class MotionProvider {
+protocol MotionProvidable {
+    func start()
+    func stop()
+    var motionType: CurrentValueSubject<MotionType, Never> { get }
+}
+
+final class MotionProvider: MotionProvidable {
     private let motion = CMMotionManager()
-    private let pedometer = CMPedometer()
-    private var isActive = false
     private var timer: Timer? = Timer()
+    private var isActive = false
     private let model: BRCActivityClassifierA? = {
         let configuration = MLModelConfiguration()
         return try? BRCActivityClassifierA(configuration: configuration)
@@ -28,8 +33,7 @@ final class MotionProvider {
         return Array<Double>.init(repeating: 0, count: 400)
     }
 
-    var currentMotionType = CurrentValueSubject<MotionType, Never>(.standing)
-    var cadence = CurrentValueSubject<Int, Never>(0)
+    var motionType = CurrentValueSubject<MotionType, Never>(.standing)
 
     func startTrackingActivityType() {
         if isActive { return }
@@ -62,11 +66,11 @@ final class MotionProvider {
 
                                       switch result {
                                       case "walking":
-                                          self.currentMotionType.send(.running)
+                                          self.motionType.send(.running)
                                       case "standing":
-                                          self.currentMotionType.send(.standing)
+                                          self.motionType.send(.standing)
                                       default:
-                                          self.currentMotionType.send(.standing)
+                                          self.motionType.send(.standing)
                                       }
                                   }
                               }
@@ -112,31 +116,14 @@ final class MotionProvider {
         return result.label
     }
 
-    func startUpdating() {
+    func start() {
         if CMMotionActivityManager.isActivityAvailable() {
             startTrackingActivityType()
         }
-
-        if CMPedometer.isStepCountingAvailable() {
-            startCountingSteps()
-        }
     }
 
-    func stopActivityUpdates() {
+    func stop() {
         timer?.invalidate()
         isActive = false
-    }
-
-    func startCountingSteps() {
-        pedometer.startUpdates(from: Date()) { [weak self] pedometerData, error in
-
-            guard
-                let self = self,
-                let cadence = pedometerData?.currentCadence,
-                error == nil
-            else { return }
-
-            self.cadence.value = Int(truncating: cadence) * 60
-        }
     }
 }

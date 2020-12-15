@@ -18,6 +18,6 @@ extension DependencyFactory: RunningMapSceneFactory {
     }
 
     func makeRunningMapVM() -> RunningMapViewModelTypes {
-        RunningMapViewModel(runningDataProvider: runningDataProvider)
+        RunningMapViewModel(runningDataProvider: runningDataService)
     }
 }
