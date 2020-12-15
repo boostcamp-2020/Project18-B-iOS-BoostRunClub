@@ -35,6 +35,7 @@
 		4C9B985325788547000A6447 /* UIView+notificationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */; };
 		4C9C8FD52566B0A400956D51 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C8FD42566B0A400956D51 /* .swiftlint.yml */; };
 		4CB8FA3725729F65000B90ED /* GoalValueSetupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */; };
+		4CBCDA0D2588CE4E008AD52E /* UIButton+setArrowImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */; };
 		4CCD6E78256BCA2500195EDA /* PrepareRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */; };
 		4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */; };
 		4CCD6E7F256BEA1200195EDA /* GoalTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD6E7E256BEA1200195EDA /* GoalTypeViewController.swift */; };
@@ -245,6 +246,7 @@
 		4C9C8FD42566B0A400956D51 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewModelTest.swift; sourceTree = "<group>"; };
 		4CB8FA3625729F65000B90ED /* GoalValueSetupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalValueSetupViewModelTest.swift; sourceTree = "<group>"; };
+		4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setArrowImage.swift"; sourceTree = "<group>"; };
 		4CCD6E77256BCA2500195EDA /* PrepareRunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunViewController.swift; sourceTree = "<group>"; };
 		4CCD6E7A256BDD0800195EDA /* PrepareRunCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRunCoordinator.swift; sourceTree = "<group>"; };
 		4CCD6E7E256BEA1200195EDA /* GoalTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewController.swift; sourceTree = "<group>"; };
@@ -476,7 +478,12 @@
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
+				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
+				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
+				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				96386604257E9BD2003EEE4B /* Configurable */,
+				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
 				71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */,
 				4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */,
 				4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */,
@@ -484,19 +491,19 @@
 				9689A165257640C700DED689 /* PausedRunningViewModel.swift */,
 				71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */,
 				9635816925726ECC00B8BE6B /* PrepareRunViewModelTest.swift */,
+				71FBAB4E257FA267005C8D30 /* ProfileViewModel.swift */,
 				4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */,
 				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
-				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
-				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
-				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
-				71FBAB4E257FA267005C8D30 /* ProfileViewModel.swift */,
 				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
+
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
 				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
 				71D3093B258642230092AB05 /* RouteDetailViewModel.swift */,
+
 				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
+				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -743,8 +750,16 @@
 				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
 				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
 				96DE09362586170E0055213C /* Clamp.swift */,
+
+
+				4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */,
+
+				967BEBA9258810B1001A241F /* UIColor+RGBA.swift */,
+
 				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
+
 				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
+
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1009,6 +1024,7 @@
 				717878492587E0E1004EF8EA /* BRCActivityClassifierA.mlmodel in Sources */,
 				71FBAB6C257FD091005C8D30 /* Factory+EditProfileScene.swift in Sources */,
 				4CEB6BF2256F657A00FA7E88 /* GoalValueSetupViewController.swift in Sources */,
+				4CBCDA0D2588CE4E008AD52E /* UIButton+setArrowImage.swift in Sources */,
 				71A58D1C256D2EEA0012FF51 /* GoalTypeViewModel.swift in Sources */,
 				4C41B40B25861801001C4713 /* SplitInfoDetailViewController.swift in Sources */,
 				71FBAB02257D24BB005C8D30 /* Factory+GoalTypeScene.swift in Sources */,

@@ -33,7 +33,7 @@ final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResu
         let runningCoordinator = RunningCoordinator(navigationController: UINavigationController())
         let splitsCoordinator = SplitsCoordinator(navigationController: UINavigationController())
 
-        coordinate(coordinator: mapCoordinator)
+        let closablePublisherWithoutRelease = coordinate(coordinator: mapCoordinator)
         coordinate(coordinator: splitsCoordinator)
         let closablePublisher = coordinate(coordinator: runningCoordinator)
 
@@ -65,5 +65,8 @@ final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResu
                 self?.release(coordinator: runningCoordinator)
                 self?.release(coordinator: splitsCoordinator)
             }
+
+        closeSubscription[mapCoordinator.identifier] = closablePublisherWithoutRelease
+            .sink { runningPageVM.inputs.didTapGoBackButton() }
     }
 }

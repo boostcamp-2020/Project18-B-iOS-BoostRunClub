@@ -12,9 +12,13 @@ import UIKit
 class RunningMapViewController: UIViewController {
     private lazy var mapView: MKMapView = makeMapView()
     private lazy var locateButton: UIButton = makeLocateButton()
+    private lazy var exitButton: UIButton = makeExitButton()
 
     private var viewModel: RunningMapViewModelTypes?
     private var cancellables = Set<AnyCancellable>()
+
+    private let buttonHeight: CGFloat = 60
+    private let buttonBottomOffset: CGFloat = 50
 
     init(with viewModel: RunningMapViewModelTypes?) {
         super.init(nibName: nil, bundle: nil)
@@ -42,6 +46,14 @@ class RunningMapViewController: UIViewController {
         viewModel.outputs.userTrackingModeOffSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.mapView.setUserTrackingMode(.none, animated: false) }
+            .store(in: &cancellables)
+
+        viewModel.outputs.appearAnimationSignal
+            .sink { [weak self] in self?.appearWithAnimation() }
+            .store(in: &cancellables)
+
+        viewModel.outputs.closeAnimationSignal
+            .sink { [weak self] in self?.closeWithAnimation() }
             .store(in: &cancellables)
     }
 
@@ -77,6 +89,33 @@ extension RunningMapViewController {
     func didTapLocateButton() {
         viewModel?.inputs.didTapLocateButton()
     }
+
+    @objc
+    func didTapExitButton() {
+        viewModel?.inputs.didTapExitButton()
+    }
+}
+
+// MARK: - Animation
+
+extension RunningMapViewController {
+    func appearWithAnimation() {
+        hideButtonsTransform()
+        UIView.animate(withDuration: 0.5) {
+            self.exitButton.transform = .identity
+            self.locateButton.transform = .identity
+        }
+    }
+
+    func closeWithAnimation() {
+        UIView.animate(withDuration: 0.2) { self.hideButtonsTransform() }
+    }
+
+    func hideButtonsTransform() {
+        let value = 2 * buttonHeight + buttonBottomOffset
+        exitButton.transform = exitButton.transform.translatedBy(x: 0, y: value)
+        locateButton.transform = locateButton.transform.translatedBy(x: 0, y: value)
+    }
 }
 
 // MARK: - MKMapViewDelegate
@@ -111,9 +150,18 @@ extension RunningMapViewController {
         locateButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             locateButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            locateButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            locateButton.heightAnchor.constraint(equalToConstant: 60),
+            locateButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -buttonBottomOffset),
+            locateButton.heightAnchor.constraint(equalToConstant: buttonHeight),
             locateButton.widthAnchor.constraint(equalTo: locateButton.heightAnchor, multiplier: 1),
+        ])
+
+        view.addSubview(exitButton)
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            exitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            exitButton.bottomAnchor.constraint(equalTo: locateButton.bottomAnchor),
+            exitButton.heightAnchor.constraint(equalTo: locateButton.heightAnchor),
+            exitButton.widthAnchor.constraint(equalTo: locateButton.widthAnchor),
         ])
     }
 
@@ -134,6 +182,12 @@ extension RunningMapViewController {
     private func makeLocateButton() -> UIButton {
         let button = CircleButton(with: .locate)
         button.addTarget(self, action: #selector(didTapLocateButton), for: .touchUpInside)
+        return button
+    }
+
+    private func makeExitButton() -> UIButton {
+        let button = CircleButton(with: .exit)
+        button.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
         return button
     }
 }

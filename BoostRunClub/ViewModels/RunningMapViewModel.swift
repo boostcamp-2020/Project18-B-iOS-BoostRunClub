@@ -17,6 +17,7 @@ protocol RunningMapViewModelTypes {
 protocol RunningMapViewModelInputs {
     func viewWillAppear()
     func didTapLocateButton()
+    func didTapExitButton()
     func viewWillDisappear()
 }
 
@@ -24,6 +25,9 @@ protocol RunningMapViewModelOutputs {
     var routesSubject: PassthroughSubject<[CLLocationCoordinate2D], Never> { get }
     var userTrackingModeOnWithAnimatedSignal: PassthroughSubject<Bool, Never> { get }
     var userTrackingModeOffSignal: PassthroughSubject<Void, Never> { get }
+    var closeRunningMapSceneSignal: PassthroughSubject<Void, Never> { get }
+    var closeAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var appearAnimationSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs {
@@ -41,7 +45,7 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
     // inputs
     func viewWillAppear() {
         userTrackingModeOnWithAnimatedSignal.send(false)
-
+        appearAnimationSignal.send()
         guard
             !runningDataProvider.locations.isEmpty,
             lastRouteIdx + 1 < runningDataProvider.locations.count
@@ -52,16 +56,24 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
 
     func viewWillDisappear() {
         userTrackingModeOffSignal.send()
+        closeAnimationSignal.send()
     }
 
     func didTapLocateButton() {
         userTrackingModeOnWithAnimatedSignal.send(true)
     }
 
+    func didTapExitButton() {
+        closeRunningMapSceneSignal.send()
+    }
+
     // outputs
     var routesSubject = PassthroughSubject<[CLLocationCoordinate2D], Never>()
     var userTrackingModeOnWithAnimatedSignal = PassthroughSubject<Bool, Never>()
     var userTrackingModeOffSignal = PassthroughSubject<Void, Never>()
+    var closeRunningMapSceneSignal = PassthroughSubject<Void, Never>()
+    var closeAnimationSignal = PassthroughSubject<Void, Never>()
+    var appearAnimationSignal = PassthroughSubject<Void, Never>()
 }
 
 extension RunningMapViewModel: RunningMapViewModelTypes {
