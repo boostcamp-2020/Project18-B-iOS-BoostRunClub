@@ -113,7 +113,8 @@ extension PrepareRunViewController {
 
 extension PrepareRunViewController {
     @objc
-    func showProfileViewController() {
+    func showProfileViewController(sender _: UIBarButtonItem) {
+        print("showprofile view controller")
         viewModel?.inputs.didTapShowProfileButton()
     }
 
@@ -254,13 +255,12 @@ extension PrepareRunViewController {
         navigationItem.title = "러닝"
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        let profileItem = UIBarButtonItem(
-            image: UIImage.SFSymbol(name: "person.circle.fill", color: .systemGray),
-            style: .plain,
-            target: self,
-            action: #selector(showProfileViewController)
-        )
-
+        let profileItem = UIBarButtonItem.makeProfileButton()
+        if let profileButton = profileItem.customView as? UIButton {
+            profileButton.addTarget(self,
+                                    action: #selector(showProfileViewController(sender:)),
+                                    for: .touchUpInside)
+        }
         navigationItem.setLeftBarButton(profileItem, animated: true)
     }
 

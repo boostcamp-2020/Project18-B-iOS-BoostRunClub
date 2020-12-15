@@ -66,18 +66,16 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     }
 
     func didTapApplyButton() {
-        let profile = Profile(image: imageDataObservable.value,
-                              lastName: lastNameTextObservable.value,
-                              firstName: firstNameTextObservable.value,
-                              hometown: hometownTextObservable.value,
-                              bio: bioTextObservable.value)
+        guard let currentProfile = currentProfile else { return }
 
-        if let imageData = profile.image {
+        if let imageData = currentProfile.image {
             Data.saveImageDataToDocumentsDirectory(fileName: "profile.png",
                                                    imageData: imageData)
         }
-        saveProfileTextsToUserDefaults(profile: profile)
-        closeSignal.send(profile)
+
+        sendChangedProfilePictureSignal()
+        saveProfileTextsToUserDefaults(profile: currentProfile)
+        closeSignal.send(currentProfile)
     }
 
     func didEditProfilePicture(to imageData: Data) {
@@ -138,5 +136,12 @@ extension EditProfileViewModel {
 
     private func compareChanges() {
         changeInContentSignal.send(currentProfile != initialProfile)
+    }
+
+    private func sendChangedProfilePictureSignal() {
+        if currentProfile?.image != initialProfile?.image {
+            guard let image = currentProfile?.image else { return }
+            // TODO: - do something here to send signal
+        }
     }
 }

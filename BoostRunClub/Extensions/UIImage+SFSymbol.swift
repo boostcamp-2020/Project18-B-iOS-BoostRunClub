@@ -16,8 +16,13 @@ extension UIImage {
         color: UIColor = .label,
         renderingMode: UIImage.RenderingMode = .automatic
     ) -> UIImage? {
-        let configuration = UIImage.SymbolConfiguration(pointSize: size, weight: weight, scale: scale)
-        return UIImage.SFSymbol(name: name, configuration: configuration, color: color, renderingMode: renderingMode)
+        let configuration = UIImage.SymbolConfiguration(pointSize: size,
+                                                        weight: weight,
+                                                        scale: scale)
+        return UIImage.SFSymbol(name: name,
+                                configuration: configuration,
+                                color: color,
+                                renderingMode: renderingMode)
     }
 
     static func SFSymbol(

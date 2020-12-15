@@ -45,6 +45,7 @@
 		4CF009C6257CADC300EC928A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF009C5257CADC300EC928A /* Location.swift */; };
 		4CF009CA257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF009C9257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift */; };
 		710CD9C225886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */; };
+		710CD9E225889E950001E763 /* ProfileButton.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710CD9E125889E950001E763 /* ProfileButton.swift.swift */; };
 		714C03982574F794006B81E3 /* RunningMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C03972574F794006B81E3 /* RunningMapCoordinator.swift */; };
 		714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */; };
 		714C039E2574F7C6006B81E3 /* SplitsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */; };
@@ -255,6 +256,7 @@
 		4CF009C5257CADC300EC928A /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4CF009C9257CAE1900EC928A /* ZActivityDetail+ActivityDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZActivityDetail+ActivityDetail.swift"; sourceTree = "<group>"; };
 		710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate+computeSplitCoordinate.swift"; sourceTree = "<group>"; };
+		710CD9E125889E950001E763 /* ProfileButton.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift.swift; sourceTree = "<group>"; };
 		714C03972574F794006B81E3 /* RunningMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMapCoordinator.swift; sourceTree = "<group>"; };
 		714C039A2574F7AE006B81E3 /* RunningInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoCoordinator.swift; sourceTree = "<group>"; };
 		714C039D2574F7C6006B81E3 /* SplitsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewCoordinator.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				71EFCC8C2577C3C0007998AD /* CircleButton.swift */,
 				967780282577905400DA2454 /* CountDownView.swift */,
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
+				710CD9E125889E950001E763 /* ProfileButton.swift.swift */,
 				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
 				4C3E7AD0256F63230061244F /* Cells */,
@@ -1045,6 +1048,7 @@
 				964BC6E42580CFEE00A69A82 /* ActivityListViewModel.swift in Sources */,
 				71FBAAFA257D2488005C8D30 /* Factory+SplitScene.swift in Sources */,
 				96CB22A12582301C000D67C4 /* MKCoordinateRegion+Make.swift in Sources */,
+				710CD9E225889E950001E763 /* ProfileButton.swift.swift in Sources */,
 				4C6904EB25868FFF007425C6 /* SplitDetailDateInfoView.swift in Sources */,
 				4CCD6E7F256BEA1200195EDA /* GoalTypeViewController.swift in Sources */,
 				4C41B41425862D29001C4713 /* UINavigationController+setStatusBar.swift in Sources */,

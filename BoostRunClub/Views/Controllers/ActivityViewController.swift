@@ -93,7 +93,8 @@ final class ActivityViewController: UIViewController {
 
 extension ActivityViewController {
     @objc
-    func showProfileViewController() {
+    func showProfileViewController(sender _: UIBarButtonItem) {
+        print("프로필컨트롤러보여줘")
         viewModel?.inputs.didTapShowProfileButton()
     }
 }
@@ -129,14 +130,13 @@ extension ActivityViewController {
         navigationItem.title = "활동"
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        let profileItem = UIBarButtonItem(
-            image: UIImage.SFSymbol(name: "person.circle.fill", color: .systemGray),
-            style: .plain,
-            target: self,
-            action: #selector(showProfileViewController)
-        )
-
-        navigationItem.setLeftBarButton(profileItem, animated: true)
+        let profileItem = UIBarButtonItem.makeProfileButton()
+        if let profileButton = profileItem.customView as? UIButton {
+            profileButton.addTarget(self,
+                                    action: #selector(showProfileViewController(sender:)),
+                                    for: .touchUpInside)
+        }
+        navigationItem.setLeftBarButton(profileItem, animated: false)
     }
 
     private func configureTableView() {
