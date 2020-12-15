@@ -14,7 +14,7 @@ extension UIBarButtonItem {
         if let imageData = Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png") {
             profileImage = UIImage(data: imageData) ?? UIImage()
         } else {
-            profileImage = UIImage.SFSymbol(name: "person.circle.fill",
+            profileImage = UIImage.SFSymbol(name: "person.circle",
                                             size: 27,
                                             weight: .regular,
                                             scale: .default,

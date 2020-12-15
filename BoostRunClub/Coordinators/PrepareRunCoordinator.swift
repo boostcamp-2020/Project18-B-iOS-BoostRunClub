@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 enum PrepareRunCoordinationResult {
-    case run(GoalInfo)
+    case run(GoalInfo), profile
 }
 
 final class PrepareRunCoordinator: BasicCoordinator<PrepareRunCoordinationResult> {
@@ -49,6 +49,14 @@ final class PrepareRunCoordinator: BasicCoordinator<PrepareRunCoordinationResult
             .compactMap { [weak self] in self?.showGoalValueSetupViewController(goalInfo: $0) }
             .flatMap { $0 }
             .sink { prepareRunVM.inputs.didChangeGoalValue($0) }
+            .store(in: &cancellables)
+
+        prepareRunVM.outputs.showProfileSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                let result = PrepareRunCoordinationResult.profile
+                self?.closeSignal.send(result)
+            }
             .store(in: &cancellables)
 
         let prepareRunVC = factory.makePrepareRunVC(with: prepareRunVM)

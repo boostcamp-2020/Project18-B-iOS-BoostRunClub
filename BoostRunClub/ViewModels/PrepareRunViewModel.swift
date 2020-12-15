@@ -35,6 +35,7 @@ protocol PrepareRunViewModelOutputs {
     var showGoalValueSetupSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
     var showRunningSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
     var countDownAnimation: PassthroughSubject<Void, Never> { get }
+    var showProfileSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs {
@@ -62,7 +63,9 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
 
     // MARK: Inputs
 
-    func didTapShowProfileButton() {}
+    func didTapShowProfileButton() {
+        showProfileSignal.send()
+    }
 
     func didTapSetGoalButton() {
         showGoalTypeActionSheetSignal.send(goalTypeObservable.value)
@@ -111,6 +114,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var showGoalTypeActionSheetSignal = PassthroughSubject<GoalType, Never>()
     var showGoalValueSetupSceneSignal = PassthroughSubject<GoalInfo, Never>()
     var showRunningSceneSignal = PassthroughSubject<GoalInfo, Never>()
+    var showProfileSignal = PassthroughSubject<Void, Never>()
 }
 
 // MARK: - Types

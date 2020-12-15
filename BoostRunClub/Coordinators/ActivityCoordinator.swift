@@ -8,7 +8,11 @@
 import Combine
 import UIKit
 
-final class ActivityCoordinator: BasicCoordinator<Void> {
+enum ActivityCoordinationResult {
+    case profile
+}
+
+final class ActivityCoordinator: BasicCoordinator<ActivityCoordinationResult> {
     let factory: ActivitySceneFactory
 
     init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
@@ -55,6 +59,14 @@ final class ActivityCoordinator: BasicCoordinator<Void> {
         activityVM.outputs.showActivityDetailScene
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.showActivityDetailScene(activity: $0) }
+            .store(in: &cancellables)
+
+        activityVM.outputs.showProfileSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                let result = ActivityCoordinationResult.profile
+                self?.closeSignal.send(result)
+            }
             .store(in: &cancellables)
 
         navigationController.pushViewController(activityVC, animated: true)
