@@ -28,6 +28,7 @@ protocol RunningPageViewModelOutputs {
     var scaleSubjectNotDragging: AnyPublisher<Double, Never> { get }
     var goBackToMainPageSignal: PassthroughSubject<Int, Never> { get }
     var runningTimeSubject: AnyPublisher<String, Never> { get }
+    var setPageSignal: PassthroughSubject<Int, Never> { get }
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
@@ -35,6 +36,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     private var isDragging: Bool = false
     private var currentPageIdx = 1
     private var cancellables = Set<AnyCancellable>()
+    private var readyToChagePageIdx = false
 
     @Published private var scale: Double = 0.0
 
@@ -54,9 +56,11 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     // Inputs
 
     func buttonScaleShouldUpdate(contentOffset: Double, screenWidth: Double) {
+        readyToChagePageIdx = contentOffset == 0 || contentOffset == screenWidth * 2
         let value = (contentOffset + screenWidth * Double(currentPageIdx - 2))
         let result = value / screenWidth
-        if result >= 1 { return }
+
+        if abs(result) > 1 { return }
         scale = result
     }
 
@@ -69,7 +73,11 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     func didChangeCurrentPage(idx: Int) {
-        currentPageIdx = idx
+        if readyToChagePageIdx {
+            currentPageIdx = idx
+        } else {
+            setPageSignal.send(currentPageIdx)
+        }
     }
 
     func didEndDragging() {
@@ -85,6 +93,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     var speechSignal = PassthroughSubject<String, Never>()
     var scaleSubject = PassthroughSubject<Double, Never>()
     var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+    var setPageSignal = PassthroughSubject<Int, Never>()
     var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
         $scale
             .filter { _ in !self.isDragging }

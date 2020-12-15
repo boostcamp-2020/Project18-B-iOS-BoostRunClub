@@ -63,6 +63,13 @@ final class RunningPageViewController: UIPageViewController {
             }
             .store(in: &cancellables)
 
+        viewModel?.outputs.setPageSignal
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.setViewControllers([self.pages[$0]], direction: .forward, animated: false)
+            }
+            .store(in: &cancellables)
+
         viewModel?.outputs.speechSignal
             .sink { [weak self] (speechText: String) in
                 self?.speech(text: speechText)
@@ -103,7 +110,6 @@ extension RunningPageViewController {
 
     func goBackToMainPage(currPageIdx: Int) {
         let direction: UIPageViewController.NavigationDirection = currPageIdx < 1 ? .forward : .reverse
-
         setViewControllers([pages[1]], direction: direction, animated: true) { _ in
             self.viewModel?.inputs.didChangeCurrentPage(idx: 1)
         }
@@ -204,11 +210,11 @@ extension RunningPageViewController: UIScrollViewDelegate {
 extension RunningPageViewController: UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
-        didFinishAnimating finished: Bool,
+        didFinishAnimating _: Bool,
         previousViewControllers _: [UIViewController],
-        transitionCompleted completed: Bool
+        transitionCompleted _: Bool
     ) {
-        if finished, completed, let viewControllers = pageViewController.viewControllers {
+        if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = pages.firstIndex(of: viewControllers[0]) {
                 viewModel?.inputs.didChangeCurrentPage(idx: viewControllerIndex)
             }

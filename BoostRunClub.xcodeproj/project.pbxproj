@@ -455,7 +455,12 @@
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
+				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
+				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
+				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				96386604257E9BD2003EEE4B /* Configurable */,
+				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
 				71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */,
 				4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */,
 				4CEB6BF4256F661700FA7E88 /* GoalValueSetupViewModel.swift */,
@@ -463,18 +468,13 @@
 				9689A165257640C700DED689 /* PausedRunningViewModel.swift */,
 				71A58D17256D2DE50012FF51 /* PrepareRunViewModel.swift */,
 				9635816925726ECC00B8BE6B /* PrepareRunViewModelTest.swift */,
+				71FBAB4E257FA267005C8D30 /* ProfileViewModel.swift */,
 				4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */,
 				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
-				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
-				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
-				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
-				71FBAB4E257FA267005C8D30 /* ProfileViewModel.swift */,
 				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
-				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
-				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
-				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
 				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
+				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
