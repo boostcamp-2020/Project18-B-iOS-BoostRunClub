@@ -59,7 +59,7 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
                 continue
             }
 
-            context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation])
+            context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
             context.restoreGState()
         }
     }
