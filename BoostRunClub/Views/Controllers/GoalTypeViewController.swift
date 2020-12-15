@@ -73,7 +73,7 @@ extension GoalTypeViewController {
             animations: {
                 self.tableView.frame.origin.y = UIScreen.main.bounds.height - self.tableViewHeight
                 self.tableView.bounds.origin.y = 0
-                self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+                self.view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.8)
             },
             completion: nil
         )
@@ -147,7 +147,7 @@ extension GoalTypeViewController {
         tableView.isScrollEnabled = false
         tableView.register(GoalTypeCell.self, forCellReuseIdentifier: String(describing: GoalTypeCell.self))
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        tableView.layer.cornerRadius = 30
+        tableView.layer.cornerRadius = 25
         tableView.rowHeight = GoalTypeCell.LayoutConstant.cellHeight
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding))
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: verticalTablePadding * 2))
