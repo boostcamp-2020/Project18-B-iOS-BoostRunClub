@@ -11,6 +11,7 @@ import UIKit
 extension UIImage {
     static func customSplitAnnotation(type: CustomAnnotationType, title: String = " ", color: UIColor = .white) -> UIImage {
         let label = UILabel()
+        label.textColor = .black
         label.text = title
         label.textAlignment = .center
 

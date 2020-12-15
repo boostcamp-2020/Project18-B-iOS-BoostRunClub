@@ -23,6 +23,7 @@ class ActivityTableView: UITableView {
 
 extension ActivityTableView {
     private func commonInit() {
+        backgroundColor = .tertiarySystemGroupedBackground
         estimatedRowHeight = 200
         allowsSelection = true
         alwaysBounceVertical = true

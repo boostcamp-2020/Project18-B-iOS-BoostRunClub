@@ -71,7 +71,7 @@ extension RouteDetailViewController {
         button.setSFSymbol(iconName: "xmark",
                            size: 17.5,
                            weight: .semibold,
-                           tintColor: .white,
+                           tintColor: .systemBackground,
                            backgroundColor: .label)
         button.bounds.size = CGSize(width: 32, height: 32)
         button.layer.cornerRadius = button.bounds.height / 2

@@ -161,7 +161,7 @@ extension RunningPageViewController {
     func makePageControl() -> UIPageControl {
         let pageControl = UIPageControl()
         pageControl.pageIndicatorTintColor = .gray
-        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.currentPageIndicatorTintColor = .label
         pageControl.numberOfPages = Pages.allCases.count
         pageControl.currentPage = 1
         pageControl.isUserInteractionEnabled = false

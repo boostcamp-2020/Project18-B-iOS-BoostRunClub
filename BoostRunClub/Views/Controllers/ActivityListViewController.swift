@@ -92,7 +92,7 @@ extension ActivityListViewController {
         layout.sectionHeadersPinToVisibleBounds = true
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .systemGroupedBackground
+        collectionView.backgroundColor = .tertiarySystemGroupedBackground
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         collectionView.register(

@@ -12,7 +12,7 @@ final class RunDataView: UIStackView {
         case main, sub
     }
 
-    private lazy var valueLabel = makeValueLabel()
+    lazy var valueLabel = makeValueLabel()
     private lazy var descriptionLabel = maekDescriptionLabel()
     let style: Style
     var tapAction: (() -> Void)?

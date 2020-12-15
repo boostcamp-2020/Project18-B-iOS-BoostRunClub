@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 final class EditProfileViewController: UIViewController, UINavigationControllerDelegate {
+    private var layers = [CALayer]()
     private lazy var scrollView = UIScrollView()
     private lazy var contentView = UIView()
     private lazy var navBar: UINavigationBar = makeNavigationBar()
@@ -20,7 +21,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
     private lazy var bioLabel: UILabel = makeLabel(withText: "약력")
     private lazy var imagePicker = makeImagePicker()
     private lazy var bioTextView: UITextView = makeBioTextView()
-    private lazy var nameTextFieldView: UIView = makeNameTextField()
+    private lazy var nameTextFieldView: UIStackView = makeNameTextField()
     private lazy var firstNameTextField: UITextField = makeTextField(placeHolder: "이름")
     private lazy var lastNameTextField: UITextField = makeTextField(placeHolder: "성")
     private lazy var hometownTextField: UITextField = makeTextField(placeHolder: "시/도, 주",
@@ -116,6 +117,11 @@ extension EditProfileViewController {
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
         registerKeyboardNotifications()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layers.forEach { $0.borderColor = UIColor.systemGray5.cgColor }
     }
 }
 
@@ -230,18 +236,20 @@ extension EditProfileViewController {
         return label
     }
 
-    private func makeNameTextField() -> UIView {
+    private func makeNameTextField() -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: [lastNameTextField, firstNameTextField])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.layer.cornerRadius = 5
         stackView.layer.borderWidth = 1
+
         stackView.layer.borderColor = UIColor.systemGray5.cgColor
+        layers.append(stackView.layer)
         stackView.clipsToBounds = true
 
         lastNameTextField.layer.borderWidth = 1
         lastNameTextField.layer.borderColor = UIColor.systemGray5.cgColor
-
+        layers.append(lastNameTextField.layer)
         return stackView
     }
 
@@ -265,6 +273,7 @@ extension EditProfileViewController {
         bioTextView.textColor = UIColor.lightGray
         bioTextView.layer.borderWidth = 1
         bioTextView.layer.borderColor = UIColor.systemGray5.cgColor
+        layers.append(bioTextView.layer)
         bioTextView.layer.cornerRadius = 5
         bioTextView.font = UIFont.systemFont(ofSize: 14)
         bioTextView.textContainerInset = UIEdgeInsets(top: 15,

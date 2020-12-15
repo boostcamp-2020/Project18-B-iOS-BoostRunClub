@@ -173,6 +173,7 @@ extension PausedRunningViewController {
             mapViewHeightConstraint,
         ])
 
+		runDataViews.forEach {  $0.valueLabel.textColor = .label }
         runDataViews.enumerated().forEach { index, runDataView in
             self.subRunDataStackViews[index / 3].addArrangedSubview(runDataView)
         }
