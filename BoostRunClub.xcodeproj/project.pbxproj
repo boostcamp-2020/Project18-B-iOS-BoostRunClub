@@ -149,6 +149,11 @@
 		967253132584878A00B4BBC6 /* DetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967253122584878A00B4BBC6 /* DetailTitleView.swift */; };
 		96725317258487B600B4BBC6 /* DetailSplitsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96725316258487B600B4BBC6 /* DetailSplitsTableView.swift */; };
 		967780292577905400DA2454 /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967780282577905400DA2454 /* CountDownView.swift */; };
+		967BEB982587EEE5001A241F /* BasicRouteOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEB972587EEE5001A241F /* BasicRouteOverlay.swift */; };
+		967BEB9C2587FDB7001A241F /* BasicRouteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEB9B2587FDB7001A241F /* BasicRouteRenderer.swift */; };
+		967BEBA22587FDEC001A241F /* GradientRouteOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA12587FDEC001A241F /* GradientRouteOverlay.swift */; };
+		967BEBA62588089F001A241F /* GradientRouteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA52588089F001A241F /* GradientRouteRenderer.swift */; };
+		967BEBAA258810B1001A241F /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA9258810B1001A241F /* UIColor+RGBA.swift */; };
 		967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A15D25763CC800DED689 /* PausedRunningViewController.swift */; };
 		9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A16125763D1E00DED689 /* PausedRunningCoordinator.swift */; };
@@ -332,6 +337,11 @@
 		967253122584878A00B4BBC6 /* DetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTitleView.swift; sourceTree = "<group>"; };
 		96725316258487B600B4BBC6 /* DetailSplitsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSplitsTableView.swift; sourceTree = "<group>"; };
 		967780282577905400DA2454 /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
+		967BEB972587EEE5001A241F /* BasicRouteOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRouteOverlay.swift; sourceTree = "<group>"; };
+		967BEB9B2587FDB7001A241F /* BasicRouteRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRouteRenderer.swift; sourceTree = "<group>"; };
+		967BEBA12587FDEC001A241F /* GradientRouteOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRouteOverlay.swift; sourceTree = "<group>"; };
+		967BEBA52588089F001A241F /* GradientRouteRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRouteRenderer.swift; sourceTree = "<group>"; };
+		967BEBA9258810B1001A241F /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
 		967FFAA3257602A200F3340C /* TimerInterval+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+String.swift"; sourceTree = "<group>"; };
 		9689A15D25763CC800DED689 /* PausedRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningViewController.swift; sourceTree = "<group>"; };
 		9689A16125763D1E00DED689 /* PausedRunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningCoordinator.swift; sourceTree = "<group>"; };
@@ -482,6 +492,7 @@
 		71E82887256B9184004A1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				967BEB962587EED4001A241F /* Renderer */,
 				967253112584876600B4BBC6 /* ActivityDetailScene */,
 				96F105B1258040CB0005F66C /* ActivityScene */,
 				96F105AA25803D7B0005F66C /* DataSource */,
@@ -659,6 +670,17 @@
 			path = ActivityDetailScene;
 			sourceTree = "<group>";
 		};
+		967BEB962587EED4001A241F /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				967BEB972587EEE5001A241F /* BasicRouteOverlay.swift */,
+				967BEB9B2587FDB7001A241F /* BasicRouteRenderer.swift */,
+				967BEBA12587FDEC001A241F /* GradientRouteOverlay.swift */,
+				967BEBA52588089F001A241F /* GradientRouteRenderer.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
 		9680AB9225707E19006F0FD2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -699,6 +721,7 @@
 				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
 				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
 				96DE09362586170E0055213C /* Clamp.swift */,
+				967BEBA9258810B1001A241F /* UIColor+RGBA.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -987,11 +1010,13 @@
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
 				961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */,
+				967BEB9C2587FDB7001A241F /* BasicRouteRenderer.swift in Sources */,
 				4C4D348C2587547100E70189 /* SplitInfoDetailViewModel.swift in Sources */,
 				71EFCCA62577D3E6007998AD /* UIButton+setSFSymbol.swift in Sources */,
 				71A58D1F256D3FF80012FF51 /* GoalTypeCell.swift in Sources */,
 				96015B56257807C100E55E9F /* UIImage+SFSymbol.swift in Sources */,
 				960A1504257E0896008D2BD3 /* UIStackView+Make.swift in Sources */,
+				967BEBA62588089F001A241F /* GradientRouteRenderer.swift in Sources */,
 				4C4D3488258751ED00E70189 /* SplitDatailSplitDataSource.swift in Sources */,
 				96C468C5257F6D900062AAA4 /* Date+String.swift in Sources */,
 				71FBAADE257D23AF005C8D30 /* Factory+TabBarContainer.swift in Sources */,
@@ -1032,6 +1057,7 @@
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71BBFC882582FDE800BC01B7 /* DefaultsProvider.swift in Sources */,
 				71FBAB06257D24E3005C8D30 /* Factory+RunningMapScene.swift in Sources */,
+				967BEBAA258810B1001A241F /* UIColor+RGBA.swift in Sources */,
 				71FBAB4F257FA267005C8D30 /* ProfileViewModel.swift in Sources */,
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
 				4CF009C0257CAC1E00EC928A /* ActivityDetail.swift in Sources */,
@@ -1043,6 +1069,7 @@
 				96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */,
 				9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */,
 				9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */,
+				967BEB982587EEE5001A241F /* BasicRouteOverlay.swift in Sources */,
 				71FBAAF2257D244F005C8D30 /* Factory+PrepareRunScene.swift in Sources */,
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
 				96FA7E0125701C9300090999 /* RunningInfoViewController.swift in Sources */,
@@ -1057,6 +1084,7 @@
 				4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */,
 				71E8289E256B9B13004A1F30 /* RunningPageViewController.swift in Sources */,
 				71E8288F256B9320004A1F30 /* AppCoordinator.swift in Sources */,
+				967BEBA22587FDEC001A241F /* GradientRouteOverlay.swift in Sources */,
 				96C468B1257F51020062AAA4 /* DateRange.swift in Sources */,
 				967780292577905400DA2454 /* CountDownView.swift in Sources */,
 				96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */,
