@@ -97,6 +97,13 @@ extension PausedRunningViewController {
         super.viewDidAppear(animated)
         viewModel?.inputs.viewDidAppear()
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        mapView.removeOverlays(mapView.overlays)
+        mapView.removeAnnotations(mapView.annotations)
+    }
 }
 
 // MARK: - Actions
@@ -136,6 +143,10 @@ extension PausedRunningViewController {
 extension PausedRunningViewController: MKMapViewDelegate {
     func showRoutesOnMap(routes: [CLLocationCoordinate2D], slices: [RunningSlice]) {
         if routes.isEmpty { return }
+        slices.forEach {
+            print("DRAWSlice \($0.startIndex) - \($0.endIndex) (\($0.isRunning))")
+        }
+
         slices.forEach { slice in
             if routes.isEmpty { return }
             let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex

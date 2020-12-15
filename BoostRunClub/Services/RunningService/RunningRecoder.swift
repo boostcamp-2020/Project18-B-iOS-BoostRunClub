@@ -34,7 +34,9 @@ class RunningRecoder: RunningRecodable {
     private(set) var states = [RunningState]()
 
     var routes: [RunningSlice] {
-        runningSplits.flatMap { $0.runningSlices } + currentSplit.runningSlices + [currentSlice]
+        currentSlice.endIndex = locations.count - 1
+        currentSlice.isRunning = states.last?.isRunning ?? true
+        return runningSplits.flatMap { $0.runningSlices } + currentSplit.runningSlices + [currentSlice]
     }
 
     private(set) var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
@@ -142,11 +144,11 @@ class RunningRecoder: RunningRecodable {
             let state = states.last,
             !locations.isEmpty
         else { return }
-
         currentSlice.endIndex = locations.count - 1
         currentSlice.isRunning = state.isRunning
         currentSlice.setupSlice(with: locations)
         currentSplit.runningSlices.append(currentSlice)
+        print("ADD Slice \(currentSlice.startIndex) - \(currentSlice.endIndex) (running \(state.isRunning)")
 
         currentSlice = RunningSlice()
         currentSlice.startIndex = locations.count - 1
