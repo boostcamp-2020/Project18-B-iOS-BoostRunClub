@@ -30,7 +30,22 @@ class DetailMapView: UIView {
         let coords = locations.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
         let region = MKCoordinateRegion.make(from: coords, offsetRatio: 0.3)
         mapView.setRegion(region, animated: false)
-        mapView.addOverlay(MKPolyline(coordinates: coords, count: locations.count))
+        mapView.addOverlay(
+            PaceGradientRouteOverlay(
+                locations: locations,
+                mapRect: mapView.visibleMapRect,
+                colorMin: .red,
+                colorMax: .green
+            ))
+
+        CLLocationCoordinate2D.computeSplitCoordinate(from: coords, distance: 1000)
+            .enumerated()
+            .forEach { index, splitCoordinate in
+                let split = MKPointAnnotation()
+                split.title = "\(index + 1)km"
+                split.coordinate = splitCoordinate
+                self.mapView.addAnnotation(split)
+            }
     }
 }
 
@@ -52,14 +67,32 @@ extension DetailMapView {
 
 extension DetailMapView: MKMapViewDelegate {
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let routePolyline = overlay as? MKPolyline
+        guard let routeOverlay = overlay as? PaceGradientRouteOverlay
         else { return MKOverlayRenderer() }
-
-        let renderer = MKPolylineRenderer(polyline: routePolyline)
-        renderer.strokeColor = .black
-        renderer.lineWidth = 7
+        let renderer = GradientRouteRenderer(overlay: routeOverlay)
+        renderer.lineWidth = 10
 
         return renderer
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        if let distanceLabelText = annotation.title {
+            let customAnnotation = UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
+            annotationView!.image = customAnnotation
+        }
+
+        return annotationView
     }
 }
 

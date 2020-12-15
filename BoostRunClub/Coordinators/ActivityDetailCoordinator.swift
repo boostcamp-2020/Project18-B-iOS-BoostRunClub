@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class ActivityDetailCoordinator: BasicCoordinator<Void> {
-    let factory: ActivityDetailSceneFactory
+    let factory: ActivityDetailSceneFactory & RouteDetailSceneFactory
     let activity: Activity
     let detail: ActivityDetail?
 
@@ -17,7 +17,7 @@ final class ActivityDetailCoordinator: BasicCoordinator<Void> {
         navigationController: UINavigationController,
         activity: Activity,
         detail: ActivityDetail? = nil,
-        factory: ActivityDetailSceneFactory = DependencyFactory.shared
+        factory: ActivityDetailSceneFactory & RouteDetailSceneFactory = DependencyFactory.shared
     ) {
         self.factory = factory
         self.activity = activity
@@ -48,8 +48,28 @@ final class ActivityDetailCoordinator: BasicCoordinator<Void> {
             }
             .store(in: &cancellables)
 
+        detailVM.outputs.showRouteDetailSignal
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] (activityDetailConfig: ActivityDetailConfig) in self?.showRouteDetailScene(activityDetailConfig) })
+            .store(in: &cancellables)
+
         detailVM.outputs.showInfoDetailSignal
             .sink { [weak self] in self?.showSplitInfoDetailScene() }
+            .store(in: &cancellables)
+    }
+
+    func showRouteDetailScene(_ activityDetailConfig: ActivityDetailConfig) {
+        let routeDetailVM = factory.makeRouteDetailVM(activityDetailConfig: activityDetailConfig)
+        let routeDetailVC = factory.makeRouteDetailVC(with: routeDetailVM)
+
+        routeDetailVC.modalPresentationStyle = .overFullScreen
+        navigationController.present(routeDetailVC, animated: true, completion: nil)
+
+        routeDetailVM.outputs.closeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak routeDetailVC] in
+                routeDetailVC?.dismiss(animated: true, completion: nil)
+            }
             .store(in: &cancellables)
     }
 

@@ -61,6 +61,17 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)
+
+        runningDataProvider.stopRunningResponse
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                if let info = $0 {
+                    self?.showActivityDetailSignal.send((info.activity, info.detail))
+                } else {
+                    self?.showPrepareRunningSignal.send()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     deinit {
@@ -75,16 +86,6 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
 
     func didLongHoldStopRunningButton() {
         runningDataProvider.stop()
-        runningDataProvider.stopRunningResponse
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in
-                if let info = $0 {
-                    self?.showActivityDetailSignal.send((info.activity, info.detail))
-                } else {
-                    self?.showPrepareRunningSignal.send()
-                }
-            }
-            .store(in: &cancellables)
     }
 
     func viewDidAppear() {
