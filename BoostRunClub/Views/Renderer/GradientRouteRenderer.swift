@@ -54,7 +54,10 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
 
             guard
                 let gradient = CGGradient(colorsSpace: nil, colors: [startColor, endColor] as CFArray, locations: [0, 1])
-            else { continue }
+            else {
+                context.restoreGState()
+                continue
+            }
 
             context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [.drawsBeforeStartLocation])
             context.restoreGState()
