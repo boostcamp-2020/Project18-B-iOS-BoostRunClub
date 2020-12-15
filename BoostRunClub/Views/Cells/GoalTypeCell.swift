@@ -50,20 +50,28 @@ extension GoalTypeCell {
     private func commonInit(_ goalType: GoalType) {
         selectionStyle = .none
         goalTypeLabel.text = goalType.description
+        goalTypeLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
         configureLayout()
     }
 
-    private func makeCheckMark() -> UIImageView {
-        let view = UIImageView()
-        view.image = UIImage.SFSymbol(name: "checkmark", color: .label)
-        return view
+//    private func makeCheckMark() -> UIImageView {
+//        let view = UIImageView()
+//        view.image = UIImage.SFSymbol(name: "checkmark", color: .label)
+//        return view
+//    }
+    private func makeCheckMark() -> UILabel {
+//        let view = UIImageView()
+//        view.image = UIImage.SFSymbol(name: "checkmark", color: .label)
+        let label = UILabel()
+        label.text = "✔️"
+        return label
     }
 
     private func configureLayout() {
         contentView.addSubview(goalTypeLabel)
         goalTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            goalTypeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstant.inset),
+            goalTypeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstant.labelInset),
             goalTypeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
 
@@ -72,7 +80,7 @@ extension GoalTypeCell {
         NSLayoutConstraint.activate([
             checkMarkImage.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -LayoutConstant.inset
+                constant: -LayoutConstant.checkMarkInset
             ),
             checkMarkImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkMarkImage.heightAnchor.constraint(equalTo: goalTypeLabel.heightAnchor, multiplier: 1.2),
@@ -85,7 +93,8 @@ extension GoalTypeCell {
 
 extension GoalTypeCell {
     enum LayoutConstant {
-        static let inset: CGFloat = 20
-        static let cellHeight: CGFloat = 100
+        static let labelInset: CGFloat = 30
+        static let checkMarkInset: CGFloat = 30
+        static let cellHeight: CGFloat = 88
     }
 }
