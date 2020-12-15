@@ -18,6 +18,6 @@ extension DependencyFactory: RunningInfoSceneFactory {
     }
 
     func makeRunningInfoVM() -> RunningInfoViewModelTypes {
-        RunningInfoViewModel(runningDataProvider: runningDataProvider)
+        RunningInfoViewModel(runningDataProvider: runningDataService)
     }
 }

@@ -20,18 +20,18 @@ protocol SplitsViewModelOutputs {
 }
 
 class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
-    let runningDataProvider: RunningDataServiceable
+    let runningDataProvider: RunningServiceType
     let factory: SplitSceneFactory
     var cancellables = Set<AnyCancellable>()
     var avgPaces = [Int]()
 
-    init(runningDataProvider: RunningDataServiceable, factory: SplitSceneFactory = DependencyFactory.shared) {
+    init(runningDataProvider: RunningServiceType, factory: SplitSceneFactory = DependencyFactory.shared) {
         self.runningDataProvider = runningDataProvider
         self.factory = factory
 
 //        RunningSplit.sampleData.forEach { self.newSplitAction(split: $0) }
 //        runningDataProvider.runningSplits.forEach { self.newSplitAction(split: $0) }
-        runningDataProvider.newSplitSubject
+        runningDataProvider.recoder.newSplitSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.newSplitAction(split: $0) }
             .store(in: &cancellables)

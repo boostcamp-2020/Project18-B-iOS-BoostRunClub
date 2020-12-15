@@ -13,12 +13,17 @@ class DependencyFactory {
     lazy var activityProvider = ActivityProvider(coreDataService: coreDataService)
     lazy var locationProvider = LocationProvider()
     lazy var motionProvider = MotionProvider()
-    lazy var mapSnapShotService = MapSnapShotService()
-    lazy var runningDataProvider = RunningDataService(
-        locationProvider: locationProvider,
+    lazy var runningDataService = RunningService(
         motionProvider: motionProvider,
-        activityWriter: activityProvider,
-        mapSnapShotService: mapSnapShotService
+        dashBoard: RunningDashBoard(
+            eventTimer: EventTimer(),
+            locationProvider: locationProvider,
+            motionProvider: motionProvider
+        ),
+        recoder: RunningRecoder(
+            activityWriter: activityProvider,
+            mapSnapShotter: MapSnapShotService()
+        )
     )
     lazy var defaultsProvider = DefaultsProvider()
 }

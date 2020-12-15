@@ -31,10 +31,10 @@ protocol RunningMapViewModelOutputs {
 }
 
 class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs {
-    private let runningDataProvider: RunningDataServiceable
+    private let runningDataProvider: RunningServiceType
     private var lastRouteIdx = 0
 
-    init(runningDataProvider: RunningDataServiceable) {
+    init(runningDataProvider: RunningServiceType) {
         self.runningDataProvider = runningDataProvider
     }
 
@@ -47,11 +47,11 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
         userTrackingModeOnWithAnimatedSignal.send(false)
         appearAnimationSignal.send()
         guard
-            !runningDataProvider.locations.isEmpty,
-            lastRouteIdx + 1 < runningDataProvider.locations.count
+            !runningDataProvider.recoder.locations.isEmpty,
+            lastRouteIdx + 1 < runningDataProvider.recoder.locations.count
         else { return }
-        routesSubject.send(runningDataProvider.locations[lastRouteIdx...].map { $0.coordinate })
-        lastRouteIdx = runningDataProvider.locations.count - 1
+        routesSubject.send(runningDataProvider.recoder.locations[lastRouteIdx...].map { $0.coordinate })
+        lastRouteIdx = runningDataProvider.recoder.locations.count - 1
     }
 
     func viewWillDisappear() {
