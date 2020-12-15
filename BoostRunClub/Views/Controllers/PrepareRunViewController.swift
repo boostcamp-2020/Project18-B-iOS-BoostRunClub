@@ -195,8 +195,8 @@ extension PrepareRunViewController {
 
 extension PrepareRunViewController {
     enum LayoutConstant {
-        static let startButtonDiameter = CGFloat(100)
-        static let setGoalWidth = CGFloat(90)
+        static let startButtonDiameter = CGFloat(115)
+        static let setGoalWidth = CGFloat(100)
         static let setGoalHeight = CGFloat(40)
     }
 }
@@ -237,7 +237,7 @@ extension PrepareRunViewController {
         button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemBackground
         button.setTitle("목표설정", for: .normal)
-        button.titleLabel?.font = button.titleLabel?.font.withSize(12)
+        button.titleLabel?.font = button.titleLabel?.font.withSize(14)
         button.layer.cornerRadius = LayoutConstant.setGoalHeight / 2
         button.addTarget(self, action: #selector(didTapSetGoalTypeButton), for: .touchUpInside)
         button.addTarget(self, action: #selector(didTouchDownSetGoalTypeButton), for: .touchDown)
@@ -286,7 +286,7 @@ extension PrepareRunViewController {
         view.addSubview(setGoalTypeButton)
         setGoalTypeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            setGoalTypeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            setGoalTypeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
             setGoalTypeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             setGoalTypeButton.widthAnchor.constraint(equalToConstant: LayoutConstant.setGoalWidth),
             setGoalTypeButton.heightAnchor.constraint(equalToConstant: LayoutConstant.setGoalHeight),
@@ -295,7 +295,7 @@ extension PrepareRunViewController {
         view.addSubview(startButton)
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            startButton.bottomAnchor.constraint(equalTo: setGoalTypeButton.topAnchor, constant: -10),
+            startButton.bottomAnchor.constraint(equalTo: setGoalTypeButton.topAnchor, constant: -12),
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.heightAnchor.constraint(equalToConstant: LayoutConstant.startButtonDiameter),
             startButton.widthAnchor.constraint(equalTo: startButton.heightAnchor, multiplier: 1),
