@@ -113,19 +113,16 @@ extension RouteDetailViewController {
 
 extension RouteDetailViewController: MKMapViewDelegate {
     func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let routePolyline = overlay as? MKPolyline
+        guard let routeOverlay = overlay as? PaceGradientRouteOverlay
         else { return MKOverlayRenderer() }
+        let renderer = GradientRouteRenderer(overlay: routeOverlay)
+        renderer.lineWidth = 10
 
-        let gradientColors = [UIColor.green, UIColor.yellow, UIColor.red]
-        let polylineRenderer = GradientPathRenderer(polyline: routePolyline, colors: gradientColors)
-        polylineRenderer.lineWidth = 15
-
-        return polylineRenderer
+        return renderer
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
-        // TODO: - 시작점, 종료점 annotation 추가 필요
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
@@ -153,45 +150,24 @@ extension RouteDetailViewController {
             .map { (location: Location) in
                 CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             }
-        let region = MKCoordinateRegion.make(from: coordinates, offsetRatio: 0.1)
+        let region = MKCoordinateRegion.make(from: coordinates, offsetRatio: 0.3)
 
         mapView.setRegion(region, animated: false)
-        mapView.addOverlay(MKPolyline(coordinates: coordinates, count: detail.locations.count))
+        mapView.addOverlay(
+            PaceGradientRouteOverlay(
+                locations: detail.locations,
+                mapRect: mapView.visibleMapRect,
+                colorMin: .red,
+                colorMax: .green
+            ))
 
-        computeSplitCoordinate(from: coordinates, distance: 1000)
+        CLLocationCoordinate2D.computeSplitCoordinate(from: coordinates, distance: 1000)
             .enumerated()
             .forEach { index, splitCoordinate in
                 let split = MKPointAnnotation()
                 split.title = "\(index + 1)km"
                 split.coordinate = splitCoordinate
-                mapView.addAnnotation(split)
+                self.mapView.addAnnotation(split)
             }
-    }
-
-    private func computeSplitCoordinate(from points: [CLLocationCoordinate2D], distance: Double) -> [CLLocationCoordinate2D] {
-        guard let first = points.first else { return [CLLocationCoordinate2D]() }
-        var previousPoint = first
-        let initialValue: Double = 0.0
-        var splitCoordinates = [CLLocationCoordinate2D]()
-
-        points.reduce(initialValue) { (acculmatedDistance, currentPoint) -> Double in
-            let addedDistance = acculmatedDistance + CLLocation(
-                latitude: previousPoint.latitude,
-                longitude: previousPoint.longitude
-            ).distance(from: CLLocation(
-                latitude: currentPoint.latitude,
-                longitude: currentPoint.longitude
-            ))
-
-            if addedDistance >= distance {
-                splitCoordinates.append(currentPoint)
-                return 0
-            } else {
-                previousPoint = currentPoint
-                return addedDistance
-            }
-        }
-
-        return splitCoordinates
     }
 }

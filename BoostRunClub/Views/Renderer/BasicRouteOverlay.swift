@@ -15,8 +15,8 @@ class BasicRouteOverlay: NSObject, MKOverlay {
 
     var locations: [Location]
 
-    init(locations: [Location], mapRect: MKMapRect) {
+    init(locations: [Location], mapRect _: MKMapRect) {
         self.locations = locations
-        boundingMapRect = mapRect
+        boundingMapRect = .world
     }
 }
