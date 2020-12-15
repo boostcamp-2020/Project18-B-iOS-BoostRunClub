@@ -37,12 +37,15 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     }
 
     private func setColors() {
-        let speedFactor: CGFloat = 0.05
-        var hue = minHue
+        guard !locations.isEmpty else { return }
+
+        let speedFactor: CGFloat = 1 / (maxSpeed - minSpeed)
+        let hueFactor: CGFloat = 1 / (maxHue - minHue)
+        var hue = minHue + (CGFloat(locations[0].speed) - minSpeed) * speedFactor * hueFactor
         var speed: CGFloat = 0
         for (idx, location) in locations.enumerated() {
             if idx != 0 {
-                let delta = (CGFloat(location.speed) - CGFloat(locations[idx - 1].speed)) * speedFactor
+                let delta = (CGFloat(location.speed) - CGFloat(locations[idx - 1].speed)) * speedFactor * 0.5
                 speed = delta == 0 ? 0 : speed + delta
             }
             hue = clamped(value: hue + speed, minValue: minHue, maxValue: maxHue)

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		157031793501852C09F6DE10 /* Pods_BoostRunClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3CAF831B658B0F9E52002 /* Pods_BoostRunClub.framework */; };
-		4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
-		4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1D491C2575D869002C66CD /* RunningDataService.swift */; };
 		4C1EDBF62578E22C004302C5 /* RunningSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EDBF52578E22C004302C5 /* RunningSlice.swift */; };
 		4C3E7AB4256E3D920061244F /* Notification.name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB3256E3D920061244F /* Notification.name.swift */; };
 		4C3E7AB8256E45480061244F /* RunningInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */; };
@@ -118,6 +116,7 @@
 		9620707B2589655A00D3ABFE /* RunningBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707A2589655A00D3ABFE /* RunningBoard.swift */; };
 		9620707F2589657A00D3ABFE /* RunningRecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707E2589657A00D3ABFE /* RunningRecoder.swift */; };
 		962070832589666300D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
+		9620708B25896A6900D3ABFE /* PedometerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620708A25896A6900D3ABFE /* PedometerProvider.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -226,7 +225,6 @@
 
 /* Begin PBXFileReference section */
 		07229ADEF1C1F5ED1B45C47D /* Pods-BoostRunClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoostRunClub.debug.xcconfig"; path = "Target Support Files/Pods-BoostRunClub/Pods-BoostRunClub.debug.xcconfig"; sourceTree = "<group>"; };
-		4C1D491C2575D869002C66CD /* RunningDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDataService.swift; sourceTree = "<group>"; };
 		4C1EDBF52578E22C004302C5 /* RunningSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSlice.swift; sourceTree = "<group>"; };
 		4C3E7AB3256E3D920061244F /* Notification.name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notification.name.swift; path = BoostRunClub/Extensions/Notification.name.swift; sourceTree = SOURCE_ROOT; };
 		4C3E7AB7256E45480061244F /* RunningInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningInfoViewModel.swift; sourceTree = "<group>"; };
@@ -332,6 +330,7 @@
 		9620707A2589655A00D3ABFE /* RunningBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBoard.swift; sourceTree = "<group>"; };
 		9620707E2589657A00D3ABFE /* RunningRecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecoder.swift; sourceTree = "<group>"; };
 		962070822589666300D3ABFE /* RunningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningState.swift; sourceTree = "<group>"; };
+		9620708A25896A6900D3ABFE /* PedometerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProvider.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -683,13 +682,13 @@
 			children = (
 				96207075258919E900D3ABFE /* RunningService */,
 				96CB229925822FC8000D67C4 /* MapSnapShotService */,
-				4C1D491C2575D869002C66CD /* RunningDataService.swift */,
 				963B46F4256CD4E0006138DF /* LocationProvider.swift */,
 				4C7045FF2577821D009C39A2 /* EventTimer.swift */,
 				96ED403A257C7747007DB3DF /* CoreDataService.swift */,
 				96ED403E257C7947007DB3DF /* ActivityProvider.swift */,
 				7187295425791A70007BD24F /* MotionProvider.swift */,
 				71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */,
+				9620708A25896A6900D3ABFE /* PedometerProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1035,7 +1034,6 @@
 				96C468BD257F61DA0062AAA4 /* DateFormatter+Common.swift in Sources */,
 				963B46F5256CD4E0006138DF /* LocationProvider.swift in Sources */,
 				71FBAB962581FB3C005C8D30 /* Data+SaveAndLoadData.swift in Sources */,
-				4C1D491D2575D869002C66CD /* RunningDataService.swift in Sources */,
 				4C7046002577821D009C39A2 /* EventTimer.swift in Sources */,
 				96ED403F257C7947007DB3DF /* ActivityProvider.swift in Sources */,
 				964BC6DC2580CFB200A69A82 /* ActivityListCoordinator.swift in Sources */,
@@ -1110,6 +1108,7 @@
 				964A0C5825802B05008D7FD7 /* Factory+ActivityListScene.swift in Sources */,
 				71D309402586423B0092AB05 /* RouteDetailViewController.swift in Sources */,
 				71E828A7256B9F13004A1F30 /* ProfileCoordinator.swift in Sources */,
+				9620708B25896A6900D3ABFE /* PedometerProvider.swift in Sources */,
 				71D309382586420A0092AB05 /* Factory+RouteDetailScene.swift in Sources */,
 				96F105AC25803D890005F66C /* ActivityDataSource.swift in Sources */,
 				714C039B2574F7AE006B81E3 /* RunningInfoCoordinator.swift in Sources */,
@@ -1184,7 +1183,6 @@
 				96461B382582BA6000E665B0 /* MapSnapShotSubscription.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
-				4C1D49202575D8C4002C66CD /* RunningDataService.swift in Sources */,
 				96461B362582BA6000E665B0 /* RouteSnapShotProcessor.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
 				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,

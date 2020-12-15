@@ -19,24 +19,26 @@ protocol RunningRecodable {
 }
 
 class RunningRecoder: RunningRecodable {
+    private var cancellables = Set<AnyCancellable>()
     let activityWriter: ActivityWritable
     let mapSnapShotter: MapSnapShotService
 
-    var locations = [CLLocation]()
-    var runningSplits = [RunningSplit]()
-    var currentSplit = RunningSplit()
-    var currentSlice = RunningSlice()
+    private(set) var locations = [CLLocation]()
+    private(set) var runningSplits = [RunningSplit]()
+    private(set) var currentSplit = RunningSplit()
+    private(set) var currentSlice = RunningSlice()
 
-    var maxAltitude: Double = 0
-    var minAltitude: Double = 0
+    private(set) var maxAltitude: Double = 0
+    private(set) var minAltitude: Double = 0
 
-    var states = [RunningState]()
+    private(set) var states = [RunningState]()
 
     var routes: [RunningSlice] {
         runningSplits.flatMap { $0.runningSlices } + currentSplit.runningSlices + [currentSlice]
     }
 
-    var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
+    private(set) var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
+
     init(activityWriter: ActivityWritable, mapSnapShotter: MapSnapShotService) {
         self.activityWriter = activityWriter
         self.mapSnapShotter = mapSnapShotter
@@ -63,7 +65,7 @@ class RunningRecoder: RunningRecodable {
         if Int(state.distance / 1000) > Int(recentState.distance / 1000) {
             let currentP = state.location.coordinate
             let prevP = recentState.location.coordinate
-            let remainDistance = Double(1000 - Int(state.distance) % 1000)
+            let remainDistance = Double(1000 - Int(recentState.distance) % 1000)
 
             let newPoint = currentP.locationToDest(dest: prevP, distanceMeters: remainDistance)
             let newLocation = CLLocation(latitude: newPoint.latitude, longitude: newPoint.longitude)
@@ -95,12 +97,14 @@ class RunningRecoder: RunningRecodable {
             let startTime = startTime,
             let endTime = endTime
         else { return nil }
+        addSlice()
+        addSplit()
 
         let uuid = UUID()
 
         let elevation = maxAltitude - minAltitude
 
-        let activity = Activity(
+        var activity = Activity(
             avgPace: lastState.avgPace,
             distance: lastState.distance,
             duration: lastState.runningTime,
@@ -121,7 +125,14 @@ class RunningRecoder: RunningRecodable {
             splits: runningSplits
         )
 
-        activityWriter.addActivity(activity: activity, activityDetail: detail)
+        mapSnapShotter.takeSnapShot(from: locations, dimension: 100)
+            .receive(on: RunLoop.main)
+            .replaceError(with: nil)
+            .sink { [weak self] data in
+                activity.thumbnail = data
+                self?.activityWriter.addActivity(activity: activity, activityDetail: detail)
+            }
+            .store(in: &cancellables)
 
         return (activity, detail)
     }

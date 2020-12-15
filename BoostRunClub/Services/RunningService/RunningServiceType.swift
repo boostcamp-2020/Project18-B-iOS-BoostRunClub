@@ -25,12 +25,11 @@ protocol RunningServiceType {
 
 class RunningService: RunningServiceType {
     private(set) var cancellables = Set<AnyCancellable>()
-    private(set) var motionProvider: MotionProvider
+    private(set) var motionProvider: MotionProvidable
     private(set) var dashBoard: RunningBoard
     private(set) var recoder: RunningRecodable
 
     private var startTime: Date?
-    private var endTime: Date?
 
     private var autoStatable = true
     var isRunning = false
@@ -39,7 +38,7 @@ class RunningService: RunningServiceType {
     let runningState = CurrentValueSubject<MotionType, Never>(.standing)
     var runningEvent = PassthroughSubject<RunningEvent, Never>()
 
-    init(motionProvider: MotionProvider, dashBoard: RunningBoard, recoder: RunningRecodable) {
+    init(motionProvider: MotionProvidable, dashBoard: RunningBoard, recoder: RunningRecodable) {
         self.dashBoard = dashBoard
         self.recoder = recoder
         self.motionProvider = motionProvider
@@ -50,7 +49,7 @@ class RunningService: RunningServiceType {
             }
             .store(in: &cancellables)
 
-        motionProvider.currentMotionType
+        motionProvider.motionType
             .receive(on: RunLoop.main)
             .filter { [weak self] in $0 != self?.runningState.value }
             .filter { [weak self] _ in self?.autoStatable ?? false }
@@ -67,20 +66,20 @@ class RunningService: RunningServiceType {
     }
 
     func start() {
+        isRunning = true
         startTime = Date()
         autoStatable = true
         dashBoard.start()
-        motionProvider.startUpdating()
-        isRunning = true
+        motionProvider.start()
         runningEvent.send(.start)
     }
 
     func stop() {
-        endTime = Date()
+        isRunning = false
         dashBoard.stop()
+        let endTime = Date()
         let activityInfo = recoder.save(startTime: startTime, endTime: endTime)
         activityResults.send(activityInfo)
-        isRunning = false
         runningEvent.send(.stop)
     }
 

@@ -47,7 +47,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 self?.runningInfoObservables.forEach {
                     let value: String
                     switch $0.value.type {
-                    case .meter:
+                    case .kilometer:
                         value = String(format: "%.2f", data.distance / 1000)
                     case .pace:
                         value = String(format: "%d'%d\"", data.pace / 60, data.pace % 60)
@@ -57,7 +57,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                         value = data.calorie <= 0 ? "--" : String(data.calorie)
                     case .cadence:
                         value = data.cadence <= 0 ? "--" : String(data.cadence)
-                    case .time, .interval, .bpm, .kilometer:
+                    case .time, .interval, .bpm, .meter:
                         return
                     }
                     $0.send(RunningInfo(type: $0.value.type, value: value))

@@ -28,7 +28,7 @@ protocol RunningBoard {
 class RunningDashBoard: RunningBoard {
     private var eventTimer: EventTimerProtocol
     private var locationProvider: LocationProvidable
-    private var motionProvider: MotionProvider
+    private var pedometerProvider: PedometerProvidable
 
     func setState(isRunning: Bool) {
         self.isRunning = isRunning
@@ -50,10 +50,10 @@ class RunningDashBoard: RunningBoard {
     var runningSubject = PassthroughSubject<RunningState, Never>()
     var cancellables = Set<AnyCancellable>()
 
-    init(eventTimer: EventTimerProtocol, locationProvider: LocationProvidable, motionProvider: MotionProvider) {
+    init(eventTimer: EventTimerProtocol, locationProvider: LocationProvidable, pedometerProvider: PedometerProvidable) {
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
-        self.motionProvider = motionProvider
+        self.pedometerProvider = pedometerProvider
 
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
@@ -70,26 +70,36 @@ class RunningDashBoard: RunningBoard {
             }
             .store(in: &cancellables)
 
-        motionProvider.cadence
+        pedometerProvider.cadence
             .sink { [weak self] cadence in
                 self?.cadence = cadence
             }.store(in: &cancellables)
     }
 
     func start() {
+        clear()
         eventTimer.start()
         locationProvider.startBackgroundTask()
-        motionProvider.startUpdating()
+        pedometerProvider.start()
         lastUpdatedTime = Date.timeIntervalSinceReferenceDate
         isRunning = true
+    }
+
+    private func clear() {
+        lastUpdatedTime = 0
+        location = nil
+        runningTime.value = 0
+        calorie = 0
+        pace = 0
+        cadence = 0
+        distance = 0
+        avgPace = 0
     }
 
     func stop() {
         eventTimer.stop()
         locationProvider.stopBackgroundTask()
-        motionProvider.stopActivityUpdates()
-        cancellables.forEach { $0.cancel() }
-        cancellables.removeAll()
+        pedometerProvider.stop()
     }
 
     func updateTime(currentTime: TimeInterval) {
