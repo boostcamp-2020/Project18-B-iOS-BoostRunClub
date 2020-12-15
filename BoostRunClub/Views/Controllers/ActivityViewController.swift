@@ -33,12 +33,16 @@ final class ActivityViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.backgroundColor = .systemBackground
-        configureNavigationItems()
         configureTableView()
         collectionView.dataSource = activityDataSource
         configureLayout()
         bindViewModel()
         viewModel?.inputs.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationItems()
     }
 
     private func bindViewModel() {

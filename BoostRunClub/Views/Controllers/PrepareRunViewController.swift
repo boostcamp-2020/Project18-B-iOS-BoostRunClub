@@ -92,7 +92,6 @@ final class PrepareRunViewController: UIViewController {
 extension PrepareRunViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationItems()
         configureLayout()
         bindViewModel()
     }
@@ -106,6 +105,11 @@ extension PrepareRunViewController {
         setGoalTypeButton.layer.shadowRadius = 50
         setGoalTypeButton.layer.shadowOffset = .zero
         setGoalTypeButton.layer.shadowOpacity = 0.5
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationItems()
     }
 }
 
