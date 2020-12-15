@@ -480,9 +480,6 @@
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
-				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
-				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
 				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				96386604257E9BD2003EEE4B /* Configurable */,
 				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
@@ -498,12 +495,10 @@
 				96FA7E0A257025FF00090999 /* RunningMapViewModel.swift */,
 				71EFCC6D257753FA007998AD /* RunningPageViewModel.swift */,
 				4C5874F9257FD88D00185B4C /* RunningSplitCellViewModel.swift */,
-
 				96E0A6A4257EEAC8008D81EC /* ActivityDateFilterViewModel.swift */,
 				964BC6E32580CFEE00A69A82 /* ActivityListViewModel.swift */,
 				967253032583DA1500B4BBC6 /* ActivityDetailViewModel.swift */,
 				71D3093B258642230092AB05 /* RouteDetailViewModel.swift */,
-
 				4C4D348B2587547100E70189 /* SplitInfoDetailViewModel.swift */,
 				96FA7E0D2570260E00090999 /* SplitsViewModel.swift */,
 			);
@@ -608,7 +603,6 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
-				967BEBB125887BD1001A241F /* New Group */,
 				717878472587E0D8004EF8EA /* CoreML */,
 				71EFCC68257750C8007998AD /* Factory */,
 				96ED402E257C7633007DB3DF /* CoreData */,
@@ -705,13 +699,6 @@
 			path = Renderer;
 			sourceTree = "<group>";
 		};
-		967BEBB125887BD1001A241F /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		9680AB9225707E19006F0FD2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,16 +740,9 @@
 				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
 				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
 				96DE09362586170E0055213C /* Clamp.swift */,
-
-
 				4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */,
-
-				967BEBA9258810B1001A241F /* UIColor+RGBA.swift */,
-
 				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
-
 				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
-
 			);
 			path = Extensions;
 			sourceTree = "<group>";
