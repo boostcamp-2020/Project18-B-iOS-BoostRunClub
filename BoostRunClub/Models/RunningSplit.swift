@@ -21,3 +21,20 @@ struct RunningSplit: Codable {
         distance = runningSlices.reduce(into: Double(0)) { $0 += $1.distance }
     }
 }
+
+extension RunningSplit {
+    static var sampleData: [RunningSplit] = {
+        var lastIdx = 10
+        var data: [RunningSplit] = (1 ... lastIdx).map { idx in
+            var split = RunningSplit()
+            var slice = RunningSlice()
+            slice.startIndex = idx
+            split.runningSlices.append(slice)
+            split.avgPace = Int.random(in: 1 ... 100)
+            split.distance = lastIdx == idx ? 439 : 1000
+            return split
+        }
+
+        return data
+    }()
+}
