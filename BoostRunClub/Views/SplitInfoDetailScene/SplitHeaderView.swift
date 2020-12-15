@@ -36,7 +36,7 @@ class SplitHeaderView: UIView {
             return label
         }
 
-        let stackView = UIStackView.make(with: labels, distribution: .fillEqually, spacing: 20)
+        let stackView = UIStackView.make(with: labels, distribution: .fillEqually)
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

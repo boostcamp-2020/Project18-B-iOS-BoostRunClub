@@ -14,8 +14,6 @@ class SplitDetailDateInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
-        dateLabel.text = "Sunday, December 6"
-        timeLabel.text = "11:36 pm - 1:00am"
     }
 
     required init?(coder: NSCoder) {
@@ -45,6 +43,10 @@ class SplitDetailDateInfoView: UIView {
 
 extension UILabel {
     func setTextAlignment(idx: Int, total: Int) {
-        textAlignment = [.left, .center, .right][idx == 0 ? 0 : 1 + (idx + 1) / total]
+        if total == 4, idx == 1 {
+            textAlignment = .left
+        } else {
+            textAlignment = [.left, .center, .right][idx == 0 ? 0 : 1 + (idx + 1) / total]
+        }
     }
 }

@@ -26,13 +26,13 @@ class SplitDatailSplitCell: UITableViewCell {
     private func commonInit() {
         let labels = [kilometerLabel, paceLabel, changeLabel, elevationLabel]
         labels.enumerated().forEach { idx, label in
-            label.font = UIFont.boldSystemFont(ofSize: 20)
+            label.font = UIFont.systemFont(ofSize: 17)
             label.textColor = .label
             label.setTextAlignment(idx: idx, total: labels.count)
         }
         kilometerLabel.textColor = .systemGray
 
-        let stackView = UIStackView.make(with: labels, distribution: .fillEqually, spacing: 20)
+        let stackView = UIStackView.make(with: labels, distribution: .fillEqually)
         contentView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
