@@ -19,10 +19,13 @@ extension DependencyFactory: TabBarContainerFactory {
 //        tabBarController.tabBar.isTranslucent = false // TODO: false true 비교
         tabBarController.tabBar.tintColor = TabBarPage.selectColor
         tabBarController.tabBar.unselectedItemTintColor = TabBarPage.unselectColor
-        viewControllers[0].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "activity"), tag: 0)
-        viewControllers[1].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "running"), tag: 1)
-        viewControllers[2].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "profile"), tag: 2)
-
+        tabBarController.tabBar.barTintColor = .white
+        viewControllers[0].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "activity4"), tag: 0)
+        viewControllers[1].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "running4"), tag: 1)
+        viewControllers[2].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "profile4"), tag: 2)
+        viewControllers.forEach {
+            $0.tabBarItem.imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0)
+        }
         return tabBarController
     }
 }
