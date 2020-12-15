@@ -54,15 +54,17 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
 
         let startPage: TabBarPage
+        let activityCloseSignal: AnyPublisher<ActivityCoordinationResult, Never>
         if
             let activity = activity,
             let detail = detail
         {
             childCoordinators[activityCoordinator.identifier] = activityCoordinator
             activityCoordinator.startDetail(activity: activity, detail: detail)
+            activityCloseSignal = activityCoordinator.closeSignal.eraseToAnyPublisher()
             startPage = .activity
         } else {
-            coordinate(coordinator: activityCoordinator)
+            activityCloseSignal = coordinate(coordinator: activityCoordinator)
             startPage = .running
         }
 
@@ -86,11 +88,22 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
                 switch $0 {
                 case let .run(info):
                     let result = MainTabCoordinationResult.running(info)
+                    self?.release(coordinator: activityCoordinator)
+                    self?.release(coordinator: prepareRunCoordinator)
+                    self?.release(coordinator: profileCoordinator)
                     self?.closeSignal.send(result)
+                case .profile:
+                    tabBarController.selectedIndex = TabBarPage.profile.rawValue
                 }
-                self?.release(coordinator: activityCoordinator)
-                self?.release(coordinator: prepareRunCoordinator)
-                self?.release(coordinator: profileCoordinator)
             }
+
+        closeSubscription[activityCoordinator.identifier] = activityCloseSignal
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: {
+                switch $0 {
+                case .profile:
+                    tabBarController.selectedIndex = TabBarPage.profile.rawValue
+                }
+            })
     }
 }

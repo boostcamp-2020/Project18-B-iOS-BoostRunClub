@@ -31,7 +31,7 @@ protocol ActivityViewModelOutputs {
     var totalDataSubject: CurrentValueSubject<ActivityTotalConfig, Never> { get }
     var recentActivitiesSubject: CurrentValueSubject<[Activity], Never> { get }
 
-    var showProfileScene: PassthroughSubject<Void, Never> { get }
+    var showProfileSignal: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
     var showActivityListScene: PassthroughSubject<Void, Never> { get }
     var showActivityDetailScene: PassthroughSubject<Activity, Never> { get }
@@ -96,7 +96,9 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
         showActivityListScene.send()
     }
 
-    func didTapShowProfileButton() {}
+    func didTapShowProfileButton() {
+        showProfileSignal.send()
+    }
 
     func didTapShowDateFilter() {
         let ranges = getDateRanges(for: filterTypeSubject.value)
@@ -108,7 +110,7 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
     var totalDataSubject = CurrentValueSubject<ActivityTotalConfig, Never>(ActivityTotalConfig())
     var recentActivitiesSubject = CurrentValueSubject<[Activity], Never>([])
 
-    var showProfileScene = PassthroughSubject<Void, Never>()
+    var showProfileSignal = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
     var showActivityListScene = PassthroughSubject<Void, Never>()
     var showActivityDetailScene = PassthroughSubject<Activity, Never>()

@@ -8,11 +8,11 @@
 import UIKit
 
 protocol TabBarContainerFactory {
-    func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UIViewController
+    func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UITabBarController
 }
 
 extension DependencyFactory: TabBarContainerFactory {
-    func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UIViewController {
+    func makeTabBarVC(with viewControllers: [UIViewController], selectedIndex: Int) -> UITabBarController {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(viewControllers, animated: true)
         tabBarController.selectedIndex = selectedIndex

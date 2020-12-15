@@ -92,7 +92,6 @@ final class PrepareRunViewController: UIViewController {
 extension PrepareRunViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationItems()
         configureLayout()
         bindViewModel()
     }
@@ -107,13 +106,19 @@ extension PrepareRunViewController {
         setGoalTypeButton.layer.shadowOffset = .zero
         setGoalTypeButton.layer.shadowOpacity = 0.5
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationItems()
+    }
 }
 
 // MARK: - Actions
 
 extension PrepareRunViewController {
     @objc
-    func showProfileViewController() {
+    func showProfileViewController(sender _: UIBarButtonItem) {
+        print("showprofile view controller")
         viewModel?.inputs.didTapShowProfileButton()
     }
 
@@ -258,14 +263,13 @@ extension PrepareRunViewController {
         navigationItem.title = "러닝"
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        let profileItem = UIBarButtonItem(
-            image: UIImage.SFSymbol(name: "person.circle.fill", color: .systemGray),
-            style: .plain,
-            target: self,
-            action: #selector(showProfileViewController)
-        )
-
-        navigationItem.setLeftBarButton(profileItem, animated: true)
+        let profileItem = UIBarButtonItem.makeProfileButton()
+        if let profileButton = profileItem.customView as? UIButton {
+            profileButton.addTarget(self,
+                                    action: #selector(showProfileViewController(sender:)),
+                                    for: .touchUpInside)
+        }
+        navigationItem.setLeftBarButton(profileItem, animated: false)
     }
 
     private func configureLayout() {
