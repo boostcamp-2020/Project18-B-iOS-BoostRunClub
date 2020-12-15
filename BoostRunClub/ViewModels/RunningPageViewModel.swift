@@ -69,7 +69,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     func dragging() {
-        scaleSubject.send(abs(scale))
+        scaleSubject.send(scale)
     }
 
     func didChangeCurrentPage(idx: Int) {

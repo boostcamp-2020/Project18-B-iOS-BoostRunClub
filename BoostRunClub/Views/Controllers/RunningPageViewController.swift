@@ -39,7 +39,10 @@ final class RunningPageViewController: UIPageViewController {
 
     func bindViewModel() {
         viewModel?.outputs.scaleSubject
-            .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
+            .sink { [weak self] in
+                self?.transformBackButton(scale: CGFloat(abs($0)))
+                self?.backButton.setArrowImage(dir: $0 > 0 ? .left : .right)
+            }
             .store(in: &cancellables)
 
         viewModel?.outputs.scaleSubjectNotDragging
@@ -51,16 +54,7 @@ final class RunningPageViewController: UIPageViewController {
             .store(in: &cancellables)
 
         viewModel?.outputs.runningTimeSubject
-            .sink { [weak self] in
-                guard let button = self?.backButton else { return }
-
-                button.setTitle($0, for: .normal)
-                // TODO: 페이지 상태에 따른 화살표 표시 처리
-                //				button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
-                //				button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                //				button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            }
+            .sink { [weak self] in self?.backButton.setTitle($0, for: .normal) }
             .store(in: &cancellables)
 
         viewModel?.outputs.setPageSignal
@@ -178,8 +172,6 @@ extension RunningPageViewController {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
         button.setTitleColor(.label, for: .normal)
-        button.contentEdgeInsets.left = 20
-        button.contentEdgeInsets.right = 20
         button.layer.cornerRadius = buttonHeight / 2
         button.addTarget(self, action: #selector(didTabBackButton), for: .touchUpInside)
         return button
