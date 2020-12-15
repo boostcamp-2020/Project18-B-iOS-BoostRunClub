@@ -8,9 +8,7 @@
 import Combine
 import UIKit
 
-protocol ActivityCoordinatorProtocol {}
-
-final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
+final class ActivityCoordinator: BasicCoordinator<Void> {
     let factory: ActivitySceneFactory
 
     init(navigationController: UINavigationController, factory: ActivitySceneFactory = DependencyFactory.shared) {
@@ -22,6 +20,11 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
 
     override func start() {
         showActivityViewController()
+    }
+
+    func startDetail(activity: Activity, detail: ActivityDetail) {
+        showActivityViewController()
+        showActivityDetailScene(activity: activity, detail: detail)
     }
 
     func showActivityViewController() {
@@ -85,16 +88,23 @@ final class ActivityCoordinator: BasicCoordinator, ActivityCoordinatorProtocol {
 
     func showActivityListScene() {
         let activityListCoordinator = ActivityListCoordinator(navigationController: navigationController)
-        childCoordinators.append(activityListCoordinator)
         activityListCoordinator.start()
+        let uuid = activityListCoordinator.identifier
+        closeSubscription[uuid] = activityListCoordinator.closeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityListCoordinator) }
     }
 
-    func showActivityDetailScene(activity: Activity) {
+    func showActivityDetailScene(activity: Activity, detail: ActivityDetail? = nil) {
         let activityDetailCoordinator = ActivityDetailCoordinator(
             navigationController: navigationController,
-            activity: activity
+            activity: activity,
+            detail: detail
         )
-        childCoordinators.append(activityDetailCoordinator)
-        activityDetailCoordinator.start()
+
+        let uuid = activityDetailCoordinator.identifier
+        closeSubscription[uuid] = coordinate(coordinator: activityDetailCoordinator)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.release(coordinator: activityDetailCoordinator) }
     }
 }

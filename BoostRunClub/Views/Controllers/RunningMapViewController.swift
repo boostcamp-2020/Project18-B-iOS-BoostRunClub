@@ -29,7 +29,9 @@ class RunningMapViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.outputs.routesSubject
             .receive(on: RunLoop.main)
-            .sink { [weak self] routes in self?.mapView.addOverlay(MKPolyline(coordinates: routes, count: routes.count)) }
+            .sink { [weak self] routes in
+                self?.mapView.addOverlay(MKPolyline(coordinates: routes, count: routes.count))
+            }
             .store(in: &cancellables)
 
         viewModel.outputs.userTrackingModeOnWithAnimatedSignal
@@ -44,7 +46,7 @@ class RunningMapViewController: UIViewController {
     }
 
     deinit {
-        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 

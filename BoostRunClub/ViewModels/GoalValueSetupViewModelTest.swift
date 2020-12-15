@@ -9,6 +9,7 @@
 import Combine
 import XCTest
 
+// swiftlint:disable:next type_body_length
 class GoalValueSetupViewModelTest: XCTestCase {
     override func setUp() {}
 
@@ -16,18 +17,18 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testMakeViewModel_TimeType() {
         let expectedObserve = expectation(description: "setupWithTime")
-        let goalInfo = GoalInfo(goalType: .time, goalValue: "12:22")
+        let goalInfo = GoalInfo(type: .time, value: "12:22")
         let viewModel = GoalValueSetupViewModel(
-            goalType: goalInfo.goalType,
-            goalValue: goalInfo.goalValue
+            goalType: goalInfo.type,
+            goalValue: goalInfo.value
         ) // test target
         let expectedNumReceived = 1
         var numReceived = 0
         let cancellable = viewModel.goalValueObservable
             .sink { presentingValue in
                 numReceived += 1
-                XCTAssertEqual(presentingValue, goalInfo.goalValue)
-                if presentingValue == goalInfo.goalValue {
+                XCTAssertEqual(presentingValue, goalInfo.value)
+                if presentingValue == goalInfo.value {
                     expectedObserve.fulfill()
                 }
             }
@@ -39,18 +40,18 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testMakeViewModel_DistanceType() {
         let expectedObserve = expectation(description: "setupWithDistance")
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "25")
+        let goalInfo = GoalInfo(type: .distance, value: "25")
         let viewModel = GoalValueSetupViewModel(
-            goalType: goalInfo.goalType,
-            goalValue: goalInfo.goalValue
+            goalType: goalInfo.type,
+            goalValue: goalInfo.value
         ) // test target
         let expectedNumReceived = 1
         var numReceived = 0
         let cancellable = viewModel.goalValueObservable
             .sink { presentingValue in
                 numReceived += 1
-                XCTAssertEqual(presentingValue, goalInfo.goalValue)
-                if presentingValue == goalInfo.goalValue {
+                XCTAssertEqual(presentingValue, goalInfo.value)
+                if presentingValue == goalInfo.value {
                     expectedObserve.fulfill()
                 }
             }
@@ -62,8 +63,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testInitialInput_TimeType() {
         let expectedObserve = expectation(description: "initialInputTime")
-        let goalInfo = GoalInfo(goalType: .time, goalValue: "11:11")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .time, value: "11:11")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let initialInput = "1"
         let expectedValue = "00:01"
 
@@ -83,8 +84,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testInitialInput_DistanceType() {
         let expectedObserve = expectation(description: "initialInputTime")
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: "15.15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let initialInput = "1"
         let expectedValue = initialInput
 
@@ -120,8 +121,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let expectedNumReceived = expectedResults.map { $0.count }
 
         inputStreams.enumerated().forEach { idx, inputs in
-            let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .distance, value: "15.15")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
             let expectedObserve = expectation(description: "invalidTimeInputs")
             let expectedResult = expectedResults[idx]
@@ -161,8 +162,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let expectedNumReceived = [4, 3, 3, 2, 1]
 
         inputStreams.enumerated().forEach { idx, inputs in
-            let goalInfo = GoalInfo(goalType: .time, goalValue: "")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .time, value: "")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
             let expectedObserve = expectation(description: "invalidTimeInputs")
             let expectedResult = expectedResults[idx]
@@ -186,8 +187,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testDeleteBackward_DistanceType_noneInputs() {
         let expectedObserve = expectation(description: "deleteBackward_distance_noneInputs")
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: "15.15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let expectedResult = "0"
 
         let cancellable = viewModel.goalValueObservable
@@ -206,8 +207,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testDeleteBackward_TimeType_noneInputs() {
         let expectedObserve = expectation(description: "deleteBackward_time_noneInputs")
-        let goalInfo = GoalInfo(goalType: .time, goalValue: "15:15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .time, value: "15:15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let expectedResult = "00:00"
 
         let cancellable = viewModel.goalValueObservable
@@ -225,8 +226,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
     }
 
     func testDeleteBackward_DistanceType_Inputs() {
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: "15.15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let cancel = ["1", "1", ".", "2", "2"].publisher
             .sink { viewModel.didInputNumber($0) }
 
@@ -250,8 +251,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
     }
 
     func testDeleteBackward_TimeType_Inputs() {
-        let goalInfo = GoalInfo(goalType: .time, goalValue: "15:15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .time, value: "15:15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let cancel = ["1", "1", "2", "2"].publisher
             .sink { viewModel.didInputNumber($0) }
 
@@ -276,8 +277,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testCancelButton_DistanceType_noneInputs() {
         let expectedObserve = expectation(description: "didTapCancel_distance_noneInputs")
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: "15.15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
         let cancellable = viewModel.closeSheetSignal
             .sink { resultValue in
@@ -294,8 +295,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
     func testCancelButton_TimeType_noneInputs() {
         let expectedObserve = expectation(description: "didTapCancel_time_noneInputs")
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: "15:15")
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: "15:15")
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
         let cancellable = viewModel.closeSheetSignal
             .sink { resultValue in
@@ -322,8 +323,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         inputs.enumerated().forEach { idx, input in
             let expectedObserve = expectation(description: "didTapCancel_distance_Inputs")
 
-            let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .distance, value: "15.15")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
             input.map { String($0) }.forEach { viewModel.didInputNumber($0) }
 
             let expectedResult = expectedResults[idx]
@@ -354,8 +355,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         inputs.enumerated().forEach { idx, input in
             let expectedObserve = expectation(description: "didTapCancel_time_Inputs")
 
-            let goalInfo = GoalInfo(goalType: .time, goalValue: "15:15")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .time, value: "15:15")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
             input.map { String($0) }.forEach { viewModel.didInputNumber($0) }
 
             let expectedResult = expectedResults[idx]
@@ -377,8 +378,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
     func testApplyButton_DistanceType_noneInputs() {
         let expectedObserve = expectation(description: "testApplyButton_DistanceType_noneInputs")
         let initialValue = "15.15"
-        let goalInfo = GoalInfo(goalType: .distance, goalValue: initialValue)
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .distance, value: initialValue)
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
         let cancellable = viewModel.closeSheetSignal
             .sink { resultValue in
@@ -396,8 +397,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
     func testApplyButton_TimeType_noneInputs() {
         let expectedObserve = expectation(description: "testApplyButton_TimeType_noneInputs")
         let initialValue = "15:15"
-        let goalInfo = GoalInfo(goalType: .time, goalValue: initialValue)
-        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+        let goalInfo = GoalInfo(type: .time, value: initialValue)
+        let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
         let cancellable = viewModel.closeSheetSignal
             .sink { resultValue in
@@ -424,8 +425,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         inputs.enumerated().forEach { idx, input in
             let expectedObserve = expectation(description: "didTapApply_distance_Inputs")
 
-            let goalInfo = GoalInfo(goalType: .distance, goalValue: "15.15")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .distance, value: "15.15")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
             input.map { String($0) }.forEach { viewModel.didInputNumber($0) }
 
             let expectedResult = expectedResults[idx]
@@ -456,8 +457,8 @@ class GoalValueSetupViewModelTest: XCTestCase {
         inputs.enumerated().forEach { idx, input in
             let expectedObserve = expectation(description: "didTapApply_time_Inputs")
 
-            let goalInfo = GoalInfo(goalType: .time, goalValue: "15:15")
-            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.goalType, goalValue: goalInfo.goalValue)
+            let goalInfo = GoalInfo(type: .time, value: "15:15")
+            let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
             input.map { String($0) }.forEach { viewModel.didInputNumber($0) }
 
             let expectedResult = expectedResults[idx]
@@ -475,4 +476,6 @@ class GoalValueSetupViewModelTest: XCTestCase {
             cancel.cancel()
         }
     }
+
+    // swiftlint:disable:next file_length
 }

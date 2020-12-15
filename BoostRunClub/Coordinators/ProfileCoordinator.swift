@@ -8,11 +8,7 @@
 import Combine
 import UIKit
 
-protocol ProfileCoordinatorProtocol {
-    func showProfileViewController()
-}
-
-final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
+final class ProfileCoordinator: BasicCoordinator<Void> {
     let factory: ProfileSceneFactory & EditProfileSceneFactory
 
     init(navigationController: UINavigationController,
@@ -55,9 +51,5 @@ final class ProfileCoordinator: BasicCoordinator, ProfileCoordinatorProtocol {
                 return profile
             }
             .eraseToAnyPublisher()
-    }
-
-    deinit {
-        print("[\(Date())] 🌈Coordinator🌈 \(Self.self) deallocated.")
     }
 }

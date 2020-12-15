@@ -13,6 +13,7 @@ struct Activity {
     var duration: Double
     var thumbnail: Data?
     var createdAt: Date
+    var finishedAt: Date
     var uuid: UUID
     var elevation: Double
 
@@ -23,10 +24,12 @@ struct Activity {
         elevation: Double,
         thumbnail: Data?,
         createdAt: Date?,
+        finishedAt: Date?,
         uuid: UUID?
     ) {
         guard
             let createdAt = createdAt,
+            let finishedAt = finishedAt,
             let uuid = uuid
         else { return nil }
         self.avgPace = avgPace
@@ -35,6 +38,7 @@ struct Activity {
         self.elevation = elevation
         self.thumbnail = thumbnail
         self.createdAt = createdAt
+        self.finishedAt = finishedAt
         self.uuid = uuid
     }
 
@@ -45,6 +49,7 @@ struct Activity {
         elevation: Double,
         thumbnail: Data?,
         createdAt: Date,
+        finishedAt: Date,
         uuid: UUID
     ) {
         self.avgPace = avgPace
@@ -53,6 +58,7 @@ struct Activity {
         self.elevation = elevation
         self.thumbnail = thumbnail
         self.createdAt = createdAt
+        self.finishedAt = finishedAt
         self.uuid = uuid
     }
 }
@@ -72,6 +78,18 @@ extension Activity {
                   elevation: Double.random(in: -10 ... 100),
                   thumbnail: nil,
                   createdAt: date,
+                  finishedAt: date,
+                  uuid: UUID())
+    }
+
+    init(date: Date, endDate: Date) {
+        self.init(avgPace: Int.random(in: 500 ... 3000),
+                  distance: Double.random(in: 800 ... 9000),
+                  duration: Double.random(in: 3000 ... 9000),
+                  elevation: Double.random(in: -10 ... 100),
+                  thumbnail: nil,
+                  createdAt: date,
+                  finishedAt: endDate,
                   uuid: UUID())
     }
 

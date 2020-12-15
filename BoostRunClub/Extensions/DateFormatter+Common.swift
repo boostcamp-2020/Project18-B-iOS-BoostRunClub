@@ -44,6 +44,19 @@ extension DateFormatter {
         return fmt
     }()
 
+    static var HMFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "h:mm"
+        return fmt
+    }()
+
+    static var MDEFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.locale = Locale(identifier: "ko")
+        fmt.dateFormat = "M월 d일 EEEE"
+        return fmt
+    }()
+
     static var KRDayOfWeekFormatter: DateFormatter = {
         let fmt = DateFormatter()
         fmt.locale = Locale(identifier: "ko")

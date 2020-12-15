@@ -2,7 +2,7 @@
 //  SplitsViewController.swift
 //  BoostRunClub
 //
-//  Created by 김신우 on 2020/11/27.
+//  Created by 조기현 on 2020/11/27.
 //
 
 import Combine
@@ -27,21 +27,21 @@ class SplitsViewController: UIViewController {
     func bindViewModel() {
         viewModel?.outputs.rowViewModelSubject
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] in
                 guard
                     let self = self,
-                    let viewModel = self.viewModel
+                    !$0.isEmpty
                 else { return }
 
                 self.tableView.reloadData()
-                let indexPath = IndexPath(row: viewModel.outputs.rowViewModelSubject.value.count - 1, section: 0)
+                let indexPath = IndexPath(row: $0.count - 1, section: 0)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             }
             .store(in: &cancellabls)
     }
 
     deinit {
-        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 
@@ -113,7 +113,7 @@ extension SplitsViewController {
 //            headerView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
 //            headerView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
             headerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            headerView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: -80),
+            headerView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: -40),
             topAnchor,
             headerView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: rowHeight),
@@ -131,6 +131,6 @@ extension SplitsViewController {
     }
 
     private func makeHeaderView() -> UIView {
-        RunningSplitHeaderView(titles: ["킬로미터", "페이스", "편차"])
+        SplitHeaderView(titles: ["킬로미터", "페이스", "편차"])
     }
 }

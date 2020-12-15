@@ -43,6 +43,10 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
         self.defaults = defaults
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // inputs
 
     func viewDidLoad() {
@@ -115,10 +119,6 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     var hometownTextObservable = CurrentValueSubject<String, Never>("")
     var bioTextObservable = CurrentValueSubject<String, Never>("")
     var changeInContentSignal = PassthroughSubject<Bool, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 extension EditProfileViewModel: EditProfileViewModelTypes {

@@ -99,9 +99,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             }.store(in: &cancellables)
 
         runningDataProvider.currentMotionType
-            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+//            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .sink { [weak self] currentMotionType in
-                if currentMotionType.stationary {
+                if currentMotionType == .standing {
                     self?.didTapPauseButton()
                 }
             }.store(in: &cancellables)
@@ -118,6 +118,10 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                     }
                 }
             }.store(in: &cancellables)
+    }
+
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }
 
     // MARK: Inputs
@@ -160,10 +164,6 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     var initialAnimation = PassthroughSubject<Void, Never>()
     var resumeAnimation = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 // MARK: - Types

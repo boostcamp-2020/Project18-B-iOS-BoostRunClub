@@ -24,4 +24,8 @@ extension Location {
                   speed: Int(clLocation.speed),
                   timestamp: clLocation.timestamp)
     }
+
+    var coord2d: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }

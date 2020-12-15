@@ -28,6 +28,7 @@ protocol PausedRunningViewModelOutputs {
     var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
     var runInfoData: [RunningInfo] { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
@@ -55,14 +56,26 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         ]
 
         runningDataProvider.currentMotionType
-            .throttle(for: .seconds(0.3), scheduler: RunLoop.main, latest: true)
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .sink { [weak self] motion in
-                if motion.running || motion.walking, motion.confidence == .high {
-                    print("###### tap resume")
+            .sink { [weak self] currentMotionType in
+                if currentMotionType == .running {
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)
+
+        runningDataProvider.stopRunningResponse
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                if let info = $0 {
+                    self?.showActivityDetailSignal.send((info.activity, info.detail))
+                } else {
+                    self?.showPrepareRunningSignal.send()
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
     }
 
     // Inputs
@@ -73,7 +86,6 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
 
     func didLongHoldStopRunningButton() {
         runningDataProvider.stop()
-        showPrepareRunningSignal.send()
     }
 
     func viewDidAppear() {
@@ -102,10 +114,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     var closeRunningInfoAnimationSignal = PassthroughSubject<Void, Never>()
     var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
     var showPrepareRunningSignal = PassthroughSubject<Void, Never>()
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
+    var showActivityDetailSignal = PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never>()
 }
 
 extension PausedRunningViewModel: PausedRunningViewModelTypes {

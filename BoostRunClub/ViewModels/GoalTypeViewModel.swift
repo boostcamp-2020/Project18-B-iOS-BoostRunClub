@@ -28,6 +28,10 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
         goalTypeObservable = CurrentValueSubject<GoalType, Never>(goalType)
     }
 
+    deinit {
+        print("[Memory \(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
+    }
+
     // MARK: Inputs
 
     func didTapBackgroundView() {
@@ -43,10 +47,6 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
 
     private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
     let goalTypeObservable: CurrentValueSubject<GoalType, Never>
-
-    deinit {
-        print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")
-    }
 }
 
 // MARK: - Types

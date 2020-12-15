@@ -8,11 +8,11 @@
 import Combine
 import UIKit
 
-protocol PausedRunningCoordinatorProtocol {
-    func showPausedRunningViewController()
+enum PausedRunCoordinationResult {
+    case runInfo, prepareRun, activityDetail(activity: Activity, detail: ActivityDetail)
 }
 
-final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinatorProtocol {
+final class PausedRunningCoordinator: BasicCoordinator<PausedRunCoordinationResult> {
     let factory: PausedRunningSceneFactory
 
     init(navigationController: UINavigationController, factory: PausedRunningSceneFactory = DependencyFactory.shared) {
@@ -26,18 +26,34 @@ final class PausedRunningCoordinator: BasicCoordinator, PausedRunningCoordinator
 
     func showPausedRunningViewController() {
         let pausedRunningVM = factory.makePausedRunningVM()
+
         pausedRunningVM.outputs.showRunningInfoSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                NotificationCenter.default.post(name: .showRunningInfoScene, object: self)
+                let result = PausedRunCoordinationResult.runInfo
+                self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
             }
             .store(in: &cancellables)
+
         pausedRunningVM.outputs.showPrepareRunningSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                NotificationCenter.default.post(name: .showPrepareRunningScene, object: self)
+                let result = PausedRunCoordinationResult.prepareRun
+                self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
             }
             .store(in: &cancellables)
+
+        pausedRunningVM.outputs.showActivityDetailSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                let result = PausedRunCoordinationResult.activityDetail(activity: $0.activity, detail: $0.detail)
+                self?.closeSignal.send(result)
+                self?.navigationController.popViewController(animated: false)
+            }
+            .store(in: &cancellables)
+
         let pausedRunningVC = factory.makePausedRunningVC(with: pausedRunningVM)
         navigationController.pushViewController(pausedRunningVC, animated: false)
     }

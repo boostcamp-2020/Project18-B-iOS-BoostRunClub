@@ -5,6 +5,7 @@
 //  Created by Imho Jang on 2020/11/23.
 //
 
+import AVFoundation
 import Combine
 import MapKit
 import UIKit
@@ -23,6 +24,8 @@ final class RunningPageViewController: UIPageViewController {
 
     private var distance: CGFloat = 0
     private let buttonHeight: CGFloat = 50
+
+    private let synthesizer = AVSpeechSynthesizer()
 
     init(with viewModel: RunningPageViewModelTypes, viewControllers: [UIViewController]) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -59,6 +62,12 @@ final class RunningPageViewController: UIPageViewController {
                 //				button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
             .store(in: &cancellables)
+
+        viewModel?.outputs.speechSignal
+            .sink { [weak self] (speechText: String) in
+                self?.speech(text: speechText)
+            }
+            .store(in: &cancellables)
     }
 
     override func viewDidLoad() {
@@ -73,7 +82,7 @@ final class RunningPageViewController: UIPageViewController {
     }
 
     deinit {
-        print("[\(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
+        print("[Memory \(Date())] 🍎ViewController🍏 \(Self.self) deallocated.")
     }
 }
 
@@ -253,5 +262,21 @@ extension RunningPageViewController: UIGestureRecognizerDelegate {
         -> Bool
     {
         true
+    }
+}
+
+// MARK: - Private Methods
+
+extension RunningPageViewController {
+    private func speech(text: String) {
+        if synthesizer.isSpeaking {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
+
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        utterance.rate = 0.5
+
+        synthesizer.speak(utterance)
     }
 }

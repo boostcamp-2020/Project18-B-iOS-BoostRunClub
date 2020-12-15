@@ -6,6 +6,7 @@
         <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="elevation" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="finishedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
@@ -19,7 +20,7 @@
         <attribute name="splits" attributeType="Binary"/>
     </entity>
     <elements>
-        <element name="ZActivity" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="ZActivity" positionX="-63" positionY="-18" width="128" height="149"/>
         <element name="ZActivityDetail" positionX="-63" positionY="27" width="128" height="134"/>
     </elements>
 </model>

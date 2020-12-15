@@ -9,12 +9,20 @@ import UIKit
 
 class ActivityDetailDataSource: NSObject, UITableViewDataSource {
     private var maxPace: CGFloat = 0
+    private var minPace: CGFloat = 0
     private var splits = [RunningSplit]()
     private var totalDistance: Double = 0
+
     func loadData(splits: [RunningSplit], distance: Double) {
         self.splits = splits
         totalDistance = distance
-        maxPace = splits.reduce(into: 0) { $0 = max($0, CGFloat($1.avgPace)) }
+        let minMaxValue = splits.reduce(into: (min: CGFloat.infinity, max: CGFloat(0))) {
+            let value = CGFloat($1.avgPace)
+            $0.max = max($0.max, value)
+            $0.min = min($0.min, value)
+        }
+        maxPace = minMaxValue.max
+        minPace = minMaxValue.min
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -33,11 +41,22 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
             let idx = indexPath.row - 1
             let split = splits[idx]
 
-            let distanceText = idx < splits.count - 1 ? "\(idx + 1)" : String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
+            let distanceText: String
+            if idx < splits.count - 1 {
+                distanceText = "\(idx + 1)"
+            } else {
+                distanceText = String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
+            }
+
             let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
             let elevationText = String(split.elevation)
 
-            let paceRatio = maxPace == 0 ? 0 : (maxPace - CGFloat(split.avgPace)) / maxPace
+            let paceRatio: CGFloat
+            if maxPace - minPace > 0 {
+                paceRatio = (maxPace - CGFloat(split.avgPace)) / (maxPace - minPace)
+            } else {
+                paceRatio = 0
+            }
 
             cell.configure(
                 style: .value,

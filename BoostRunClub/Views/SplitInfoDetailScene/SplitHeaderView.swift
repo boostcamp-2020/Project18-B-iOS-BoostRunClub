@@ -1,5 +1,5 @@
 //
-//  RunningSplitHeaderView.swift
+//  SplitHeaderView.swift
 //  BoostRunClub
 //
 //  Created by 조기현 on 2020/12/09.
@@ -7,10 +7,13 @@
 
 import UIKit
 
-class RunningSplitHeaderView: UIView {
-    init(titles: [String]) {
+class SplitHeaderView: UIView {
+    var inset: CGFloat = -40
+
+    init(titles: [String], with bottomBorder: Bool = true, inset: CGFloat = -40) {
         super.init(frame: .zero)
-        configure(titles: titles)
+        self.inset = inset
+        configure(titles: titles, bottomBorder: bottomBorder)
     }
 
     override init(frame: CGRect) {
@@ -21,7 +24,7 @@ class RunningSplitHeaderView: UIView {
         super.init(coder: coder)
     }
 
-    func configure(titles: [String]) {
+    func configure(titles: [String], bottomBorder: Bool) {
         backgroundColor = .systemBackground
 
         let labels: [UILabel] = titles.enumerated().map { idx, title in
@@ -29,7 +32,7 @@ class RunningSplitHeaderView: UIView {
             label.text = title
             label.font = label.font.withSize(17)
             label.textColor = .lightGray
-            label.textAlignment = [.left, .center, .right][idx == 0 ? 0 : 1 + (idx + 1) / titles.count]
+            label.setTextAlignment(idx: idx, total: titles.count)
             return label
         }
 
@@ -37,19 +40,25 @@ class RunningSplitHeaderView: UIView {
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: widthAnchor, constant: inset),
+            stackView.heightAnchor.constraint(equalToConstant: 60),
         ])
 
+        if bottomBorder {
+            addBottomBorder()
+        }
+    }
+
+    func addBottomBorder() {
         let bottomBorder = UIView()
         bottomBorder.backgroundColor = .lightGray
         addSubview(bottomBorder)
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomBorder.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bottomBorder.widthAnchor.constraint(equalTo: widthAnchor, constant: inset),
             bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.5),
         ])

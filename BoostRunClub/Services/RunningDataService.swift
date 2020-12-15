@@ -18,6 +18,7 @@ protocol RunningDataServiceable {
     var avgPace: CurrentValueSubject<Int, Never> { get }
     var cadence: CurrentValueSubject<Int, Never> { get }
     var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
+    var runningEvent: PassthroughSubject<RunningEvent, Never> { get }
 
     var isRunning: Bool { get }
     var currentLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
@@ -25,7 +26,8 @@ protocol RunningDataServiceable {
     var runningSplits: [RunningSplit] { get }
     var currentRunningSlice: RunningSlice { get }
     var routes: [RunningSlice] { get }
-    var currentMotionType: CurrentValueSubject<CMMotionActivity, Never> { get }
+    var currentMotionType: CurrentValueSubject<MotionType, Never> { get }
+    var stopRunningResponse: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
     func start()
     func stop()
     func pause()
@@ -44,6 +46,7 @@ class RunningDataService: RunningDataServiceable {
     var lastUpdatedTime: TimeInterval = 0
 
     var currentLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
+    var stopRunningResponse = PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never>()
 
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
     var calorie = CurrentValueSubject<Int, Never>(0)
@@ -52,6 +55,7 @@ class RunningDataService: RunningDataServiceable {
     var cadence = CurrentValueSubject<Int, Never>(0)
     var distance = CurrentValueSubject<Double, Never>(0)
     var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
+    var runningEvent = PassthroughSubject<RunningEvent, Never>()
     var locations = [CLLocation]()
 
     var runningSplits = [RunningSplit]()
@@ -61,7 +65,7 @@ class RunningDataService: RunningDataServiceable {
         runningSplits.flatMap { $0.runningSlices } + currentRunningSplit.runningSlices + [currentRunningSlice]
     }
 
-    var currentMotionType = CurrentValueSubject<CMMotionActivity, Never>(.init())
+    var currentMotionType = CurrentValueSubject<MotionType, Never>(.standing)
 
     private(set) var isRunning: Bool = false
     let eventTimer: EventTimerProtocol
@@ -127,6 +131,7 @@ class RunningDataService: RunningDataServiceable {
             locationProvider.startBackgroundTask()
             initializeRunningData()
         }
+        runningEvent.send(RunningEvent.start)
     }
 
     func stop() {
@@ -135,6 +140,7 @@ class RunningDataService: RunningDataServiceable {
         eventTimer.stop()
         endTime = Date()
         if !locations.isEmpty {
+            runningEvent.send(RunningEvent.stop)
             mapSnapShotService.takeSnapShot(from: locations, dimension: 100)
                 .receive(on: RunLoop.main)
                 .replaceError(with: nil)
@@ -143,6 +149,8 @@ class RunningDataService: RunningDataServiceable {
                     self?.saveRunning(with: data)
                 }
                 .store(in: &cancellables)
+        } else {
+            stopRunningResponse.send(nil)
         }
         isRunning = false
     }
@@ -150,11 +158,13 @@ class RunningDataService: RunningDataServiceable {
     func pause() {
         addSlice()
         isRunning = false
+        runningEvent.send(RunningEvent.pause)
     }
 
     func resume() {
         addSlice()
         isRunning = true
+        runningEvent.send(RunningEvent.resume)
     }
 
     func addSlice() {
@@ -219,6 +229,7 @@ class RunningDataService: RunningDataServiceable {
             elevation: 0, // TODO: elevation 값 저장
             thumbnail: data,
             createdAt: startTime,
+            finishedAt: Date(),
             uuid: uuid
         )
 
@@ -231,7 +242,7 @@ class RunningDataService: RunningDataServiceable {
             locations: locations.map { Location(clLocation: $0) },
             splits: runningSplits
         )
-
+        stopRunningResponse.send((activity, activityDetail))
         activityWriter.addActivity(activity: activity, activityDetail: activityDetail)
     }
 }
