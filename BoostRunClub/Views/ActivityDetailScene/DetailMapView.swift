@@ -37,6 +37,15 @@ class DetailMapView: UIView {
                 colorMin: .red,
                 colorMax: .green
             ))
+
+        CLLocationCoordinate2D.computeSplitCoordinate(from: coords, distance: 1000)
+            .enumerated()
+            .forEach { index, splitCoordinate in
+                let split = MKPointAnnotation()
+                split.title = "\(index + 1)km"
+                split.coordinate = splitCoordinate
+                self.mapView.addAnnotation(split)
+            }
     }
 }
 
@@ -64,6 +73,26 @@ extension DetailMapView: MKMapViewDelegate {
         renderer.lineWidth = 10
 
         return renderer
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        if let distanceLabelText = annotation.title {
+            let customAnnotation = UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
+            annotationView!.image = customAnnotation
+        }
+
+        return annotationView
     }
 }
 
