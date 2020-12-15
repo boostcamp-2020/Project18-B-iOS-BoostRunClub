@@ -265,7 +265,7 @@ extension PrepareRunViewController {
                                     action: #selector(showProfileViewController(sender:)),
                                     for: .touchUpInside)
         }
-        navigationItem.setLeftBarButton(profileItem, animated: true)
+        navigationItem.setLeftBarButton(profileItem, animated: false)
     }
 
     private func configureLayout() {
