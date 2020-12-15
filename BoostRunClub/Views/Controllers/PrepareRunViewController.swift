@@ -202,6 +202,10 @@ extension PrepareRunViewController {
     private func makeMapView() -> MKMapView {
         let view = MKMapView()
         view.showsUserLocation = true
+        view.setRegion(MKCoordinateRegion(center: view.userLocation.coordinate,
+                                          latitudinalMeters: 500,
+                                          longitudinalMeters: 500),
+                       animated: false)
         view.mapType = MKMapType.standard
         view.userTrackingMode = MKUserTrackingMode.follow
         view.isUserInteractionEnabled = false
