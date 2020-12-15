@@ -158,7 +158,7 @@
 		967BEB9C2587FDB7001A241F /* BasicRouteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEB9B2587FDB7001A241F /* BasicRouteRenderer.swift */; };
 		967BEBA22587FDEC001A241F /* GradientRouteOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA12587FDEC001A241F /* GradientRouteOverlay.swift */; };
 		967BEBA62588089F001A241F /* GradientRouteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA52588089F001A241F /* GradientRouteRenderer.swift */; };
-		967BEBAA258810B1001A241F /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA9258810B1001A241F /* UIColor+RGBA.swift */; };
+		967BEBAA258810B1001A241F /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967BEBA9258810B1001A241F /* UIColor+Components.swift */; };
 		967FFAA4257602A200F3340C /* TimerInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FFAA3257602A200F3340C /* TimerInterval+String.swift */; };
 		9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A15D25763CC800DED689 /* PausedRunningViewController.swift */; };
 		9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A16125763D1E00DED689 /* PausedRunningCoordinator.swift */; };
@@ -351,7 +351,7 @@
 		967BEB9B2587FDB7001A241F /* BasicRouteRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRouteRenderer.swift; sourceTree = "<group>"; };
 		967BEBA12587FDEC001A241F /* GradientRouteOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRouteOverlay.swift; sourceTree = "<group>"; };
 		967BEBA52588089F001A241F /* GradientRouteRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRouteRenderer.swift; sourceTree = "<group>"; };
-		967BEBA9258810B1001A241F /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
+		967BEBA9258810B1001A241F /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
 		967FFAA3257602A200F3340C /* TimerInterval+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+String.swift"; sourceTree = "<group>"; };
 		9689A15D25763CC800DED689 /* PausedRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningViewController.swift; sourceTree = "<group>"; };
 		9689A16125763D1E00DED689 /* PausedRunningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedRunningCoordinator.swift; sourceTree = "<group>"; };
@@ -598,6 +598,7 @@
 		9600DB502566AA4400183CB9 /* BoostRunClub */ = {
 			isa = PBXGroup;
 			children = (
+				967BEBB125887BD1001A241F /* New Group */,
 				717878472587E0D8004EF8EA /* CoreML */,
 				71EFCC68257750C8007998AD /* Factory */,
 				96ED402E257C7633007DB3DF /* CoreData */,
@@ -694,6 +695,13 @@
 			path = Renderer;
 			sourceTree = "<group>";
 		};
+		967BEBB125887BD1001A241F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		9680AB9225707E19006F0FD2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,7 +743,7 @@
 				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
 				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
 				96DE09362586170E0055213C /* Clamp.swift */,
-				967BEBA9258810B1001A241F /* UIColor+RGBA.swift */,
+				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
 				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
 			);
 			path = Extensions;
@@ -1074,7 +1082,7 @@
 				71E828A1256B9B1E004A1F30 /* ProfileViewController.swift in Sources */,
 				71BBFC882582FDE800BC01B7 /* DefaultsProvider.swift in Sources */,
 				71FBAB06257D24E3005C8D30 /* Factory+RunningMapScene.swift in Sources */,
-				967BEBAA258810B1001A241F /* UIColor+RGBA.swift in Sources */,
+				967BEBAA258810B1001A241F /* UIColor+Components.swift in Sources */,
 				71FBAB4F257FA267005C8D30 /* ProfileViewModel.swift in Sources */,
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
 				4CF009C0257CAC1E00EC928A /* ActivityDetail.swift in Sources */,
