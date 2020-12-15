@@ -117,6 +117,7 @@
 		9620707F2589657A00D3ABFE /* RunningRecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707E2589657A00D3ABFE /* RunningRecoder.swift */; };
 		962070832589666300D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
 		9620708B25896A6900D3ABFE /* PedometerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620708A25896A6900D3ABFE /* PedometerProvider.swift */; };
+		9620708E2589810800D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -1185,6 +1186,7 @@
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				96461B362582BA6000E665B0 /* RouteSnapShotProcessor.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
+				9620708E2589810800D3ABFE /* RunningState.swift in Sources */,
 				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				96D7133F2579178600D3D99E /* RunningSplit.swift in Sources */,
 				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
