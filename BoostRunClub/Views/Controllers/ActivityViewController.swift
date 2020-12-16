@@ -54,7 +54,6 @@ final class ActivityViewController: UIViewController {
             .sink { [weak self] in
                 self?.activityDataSource.loadActivities($0)
                 self?.collectionView.reloadData()
-//                self?.tableView.reloadData()
             }
             .store(in: &cancellables)
 
