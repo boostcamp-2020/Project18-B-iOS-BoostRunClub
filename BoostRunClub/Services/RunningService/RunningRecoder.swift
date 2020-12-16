@@ -19,10 +19,10 @@ protocol RunningRecodable {
     var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
 }
 
-class RunningRecoder: RunningRecodable {
+final class RunningRecoder: RunningRecodable {
     private var cancellables = Set<AnyCancellable>()
-    let activityWriter: ActivityWritable
-    let mapSnapShotter: MapSnapShotService
+    private let activityWriter: ActivityWritable
+    private let mapSnapShotter: MapSnapShotService
 
     private(set) var locations = [CLLocation]()
     private(set) var runningSplits = [RunningSplit]()
@@ -151,7 +151,7 @@ class RunningRecoder: RunningRecodable {
         return (activity, detail)
     }
 
-    func addSlice() {
+    private func addSlice() {
         guard
             let state = states.last,
             !locations.isEmpty
@@ -166,7 +166,7 @@ class RunningRecoder: RunningRecodable {
         currentSlice.startIndex = locations.count - 1
     }
 
-    func addSplit() {
+    private func addSplit() {
         currentSplit.setup(with: states)
         runningSplits.append(currentSplit)
 

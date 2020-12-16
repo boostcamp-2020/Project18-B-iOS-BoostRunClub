@@ -10,7 +10,6 @@ import CoreLocation
 import Foundation
 
 protocol RunningBoard {
-    func setState(isRunning: Bool)
     var runningSubject: PassthroughSubject<RunningState, Never> { get }
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
 
@@ -21,18 +20,16 @@ protocol RunningBoard {
     var distance: Double { get }
     var avgPace: Double { get }
 
+    func setState(isRunning: Bool)
     func start()
     func stop()
+    func clear()
 }
 
-class RunningDashBoard: RunningBoard {
+final class RunningDashBoard: RunningBoard {
     private var eventTimer: EventTimerProtocol
     private var locationProvider: LocationProvidable
     private var pedometerProvider: PedometerProvidable
-
-    func setState(isRunning: Bool) {
-        self.isRunning = isRunning
-    }
 
     private(set) var isRunning = false
 
@@ -77,16 +74,20 @@ class RunningDashBoard: RunningBoard {
             }.store(in: &cancellables)
     }
 
+    func setState(isRunning: Bool) {
+        self.isRunning = isRunning
+    }
+
     func start() {
-        clear()
         eventTimer.start()
         locationProvider.startBackgroundTask()
         pedometerProvider.start()
+
         lastUpdatedTime = Date.timeIntervalSinceReferenceDate
         isRunning = true
     }
 
-    private func clear() {
+    func clear() {
         lastUpdatedTime = 0
         location = nil
         runningTime.value = 0
@@ -104,14 +105,14 @@ class RunningDashBoard: RunningBoard {
         pedometerProvider.stop()
     }
 
-    func updateTime(currentTime: TimeInterval) {
+    private func updateTime(currentTime: TimeInterval) {
         if isRunning {
             runningTime.value += currentTime - lastUpdatedTime
         }
         lastUpdatedTime = currentTime
     }
 
-    func publish() {
+    private func publish() {
         guard let location = location else { return }
 
         let result = RunningState(
@@ -127,7 +128,7 @@ class RunningDashBoard: RunningBoard {
         runningSubject.send(result)
     }
 
-    func updateLocation(newLocation: CLLocation) {
+    private func updateLocation(newLocation: CLLocation) {
         numLocationReceive += 1
         // processing distance
         if isRunning, let prevLocation = location {

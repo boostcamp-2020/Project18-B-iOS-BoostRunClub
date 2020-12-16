@@ -36,10 +36,12 @@ class LocationProvider: NSObject, LocationProvidable {
 
     func startBackgroundTask() {
         locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
     }
 
     func stopBackgroundTask() {
         locationManager.allowsBackgroundLocationUpdates = false
+        locationManager.pausesLocationUpdatesAutomatically = true
     }
 }
 
