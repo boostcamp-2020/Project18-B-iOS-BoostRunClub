@@ -74,7 +74,10 @@ class PausedRunningViewController: UIViewController {
 
         endRunningButton.didTapButton
             .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.viewModel?.inputs.didLongHoldStopRunningButton() }
+            .sink { [weak self] in
+                self?.view.notificationFeedback()
+                self?.viewModel?.inputs.didLongHoldStopRunningButton()
+            }
             .store(in: &cancellables)
     }
 

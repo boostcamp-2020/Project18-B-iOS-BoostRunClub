@@ -58,31 +58,39 @@ class RunningService: RunningServiceType {
             .filter { [weak self] in $0 != self?.runningState.value }
             .filter { [weak self] _ in self?.autoStatable ?? false }
             .sink { [weak self] in
+
+                self?.runningState.send($0)
                 switch $0 {
                 case .running:
                     dashBoard.setState(isRunning: true)
                 case .standing:
                     dashBoard.setState(isRunning: false)
                 }
-                self?.runningState.send($0)
             }
             .store(in: &cancellables)
     }
 
     func start() {
+        recoder.clear()
+        dashBoard.clear()
+
         isRunning = true
         startTime = Date()
         autoStatable = true
+
         dashBoard.start()
         motionProvider.start()
-        recoder.clear()
+
         runningEvent.send(.start)
     }
 
     func stop() {
-        isRunning = false
-        dashBoard.stop()
         let endTime = Date()
+
+        dashBoard.stop()
+
+        isRunning = false
+
         let activityInfo = recoder.save(startTime: startTime, endTime: endTime)
         activityResults.send(activityInfo)
         runningEvent.send(.stop)
@@ -90,12 +98,14 @@ class RunningService: RunningServiceType {
 
     func pause() {
         autoStatable = false
+
         dashBoard.setState(isRunning: false)
         runningEvent.send(.pause)
     }
 
     func resume() {
         autoStatable = true
+
         dashBoard.setState(isRunning: true)
         runningEvent.send(.resume)
     }

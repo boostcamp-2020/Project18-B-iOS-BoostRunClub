@@ -46,7 +46,10 @@ final class AppCoordinator: BasicCoordinator<Void> {
 
     func showRunningScene(goalType: GoalType, goalValue: String) {
         let goalInfo = GoalInfo(type: goalType, value: goalValue)
-        let runningPageCoordinator = RunningPageCoordinator(navigationController: navigationController, goalInfo: goalInfo)
+        let runningPageCoordinator = RunningPageCoordinator(
+            navigationController: navigationController,
+            goalInfo: goalInfo
+        )
 
         let uuid = runningPageCoordinator.identifier
         closeSubscription[uuid] = coordinate(coordinator: runningPageCoordinator)
