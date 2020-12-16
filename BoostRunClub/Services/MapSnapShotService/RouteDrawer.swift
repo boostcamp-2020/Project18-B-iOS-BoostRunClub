@@ -43,6 +43,5 @@ struct RouteDrawer: RouteDrawable {
         context.beginPath()
         context.addPath(path)
         context.strokePath()
-
     }
 }
