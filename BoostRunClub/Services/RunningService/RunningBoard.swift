@@ -37,6 +37,7 @@ class RunningDashBoard: RunningBoard {
     private(set) var isRunning = false
 
     private var lastUpdatedTime: TimeInterval = 0
+    private var numLocationReceive: Double = 0
 
     // runningTime, calorie, pace, cadence, distance
     private(set) var location: CLLocation?
@@ -94,6 +95,7 @@ class RunningDashBoard: RunningBoard {
         cadence = 0
         distance = 0
         avgPace = 0
+        numLocationReceive = 0
     }
 
     func stop() {
@@ -125,7 +127,6 @@ class RunningDashBoard: RunningBoard {
         runningSubject.send(result)
     }
 
-    private var numLocationReceive: Double = 0
     func updateLocation(newLocation: CLLocation) {
         numLocationReceive += 1
         // processing distance
