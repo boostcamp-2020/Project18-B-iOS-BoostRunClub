@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum RunningEvent: String {
-    case start, resume, pause, stop
+enum RunningEvent {
+    case start, resume, pause, stop, goal(String)
 
     var text: String {
         switch self {
@@ -20,6 +20,8 @@ enum RunningEvent: String {
             return "Pause Workout"
         case .stop:
             return "Ending Workout. Great job today."
+        case let .goal(text):
+            return text
         }
     }
 }

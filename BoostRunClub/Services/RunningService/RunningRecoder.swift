@@ -12,6 +12,7 @@ import Foundation
 protocol RunningRecodable {
     func addState(_ state: RunningState)
     func save(startTime: Date?, endTime: Date?) -> (activity: Activity, detail: ActivityDetail)?
+    func clear()
 
     var locations: [CLLocation] { get }
     var routes: [RunningSlice] { get }
@@ -44,6 +45,16 @@ class RunningRecoder: RunningRecodable {
     init(activityWriter: ActivityWritable, mapSnapShotter: MapSnapShotService) {
         self.activityWriter = activityWriter
         self.mapSnapShotter = mapSnapShotter
+    }
+
+    func clear() {
+        maxAltitude = 0
+        minAltitude = 0
+        locations.removeAll()
+        states.removeAll()
+        runningSplits.removeAll()
+        currentSplit = RunningSplit()
+        currentSlice = RunningSlice()
     }
 
     func addState(_ state: RunningState) {
@@ -126,6 +137,7 @@ class RunningRecoder: RunningRecodable {
             locations: locations.map { Location(clLocation: $0) },
             splits: runningSplits
         )
+        print("[Recoder] splits \(runningSplits.count)")
 
         mapSnapShotter.takeSnapShot(from: locations, dimension: 100)
             .receive(on: RunLoop.main)
@@ -148,7 +160,7 @@ class RunningRecoder: RunningRecodable {
         currentSlice.isRunning = state.isRunning
         currentSlice.setupSlice(with: locations)
         currentSplit.runningSlices.append(currentSlice)
-        print("ADD Slice \(currentSlice.startIndex) - \(currentSlice.endIndex) (running \(state.isRunning)")
+        print("[Recoder]ADD Slice \(currentSlice.startIndex) - \(currentSlice.endIndex) (running \(state.isRunning)")
 
         currentSlice = RunningSlice()
         currentSlice.startIndex = locations.count - 1
@@ -157,6 +169,8 @@ class RunningRecoder: RunningRecodable {
     func addSplit() {
         currentSplit.setup(with: states)
         runningSplits.append(currentSplit)
+
+        print("[Recoder] save Splits: a.pace \(currentSplit.avgPace), D: \(currentSplit.distance), E: \(currentSplit.elevation)")
         newSplitSubject.send(currentSplit)
         currentSplit = RunningSplit()
     }

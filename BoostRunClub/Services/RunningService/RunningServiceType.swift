@@ -21,6 +21,8 @@ protocol RunningServiceType {
     func stop()
     func pause()
     func resume()
+
+    func setGoal(_ goalInfo: GoalInfo?)
 }
 
 class RunningService: RunningServiceType {
@@ -37,6 +39,8 @@ class RunningService: RunningServiceType {
 
     let runningState = CurrentValueSubject<MotionType, Never>(.standing)
     var runningEvent = PassthroughSubject<RunningEvent, Never>()
+
+    var goalSubscription: AnyCancellable?
 
     init(motionProvider: MotionProvidable, dashBoard: RunningBoard, recoder: RunningRecodable) {
         self.dashBoard = dashBoard
@@ -71,6 +75,7 @@ class RunningService: RunningServiceType {
         autoStatable = true
         dashBoard.start()
         motionProvider.start()
+        recoder.clear()
         runningEvent.send(.start)
     }
 
@@ -93,5 +98,39 @@ class RunningService: RunningServiceType {
         autoStatable = true
         dashBoard.setState(isRunning: true)
         runningEvent.send(.resume)
+    }
+
+    func setGoal(_ goalInfo: GoalInfo?) {
+        guard let goalInfo = goalInfo else { return }
+
+        switch goalInfo.type {
+        case .distance:
+            guard var value = Double(goalInfo.value) else { return }
+            value *= 1000
+            goalSubscription = dashBoard.runningSubject
+                .first(where: { $0.distance > value })
+                .sink { [weak self] _ in
+                    let text = "Congratulations. You've reached your goal of \(value) meters. Great job"
+                    self?.runningEvent.send(.goal(text))
+                }
+
+        case .time:
+            let components = goalInfo.value.components(separatedBy: ":")
+            guard
+                components.count >= 2,
+                let hour = Int(components[0]),
+                let minute = Int(components[1])
+            else { return }
+            let interval = hour * 60 * 60 + minute * 60
+            goalSubscription = dashBoard.runningTime
+                .first(where: { $0 > Double(interval) })
+                .sink { [weak self] _ in
+                    let text = "Congratulations. You've reached your goal of running \(hour * 60 + minute) minutes. Kudos to you, friend."
+                    self?.runningEvent.send(.goal(text))
+                }
+
+        case .none, .speed:
+            return
+        }
     }
 }

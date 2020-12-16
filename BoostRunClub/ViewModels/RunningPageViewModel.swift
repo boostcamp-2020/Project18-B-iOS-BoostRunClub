@@ -45,6 +45,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
 
         runningDataProvider.runningEvent
             .sink { [weak self] event in
+                print("[SPEAK!]!!!!!!!!!!!!!!!!!!!!\(event.text)")
                 self?.speechSignal.send(event.text)
             }.store(in: &cancellables)
     }

@@ -13,7 +13,7 @@ protocol RunningPageContainerFactory {
         viewControllers: [UIViewController]
     )
         -> UIViewController
-    func makeRunningPageVM() -> RunningPageViewModelTypes
+    func makeRunningPageVM(goalInfo: GoalInfo?) -> RunningPageViewModelTypes
 }
 
 extension DependencyFactory: RunningPageContainerFactory {
@@ -24,7 +24,8 @@ extension DependencyFactory: RunningPageContainerFactory {
         RunningPageViewController(with: viewModel, viewControllers: viewControllers)
     }
 
-    func makeRunningPageVM() -> RunningPageViewModelTypes {
-        RunningPageViewModel(runningDataProvider: runningDataService)
+    func makeRunningPageVM(goalInfo: GoalInfo? = nil) -> RunningPageViewModelTypes {
+        runningDataService.setGoal(goalInfo)
+        return RunningPageViewModel(runningDataProvider: runningDataService)
     }
 }

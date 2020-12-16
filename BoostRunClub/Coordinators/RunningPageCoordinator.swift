@@ -15,12 +15,14 @@ enum RunningPageCoordinationResult {
 
 final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResult> {
     let factory: RunningPageContainerFactory
-
+    let goalInfo: GoalInfo
     init(
         navigationController: UINavigationController,
-        factory: RunningPageContainerFactory = DependencyFactory.shared
+        factory: RunningPageContainerFactory = DependencyFactory.shared,
+        goalInfo: GoalInfo
     ) {
         self.factory = factory
+        self.goalInfo = goalInfo
         super.init(navigationController: navigationController)
     }
 
@@ -37,7 +39,7 @@ final class RunningPageCoordinator: BasicCoordinator<RunningPageCoordinationResu
         coordinate(coordinator: splitsCoordinator)
         let closablePublisher = coordinate(coordinator: runningCoordinator)
 
-        let runningPageVM = factory.makeRunningPageVM()
+        let runningPageVM = factory.makeRunningPageVM(goalInfo: goalInfo)
         let runningPageVC = factory.makeRunningPageVC(
             with: runningPageVM,
             viewControllers: [
