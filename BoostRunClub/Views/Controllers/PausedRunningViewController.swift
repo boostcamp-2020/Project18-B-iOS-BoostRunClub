@@ -152,7 +152,10 @@ extension PausedRunningViewController: MKMapViewDelegate {
 
         slices.forEach { slice in
             if routes.isEmpty { return }
-            let endIdx = slice.endIndex == -1 ? routes.count - 1 : slice.endIndex
+            var endIdx = slice.endIndex
+            if slice.endIndex < 0 || slice.endIndex > routes.count - 1 {
+                endIdx = routes.count - 1
+            }
             color = [UIColor.systemBlue, .systemRed][slice.isRunning ? 0 : 1].withAlphaComponent(0.9)
             mapView.addOverlay(MKPolyline(
                 coordinates: Array(routes[slice.startIndex ... endIdx]),
