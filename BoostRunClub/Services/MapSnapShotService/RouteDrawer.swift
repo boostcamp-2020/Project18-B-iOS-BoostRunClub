@@ -26,7 +26,7 @@ struct RouteDrawer: RouteDrawable {
 
     let style: Style
 
-    func draw(context: CGContext, size: CGSize, locations: [CLLocation], snapshot: MKMapSnapshotter.Snapshot) {
+    func draw(context: CGContext, size _: CGSize, locations: [CLLocation], snapshot: MKMapSnapshotter.Snapshot) {
         guard !style.lineColors.isEmpty else { return }
 
         context.setLineWidth(style.lineWidth)
@@ -37,25 +37,12 @@ struct RouteDrawer: RouteDrawable {
         let path = CGMutablePath()
         path.addLines(between: points)
 
+        let lineColor = style.lineColors.first ?? UIColor.black
+
+        context.setStrokeColor(lineColor.cgColor)
+        context.beginPath()
         context.addPath(path)
-        context.replacePathWithStrokedPath()
-        context.clip()
+        context.strokePath()
 
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let colors = [style.lineColors.first!.cgColor, style.lineColors.last!.cgColor] as CFArray
-        guard
-            let gradient = CGGradient(
-                colorsSpace: colorSpace,
-                colors: colors,
-                locations: nil
-            )
-        else { return }
-
-        context.drawLinearGradient(
-            gradient,
-            start: .zero,
-            end: CGPoint(x: size.width, y: size.height),
-            options: []
-        )
     }
 }
