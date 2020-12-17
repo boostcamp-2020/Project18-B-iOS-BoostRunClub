@@ -54,9 +54,10 @@ class RunningService: RunningServiceType {
             .store(in: &cancellables)
 
         motionProvider.motionType
+            .debounce(for: 3, scheduler: RunLoop.main)
             .receive(on: RunLoop.main)
-            .filter { [weak self] in $0 != self?.runningState.value }
             .filter { [weak self] _ in self?.autoStatable ?? false }
+            .filter { [weak self] in $0 != self?.runningState.value }
             .sink { [weak self] in
 
                 self?.runningState.send($0)
