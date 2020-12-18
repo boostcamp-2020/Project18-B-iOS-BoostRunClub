@@ -21,10 +21,11 @@ protocol GoalValueSetupViewModelInputs {
 }
 
 protocol GoalValueSetupViewModelOutputs {
+    var goalType: GoalType { get }
     var goalValueObservable: CurrentValueSubject<String, Never> { get }
     var runningEstimationObservable: AnyPublisher<String, Never> { get }
+
     var closeSheetSignal: PassthroughSubject<String?, Never> { get }
-    var goalType: GoalType { get }
 }
 
 class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupViewModelOutputs {

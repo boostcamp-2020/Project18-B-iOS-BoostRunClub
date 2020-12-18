@@ -14,6 +14,8 @@ class DependencyFactory {
     lazy var locationProvider = LocationProvider()
     lazy var motionProvider = MotionProvider()
     lazy var pedometerProvider = PedometerProvider()
+    lazy var defaultsProvider = DefaultsProvider()
+
     lazy var runningDataService = RunningService(
         motionProvider: motionProvider,
         dashBoard: RunningDashBoard(
@@ -26,5 +28,4 @@ class DependencyFactory {
             mapSnapShotter: MapSnapShotService()
         )
     )
-    lazy var defaultsProvider = DefaultsProvider()
 }

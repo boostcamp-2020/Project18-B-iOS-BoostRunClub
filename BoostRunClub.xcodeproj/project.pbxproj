@@ -488,8 +488,8 @@
 		71A58D16256D2DE50012FF51 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				96386604257E9BD2003EEE4B /* Configurable */,
+				960A14DD257DD127008D2BD3 /* ActivityViewModel.swift */,
 				71FBAB65257FCD84005C8D30 /* EditProfileViewModel.swift */,
 				71A58D1B256D2EEA0012FF51 /* GoalTypeViewModel.swift */,
 				4CB8FA3225729F56000B90ED /* GoalTypeViewModelTest.swift */,
@@ -520,15 +520,15 @@
 				967253112584876600B4BBC6 /* ActivityDetailScene */,
 				96F105B1258040CB0005F66C /* ActivityScene */,
 				96F105AA25803D7B0005F66C /* DataSource */,
+				4C9DA8E12586645B00B86F57 /* SplitInfoDetailScene */,
+				4C3E7ACE256F63080061244F /* Controllers */,
+				4C3E7AD0256F63230061244F /* Cells */,
 				71EFCC8C2577C3C0007998AD /* CircleButton.swift */,
 				967780282577905400DA2454 /* CountDownView.swift */,
 				4C3E7AC8256F43440061244F /* GoalValueView.swift */,
 				710CD9E125889E950001E763 /* ProfileButton.swift.swift */,
 				9635815425722CFA00B8BE6B /* NikeLabel.swift */,
 				9635815125722B5B00B8BE6B /* RunDataView.swift */,
-				4C3E7AD0256F63230061244F /* Cells */,
-				4C9DA8E12586645B00B86F57 /* SplitInfoDetailScene */,
-				4C3E7ACE256F63080061244F /* Controllers */,
 				960A151B257E43E7008D2BD3 /* RoundSegmentControl.swift */,
 				96DE093225860FAC0055213C /* CircleLongPressButton.swift */,
 			);

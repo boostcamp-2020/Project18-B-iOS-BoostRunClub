@@ -38,6 +38,6 @@ class SplitDatailSplitDataSource: NSObject, UITableViewDataSource {
             cell.elevationLabel.text = data[indexPath.row].elevation
         }
 
-        return cell ?? UITableViewCell()
+        return cell
     }
 }

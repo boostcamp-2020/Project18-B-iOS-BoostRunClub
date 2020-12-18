@@ -12,12 +12,12 @@ import Foundation
 protocol PedometerProvidable {
     func start()
     func stop()
-    var cadence: CurrentValueSubject<Int, Never> { get }
+    var cadence: PassthroughSubject<Int, Never> { get }
 }
 
 final class PedometerProvider: PedometerProvidable {
     private let pedometer = CMPedometer()
-    private(set) var cadence = CurrentValueSubject<Int, Never>(0)
+    private(set) var cadence = PassthroughSubject<Int, Never>()
     private var isActive = false
 
     func start() {
@@ -43,7 +43,7 @@ final class PedometerProvider: PedometerProvidable {
                 error == nil
             else { return }
 
-            self.cadence.value = Int(truncating: cadence) * 60
+            self.cadence.send(Int(truncating: cadence) * 60)
         }
     }
 }

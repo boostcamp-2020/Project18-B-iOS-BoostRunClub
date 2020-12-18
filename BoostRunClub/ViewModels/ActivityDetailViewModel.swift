@@ -32,6 +32,8 @@ protocol ActivityDetailViewModelOutputs {
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
+    private var initialAnimation = false
+
     init?(activity: Activity, detail: ActivityDetail?, activityProvider: ActivityReadable) {
         let detailConfig: ActivityDetailConfig
         if let detail = detail {
@@ -65,7 +67,10 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     func viewDidLoad() {}
 
     func viewDidAppear() {
-        initialAnimationSignal.send()
+        if !initialAnimation {
+            initialAnimation = true
+            initialAnimationSignal.send()
+        }
     }
 
     // Outputs

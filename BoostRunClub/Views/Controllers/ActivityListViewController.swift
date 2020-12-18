@@ -10,8 +10,8 @@ import UIKit
 
 class ActivityListViewController: UIViewController {
     private lazy var collectionView = makeCollectionView()
-
     private var dataSource = ActivityListDataSource()
+
     private var cancellables = Set<AnyCancellable>()
     private var viewModel: ActivityListViewModelTypes?
 

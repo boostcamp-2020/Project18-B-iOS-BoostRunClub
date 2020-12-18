@@ -77,70 +77,12 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-//        runningDataProvider.distance
-//            .map { String(format: "%.2f", $0 / 1000) }
-//            .sink { [weak self] distance in
-//                self?.possibleTypes[.kilometer] = distance
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .kilometer {
-//                        $0.send(RunningInfo(type: .kilometer, value: distance))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.pace
-//            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-//            .sink { [weak self] pace in
-//                self?.possibleTypes[.pace] = pace
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .pace {
-//                        $0.send(RunningInfo(type: .pace, value: pace))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.avgPace
-//            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-//            .sink { [weak self] averagePace in
-//                self?.possibleTypes[.averagePace] = averagePace
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .averagePace {
-//                        $0.send(RunningInfo(type: .averagePace, value: averagePace))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.calorie
-//            .map { $0 <= 0 ? "--" : String($0) }
-//            .sink { [weak self] calorie in
-//                self?.possibleTypes[.calorie] = calorie
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .calorie {
-//                        $0.send(RunningInfo(type: .calorie, value: calorie))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
         runningDataProvider.runningState
-//            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .standing {
                     self?.showPausedRunningSignal.send()
                 }
             }.store(in: &cancellables)
-
-//        runningDataProvider.cadence
-//            .map { $0 <= 0 ? "--" :
-//                String($0)
-//            }
-//            .sink { [weak self] cadence in
-//                self?.possibleTypes[.cadence] = cadence
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .cadence {
-//                        $0.send(RunningInfo(type: .cadence, value: cadence))
-//                    }
-//                }
-//            }.store(in: &cancellables)
     }
 
     deinit {

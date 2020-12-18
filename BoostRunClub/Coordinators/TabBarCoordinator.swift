@@ -69,7 +69,7 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
         }
 
         coordinate(coordinator: profileCoordinator)
-        let closablePublisher = coordinate(coordinator: prepareRunCoordinator)
+        let prepareRunCloseSignal = coordinate(coordinator: prepareRunCoordinator)
 
         let tabBarController = factory.makeTabBarVC(
             with: [
@@ -82,7 +82,7 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
         navigationController.viewControllers = [tabBarController]
 
         let uuid = prepareRunCoordinator.identifier
-        closeSubscription[uuid] = closablePublisher
+        closeSubscription[uuid] = prepareRunCloseSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 switch $0 {

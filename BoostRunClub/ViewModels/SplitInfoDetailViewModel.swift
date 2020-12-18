@@ -68,7 +68,7 @@ extension SplitInfoDetailViewModel {
     }
 
     func makeSplitInfo() -> [SplitInfo] {
-        var splitInfo: [SplitInfo] = [
+        let splitInfo: [SplitInfo] = [
             SplitInfo(title: "거리", value: "\(distText) km"),
             SplitInfo(title: "평균 페이스", value: "\(avgPaceText) /km"),
             SplitInfo(title: "최고 페이스", value: "\(maxPaceText) /km"),

@@ -20,24 +20,21 @@ final class MotionProvider: MotionProvidable {
     private let motion = CMMotionManager()
     private var timer: Timer? = Timer()
     private var isActive = false
+
     private let model: BRCActivityClassifierA? = {
         let configuration = MLModelConfiguration()
         return try? BRCActivityClassifierA(configuration: configuration)
     }()
 
-    var gravityArray = [CMAcceleration]()
-    var accelerometerArray = [CMAcceleration]()
-    var rotationArray = [CMRotationRate]()
-    var attitudeArray = [CMAttitude]()
-    var array: [Double] {
-        return Array<Double>.init(repeating: 0, count: 400)
-    }
+    private var gravityArray = [CMAcceleration]()
+    private var accelerometerArray = [CMAcceleration]()
+    private var rotationArray = [CMRotationRate]()
+    private var array = [Double](repeating: 0, count: 400)
 
     var motionType = CurrentValueSubject<MotionType, Never>(.standing)
 
     func startTrackingActivityType() {
         if isActive { return }
-
         isActive = true
 
         if motion.isDeviceMotionAvailable {
@@ -56,13 +53,12 @@ final class MotionProvider: MotionProvidable {
                                       let result = self.getActivity(
                                           gravity: self.gravityArray,
                                           accelometer: self.accelerometerArray,
-                                          rotation: self.rotationArray,
-                                          attitude: self.attitudeArray
+                                          rotation: self.rotationArray
                                       )
 
-                                      self.gravityArray = []
-                                      self.accelerometerArray = []
-                                      self.rotationArray = []
+                                      self.gravityArray.removeAll()
+                                      self.accelerometerArray.removeAll()
+                                      self.rotationArray.removeAll()
 
                                       switch result {
                                       case "walking":
@@ -83,21 +79,21 @@ final class MotionProvider: MotionProvidable {
     func getActivity(
         gravity: [CMAcceleration],
         accelometer: [CMAcceleration],
-        rotation: [CMRotationRate],
-        attitude _: [CMAttitude]
+        rotation: [CMRotationRate]
     )
         -> String
     {
-        guard let gravX = try? MLMultiArray(gravity.map { $0.x }),
-              let gravY = try? MLMultiArray(gravity.map { $0.y }),
-              let gravZ = try? MLMultiArray(gravity.map { $0.z }),
-              let rotationRateX = try? MLMultiArray(rotation.map { $0.x }),
-              let rotationRateY = try? MLMultiArray(rotation.map { $0.y }),
-              let rotationRateZ = try? MLMultiArray(rotation.map { $0.z }),
-              let userAccelerationX = try? MLMultiArray(accelometer.map { $0.x }),
-              let userAccelerationY = try? MLMultiArray(accelometer.map { $0.y }),
-              let userAccelerationZ = try? MLMultiArray(accelometer.map { $0.z }),
-              let stateIn = try? MLMultiArray(array)
+        guard
+            let gravX = try? MLMultiArray(gravity.map { $0.x }),
+            let gravY = try? MLMultiArray(gravity.map { $0.y }),
+            let gravZ = try? MLMultiArray(gravity.map { $0.z }),
+            let rotationRateX = try? MLMultiArray(rotation.map { $0.x }),
+            let rotationRateY = try? MLMultiArray(rotation.map { $0.y }),
+            let rotationRateZ = try? MLMultiArray(rotation.map { $0.z }),
+            let userAccelerationX = try? MLMultiArray(accelometer.map { $0.x }),
+            let userAccelerationY = try? MLMultiArray(accelometer.map { $0.y }),
+            let userAccelerationZ = try? MLMultiArray(accelometer.map { $0.z }),
+            let stateIn = try? MLMultiArray(array)
         else { return "" }
 
         let input = BRCActivityClassifierAInput(
