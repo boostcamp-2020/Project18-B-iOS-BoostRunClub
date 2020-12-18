@@ -112,9 +112,10 @@
 		960F9E432581050B008FDA89 /* ActivityListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960F9E422581050B008FDA89 /* ActivityListHeaderView.swift */; };
 		961840D92580EE0000069FDA /* ActivityListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961840D82580EE0000069FDA /* ActivityListDataSource.swift */; };
 		961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961840E32580F6A200069FDA /* ActivityListItem.swift */; };
+		961905E8258D2A40001FB34F /* Double+Radian+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */; };
 		9620707725891F9F00D3ABFE /* RunningServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707625891F9F00D3ABFE /* RunningServiceType.swift */; };
 		9620707B2589655A00D3ABFE /* RunningBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707A2589655A00D3ABFE /* RunningBoard.swift */; };
-		9620707F2589657A00D3ABFE /* RunningRecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707E2589657A00D3ABFE /* RunningRecoder.swift */; };
+		9620707F2589657A00D3ABFE /* RunningRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707E2589657A00D3ABFE /* RunningRecorder.swift */; };
 		962070832589666300D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
 		9620708B25896A6900D3ABFE /* PedometerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620708A25896A6900D3ABFE /* PedometerProvider.swift */; };
 		9620708E2589810800D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
@@ -327,9 +328,10 @@
 		960F9E422581050B008FDA89 /* ActivityListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListHeaderView.swift; sourceTree = "<group>"; };
 		961840D82580EE0000069FDA /* ActivityListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListDataSource.swift; sourceTree = "<group>"; };
 		961840E32580F6A200069FDA /* ActivityListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListItem.swift; sourceTree = "<group>"; };
+		961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Radian+Degree.swift"; sourceTree = "<group>"; };
 		9620707625891F9F00D3ABFE /* RunningServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceType.swift; sourceTree = "<group>"; };
 		9620707A2589655A00D3ABFE /* RunningBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBoard.swift; sourceTree = "<group>"; };
-		9620707E2589657A00D3ABFE /* RunningRecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecoder.swift; sourceTree = "<group>"; };
+		9620707E2589657A00D3ABFE /* RunningRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecorder.swift; sourceTree = "<group>"; };
 		962070822589666300D3ABFE /* RunningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningState.swift; sourceTree = "<group>"; };
 		9620708A25896A6900D3ABFE /* PedometerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProvider.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
@@ -645,7 +647,7 @@
 			children = (
 				9620707625891F9F00D3ABFE /* RunningServiceType.swift */,
 				9620707A2589655A00D3ABFE /* RunningBoard.swift */,
-				9620707E2589657A00D3ABFE /* RunningRecoder.swift */,
+				9620707E2589657A00D3ABFE /* RunningRecorder.swift */,
 			);
 			path = RunningService;
 			sourceTree = "<group>";
@@ -763,6 +765,7 @@
 				4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */,
 				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
 				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
+				961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1020,6 +1023,7 @@
 				4CF009BC257CA9EB00EC928A /* ZActivity+Activity.swift in Sources */,
 				9689A166257640C700DED689 /* PausedRunningViewModel.swift in Sources */,
 				96ED403B257C7747007DB3DF /* CoreDataService.swift in Sources */,
+				961905E8258D2A40001FB34F /* Double+Radian+Degree.swift in Sources */,
 				96CB22B525823B02000D67C4 /* MapSnapShotSubscription.swift in Sources */,
 				71E82898256B9788004A1F30 /* TabBarCoordinator.swift in Sources */,
 				96B2DC2B258489CF00A95DD0 /* UILabel+Make.swift in Sources */,
@@ -1139,7 +1143,7 @@
 				96E0A6A5257EEAC8008D81EC /* ActivityDateFilterViewModel.swift in Sources */,
 				960A14F5257DF9D1008D2BD3 /* ActivityTotalConfig.swift in Sources */,
 				96E0A6A1257EEA79008D81EC /* ActivityDateFilterViewController.swift in Sources */,
-				9620707F2589657A00D3ABFE /* RunningRecoder.swift in Sources */,
+				9620707F2589657A00D3ABFE /* RunningRecorder.swift in Sources */,
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
 				964BC6E02580CFDA00A69A82 /* ActivityListViewController.swift in Sources */,

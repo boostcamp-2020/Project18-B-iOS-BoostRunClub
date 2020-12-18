@@ -14,14 +14,18 @@ struct RunningSlice: Codable {
     var distance: Double = 0
     var isRunning: Bool = false
 
-    mutating func setupSlice(with locations: [CLLocation]) {
-        endIndex = locations.count - 1
+    mutating func setupSlice(with runningStates: [RunningState]) {
         if startIndex < endIndex {
             distance = (startIndex ..< endIndex).reduce(into: Double(0)) { distance, idx in
-                distance += locations[idx].distance(from: locations[idx + 1])
+                let newDistance = runningStates[idx].location.distance(from: runningStates[idx + 1].location)
+                print("[SLICE] (\(idx) - \(idx + 1)) (D \(distance) + \(newDistance) = \(distance + newDistance)")
+                print("[SLICE] (\(runningStates[idx + 1].distance) - \(runningStates[idx].distance) = \(runningStates[idx + 1].distance - runningStates[idx].distance)")
+                distance += newDistance
             }
         } else {
             distance = 0
         }
+
+        print("[SLICE] from distance: \(runningStates[endIndex].distance - runningStates[startIndex].distance)")
     }
 }

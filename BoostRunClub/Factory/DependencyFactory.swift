@@ -23,7 +23,7 @@ class DependencyFactory {
             locationProvider: locationProvider,
             pedometerProvider: pedometerProvider
         ),
-        recoder: RunningRecoder(
+        recoder: RunningRecorder(
             activityWriter: activityProvider,
             mapSnapShotter: MapSnapShotService()
         )

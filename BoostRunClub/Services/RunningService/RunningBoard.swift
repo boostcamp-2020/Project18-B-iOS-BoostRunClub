@@ -52,7 +52,23 @@ final class RunningDashBoard: RunningBoard {
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         self.pedometerProvider = pedometerProvider
+    }
 
+    func setState(isRunning: Bool) {
+        self.isRunning = isRunning
+    }
+
+    func start() {
+        bindEvent()
+        eventTimer.start()
+        locationProvider.startBackgroundTask()
+        pedometerProvider.start()
+
+        lastUpdatedTime = Date.timeIntervalSinceReferenceDate
+        isRunning = true
+    }
+
+    private func bindEvent() {
         locationProvider.locationSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] location in
@@ -68,23 +84,10 @@ final class RunningDashBoard: RunningBoard {
             }
             .store(in: &cancellables)
 
-        pedometerProvider.cadence
+        pedometerProvider.cadenceSubject
             .sink { [weak self] cadence in
                 self?.cadence = cadence
             }.store(in: &cancellables)
-    }
-
-    func setState(isRunning: Bool) {
-        self.isRunning = isRunning
-    }
-
-    func start() {
-        eventTimer.start()
-        locationProvider.startBackgroundTask()
-        pedometerProvider.start()
-
-        lastUpdatedTime = Date.timeIntervalSinceReferenceDate
-        isRunning = true
     }
 
     func clear() {
@@ -100,6 +103,8 @@ final class RunningDashBoard: RunningBoard {
     }
 
     func stop() {
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
         eventTimer.stop()
         locationProvider.stopBackgroundTask()
         pedometerProvider.stop()
@@ -114,7 +119,7 @@ final class RunningDashBoard: RunningBoard {
 
     private func publish() {
         guard let location = location else { return }
-
+        print("[DASHBOARD] D: \(distance)")
         let result = RunningState(
             location: location,
             runningTime: runningTime.value,

@@ -11,7 +11,7 @@ import Foundation
 
 protocol RunningServiceType {
     var dashBoard: RunningBoard { get }
-    var recoder: RunningRecodable { get }
+    var recoder: RunningRecordable { get }
     var activityResults: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
     var runningState: CurrentValueSubject<MotionType, Never> { get }
     var runningEvent: PassthroughSubject<RunningEvent, Never> { get }
@@ -29,7 +29,7 @@ class RunningService: RunningServiceType {
     private(set) var cancellables = Set<AnyCancellable>()
     private(set) var motionProvider: MotionProvidable
     private(set) var dashBoard: RunningBoard
-    private(set) var recoder: RunningRecodable
+    private(set) var recoder: RunningRecordable
 
     private var startTime: Date?
 
@@ -42,7 +42,7 @@ class RunningService: RunningServiceType {
 
     var goalSubscription: AnyCancellable?
 
-    init(motionProvider: MotionProvidable, dashBoard: RunningBoard, recoder: RunningRecodable) {
+    init(motionProvider: MotionProvidable, dashBoard: RunningBoard, recoder: RunningRecordable) {
         self.dashBoard = dashBoard
         self.recoder = recoder
         self.motionProvider = motionProvider
