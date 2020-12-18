@@ -33,6 +33,7 @@ final class RunningRecorder: RunningRecordable {
     private(set) var minAltitude: Double = 0
 
     private(set) var states = [RunningState]()
+    private var paceDelta: Int = 1
 
     var routes: [RunningSlice] {
         currentSlice.endIndex = locations.count - 1
@@ -81,6 +82,13 @@ final class RunningRecorder: RunningRecordable {
             addSlice()
         }
 
+        // 페이스 증가/감소 여부에 따라 Slice 분리
+        let newPaceDelta = state.pace - recentState.pace
+        if newPaceDelta * paceDelta < 0 {
+            paceDelta = newPaceDelta
+            addSlice()
+        }
+
         states.append(state)
         locations.append(state.location)
     }
@@ -99,6 +107,10 @@ final class RunningRecorder: RunningRecordable {
         currentSlice.isRunning = state.isRunning
         currentSlice.setupSlice(with: states)
         currentSplit.runningSlices.append(currentSlice)
+
+        // swiftlint:disable:next line_length
+        print("[RECORDER] addSlice (\(currentSlice.startIndex)-\(currentSlice.endIndex)) run: \(currentSlice.isRunning) paceD: \(states[currentSlice.startIndex].pace - states[currentSlice.endIndex].pace) ")
+
         currentSlice = RunningSlice()
         currentSlice.startIndex = locations.count - 1
     }

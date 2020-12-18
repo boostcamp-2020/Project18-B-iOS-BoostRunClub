@@ -52,7 +52,6 @@ class DetailMapView: UIView {
                 annotation.coordinate = coords[locationIdx]
                 self.mapView.addAnnotation(annotation)
             }
-
     }
 }
 

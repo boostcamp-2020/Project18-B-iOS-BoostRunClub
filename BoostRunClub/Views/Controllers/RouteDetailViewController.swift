@@ -175,6 +175,5 @@ extension RouteDetailViewController {
                 annotation.coordinate = coords[locationIdx]
                 self.mapView.addAnnotation(annotation)
             }
-
     }
 }
