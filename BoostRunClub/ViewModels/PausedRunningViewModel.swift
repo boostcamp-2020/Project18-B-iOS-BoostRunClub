@@ -17,21 +17,28 @@ protocol PausedRunningViewModelTypes {
 protocol PausedRunningViewModelInputs {
     func didTapResumeButton()
     func didLongHoldStopRunningButton()
-    func viewDidAppear()
     func closeAnimationEnded()
     func didTapRunData(index: Int)
+
+    // Life Cycle
+    func viewDidAppear()
 }
 
 protocol PausedRunningViewModelOutputs {
-    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
-    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
-    var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
-    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
+    // Data For Configure
     var runInfoData: [RunningInfo] { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
+
+    // Signal For View Action
+    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
+
+    // Signal For Coordinate
+    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
+    var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {

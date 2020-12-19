@@ -8,12 +8,6 @@
 import Combine
 import Foundation
 
-protocol EventTimeProvidable {
-    var timeIntervalSubject: PassthroughSubject<TimeInterval, Never> { get }
-    func start()
-    func stop()
-}
-
 class EventTimeProvider: EventTimeProvidable {
     var timeIntervalSubject = PassthroughSubject<TimeInterval, Never>()
 

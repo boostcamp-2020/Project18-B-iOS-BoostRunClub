@@ -9,12 +9,6 @@ import Combine
 import CoreLocation
 import Foundation
 
-protocol LocationProvidable {
-    var locationSubject: PassthroughSubject<CLLocation, Never> { get }
-    func startBackgroundTask()
-    func stopBackgroundTask()
-}
-
 class LocationProvider: NSObject, LocationProvidable {
     let locationManager: CLLocationManager
     private(set) var locationSubject = PassthroughSubject<CLLocation, Never>()

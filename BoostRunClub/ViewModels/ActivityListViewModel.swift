@@ -19,8 +19,10 @@ protocol ActivityListViewModelInputs {
 }
 
 protocol ActivityListViewModelOutputs {
+    // Data For Configure
     var activityListItemSubject: CurrentValueSubject<[ActivityListItem], Never> { get }
 
+    // Signal For Coordinate
     var showActivityDetails: PassthroughSubject<Activity, Never> { get }
     var closeSignal: PassthroughSubject<Void, Never> { get }
 }

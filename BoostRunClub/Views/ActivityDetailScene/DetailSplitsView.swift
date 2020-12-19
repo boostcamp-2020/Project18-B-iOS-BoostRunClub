@@ -44,9 +44,8 @@ extension DetailSplitsView {
 
 extension DetailSplitsView {
     private func commonInit() {
-        tableView.intrinsicSizeChangedSignal
-            .sink { [weak self] in
-                self?.invalidateIntrinsicContentSize()
+        tableView.didIntrinsicSizeChangedSignal
+            .sink { [weak self] _ in
                 self?.didHeightChangeSignal.send()
             }
             .store(in: &cancellables)

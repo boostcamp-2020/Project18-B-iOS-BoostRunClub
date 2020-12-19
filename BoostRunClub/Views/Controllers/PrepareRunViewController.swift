@@ -58,14 +58,14 @@ final class PrepareRunViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.goalValueSetupClosed
+        viewModel.outputs.goalValueSetupAnimationSignal
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewShrinkToOriginalSizeAnimation()
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.goalTypeSetupClosed
+        viewModel.outputs.goalTypeSetupAnimationSignal
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewCrossDissolveAnimation()

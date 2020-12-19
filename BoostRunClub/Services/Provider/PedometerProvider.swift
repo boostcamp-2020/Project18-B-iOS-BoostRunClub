@@ -9,12 +9,6 @@ import Combine
 import CoreMotion
 import Foundation
 
-protocol PedometerProvidable {
-    func start()
-    func stop()
-    var cadenceSubject: PassthroughSubject<Int, Never> { get }
-}
-
 final class PedometerProvider: PedometerProvidable {
     private let pedometer = CMPedometer()
     private(set) var cadenceSubject = PassthroughSubject<Int, Never>()

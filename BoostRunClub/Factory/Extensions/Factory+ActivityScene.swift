@@ -29,7 +29,7 @@ extension DependencyFactory: ActivitySceneFactory {
     }
 
     func makeActivityVM() -> ActivityViewModelTypes {
-        return ActivityViewModel(activityReader: activityStorage)
+        return ActivityViewModel(activityReader: activityStorageService)
     }
 
     func makeActivityDateFilterVC(

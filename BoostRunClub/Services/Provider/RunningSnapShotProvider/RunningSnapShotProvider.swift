@@ -9,10 +9,6 @@ import Combine
 import Foundation
 import MapKit
 
-protocol RunningSnapShotProvidable {
-    func takeSnapShot(from locations: [CLLocation], dimension: Double) -> AnyPublisher<Data?, Error>
-}
-
 class RunningSnapShotProvider: RunningSnapShotProvidable {
     func takeSnapShot(
         from locations: [CLLocation],

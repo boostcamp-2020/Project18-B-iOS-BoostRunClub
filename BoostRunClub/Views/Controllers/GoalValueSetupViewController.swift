@@ -28,7 +28,7 @@ class GoalValueSetupViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         keyboardType = viewModel.outputs.goalType == GoalType.distance ? .decimalPad : .numberPad
 
-        viewModel.outputs.goalValueObservable
+        viewModel.outputs.goalValueSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] value in
                 self?.goalValueView.setLabelText(goalValue: value, goalUnit: viewModel.outputs.goalType.unit)

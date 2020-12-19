@@ -29,8 +29,6 @@ class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
         self.runningService = runningService
         self.factory = factory
 
-//        RunningSplit.sampleData.forEach { self.newSplitAction(split: $0) }
-//        runningService.runningSplits.forEach { self.newSplitAction(split: $0) }
         runningService.recordService.didAddSplitSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.newSplitAction(split: $0) }

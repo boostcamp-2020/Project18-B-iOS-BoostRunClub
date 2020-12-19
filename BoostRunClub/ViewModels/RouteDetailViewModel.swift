@@ -16,13 +16,16 @@ protocol RouteDetailViewModelTypes: AnyObject {
 }
 
 protocol RouteDetailViewModelInputs {
-    func viewDidLoad()
     func didTapCloseButton()
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol RouteDetailViewModelOutputs {
-    var closeSignal: PassthroughSubject<Void, Never> { get }
     var detailConfigSubject: PassthroughSubject<ActivityDetailConfig, Never> { get }
+
+    var closeSignal: PassthroughSubject<Void, Never> { get }
 }
 
 final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewModelOutputs {

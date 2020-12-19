@@ -15,14 +15,17 @@ protocol ProfileViewModelTypes: AnyObject {
 }
 
 protocol ProfileViewModelInputs {
-    func viewDidLoad()
     func didTapEditProfileButton()
     func didEditProfile(_ profile: Profile)
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol ProfileViewModelOutputs {
-    var showEditProfileSignal: PassthroughSubject<Void, Never> { get }
     var profileSubject: PassthroughSubject<Profile, Never> { get }
+
+    var showEditProfileSignal: PassthroughSubject<Void, Never> { get }
 }
 
 final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {

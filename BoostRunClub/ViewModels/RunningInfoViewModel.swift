@@ -16,17 +16,22 @@ protocol RunningInfoViewModelTypes: AnyObject {
 protocol RunningInfoViewModelInputs {
     func didTapPauseButton()
     func didTapRunData(index: Int)
+
+    // Life Cycle
     func viewDidAppear()
 }
 
 protocol RunningInfoViewModelOutputs {
     typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfo, Never>
+    // Data For Configure
     var runningInfoSubjects: [RunningInfoTypeSubject] { get }
 
+    // Signal For View Action
     var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
     var initialAnimationSignal: PassthroughSubject<Void, Never> { get }
     var resumeAnimationSignal: PassthroughSubject<Void, Never> { get }
 
+    // Signal For Coordinate
     var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 

@@ -14,7 +14,7 @@ protocol SplitInfoDetailViewModelType {
 }
 
 protocol SplitInfoDetailViewModelInputs {
-    func didTapbackButton()
+    func didTapBackButton()
 }
 
 protocol SplitInfoDetailViewModelOutputs {
@@ -42,7 +42,7 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
         splitSubject.value = makeSplitRows()
     }
 
-    func didTapbackButton() {}
+    func didTapBackButton() {}
 
     var splitInfoSubject = CurrentValueSubject<[SplitInfo], Never>([])
     var splitSubject = CurrentValueSubject<[SplitRow], Never>([])

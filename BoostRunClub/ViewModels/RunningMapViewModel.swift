@@ -15,19 +15,26 @@ protocol RunningMapViewModelTypes {
 }
 
 protocol RunningMapViewModelInputs {
-    func viewWillAppear()
     func didTapLocateButton()
     func didTapExitButton()
+
+    // Life Cycle
+    func viewWillAppear()
     func viewWillDisappear()
 }
 
 protocol RunningMapViewModelOutputs {
+    // Data For Configure
     var routesSubject: PassthroughSubject<[CLLocationCoordinate2D], Never> { get }
+
+    // Signal For View Action
     var userTrackingModeOnWithAnimatedSignal: PassthroughSubject<Bool, Never> { get }
     var userTrackingModeOffSignal: PassthroughSubject<Void, Never> { get }
-    var closeRunningMapSceneSignal: PassthroughSubject<Void, Never> { get }
     var closeAnimationSignal: PassthroughSubject<Void, Never> { get }
     var appearAnimationSignal: PassthroughSubject<Void, Never> { get }
+
+    // Signal For Coordinate
+    var closeSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs {
@@ -64,14 +71,14 @@ class RunningMapViewModel: RunningMapViewModelInputs, RunningMapViewModelOutputs
     }
 
     func didTapExitButton() {
-        closeRunningMapSceneSignal.send()
+        closeSignal.send()
     }
 
     // outputs
     var routesSubject = PassthroughSubject<[CLLocationCoordinate2D], Never>()
     var userTrackingModeOnWithAnimatedSignal = PassthroughSubject<Bool, Never>()
     var userTrackingModeOffSignal = PassthroughSubject<Void, Never>()
-    var closeRunningMapSceneSignal = PassthroughSubject<Void, Never>()
+    var closeSignal = PassthroughSubject<Void, Never>()
     var closeAnimationSignal = PassthroughSubject<Void, Never>()
     var appearAnimationSignal = PassthroughSubject<Void, Never>()
 }

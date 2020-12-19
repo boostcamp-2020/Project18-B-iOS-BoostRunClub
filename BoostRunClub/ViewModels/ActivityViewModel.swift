@@ -15,22 +15,26 @@ protocol ActivityViewModelTypes: AnyObject {
 }
 
 protocol ActivityViewModelInputs {
-    func viewDidLoad()
     func didFilterChanged(to idx: Int)
     func didFilterRangeChanged(range: DateRange)
     func didSelectActivity(at index: Int)
     func didTapShowDateFilter()
     func didTapShowAllActivities()
     func didTapShowProfileButton()
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol ActivityViewModelOutputs {
     typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange], current: DateRange)
 
+    // Data For Configure
     var filterTypeSubject: CurrentValueSubject<ActivityFilterType, Never> { get }
     var totalDataSubject: CurrentValueSubject<ActivityTotalConfig, Never> { get }
     var recentActivitiesSubject: CurrentValueSubject<[Activity], Never> { get }
 
+    // Signal For Coordinate
     var showProfileSignal: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
     var showActivityListSignal: PassthroughSubject<Void, Never> { get }

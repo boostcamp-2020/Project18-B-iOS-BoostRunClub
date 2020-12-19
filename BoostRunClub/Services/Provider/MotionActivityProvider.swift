@@ -9,12 +9,6 @@ import Combine
 import CoreMotion
 import Foundation
 
-protocol MotionActivityProvidable {
-    var motionTypeSubject: PassthroughSubject<MotionType, Never> { get }
-    func start()
-    func stop()
-}
-
 class MotionActivityProvider: MotionActivityProvidable {
     private let activityManager = CMMotionActivityManager()
     private var isActive = false

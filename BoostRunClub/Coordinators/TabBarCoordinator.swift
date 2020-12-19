@@ -53,6 +53,7 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
         let prepareRunCoordinator = PrepareRunCoordinator(navigationController: UINavigationController())
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
 
+        // TabBar Main Page
         let startPage: TabBarPage
         let activityCloseSignal: AnyPublisher<ActivityCoordinationResult, Never>
         if

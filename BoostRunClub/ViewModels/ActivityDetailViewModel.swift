@@ -18,6 +18,8 @@ protocol ActivityDetailViewModelInputs {
     func didTapBackItem()
     func didTapShowRouteDetail()
     func didTapShowInfoDetail()
+
+    // Life Cycle
     func viewDidLoad()
     func viewDidAppear()
 }
@@ -26,7 +28,7 @@ protocol ActivityDetailViewModelOutputs {
     var showInfoDetailSignal: PassthroughSubject<Void, Never> { get }
     var showRouteDetailSignal: PassthroughSubject<ActivityDetailConfig, Never> { get }
     var closeSignal: PassthroughSubject<Void, Never> { get }
-    
+
     var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never> { get }
 
     var initialAnimationSignal: PassthroughSubject<Void, Never> { get }

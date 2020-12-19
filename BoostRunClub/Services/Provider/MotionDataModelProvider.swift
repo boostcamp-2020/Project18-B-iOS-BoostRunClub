@@ -10,12 +10,6 @@ import CoreML
 import CoreMotion
 import Foundation
 
-protocol MotionDataModelProvidable {
-    func start()
-    func stop()
-    var motionType: CurrentValueSubject<MotionType, Never> { get }
-}
-
 final class MotionDataModelProvider: MotionDataModelProvidable {
     private let motion = CMMotionManager()
     private var timer: Timer? = Timer()

@@ -23,13 +23,17 @@ protocol RunningPageViewModelInputs {
 }
 
 protocol RunningPageViewModelOutputs {
+    // Data For Configure
+    var runningTimeSubject: AnyPublisher<String, Never> { get }
+
+    // Signal For View Action
     var speechSignal: PassthroughSubject<String, Never> { get }
     var scaleOnDraggingSubject: PassthroughSubject<Double, Never> { get }
     var scaleOnSlidingSubject: AnyPublisher<Double, Never> { get }
-    var runningTimeSubject: AnyPublisher<String, Never> { get }
-
-    var backToPageMainSignal: PassthroughSubject<Int, Never> { get }
     var setPageSignal: PassthroughSubject<Int, Never> { get }
+
+    // Signal For Coordinate
+    var backToPageMainSignal: PassthroughSubject<Int, Never> { get }
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {

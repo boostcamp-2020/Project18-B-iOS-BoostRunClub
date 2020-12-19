@@ -87,7 +87,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.changeInContentSignal
+        viewModel.outputs.saveButtonActivateSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] (bool: Bool) in
                 if bool {

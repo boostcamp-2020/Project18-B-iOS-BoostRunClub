@@ -14,25 +14,30 @@ protocol EditProfileViewModelTypes {
 }
 
 protocol EditProfileViewModelInputs {
-    // view did load view controller에서 바인딩하기
-    func viewDidLoad()
     func didTapApplyButton()
     func didEditProfilePicture(to imageData: Data)
     func didEditLastName(to text: String)
     func didEditFirstName(to text: String)
     func didEditHometown(to text: String)
     func didEditBio(to text: String)
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol EditProfileViewModelOutputs {
-    var closeSignal: PassthroughSubject<Profile, Never> { get }
+    // Data For Configure
     var imageDataSubject: CurrentValueSubject<Data?, Never> { get }
     var lastNameTextSubject: CurrentValueSubject<String, Never> { get }
     var firstNameTextSubject: CurrentValueSubject<String, Never> { get }
     var hometownTextSubject: CurrentValueSubject<String, Never> { get }
-
     var bioTextSubject: CurrentValueSubject<String, Never> { get }
-    var changeInContentSignal: PassthroughSubject<Bool, Never> { get }
+
+    // Signal For View Action
+    var saveButtonActivateSignal: PassthroughSubject<Bool, Never> { get }
+
+    // Signal For Coordinate
+    var closeSignal: PassthroughSubject<Profile, Never> { get }
 }
 
 final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewModelOutputs {
@@ -117,7 +122,7 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     var firstNameTextSubject = CurrentValueSubject<String, Never>("")
     var hometownTextSubject = CurrentValueSubject<String, Never>("")
     var bioTextSubject = CurrentValueSubject<String, Never>("")
-    var changeInContentSignal = PassthroughSubject<Bool, Never>()
+    var saveButtonActivateSignal = PassthroughSubject<Bool, Never>()
 }
 
 extension EditProfileViewModel: EditProfileViewModelTypes {
@@ -136,7 +141,7 @@ extension EditProfileViewModel {
     }
 
     private func compareChanges() {
-        changeInContentSignal.send(currentProfile != initialProfile)
+        saveButtonActivateSignal.send(currentProfile != initialProfile)
     }
 
     private func sendChangedProfilePictureSignal() {
