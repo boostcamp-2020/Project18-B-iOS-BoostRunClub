@@ -58,7 +58,6 @@ class RunningService: RunningServiceType {
             .filter { [weak self] _ in self?.autoStatable ?? false }
             .filter { [weak self] in $0 != self?.runningStateSubject.value }
             .sink { [weak self] in
-
                 self?.runningStateSubject.send($0)
                 switch $0 {
                 case .running:

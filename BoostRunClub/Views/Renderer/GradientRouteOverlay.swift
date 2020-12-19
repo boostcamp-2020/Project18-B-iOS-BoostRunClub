@@ -12,7 +12,6 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     let minSpeed: CGFloat
     var maxHue: CGFloat
     var minHue: CGFloat
-//    var colors = [CGColor]()
     var colors = [(start: CGColor, end: CGColor)]()
     var slices = [RunningSlice]()
 

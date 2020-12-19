@@ -33,11 +33,11 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
         isActive = true
 
         if motion.isDeviceMotionAvailable {
-            motion.deviceMotionUpdateInterval = 1.0 / 100.0
+            motion.deviceMotionUpdateInterval = 1.0 / 50.0
             motion.showsDeviceMovementDisplay = true
             motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
 
-            timer = Timer(fire: Date(), interval: 1.0 / 100.0, repeats: true,
+            timer = Timer(fire: Date(), interval: 1.0 / 50.0, repeats: true,
                           block: { _ in
                               if let data = self.motion.deviceMotion {
                                   self.attitudeArray.append(data.attitude)
