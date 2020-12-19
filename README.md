@@ -24,9 +24,10 @@
   margin-right: auto;
   width: 76%;">
 
-| <img src="https://avatars1.githubusercontent.com/u/34773827?s=400&u=5d2fc5bb683e8974b85d82aa58096335b79db6ab&v=4" width="150"> | <img src="https://avatars3.githubusercontent.com/u/46217844?s=460&u=8dc1af018cddf99b1dee7170beac87d0f69c1fa1&v=4" width="150"> | <img src="https://avatars2.githubusercontent.com/u/21030956?s=460&u=3a1ddcfd3e95a67f995b6a4ab00be331c01a9a5c&v=4" width="150"> |
+| 🍎 iOS   | 🍏 iOS  |  🍎 iOS  |
 | :-: | :-: | :-: |
-|  **S011 김신우**   |  **S046 장임호**  |  **S053 조기현** |
+| <img src="https://avatars1.githubusercontent.com/u/34773827?s=400&u=5d2fc5bb683e8974b85d82aa58096335b79db6ab&v=4" width="150"> | <img src="https://avatars3.githubusercontent.com/u/46217844?s=460&u=8dc1af018cddf99b1dee7170beac87d0f69c1fa1&v=4" width="150"> | <img src="https://avatars2.githubusercontent.com/u/21030956?s=460&u=3a1ddcfd3e95a67f995b6a4ab00be331c01a9a5c&v=4" width="150"> |
+|  **`S011` 김신우**   |  **`S046` 장임호**  |  **`S053` 조기현** |
 | [@SHIVVVPP](https://github.com/SHIVVVPP)   | [@seoulboy](https://github.com/seoulboy)   | [@whrlgus](https://github.com/whrlgus)     |
 |  잠 그게 뭐죠?  |  잠은 자야합니다  |  라면 끓여와도 되죠?  |
 
@@ -38,7 +39,7 @@
 
 >부런클 앱의 미리보기 화면입니다 ✨
 
-| <img src="https://user-images.githubusercontent.com/34773827/101919696-34531180-3c0e-11eb-802f-46d75562746e.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101919701-36b56b80-3c0e-11eb-9f02-a30b4cb32856.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101921009-d58e9780-3c0f-11eb-9f16-d1236e3102a7.gif" width="400px"> | 
+| <img src="https://user-images.githubusercontent.com/34773827/101919696-34531180-3c0e-11eb-802f-46d75562746e.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/21030956/102686069-78569f80-4228-11eb-87ff-6c887358dee3.gif" width="400px"> | <img src="https://user-images.githubusercontent.com/34773827/101921009-d58e9780-3c0f-11eb-9f16-d1236e3102a7.gif" width="400px"> | 
 | :-: | :-: | :-: | 
 | **목표 설정 (시간)** | **러닝** |  **러닝 일시정지** |  
 
@@ -46,14 +47,17 @@
 | :-: | :-: | :-: | 
 | **활동** | **모든 활동** |  **프로필** | 
 
+|<img src = "https://user-images.githubusercontent.com/34773827/102686101-ad62f200-4228-11eb-8e1e-e3fff229fdb1.gif" width="400px"> |<img src = "https://user-images.githubusercontent.com/34773827/102686924-6d067280-422e-11eb-9ced-31a9aa019f9d.gif" width="400px"> |<img src = "https://user-images.githubusercontent.com/34773827/102686922-611ab080-422e-11eb-84f4-5a211d19d298.gif" width="400px"> |
+| :-: | :-: | :-: | 
+| **활동상세** | **구간상세** |  **경로상세** |
 <br>
 
 ## 🚗 How to run
 >부런클을 직접 설치하여 사용해 보세요 ✨
 
 - 우선 xcode 12.2 와 cocoapods 설치가 선행되어야 합니다. `brew install cocoapods`
-- 설치가 되어있다면, 해당 깃헙 저장소를 로컬 클론해주세요.
-- 클론 후 해당 폴더에서 `pod install` 을 실행해주세요.
+- 설치가 되어있다면, 저장소의 `Code` 버튼을 클릭하여 해당 깃헙 저장소를 로컬에 클론하시거나 `Open With Xcode`를 클릭해주세요. 
+- 클론 후에는 해당 폴더에서 `pod install` 을 실행해주세요.
 - 인스톨이 완료된 후에는 `BoostRunClub.xcworkspace` 를 열고, 실행 버튼 혹은
  실행 단축키 `command + R` 을 눌러서 실행해주세요.
 
@@ -65,7 +69,7 @@
 ### 러닝 기능
 - 사용자의 러닝을 기록하여 그 경로를 지도에 표시합니다.
 - 기록된 러닝 정보를 바탕으로 구간 별 페이스, 케이던스 등 측정 자료를 표시합니다.
-- 사용자의 움직임을 감지하여 러닝을 일시정지 / 재개할 수 있습니다.
+- 사용자의 움직임을 감지하여 러닝을 자동으로 일시정지 / 재개할 수 있습니다.
 
 ### 활동 기능
 - 저장된 러닝 데이터를 주, 월, 년 별로 필터 적용하여 확인이 가능합니다.
@@ -73,12 +77,66 @@
 - 이전에 달린 러닝 경로를 지도에서 확인할 수 있습니다.
 - 소모된 칼로리량, 평균페이스, 고도 상승 및 하강 등 러닝 상세 데이터를 확인할 수 있습니다.
 
+
+### UI/UX
+- 화면 전환/버튼 클릭 시 반응하는 뷰에 애니메이션 및 햅틱 피드백을 적용하였습니다.
+- 컬러 에셋을 사용하여 다크모드를 지원하도록 구현하였습니다.
+- `AVFoundation` framework의 `AVSpeechSynthesizer`를 사용하여 음성 피드백을 제공합니다.
+- 러닝 시작/일시정지/러닝, 목표 달성 시에 사용자에게 음성으로 알려주어 사용성을 높입니다.
+
+### 다크모드 지원
+
+|                                                              |                                                              |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692748-c8e5f100-4258-11eb-9eb7-0846808ec74c.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692750-d0a59580-4258-11eb-9bf8-24220172c05d.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692550-6dffca00-4257-11eb-9c61-6cf952b653e4.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692544-60e2db00-4257-11eb-81ab-270504a2d629.png" width = 400px> |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692560-7b1cb900-4257-11eb-9c3e-cdf3e28f0393.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692569-87087b00-4257-11eb-855a-ffd8029c6bac.png" width = 400px> |                                                              |                                                              |
+
+
+
+
+
+
+<details> 
+ <summary style="color:blue">👈 더보기</summary>
+ <br> 
+
+
+|                                                              |                                                              |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692732-afdd4000-4258-11eb-8a9c-eae60baf5c68.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692721-9a681600-4258-11eb-9dfc-15b233ddc673.png" width = 400px> |                                                              |                                                              |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692465-bbc80280-4256-11eb-8daa-9924f174cbb7.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692480-d8fcd100-4256-11eb-8c8a-68320319faf3.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692492-f7fb6300-4256-11eb-91cc-7ef33d1483c1.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692488-ee71fb00-4256-11eb-8bfe-5d9a7175a21d.png" width = 400px> |
+
+
+
+|                                                              |                                                              |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692645-08f8a400-4258-11eb-9218-e8cd96fbec45.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692641-01d19600-4258-11eb-9de6-9a330ad203f5.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692650-1746c000-4258-11eb-88bf-56770d2db0a5.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692656-1dd53780-4258-11eb-9116-0c89a193e7ff.png" width = 400px> |
+
+
+
+|                                                              |                                                              |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692613-cc2cad00-4257-11eb-98ff-f579c52fd447.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692598-b7e8b000-4257-11eb-8dc6-3b2de619a89c.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692618-d6e74200-4257-11eb-82e4-f4d74cd56ed3.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692607-c0d98180-4257-11eb-9c09-c9ddc91212cd.png" width = 400px> |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692632-ec5c6c00-4257-11eb-9275-89e7d5899a5e.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692633-f54d3d80-4257-11eb-91a5-126f3dc2535e.png" width = 400px> |                                                              |                                                              |
+
+|                                                              |                                                              |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src = "https://user-images.githubusercontent.com/34773827/102692665-2c235380-4258-11eb-9634-c6db91086c0e.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692663-26c60900-4258-11eb-9486-4c2391e021ac.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692675-36dde880-4258-11eb-9b2e-03ade3348384.png" width = 400px> | <img src = "https://user-images.githubusercontent.com/34773827/102692677-3e04f680-4258-11eb-8ef5-7fe054324c0c.png" width = 400px> |
+
+
+
+
+ <br> 
+
+  </details>
+
+
 <br>
 
 ## 🏛 Architecture
 >부런클에서 사용하고 있는 프로젝트 구조를 보기 쉽게 한눈에 그려보았습니다 ✨
 
-![](https://i.imgur.com/Lh3fTL5.jpg)
+![리드미 001](https://user-images.githubusercontent.com/34773827/102685609-56a7e900-4225-11eb-85e0-6e34407bfdc7.jpeg)
 
 <br>
 
@@ -88,6 +146,19 @@
 ![333 001](https://user-images.githubusercontent.com/46217844/102346327-01c86080-3fe2-11eb-9660-e5e4505d6427.jpeg)
 
 <br>
+
+## 📈 DevOps
+
+### Continuous Integration with `Github Actions`
+
+`Github Actions`를 이용하여 테스트 및 빌드를 자동화하였고, PR을 merge하기 전에 빌드나 테스트가 올바르게 실행이 되는지 손쉽게 확인할 수 있었습니다. 이를 통해 빌드가 되지 않는 코드를 신속하게 확인하고 수정할 수 있었습니다.
+
+
+### `Slack + Github` ChatOps Integration
+
+부스트캠프 Slack에 프로젝트에 대한 Github 알림을 받을 채널을 생성하고 Github App을 통해 프로젝트 저장소와 연동하였습니다.
+
+부스트 런 클럽 프로젝트 저장소에서 일어나는 다양한 활동을 실시간으로 알림 받고, 이를 통해 각 팀원들의 활동 내역을 보다 더 편리하고 빠르게 확인하며 팀의 생산성을 높이고자 노력했습니다. 
 
 ## 💪 Challenges
 >부런클 제작 과정에 있어 저희가 마주했던 도전과제들과 문제를 해결했던 경험을 공유합니다 ✨
@@ -130,6 +201,9 @@ RunningSplit을 통해 사용자는 자신이 뛴 경로와 정보를 볼 수 �
 Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위치 끝 위치를 가지고 있으며
 이를 통해서 Running Split 경로를 그릴 때 RunningSlice 배열 정보를 통해 어색하지 않은 경로를 그릴 수 있게 되었고, 더 나아가 러닝상태에서의 경로와 러닝상태가 아닐 때의 경로를 모두 표시하고 색으로 구분하여 더 나은 사용성을 제공할 수 있게 되었습니다.
 
+
+ ![image](https://user-images.githubusercontent.com/34773827/102685647-8eaf2c00-4225-11eb-9797-bba196b66b27.png)
+
  <br> 
 
 </details>
@@ -153,9 +227,36 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 
 </details>
 
+### 4. 러닝 상태 컨트롤 하기
+
+저희 프로젝트의 핵심 기능 중 하나는 러닝 상태에 따라 자동으로 화면 전환과,
+러닝 여부에 따라 화면에 표시되는 지표들이 변경되는 것입니다.
+
+<details>
+<summary style="color:purple">👈 더보기 </summary>
+
+<br>
+
+저희는 이 기능을 효과적으로 처리하기 위해
+러닝 서비스를 RunningFlowController, RunningDashBoard, RunningRecorder 로 분리하여 구현하였습니다.
+RunningDashBoard는 디바이스의 이벤트를 처리하여 우리가 사용할 러닝 정보로 변환하며 최신 상태를 알리고,
+RunningRecorder는 DashBoard의 값이 변경 될 때, 러닝정보를 누적하고 구조화 시킵니다.
+RunningFlowController는 사용자 이벤트 및 모션 상태 변화를 감지하여 DashBoard, Recorder에 명령을 내려 흐름을 변경합니다.
+
+이렇게 핵심 기능들을 분리함으로써 저희는 러닝 상태 변화에 따른 다양한 효과들을 구현할 수 있었습니다.
+
+![image](https://user-images.githubusercontent.com/34773827/102685985-dfc01f80-4227-11eb-9525-4756d946e294.png)
 
 
-### 4. 의존성 컨테이너 - 싱글턴으로 구현 vs 주입을 통한 구현
+<br> 
+
+
+
+</details>
+
+
+
+### 5. 의존성 컨테이너 - 싱글턴으로 구현 vs 주입을 통한 구현
 
 러닝 데이터를 측정하고 관리하기위한 애플리케이션을 만들다 보니 Core Location 을 감싸는 구체타입 LocationProvider, Core Motion 을 감싸는 구체타입 MotionProvider, 그리고 Core Data를 감싸는 구체타입 RunningDataProvider 등의 여러 구체타입들을 만들게 되었습니다. 각 구체타입에 대한 의존성을 주입하기 위해 ...
 <details> 
@@ -171,8 +272,23 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 
 </details>
 
+### 6. Core ML을 이용한 모션 감지 정확도 개선
+
+걷고 있는 지 뛰고 있는 지, 아니면 가만히 서 있는 지와 같은 사용자 모션에 따라, 러닝 기록 여부를 결정해야 합니다. CMMotionActivity를 활용하면 최대 5가지의 상태를 구분할 수 있지만, 정확도가 너무 낮다는 문제가 있었습니다. 
+
+<details>
+ <summary style="color:red">👈 더보기</summary>
+이 문제를 CoreML을 이용해서 해결했습니다. 기기 센서를 통해 발생하는 값(attitude, gravity, rotationRate, userAcceleration)을 기반으로 label을 두 가지로 구분할 수 있는 모델을 만들었습니다. 꼭 필요한 센서 값을 선별하였고, 기대하는 값의 정확도를 높일 수 있었습니다.
+  <img src = "https://i.imgur.com/wvEluOT.png"/>
+</details>
 
 <br>
+
+
+
+
+##  Things to do
+
 
 
 <div align="center">
