@@ -88,7 +88,7 @@ extension RunDataView {
             label = UILabel()
             label.font = UIFont.boldSystemFont(ofSize: 17)
         }
-        label.textColor = .black
+        label.textColor = UIColor(named: "accent2")
         label.textAlignment = .center
         label.text = "00:00"
         return label
