@@ -783,29 +783,15 @@
 		9680AB9325707E3E006F0FD2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				96A99724258E666400829819 /* MapKit */,
+				96A99723258E664300829819 /* Math */,
+				96A99722258E663400829819 /* Date */,
+				96A9971D258E65FE00829819 /* UIKit */,
 				4C3E7AB3256E3D920061244F /* Notification.name.swift */,
 				969D5F1B256FC48000DD11AB /* String+Regex.swift */,
 				96FA7DF52570177C00090999 /* CaseIterable+.swift */,
-				967FFAA3257602A200F3340C /* TimerInterval+String.swift */,
-				71EFCCA52577D3E6007998AD /* UIButton+setSFSymbol.swift */,
-				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
-				4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */,
-				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
 				71FBAB8C2581EC2B005C8D30 /* URL+Documents.swift */,
 				71FBAB952581FB3C005C8D30 /* Data+SaveAndLoadData.swift */,
-				4C58750F258014C000185B4C /* UIView+identifier.swift */,
-				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
-				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
-				96C468C4257F6D900062AAA4 /* Date+String.swift */,
-				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
-				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
-				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
-				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
-				96DE09362586170E0055213C /* Clamp.swift */,
-				4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */,
-				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
-				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
-				961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -817,6 +803,52 @@
 				96ED403E257C7947007DB3DF /* ActivityStorageService.swift */,
 			);
 			path = CoreDataStorage;
+			sourceTree = "<group>";
+		};
+		96A9971D258E65FE00829819 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				71EFCCA52577D3E6007998AD /* UIButton+setSFSymbol.swift */,
+				96015B55257807C100E55E9F /* UIImage+SFSymbol.swift */,
+				960A1503257E0896008D2BD3 /* UIStackView+Make.swift */,
+				4C58750F258014C000185B4C /* UIView+identifier.swift */,
+				4C9B985225788547000A6447 /* UIView+notificationFeedback.swift */,
+				96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */,
+				71D3095525865D870092AB05 /* UIImage+CustomAnnotation.swift */,
+				4C41B41325862D29001C4713 /* UINavigationController+setStatusBar.swift */,
+				4CBCDA0C2588CE4E008AD52E /* UIButton+setArrowImage.swift */,
+				967BEBA9258810B1001A241F /* UIColor+Components.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		96A99722258E663400829819 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				96C468B4257F58600062AAA4 /* Date+DateRange.swift */,
+				96C468BC257F61DA0062AAA4 /* DateFormatter+Common.swift */,
+				96C468C4257F6D900062AAA4 /* Date+String.swift */,
+				967FFAA3257602A200F3340C /* TimerInterval+String.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		96A99723258E664300829819 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				96DE09362586170E0055213C /* Clamp.swift */,
+				961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
+		96A99724258E666400829819 /* MapKit */ = {
+			isa = PBXGroup;
+			children = (
+				96CB22A02582301C000D67C4 /* MKCoordinateRegion+Make.swift */,
+				710CD9C125886BF90001E763 /* CLLocationCoordinate+computeSplitCoordinate.swift */,
+			);
+			path = MapKit;
 			sourceTree = "<group>";
 		};
 		96CB229925822FC8000D67C4 /* RunningSnapShotProvider */ = {
