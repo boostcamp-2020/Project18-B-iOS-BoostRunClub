@@ -17,7 +17,7 @@ protocol ActivityDetailSceneFactory {
 
 extension DependencyFactory: ActivityDetailSceneFactory {
     func makeActivityDetailVM(activity: Activity, detail: ActivityDetail?) -> ActivityDetailViewModelTypes? {
-        ActivityDetailViewModel(activity: activity, detail: detail, activityProvider: activityProvider)
+        ActivityDetailViewModel(activity: activity, detail: detail, activityService: activityStorage)
     }
 
     func makeActivityDetailVC(with viewModel: ActivityDetailViewModelTypes) -> UIViewController {
@@ -25,7 +25,7 @@ extension DependencyFactory: ActivityDetailSceneFactory {
     }
 
     func makeSplitInfoDetailVM(activity: Activity) -> SplitInfoDetailViewModelType? {
-        SplitInfoDetailViewModel(activity: activity, activityProvider: activityProvider)
+        SplitInfoDetailViewModel(activity: activity, activityReader: activityStorage)
     }
 
     func makeSplitInfoDetailVC(with viewModel: SplitInfoDetailViewModelType) -> UIViewController {

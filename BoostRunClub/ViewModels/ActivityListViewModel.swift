@@ -26,12 +26,12 @@ protocol ActivityListViewModelOutputs {
 }
 
 class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelOutputs {
-    let activityProvider: ActivityReadable
+    let activityService: ActivityReadable
 
-    init(activityProvider: ActivityReadable) {
-        self.activityProvider = activityProvider
+    init(activityReader: ActivityReadable) {
+        activityService = activityReader
 
-        let activites = activityProvider.fetchActivities().sorted(by: >)
+        let activites = activityReader.fetchActivities().sorted(by: >)
         let listItems = makeActivityListItems(from: activites)
         activityListItemSubject.send(listItems)
     }

@@ -9,7 +9,7 @@ import Combine
 import CoreLocation
 import Foundation
 
-protocol RunningRecordable {
+protocol RunningRecordServiceable {
     func addState(_ state: RunningState)
     func save(startTime: Date?, endTime: Date?) -> (activity: Activity, detail: ActivityDetail)?
     func clear()
@@ -19,10 +19,10 @@ protocol RunningRecordable {
     var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
 }
 
-final class RunningRecorder: RunningRecordable {
+final class RunningRecordService: RunningRecordServiceable {
     private var cancellables = Set<AnyCancellable>()
     private let activityWriter: ActivityWritable
-    private let mapSnapShotter: MapSnapShotService
+    private let mapSnapShotter: RunningSnapShotProvider
 
     private(set) var locations = [CLLocation]()
     private(set) var runningSplits = [RunningSplit]()
@@ -43,7 +43,7 @@ final class RunningRecorder: RunningRecordable {
 
     private(set) var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
 
-    init(activityWriter: ActivityWritable, mapSnapShotter: MapSnapShotService) {
+    init(activityWriter: ActivityWritable, mapSnapShotter: RunningSnapShotProvider) {
         self.activityWriter = activityWriter
         self.mapSnapShotter = mapSnapShotter
     }

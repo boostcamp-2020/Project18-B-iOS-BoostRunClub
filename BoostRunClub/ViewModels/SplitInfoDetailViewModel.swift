@@ -28,8 +28,8 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
     let activity: Activity
     var activityDetail: ActivityDetail
 
-    init?(activity: Activity, activityProvider: ActivityReadable) {
-        guard let activityDetail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+    init?(activity: Activity, activityReader: ActivityReadable) {
+        guard let activityDetail = activityReader.fetchActivityDetail(activityId: activity.uuid) else { return nil }
 
         self.activity = activity
         self.activityDetail = activityDetail

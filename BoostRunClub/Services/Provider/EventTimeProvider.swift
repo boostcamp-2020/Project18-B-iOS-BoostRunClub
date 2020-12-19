@@ -8,13 +8,13 @@
 import Combine
 import Foundation
 
-protocol EventTimerProtocol {
+protocol EventTimeProvidable {
     var timeSubject: PassthroughSubject<TimeInterval, Never> { get }
     func start()
     func stop()
 }
 
-class EventTimer: EventTimerProtocol {
+class EventTimeProvider: EventTimeProvidable {
     var timeSubject = PassthroughSubject<TimeInterval, Never>()
 
     var cancellable: AnyCancellable?

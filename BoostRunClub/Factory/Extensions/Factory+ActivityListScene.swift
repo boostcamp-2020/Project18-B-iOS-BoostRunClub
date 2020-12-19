@@ -18,6 +18,6 @@ extension DependencyFactory: ActivityListSceneFactory {
     }
 
     func makeActivityListVM() -> ActivityListViewModelTypes {
-        ActivityListViewModel(activityProvider: activityProvider)
+        ActivityListViewModel(activityReader: activityStorage)
     }
 }

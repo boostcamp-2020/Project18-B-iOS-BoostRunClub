@@ -9,11 +9,11 @@ import Combine
 import Foundation
 import MapKit
 
-protocol MapSnapShotServiceable {
+protocol RunningSnapShotProvidable {
     func takeSnapShot(from locations: [CLLocation], dimension: Double) -> AnyPublisher<Data?, Error>
 }
 
-class MapSnapShotService: MapSnapShotServiceable {
+class RunningSnapShotProvider: RunningSnapShotProvidable {
     func takeSnapShot(
         from locations: [CLLocation],
         dimension: Double

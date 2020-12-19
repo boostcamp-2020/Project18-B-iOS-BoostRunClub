@@ -33,16 +33,16 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     private var cancellables = Set<AnyCancellable>()
 
     private var possibleTypes: [RunningInfoType: String]
-    let runningDataProvider: RunningServiceType
+    let runningService: RunningServiceType
 
-    init(runningDataProvider: RunningServiceType) {
+    init(runningService: RunningServiceType) {
         // TODO: GOALTYPE - SPEED 제거
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
-        self.runningDataProvider = runningDataProvider
+        self.runningService = runningService
 
-        runningDataProvider.dashBoard.runningSubject
+        runningService.dashBoardService.runningSubject
             .sink { [weak self] data in
                 self?.runningInfoObservables.forEach {
                     let value: String
@@ -65,7 +65,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             }
             .store(in: &cancellables)
 
-        runningDataProvider.dashBoard.runningTime
+        runningService.dashBoardService.runningTime
             .map { $0.simpleFormattedString }
             .sink { [weak self] timeString in
                 self?.possibleTypes[.time] = timeString
@@ -77,7 +77,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
                 }
             }.store(in: &cancellables)
 
-        runningDataProvider.runningState
+        runningService.runningState
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .standing {
                     self?.showPausedRunningSignal.send()
@@ -93,7 +93,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapPauseButton() {
         showPausedRunningSignal.send()
-        runningDataProvider.pause()
+        runningService.pause()
     }
 
     func didTapRunData(index: Int) {
@@ -109,10 +109,10 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     }
 
     func viewDidAppear() {
-        if runningDataProvider.isRunning {
+        if runningService.isRunning {
             resumeAnimation.send()
         } else {
-            runningDataProvider.start()
+            runningService.start()
             initialAnimation.send()
         }
     }

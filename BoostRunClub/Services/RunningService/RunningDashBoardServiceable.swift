@@ -9,7 +9,7 @@ import Combine
 import CoreLocation
 import Foundation
 
-protocol RunningBoard {
+protocol RunningDashBoardServiceable {
     var runningSubject: PassthroughSubject<RunningState, Never> { get }
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
 
@@ -26,8 +26,8 @@ protocol RunningBoard {
     func clear()
 }
 
-final class RunningDashBoard: RunningBoard {
-    private var eventTimer: EventTimerProtocol
+final class RunningDashBoardService: RunningDashBoardServiceable {
+    private var eventTimer: EventTimeProvidable
     private var locationProvider: LocationProvidable
     private var pedometerProvider: PedometerProvidable
 
@@ -48,7 +48,7 @@ final class RunningDashBoard: RunningBoard {
     var runningSubject = PassthroughSubject<RunningState, Never>()
     var cancellables = Set<AnyCancellable>()
 
-    init(eventTimer: EventTimerProtocol, locationProvider: LocationProvidable, pedometerProvider: PedometerProvidable) {
+    init(eventTimer: EventTimeProvidable, locationProvider: LocationProvidable, pedometerProvider: PedometerProvidable) {
         self.eventTimer = eventTimer
         self.locationProvider = locationProvider
         self.pedometerProvider = pedometerProvider

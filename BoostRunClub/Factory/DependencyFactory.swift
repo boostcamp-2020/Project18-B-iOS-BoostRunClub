@@ -10,22 +10,30 @@ import Foundation
 class DependencyFactory {
     static let shared = DependencyFactory()
     lazy var coreDataService = CoreDataService()
-    lazy var activityProvider = ActivityProvider(coreDataService: coreDataService)
+    lazy var activityStorage = ActivityStorageService(coreDataService: coreDataService)
     lazy var locationProvider = LocationProvider()
-    lazy var motionProvider = MotionProvider()
     lazy var pedometerProvider = PedometerProvider()
     lazy var defaultsProvider = DefaultsProvider()
 
+    lazy var motionDataModelProvider = MotionDataModelProvider()
+    lazy var motionActivityProvider = MotionActivityProvider()
+    lazy var runningSnapShotProvider = RunningSnapShotProvider()
+
+    // Running Service
     lazy var runningDataService = RunningService(
-        motionProvider: motionProvider,
-        dashBoard: RunningDashBoard(
-            eventTimer: EventTimer(),
+        motionProvider: RunningMotionService(
+            motionDataModelProvider: motionDataModelProvider,
+            motionActivityProvider: motionActivityProvider,
+            locationProvider: locationProvider
+        ),
+        dashBoard: RunningDashBoardService(
+            eventTimer: EventTimeProvider(),
             locationProvider: locationProvider,
             pedometerProvider: pedometerProvider
         ),
-        recoder: RunningRecorder(
-            activityWriter: activityProvider,
-            mapSnapShotter: MapSnapShotService()
+        recoder: RunningRecordService(
+            activityWriter: activityStorage,
+            mapSnapShotter: runningSnapShotProvider
         )
     )
 }

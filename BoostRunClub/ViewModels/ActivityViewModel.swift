@@ -38,15 +38,15 @@ protocol ActivityViewModelOutputs {
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
-    let activityProvider: ActivityReadable
+    let activityService: ActivityReadable
 
     private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
     var cancellables = Set<AnyCancellable>()
 
-    init(activityProvider: ActivityReadable) {
-        self.activityProvider = activityProvider
-        activityProvider.activityChangeSignal
+    init(activityReader: ActivityReadable) {
+        activityService = activityReader
+        activityReader.activityChangeSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.fetchActivities() }
             .store(in: &cancellables)
@@ -125,7 +125,7 @@ extension ActivityViewModel: ActivityViewModelTypes {
 
 extension ActivityViewModel {
     private func fetchActivities() {
-        activities = activityProvider.fetchActivities().sorted(by: >)
+        activities = activityService.fetchActivities().sorted(by: >)
 
         ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
 

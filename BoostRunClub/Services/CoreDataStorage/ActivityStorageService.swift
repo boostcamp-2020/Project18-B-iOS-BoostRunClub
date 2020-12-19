@@ -1,5 +1,5 @@
 //
-//  ActivityProvider.swift
+//  ActivityStorageService.swift
 //  BoostRunClub
 //
 //  Created by 김신우 on 2020/12/06.
@@ -21,12 +21,12 @@ protocol ActivityReadable {
     func fetchActivityDetail(activityId: UUID) -> ActivityDetail?
 }
 
-protocol ActivityManageable {
+protocol ActivityStorageServiceable {
     var reader: ActivityReadable { get }
     var writer: ActivityWritable { get }
 }
 
-class ActivityProvider: ActivityWritable, ActivityReadable {
+class ActivityStorageService: ActivityWritable, ActivityReadable {
     let coreDataService: CoreDataServiceable
 
     init(coreDataService: CoreDataServiceable) {
@@ -73,7 +73,7 @@ class ActivityProvider: ActivityWritable, ActivityReadable {
     var activityChangeSignal = PassthroughSubject<Void, Never>()
 }
 
-extension ActivityProvider: ActivityManageable {
+extension ActivityStorageService: ActivityStorageServiceable {
     var reader: ActivityReadable { self }
     var writer: ActivityWritable { self }
 }

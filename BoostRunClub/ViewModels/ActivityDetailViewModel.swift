@@ -34,12 +34,12 @@ protocol ActivityDetailViewModelOutputs {
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
     private var initialAnimation = false
 
-    init?(activity: Activity, detail: ActivityDetail?, activityProvider: ActivityReadable) {
+    init?(activity: Activity, detail: ActivityDetail?, activityService: ActivityReadable) {
         let detailConfig: ActivityDetailConfig
         if let detail = detail {
             detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
         } else {
-            guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+            guard let detail = activityService.fetchActivityDetail(activityId: activity.uuid) else { return nil }
             detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
         }
 
