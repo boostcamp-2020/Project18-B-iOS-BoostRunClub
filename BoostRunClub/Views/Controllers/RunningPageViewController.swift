@@ -171,7 +171,7 @@ extension RunningPageViewController {
     func makeBackButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = buttonHeight / 2
         button.addTarget(self, action: #selector(didTabBackButton), for: .touchUpInside)
         return button

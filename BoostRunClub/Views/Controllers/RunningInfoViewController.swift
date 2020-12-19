@@ -74,7 +74,7 @@ final class RunningInfoViewController: UIViewController {
 extension RunningInfoViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
+        view.backgroundColor = UIColor(named: "accent")
         configureLayout()
         bindViewModel()
     }

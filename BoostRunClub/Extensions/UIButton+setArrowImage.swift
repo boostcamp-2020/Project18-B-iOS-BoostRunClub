@@ -12,7 +12,7 @@ extension UIButton {
         case left, right
     }
 
-    func setArrowImage(dir: ArrowDirection, color: UIColor = .label) {
+    func setArrowImage(dir: ArrowDirection, color: UIColor = .black) {
         let arrow = UIImage(systemName: "arrow.\(dir.rawValue)")
         setImage(arrow, for: .normal)
         switch dir {

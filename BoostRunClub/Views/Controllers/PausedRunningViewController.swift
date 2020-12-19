@@ -132,7 +132,7 @@ extension PausedRunningViewController {
         mapViewHeightConstraint.constant = .zero
         resumeButtonInitialCenterXConstraint.constant = .zero
         endRunningButtonInitialCenterXConstraint.constant = .zero
-        view.backgroundColor = #colorLiteral(red: 0.9763557315, green: 0.9324046969, blue: 0, alpha: 1)
+        view.backgroundColor = UIColor(named: "accent")
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         } completion: { _ in
