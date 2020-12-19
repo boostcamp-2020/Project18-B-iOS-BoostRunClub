@@ -13,13 +13,17 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     var maxHue: CGFloat
     var minHue: CGFloat
     var colors = [CGColor]()
+//    var colors = [(start: CGColor, end: CGColor)]()
+    var splits = [RunningSplit]()
 
     init(
         locations: [Location],
+        splits: [RunningSplit],
         mapRect: MKMapRect,
         colorMin: UIColor,
         colorMax: UIColor
     ) {
+        self.splits = splits
         let minMaxValue = locations.reduce(into: (min: Int.max, max: Int.min)) {
             $0.min = min($0.min, $1.speed)
             $0.max = max($0.max, $1.speed)
@@ -37,6 +41,13 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     }
 
     private func setColors() {
+//        guard !splits.isEmpty else { return }
+//
+//        let speedFactor: CGFloat = 1 / (maxSpeed - minSpeed)
+//        let hueFactor: CGFloat = 1 / (maxHue - minHue)
+//
+//        var hue = minHue + CGFloat()
+
         guard !locations.isEmpty else { return }
 
         let speedFactor: CGFloat = 1 / (maxSpeed - minSpeed)

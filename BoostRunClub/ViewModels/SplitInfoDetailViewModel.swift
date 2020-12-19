@@ -126,6 +126,7 @@ extension SplitInfoDetailViewModel {
         let elevation = "--"
 
         return SplitRow(
+            distance: splits[idx].distance,
             kilometer: kilometer,
             avgPace: paceToText(splits[idx].avgPace),
             change: valueChange,

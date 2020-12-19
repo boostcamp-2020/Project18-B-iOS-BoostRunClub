@@ -33,6 +33,7 @@ class DetailMapView: UIView {
         mapView.addOverlay(
             PaceGradientRouteOverlay(
                 locations: locations,
+                splits: splits,
                 mapRect: mapView.visibleMapRect,
                 colorMin: .red,
                 colorMax: .green

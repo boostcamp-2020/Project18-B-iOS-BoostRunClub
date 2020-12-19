@@ -156,6 +156,7 @@ extension RouteDetailViewController {
         mapView.addOverlay(
             PaceGradientRouteOverlay(
                 locations: detail.locations,
+                splits: detail.splits,
                 mapRect: mapView.visibleMapRect,
                 colorMin: .red,
                 colorMax: .green
