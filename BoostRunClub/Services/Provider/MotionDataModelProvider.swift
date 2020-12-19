@@ -15,21 +15,6 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
     private var timer: Timer? = Timer()
     private var isActive = false
 
-    private let model: BRCActivityClassifierA? = {
-        let configuration = MLModelConfiguration()
-        return try? BRCActivityClassifierA(configuration: configuration)
-    }()
-
-    private let myModel: MyActivityClassifier? = {
-        let configuration = MLModelConfiguration()
-        return try? MyActivityClassifier(configuration: configuration)
-    }()
-
-    private let activityModel: ActivityClassifier? = {
-        let configuration = MLModelConfiguration()
-        return try? ActivityClassifier(configuration: configuration)
-    }()
-
     private let runningModel: RunningMotionClassifier? = {
         let configuration = MLModelConfiguration()
         return try? RunningMotionClassifier(configuration: configuration)
@@ -113,18 +98,6 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
             let stateIn = try? MLMultiArray(array)
         else { return "" }
 
-//        let input = BRCActivityClassifierAInput(
-//            gravity_x: gravX,
-//            gravity_y: gravY,
-//            gravity_z: gravZ,
-//            rotationRate_x: rotX,
-//            rotationRate_y: rotY,
-//            rotationRate_z: rotZ,
-//            userAcceleration_x: accX,
-//            userAcceleration_y: accY,
-//            userAcceleration_z: accZ,
-//            stateIn: stateIn
-//        )
         let input = RunningMotionClassifierInput(
             attitude_pitch: attiP,
             attitude_roll: attiR,
@@ -141,10 +114,9 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
             stateIn: stateIn
         )
 
-//        guard let result = try? model?.prediction(input: input) else { return "" }
         guard let result = try? runningModel?.prediction(input: input) else { return "" }
-        let standingProb = result.labelProbability["stand"] ?? 0
-        let walkingProb = result.labelProbability["run"] ?? 0
+        let standingProb = result.labelProbability["standing"] ?? 0
+        let walkingProb = result.labelProbability["running"] ?? 0
         print("[CORE MOTION] \(String(format: "walking: %.2f", walkingProb * 100)) \(String(format: "stand: %.2f", standingProb * 100))")
         return standingProb > 0.60 ? "standing" : "walking"
     }

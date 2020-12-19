@@ -50,6 +50,11 @@ extension LocationProvider: CLLocationManagerDelegate {
               location.courseAccuracy.sign == .plus
         else { return }
 
+        print("[CORE LOCATION] \(location.coordinate), \(location.horizontalAccuracy)")
+        if location.horizontalAccuracy > 30 {
+            return
+        }
+
         locationSubject.send(location)
     }
 }

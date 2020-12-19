@@ -60,6 +60,5 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
             )
             )
         }
-        
     }
 }
