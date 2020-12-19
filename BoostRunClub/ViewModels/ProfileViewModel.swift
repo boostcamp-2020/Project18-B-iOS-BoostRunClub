@@ -21,8 +21,8 @@ protocol ProfileViewModelInputs {
 }
 
 protocol ProfileViewModelOutputs {
-    var showEditProfileSceneSignal: PassthroughSubject<Void, Never> { get }
-    var profileSignal: PassthroughSubject<Profile, Never> { get }
+    var showEditProfileSignal: PassthroughSubject<Void, Never> { get }
+    var profileSubject: PassthroughSubject<Profile, Never> { get }
 }
 
 final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
@@ -45,21 +45,21 @@ final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
     // inputs
 
     func viewDidLoad() {
-        profileSignal.send(profile)
+        profileSubject.send(profile)
     }
 
     func didTapEditProfileButton() {
-        showEditProfileSceneSignal.send()
+        showEditProfileSignal.send()
     }
 
     func didEditProfile(_ profile: Profile) {
-        profileSignal.send(profile)
+        profileSubject.send(profile)
     }
 
     // outputs
 
-    var showEditProfileSceneSignal = PassthroughSubject<Void, Never>()
-    var profileSignal = PassthroughSubject<Profile, Never>()
+    var showEditProfileSignal = PassthroughSubject<Void, Never>()
+    var profileSubject = PassthroughSubject<Profile, Never>()
 }
 
 extension ProfileViewModel: ProfileViewModelTypes {

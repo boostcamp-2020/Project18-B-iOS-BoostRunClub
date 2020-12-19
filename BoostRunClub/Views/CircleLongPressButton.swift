@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 class CircleLongPressButton: CircleButton {
-    private(set) var didTapButton = PassthroughSubject<Void, Never>()
+    private(set) var didTapButtonSignal = PassthroughSubject<Void, Never>()
 
     private lazy var displayLink = CADisplayLink(target: self, selector: #selector(updateTime))
     private var lastUpdatedTime: TimeInterval = 0
@@ -56,7 +56,7 @@ class CircleLongPressButton: CircleButton {
 
         if newProgress >= 1 {
             direction = -1
-            didTapButton.send()
+            didTapButtonSignal.send()
         }
 
         if newProgress <= 0 {

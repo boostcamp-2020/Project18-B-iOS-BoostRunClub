@@ -24,7 +24,7 @@ final class ProfileCoordinator: BasicCoordinator<Void> {
 
     func showProfileViewController() {
         let profileVM = factory.makeProfileVM()
-        profileVM.outputs.showEditProfileSceneSignal
+        profileVM.outputs.showEditProfileSignal
             .receive(on: RunLoop.main)
             .compactMap { [weak self] in self?.showEditProfileScene() }
             .flatMap { $0 }

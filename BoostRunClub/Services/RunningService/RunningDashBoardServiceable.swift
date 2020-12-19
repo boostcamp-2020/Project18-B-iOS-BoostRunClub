@@ -10,7 +10,7 @@ import CoreLocation
 import Foundation
 
 protocol RunningDashBoardServiceable {
-    var runningSubject: PassthroughSubject<RunningState, Never> { get }
+    var runningStateSubject: PassthroughSubject<RunningState, Never> { get }
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
 
     var location: CLLocation? { get }
@@ -45,7 +45,7 @@ final class RunningDashBoardService: RunningDashBoardServiceable {
     private(set) var distance: Double = 0
     private(set) var avgPace: Double = 0
 
-    var runningSubject = PassthroughSubject<RunningState, Never>()
+    var runningStateSubject = PassthroughSubject<RunningState, Never>()
     var cancellables = Set<AnyCancellable>()
 
     init(eventTimer: EventTimeProvidable, locationProvider: LocationProvidable, pedometerProvider: PedometerProvidable) {
@@ -78,7 +78,7 @@ final class RunningDashBoardService: RunningDashBoardServiceable {
             }
             .store(in: &cancellables)
 
-        eventTimer.timeSubject
+        eventTimer.timeIntervalSubject
             .sink { [weak self] time in
                 self?.updateTime(currentTime: time)
             }
@@ -130,7 +130,7 @@ final class RunningDashBoardService: RunningDashBoardServiceable {
             distance: distance,
             isRunning: isRunning
         )
-        runningSubject.send(result)
+        runningStateSubject.send(result)
     }
 
     private func updateLocation(newLocation: CLLocation) {

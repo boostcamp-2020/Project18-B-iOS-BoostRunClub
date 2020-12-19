@@ -26,7 +26,7 @@ final class ActivityListCoordinator: BasicCoordinator<Void> {
         let listVM = factory.makeActivityListVM()
         let listVC = factory.makeActivityListVC(with: listVM)
 
-        listVM.outputs.goBackToSceneSignal
+        listVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .sink { [weak self, weak listVC] in
                 listVC?.navigationController?.popViewController(animated: true)

@@ -12,9 +12,9 @@ import Foundation
 protocol RunningServiceType {
     var dashBoardService: RunningDashBoardServiceable { get }
     var recordService: RunningRecordServiceable { get }
-    var activityResults: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
-    var runningState: CurrentValueSubject<MotionType, Never> { get }
-    var runningEvent: PassthroughSubject<RunningEvent, Never> { get }
+    var runningResultSubject: PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never> { get }
+    var runningStateSubject: CurrentValueSubject<MotionType, Never> { get }
+    var runningEventSubject: PassthroughSubject<RunningEvent, Never> { get }
     var isRunning: Bool { get }
 
     func start()
@@ -35,10 +35,10 @@ class RunningService: RunningServiceType {
 
     private var autoStatable = true
     var isRunning = false
-    let activityResults = PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never>()
+    let runningResultSubject = PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never>()
 
-    let runningState = CurrentValueSubject<MotionType, Never>(.standing)
-    var runningEvent = PassthroughSubject<RunningEvent, Never>()
+    let runningStateSubject = CurrentValueSubject<MotionType, Never>(.standing)
+    var runningEventSubject = PassthroughSubject<RunningEvent, Never>()
 
     var goalSubscription: AnyCancellable?
 
@@ -47,7 +47,7 @@ class RunningService: RunningServiceType {
         recordService = recoder
         motionService = motionProvider
 
-        dashBoard.runningSubject
+        dashBoard.runningStateSubject
             .sink { [weak self] in
                 self?.recordService.addState($0)
             }
@@ -56,10 +56,10 @@ class RunningService: RunningServiceType {
         motionProvider.motionTypeSubject
             .receive(on: RunLoop.main)
             .filter { [weak self] _ in self?.autoStatable ?? false }
-            .filter { [weak self] in $0 != self?.runningState.value }
+            .filter { [weak self] in $0 != self?.runningStateSubject.value }
             .sink { [weak self] in
 
-                self?.runningState.send($0)
+                self?.runningStateSubject.send($0)
                 switch $0 {
                 case .running:
                     dashBoard.setState(isRunning: true)
@@ -81,7 +81,7 @@ class RunningService: RunningServiceType {
         dashBoardService.start()
         motionService.start()
 
-        runningEvent.send(.start)
+        runningEventSubject.send(.start)
     }
 
     func stop() {
@@ -92,22 +92,22 @@ class RunningService: RunningServiceType {
         isRunning = false
 
         let activityInfo = recordService.save(startTime: startTime, endTime: endTime)
-        activityResults.send(activityInfo)
-        runningEvent.send(.stop)
+        runningResultSubject.send(activityInfo)
+        runningEventSubject.send(.stop)
     }
 
     func pause() {
         autoStatable = false
 
         dashBoardService.setState(isRunning: false)
-        runningEvent.send(.pause)
+        runningEventSubject.send(.pause)
     }
 
     func resume() {
         autoStatable = true
 
         dashBoardService.setState(isRunning: true)
-        runningEvent.send(.resume)
+        runningEventSubject.send(.resume)
     }
 
     func setGoal(_ goalInfo: GoalInfo?) {
@@ -117,11 +117,11 @@ class RunningService: RunningServiceType {
         case .distance:
             guard var value = Double(goalInfo.value) else { return }
             value *= 1000
-            goalSubscription = dashBoardService.runningSubject
+            goalSubscription = dashBoardService.runningStateSubject
                 .first(where: { $0.distance > value })
                 .sink { [weak self] _ in
                     let text = "Congratulations. You've reached your goal of \(value) meters. Great job"
-                    self?.runningEvent.send(.goal(text))
+                    self?.runningEventSubject.send(.goal(text))
                 }
 
         case .time:
@@ -136,7 +136,7 @@ class RunningService: RunningServiceType {
                 .first(where: { $0 > Double(interval) })
                 .sink { [weak self] _ in
                     let text = "Congratulations. You've reached your goal of running \(hour * 60 + minute) minutes. Kudos to you, friend."
-                    self?.runningEvent.send(.goal(text))
+                    self?.runningEventSubject.send(.goal(text))
                 }
 
         case .none, .speed:

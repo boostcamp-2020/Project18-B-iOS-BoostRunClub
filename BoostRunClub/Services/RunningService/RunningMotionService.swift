@@ -21,6 +21,7 @@ class RunningMotionService: RunningMotionServiceable {
     private var motionActivityProvider: MotionActivityProvidable
 
     var motionTypeSubject = PassthroughSubject<MotionType, Never>()
+    var cancellables = Set<AnyCancellable>()
 
     init(
         motionDataModelProvider: MotionDataModelProvidable,
@@ -32,7 +33,18 @@ class RunningMotionService: RunningMotionServiceable {
         self.locationProvider = locationProvider
     }
 
-    func start() {}
+    func start() {
+        bindProvider()
+    }
 
-    func stop() {}
+    private func bindProvider() {
+//        motionActivityProvider.currentMotionType
+//        motionDataModelProvider.motionType
+//        locationProvider.locationSubject
+    }
+
+    func stop() {
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+    }
 }

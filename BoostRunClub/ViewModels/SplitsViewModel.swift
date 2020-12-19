@@ -31,7 +31,7 @@ class SplitsViewModel: SplitsViewModelInputs, SplitsViewModelOutputs {
 
 //        RunningSplit.sampleData.forEach { self.newSplitAction(split: $0) }
 //        runningService.runningSplits.forEach { self.newSplitAction(split: $0) }
-        runningService.recordService.newSplitSubject
+        runningService.recordService.didAddSplitSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.newSplitAction(split: $0) }
             .store(in: &cancellables)

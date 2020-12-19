@@ -68,11 +68,11 @@ class ActivityDetailViewController: UIViewController {
             .sink { [weak self] in self?.initialAnimation() }
             .store(in: &cancellables)
 
-        splitsView.heightChangedPublisher
+        splitsView.didHeightChangeSignal
             .sink { [weak self] in self?.contentStack.layoutIfNeeded() }
             .store(in: &cancellables)
 
-        splitsView.tapInfoButtonSignal
+        splitsView.didTapInfoButtonSignal
             .sink { [weak self] in self?.viewModel?.inputs.didTapShowInfoDetail() }
             .store(in: &cancellables)
 

@@ -10,6 +10,7 @@ import CoreMotion
 import Foundation
 
 protocol MotionActivityProvidable {
+    var motionTypeSubject: PassthroughSubject<MotionType, Never> { get }
     func start()
     func stop()
 }
@@ -18,7 +19,7 @@ class MotionActivityProvider: MotionActivityProvidable {
     private let activityManager = CMMotionActivityManager()
     private var isActive = false
 
-    var currentMotionType = PassthroughSubject<MotionType, Never>()
+    var motionTypeSubject = PassthroughSubject<MotionType, Never>()
 
     func startTrackingActivityType() {
         if isActive { return }
@@ -32,7 +33,7 @@ class MotionActivityProvider: MotionActivityProvidable {
             else { return }
 
             let motionType = activity.motionType
-            self.currentMotionType.send(motionType)
+            self.motionTypeSubject.send(motionType)
         }
     }
 

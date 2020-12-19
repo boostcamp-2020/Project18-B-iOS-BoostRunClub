@@ -79,11 +79,11 @@ final class ActivityViewController: UIViewController {
             viewModel?.inputs.didTapShowDateFilter()
         }
 
-        containerCellView.itemSelectedPublisher
+        containerCellView.didItemSelectedSignal
             .sink { [weak viewModel] in viewModel?.inputs.didSelectActivity(at: $0.row) }
             .store(in: &cancellables)
 
-        containerCellView.heightChangedPublisher
+        containerCellView.didHeightChangeSignal
             .sink {
                 guard let path = self.tableView.indexPath(for: $0) else { return }
                 self.tableView.reloadRows(at: [path], with: .none)

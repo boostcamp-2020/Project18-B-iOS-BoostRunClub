@@ -16,7 +16,7 @@ protocol RunningRecordServiceable {
 
     var locations: [CLLocation] { get }
     var routes: [RunningSlice] { get }
-    var newSplitSubject: PassthroughSubject<RunningSplit, Never> { get }
+    var didAddSplitSignal: PassthroughSubject<RunningSplit, Never> { get }
 }
 
 final class RunningRecordService: RunningRecordServiceable {
@@ -41,7 +41,7 @@ final class RunningRecordService: RunningRecordServiceable {
         return runningSplits.flatMap { $0.runningSlices } + currentSplit.runningSlices + [currentSlice]
     }
 
-    private(set) var newSplitSubject = PassthroughSubject<RunningSplit, Never>()
+    private(set) var didAddSplitSignal = PassthroughSubject<RunningSplit, Never>()
 
     init(activityWriter: ActivityWritable, mapSnapShotter: RunningSnapShotProvider) {
         self.activityWriter = activityWriter
@@ -118,7 +118,7 @@ final class RunningRecordService: RunningRecordServiceable {
     private func addSplit() {
         currentSplit.setup(with: states)
         runningSplits.append(currentSplit)
-        newSplitSubject.send(currentSplit)
+        didAddSplitSignal.send(currentSplit)
         currentSplit = RunningSplit()
     }
 

@@ -9,13 +9,13 @@ import Combine
 import Foundation
 
 protocol EventTimeProvidable {
-    var timeSubject: PassthroughSubject<TimeInterval, Never> { get }
+    var timeIntervalSubject: PassthroughSubject<TimeInterval, Never> { get }
     func start()
     func stop()
 }
 
 class EventTimeProvider: EventTimeProvidable {
-    var timeSubject = PassthroughSubject<TimeInterval, Never>()
+    var timeIntervalSubject = PassthroughSubject<TimeInterval, Never>()
 
     var cancellable: AnyCancellable?
 
@@ -23,7 +23,7 @@ class EventTimeProvider: EventTimeProvidable {
         cancellable = Timer.TimerPublisher(interval: 0.8, runLoop: RunLoop.main, mode: .common)
             .autoconnect()
             .sink { date in
-                self.timeSubject.send(date.timeIntervalSinceReferenceDate)
+                self.timeIntervalSubject.send(date.timeIntervalSinceReferenceDate)
             }
     }
 

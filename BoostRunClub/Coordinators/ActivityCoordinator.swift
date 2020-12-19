@@ -51,12 +51,12 @@ final class ActivityCoordinator: BasicCoordinator<ActivityCoordinationResult> {
             }
             .store(in: &cancellables)
 
-        activityVM.outputs.showActivityListScene
+        activityVM.outputs.showActivityListSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.showActivityListScene() }
             .store(in: &cancellables)
 
-        activityVM.outputs.showActivityDetailScene
+        activityVM.outputs.showActivityDetailSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.showActivityDetailScene(activity: $0) }
             .store(in: &cancellables)
@@ -90,7 +90,7 @@ final class ActivityCoordinator: BasicCoordinator<ActivityCoordinationResult> {
         activityDateFilterVC.modalPresentationStyle = .overCurrentContext
         navigationController.topViewController?.present(activityDateFilterVC, animated: false, completion: nil)
 
-        return activityDateFilterVM.outputs.closeSheetSignal
+        return activityDateFilterVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak activityDateFilterVC] _ in
                 (activityDateFilterVC as? ActivityDateFilterViewController)?.closeWithAnimation()

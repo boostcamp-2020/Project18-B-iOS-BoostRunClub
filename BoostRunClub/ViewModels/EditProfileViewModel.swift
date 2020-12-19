@@ -26,11 +26,12 @@ protocol EditProfileViewModelInputs {
 
 protocol EditProfileViewModelOutputs {
     var closeSignal: PassthroughSubject<Profile, Never> { get }
-    var imageDataObservable: CurrentValueSubject<Data?, Never> { get }
-    var lastNameTextObservable: CurrentValueSubject<String, Never> { get }
-    var firstNameTextObservable: CurrentValueSubject<String, Never> { get }
-    var hometownTextObservable: CurrentValueSubject<String, Never> { get }
-    var bioTextObservable: CurrentValueSubject<String, Never> { get }
+    var imageDataSubject: CurrentValueSubject<Data?, Never> { get }
+    var lastNameTextSubject: CurrentValueSubject<String, Never> { get }
+    var firstNameTextSubject: CurrentValueSubject<String, Never> { get }
+    var hometownTextSubject: CurrentValueSubject<String, Never> { get }
+
+    var bioTextSubject: CurrentValueSubject<String, Never> { get }
     var changeInContentSignal: PassthroughSubject<Bool, Never> { get }
 }
 
@@ -50,17 +51,17 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     // inputs
 
     func viewDidLoad() {
-        imageDataObservable.value = Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png")
-        lastNameTextObservable.value = defaults.reader.string(forKey: "LastName") ?? ""
-        firstNameTextObservable.value = defaults.reader.string(forKey: "FirstName") ?? ""
-        hometownTextObservable.value = defaults.reader.string(forKey: "Hometown") ?? ""
-        bioTextObservable.value = defaults.reader.string(forKey: "Bio") ?? ""
+        imageDataSubject.value = Data.loadImageDataFromDocumentsDirectory(fileName: "profile.png")
+        lastNameTextSubject.value = defaults.reader.string(forKey: "LastName") ?? ""
+        firstNameTextSubject.value = defaults.reader.string(forKey: "FirstName") ?? ""
+        hometownTextSubject.value = defaults.reader.string(forKey: "Hometown") ?? ""
+        bioTextSubject.value = defaults.reader.string(forKey: "Bio") ?? ""
 
-        initialProfile = Profile(image: imageDataObservable.value,
-                                 lastName: lastNameTextObservable.value,
-                                 firstName: firstNameTextObservable.value,
-                                 hometown: hometownTextObservable.value,
-                                 bio: bioTextObservable.value)
+        initialProfile = Profile(image: imageDataSubject.value,
+                                 lastName: lastNameTextSubject.value,
+                                 firstName: firstNameTextSubject.value,
+                                 hometown: hometownTextSubject.value,
+                                 bio: bioTextSubject.value)
 
         currentProfile = initialProfile
     }
@@ -79,31 +80,31 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     }
 
     func didEditProfilePicture(to imageData: Data) {
-        imageDataObservable.value = imageData
+        imageDataSubject.value = imageData
         currentProfile?.image = imageData
         compareChanges()
     }
 
     func didEditLastName(to text: String) {
-        lastNameTextObservable.value = text
+        lastNameTextSubject.value = text
         currentProfile?.lastName = text
         compareChanges()
     }
 
     func didEditFirstName(to text: String) {
-        firstNameTextObservable.value = text
+        firstNameTextSubject.value = text
         currentProfile?.firstName = text
         compareChanges()
     }
 
     func didEditHometown(to text: String) {
-        hometownTextObservable.value = text
+        hometownTextSubject.value = text
         currentProfile?.hometown = text
         compareChanges()
     }
 
     func didEditBio(to text: String) {
-        bioTextObservable.value = text
+        bioTextSubject.value = text
         currentProfile?.bio = text
         compareChanges()
     }
@@ -111,11 +112,11 @@ final class EditProfileViewModel: EditProfileViewModelInputs, EditProfileViewMod
     // ouputs
 
     var closeSignal = PassthroughSubject<Profile, Never>()
-    var imageDataObservable = CurrentValueSubject<Data?, Never>(nil)
-    var lastNameTextObservable = CurrentValueSubject<String, Never>("")
-    var firstNameTextObservable = CurrentValueSubject<String, Never>("")
-    var hometownTextObservable = CurrentValueSubject<String, Never>("")
-    var bioTextObservable = CurrentValueSubject<String, Never>("")
+    var imageDataSubject = CurrentValueSubject<Data?, Never>(nil)
+    var lastNameTextSubject = CurrentValueSubject<String, Never>("")
+    var firstNameTextSubject = CurrentValueSubject<String, Never>("")
+    var hometownTextSubject = CurrentValueSubject<String, Never>("")
+    var bioTextSubject = CurrentValueSubject<String, Never>("")
     var changeInContentSignal = PassthroughSubject<Bool, Never>()
 }
 

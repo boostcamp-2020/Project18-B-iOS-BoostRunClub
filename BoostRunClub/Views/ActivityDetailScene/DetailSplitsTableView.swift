@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 class DetailSplitsTableView: UITableView {
-    private(set) var intrinsicSizeChangedSignal = PassthroughSubject<Void, Never>()
+    private(set) var intrinsicSizeChangedSignal = PassthroughSubject<CGSize, Never>()
 
     init() {
         super.init(frame: .zero, style: .plain)
@@ -26,7 +26,7 @@ class DetailSplitsTableView: UITableView {
 
         if bounds.size != intrinsicContentSize {
             invalidateIntrinsicContentSize()
-            intrinsicSizeChangedSignal.send()
+            intrinsicSizeChangedSignal.send(intrinsicContentSize)
         }
     }
 

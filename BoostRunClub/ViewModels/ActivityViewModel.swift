@@ -33,8 +33,8 @@ protocol ActivityViewModelOutputs {
 
     var showProfileSignal: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
-    var showActivityListScene: PassthroughSubject<Void, Never> { get }
-    var showActivityDetailScene: PassthroughSubject<Activity, Never> { get }
+    var showActivityListSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<Activity, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
@@ -89,11 +89,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didSelectActivity(at index: Int) {
         guard recentActivitiesSubject.value.count > index else { return }
-        showActivityDetailScene.send(recentActivitiesSubject.value[index])
+        showActivityDetailSignal.send(recentActivitiesSubject.value[index])
     }
 
     func didTapShowAllActivities() {
-        showActivityListScene.send()
+        showActivityListSignal.send()
     }
 
     func didTapShowProfileButton() {
@@ -112,8 +112,8 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     var showProfileSignal = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
-    var showActivityListScene = PassthroughSubject<Void, Never>()
-    var showActivityDetailScene = PassthroughSubject<Activity, Never>()
+    var showActivityListSignal = PassthroughSubject<Void, Never>()
+    var showActivityDetailSignal = PassthroughSubject<Activity, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {

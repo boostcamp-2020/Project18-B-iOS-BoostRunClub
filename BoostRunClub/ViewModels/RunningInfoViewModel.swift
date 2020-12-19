@@ -21,11 +21,12 @@ protocol RunningInfoViewModelInputs {
 
 protocol RunningInfoViewModelOutputs {
     typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfo, Never>
+    var runningInfoSubjects: [RunningInfoTypeSubject] { get }
 
-    var runningInfoObservables: [RunningInfoTypeSubject] { get }
-    var runningInfoTapAnimation: PassthroughSubject<Int, Never> { get }
-    var initialAnimation: PassthroughSubject<Void, Never> { get }
-    var resumeAnimation: PassthroughSubject<Void, Never> { get }
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
+    var initialAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var resumeAnimationSignal: PassthroughSubject<Void, Never> { get }
+
     var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 
@@ -42,9 +43,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
         self.runningService = runningService
 
-        runningService.dashBoardService.runningSubject
+        runningService.dashBoardService.runningStateSubject
             .sink { [weak self] data in
-                self?.runningInfoObservables.forEach {
+                self?.runningInfoSubjects.forEach {
                     let value: String
                     switch $0.value.type {
                     case .kilometer:
@@ -70,14 +71,14 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             .sink { [weak self] timeString in
                 self?.possibleTypes[.time] = timeString
 
-                self?.runningInfoObservables.forEach {
+                self?.runningInfoSubjects.forEach {
                     if $0.value.type == .time {
                         $0.send(RunningInfo(type: .time, value: timeString))
                     }
                 }
             }.store(in: &cancellables)
 
-        runningService.runningState
+        runningService.runningStateSubject
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .standing {
                     self?.showPausedRunningSignal.send()
@@ -97,37 +98,37 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     }
 
     func didTapRunData(index: Int) {
-        var nextType = runningInfoObservables[index].value.type.circularNext()
+        var nextType = runningInfoSubjects[index].value.type.circularNext()
         nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
-        runningInfoObservables[index].send(
+        runningInfoSubjects[index].send(
             RunningInfo(
                 type: nextType,
                 value: possibleTypes[nextType, default: nextType.initialValue]
             )
         )
-        runningInfoTapAnimation.send(index)
+        runningInfoTapAnimationSignal.send(index)
     }
 
     func viewDidAppear() {
         if runningService.isRunning {
-            resumeAnimation.send()
+            resumeAnimationSignal.send()
         } else {
             runningService.start()
-            initialAnimation.send()
+            initialAnimationSignal.send()
         }
     }
 
     // MARK: Outputs
 
-    var runningInfoObservables = [
+    var runningInfoSubjects = [
         RunningInfoTypeSubject(RunningInfo(type: .time)),
         RunningInfoTypeSubject(RunningInfo(type: .pace)),
         RunningInfoTypeSubject(RunningInfo(type: .averagePace)),
         RunningInfoTypeSubject(RunningInfo(type: .kilometer)),
     ]
-    var runningInfoTapAnimation = PassthroughSubject<Int, Never>()
-    var initialAnimation = PassthroughSubject<Void, Never>()
-    var resumeAnimation = PassthroughSubject<Void, Never>()
+    var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
+    var initialAnimationSignal = PassthroughSubject<Void, Never>()
+    var resumeAnimationSignal = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
 }
 

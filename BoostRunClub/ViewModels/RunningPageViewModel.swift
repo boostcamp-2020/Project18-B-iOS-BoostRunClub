@@ -24,10 +24,11 @@ protocol RunningPageViewModelInputs {
 
 protocol RunningPageViewModelOutputs {
     var speechSignal: PassthroughSubject<String, Never> { get }
-    var scaleSubject: PassthroughSubject<Double, Never> { get }
-    var scaleSubjectNotDragging: AnyPublisher<Double, Never> { get }
-    var goBackToMainPageSignal: PassthroughSubject<Int, Never> { get }
+    var scaleOnDraggingSubject: PassthroughSubject<Double, Never> { get }
+    var scaleOnSlidingSubject: AnyPublisher<Double, Never> { get }
     var runningTimeSubject: AnyPublisher<String, Never> { get }
+
+    var backToPageMainSignal: PassthroughSubject<Int, Never> { get }
     var setPageSignal: PassthroughSubject<Int, Never> { get }
 }
 
@@ -43,7 +44,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     init(runningService: RunningServiceType) {
         self.runningService = runningService
 
-        runningService.runningEvent
+        runningService.runningEventSubject
             .sink { [weak self] event in
                 print("[SPEAK!]!!!!!!!!!!!!!!!!!!!!\(event.text)")
                 self?.speechSignal.send(event.text)
@@ -66,11 +67,11 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     func didTapGoBackButton() {
-        goBackToMainPageSignal.send(currentPageIdx)
+        backToPageMainSignal.send(currentPageIdx)
     }
 
     func dragging() {
-        scaleSubject.send(scale)
+        scaleOnDraggingSubject.send(scale)
     }
 
     func didChangeCurrentPage(idx: Int) {
@@ -92,10 +93,10 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     // Outputs
 
     var speechSignal = PassthroughSubject<String, Never>()
-    var scaleSubject = PassthroughSubject<Double, Never>()
-    var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+    var scaleOnDraggingSubject = PassthroughSubject<Double, Never>()
+    var backToPageMainSignal = PassthroughSubject<Int, Never>()
     var setPageSignal = PassthroughSubject<Int, Never>()
-    var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
+    var scaleOnSlidingSubject: AnyPublisher<Double, Never> {
         $scale
             .filter { _ in !self.isDragging }
             .map { abs($0) }

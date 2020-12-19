@@ -22,7 +22,7 @@ protocol ActivityListViewModelOutputs {
     var activityListItemSubject: CurrentValueSubject<[ActivityListItem], Never> { get }
 
     var showActivityDetails: PassthroughSubject<Activity, Never> { get }
-    var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
+    var closeSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelOutputs {
@@ -42,7 +42,7 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
 
     // Inputs
     func didTapBackItem() {
-        goBackToSceneSignal.send()
+        closeSignal.send()
     }
 
     func didTapActivity(section: Int, row: Int) {
@@ -54,7 +54,7 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
     var activityListItemSubject = CurrentValueSubject<[ActivityListItem], Never>([])
 
     var showActivityDetails = PassthroughSubject<Activity, Never>()
-    var goBackToSceneSignal = PassthroughSubject<Void, Never>()
+    var closeSignal = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityListViewModel: ActivityListViewModelTypes {

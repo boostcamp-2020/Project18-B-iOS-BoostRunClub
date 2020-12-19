@@ -57,14 +57,14 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
             RunningInfo(type: .cadence, value: cadence <= 0 ? "--" : String(cadence)),
         ]
 
-        runningService.runningState
+        runningService.runningStateSubject
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .running {
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)
 
-        runningService.activityResults
+        runningService.runningResultSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 if let info = $0 {

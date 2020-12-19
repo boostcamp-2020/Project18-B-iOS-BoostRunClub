@@ -47,28 +47,28 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
-        viewModel.outputs.firstNameTextObservable
+        viewModel.outputs.firstNameTextSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
                 self?.firstNameTextField.text = text
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.lastNameTextObservable
+        viewModel.outputs.lastNameTextSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
                 self?.lastNameTextField.text = text
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.hometownTextObservable
+        viewModel.outputs.hometownTextSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
                 self?.hometownTextField.text = text
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.bioTextObservable
+        viewModel.outputs.bioTextSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
                 self?.bioTextView.text = text
@@ -76,7 +76,7 @@ final class EditProfileViewController: UIViewController, UINavigationControllerD
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.imageDataObservable
+        viewModel.outputs.imageDataSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] imageData in
                 if let imageData = imageData {

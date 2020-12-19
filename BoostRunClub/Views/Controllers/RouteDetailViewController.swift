@@ -28,7 +28,7 @@ final class RouteDetailViewController: UIViewController {
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
-        viewModel.outputs.detailConfigSignal
+        viewModel.outputs.detailConfigSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] (detail: ActivityDetailConfig) in
                 self?.setupMapView(detail)
