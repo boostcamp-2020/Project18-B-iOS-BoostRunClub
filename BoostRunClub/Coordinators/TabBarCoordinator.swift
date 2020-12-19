@@ -49,11 +49,11 @@ final class MainTabBarCoordinator: BasicCoordinator<MainTabCoordinationResult> {
     }
 
     private func showTabBarController(activity: Activity? = nil, detail: ActivityDetail? = nil) {
+        // configure tab coordinators
         let activityCoordinator = ActivityCoordinator(navigationController: UINavigationController())
         let prepareRunCoordinator = PrepareRunCoordinator(navigationController: UINavigationController())
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
 
-        // TabBar Main Page
         let startPage: TabBarPage
         let activityCloseSignal: AnyPublisher<ActivityCoordinationResult, Never>
         if

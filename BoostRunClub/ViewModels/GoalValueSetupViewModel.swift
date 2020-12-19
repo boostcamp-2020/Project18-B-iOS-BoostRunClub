@@ -84,7 +84,7 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
     }
 
     func didTapCancelButton() {
-        closeSheetSignal.send(nil)
+        closeSignal.send(nil)
     }
 
     func didTapApplyButton() {
@@ -99,13 +99,13 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
         case .time, .speed, .none:
             break
         }
-        closeSheetSignal.send(goalValue)
+        closeSignal.send(goalValue)
     }
 
     // MARK: Outputs
 
     var goalValueSubject: CurrentValueSubject<String, Never>
-    
+
     var closeSignal = PassthroughSubject<String?, Never>()
 }
 

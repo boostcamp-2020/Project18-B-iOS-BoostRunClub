@@ -78,7 +78,7 @@ final class PrepareRunCoordinator: BasicCoordinator<PrepareRunCoordinationResult
             goalType: goalInfo.type,
             goalValue: goalInfo.value
         )
-        
+
         let goalValueSetupVC = factory.makeGoalValueSetupVC(with: goalValueSetupVM)
         navigationController.pushViewController(goalValueSetupVC, animated: false)
 

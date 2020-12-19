@@ -11,7 +11,7 @@ import Foundation
 class EventTimeProvider: EventTimeProvidable {
     var timeIntervalSubject = PassthroughSubject<TimeInterval, Never>()
 
-    var cancellable: AnyCancellable?
+    private var cancellable: AnyCancellable?
 
     func start() {
         cancellable = Timer.TimerPublisher(interval: 0.8, runLoop: RunLoop.main, mode: .common)

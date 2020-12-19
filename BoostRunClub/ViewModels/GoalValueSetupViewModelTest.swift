@@ -280,7 +280,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: "15.15")
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertNil(resultValue)
                 if resultValue == nil {
@@ -298,7 +298,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: "15:15")
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertNil(resultValue)
                 if resultValue == nil {
@@ -329,7 +329,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -361,7 +361,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -381,7 +381,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: initialValue)
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertEqual(resultValue, initialValue)
                 if resultValue == initialValue {
@@ -400,7 +400,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .time, value: initialValue)
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertEqual(resultValue, initialValue)
                 if resultValue == initialValue {
@@ -431,7 +431,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -463,7 +463,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
