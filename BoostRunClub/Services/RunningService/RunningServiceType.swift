@@ -54,7 +54,7 @@ class RunningService: RunningServiceType {
             .store(in: &cancellables)
 
         motionProvider.motionType
-            .debounce(for: 3, scheduler: RunLoop.main)
+            .throttle(for: 1.5, scheduler: RunLoop.main, latest: true)
             .receive(on: RunLoop.main)
             .filter { [weak self] _ in self?.autoStatable ?? false }
             .filter { [weak self] in $0 != self?.runningState.value }
