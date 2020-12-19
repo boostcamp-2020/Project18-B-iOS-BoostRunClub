@@ -41,8 +41,9 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     private var possibleTypes: [RunningInfoType: String]
     let runningService: RunningServiceType
 
-    init(runningService: RunningServiceType) {
-        // TODO: GOALTYPE - SPEED 제거
+    var isResumed: Bool
+    init(runningService: RunningServiceType, resumed: Bool) {
+        isResumed = resumed
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
@@ -115,11 +116,13 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     }
 
     func viewDidAppear() {
-        if runningService.isRunning {
-            resumeAnimationSignal.send()
-        } else {
+        if !runningService.isRunning {
             runningService.start()
             initialAnimationSignal.send()
+        }
+
+        if isResumed {
+            resumeAnimationSignal.send()
         }
     }
 

@@ -67,8 +67,8 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
                 gradient, start: points[startIdx],
                 end: points[endIdx],
                 options: [
-                    //                    .drawsAfterEndLocation,
-//                    .drawsBeforeStartLocation,
+                    .drawsAfterEndLocation,
+                    .drawsBeforeStartLocation,
                 ]
             )
             context.restoreGState()
