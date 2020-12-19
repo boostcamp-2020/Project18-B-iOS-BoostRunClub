@@ -138,7 +138,6 @@ extension GoalTypeViewController {
         let size = CGSize(width: UIScreen.main.bounds.width, height: tableViewHeight)
         let origin = CGPoint(x: 0, y: UIScreen.main.bounds.height)
         let tableView = UITableView(frame: CGRect(origin: origin, size: size), style: .plain)
-        tableView.backgroundColor = UIColor.tertiarySystemBackground
         tableView.layer.masksToBounds = true
         tableView.delegate = self
         tableView.dataSource = self

@@ -19,7 +19,7 @@ extension DependencyFactory: TabBarContainerFactory {
 //        tabBarController.tabBar.isTranslucent = false // TODO: false true 비교
         tabBarController.tabBar.tintColor = TabBarPage.selectColor
         tabBarController.tabBar.unselectedItemTintColor = TabBarPage.unselectColor
-        tabBarController.tabBar.barTintColor = .white
+        tabBarController.tabBar.barTintColor = .systemBackground
         viewControllers[0].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "activity4"), tag: 0)
         viewControllers[1].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "running4"), tag: 1)
         viewControllers[2].tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "profile4"), tag: 2)
