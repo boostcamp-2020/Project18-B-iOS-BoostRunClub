@@ -24,8 +24,8 @@ enum TabBarPage: Int {
         }
     }
 
-    static var selectColor: UIColor { .black }
-    static var unselectColor: UIColor { .gray }
+    static var selectColor: UIColor { .label }
+    static var unselectColor: UIColor { .lightGray }
 }
 
 enum MainTabCoordinationResult {
