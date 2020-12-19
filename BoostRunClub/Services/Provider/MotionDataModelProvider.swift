@@ -30,6 +30,11 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
         return try? ActivityClassifier(configuration: configuration)
     }()
 
+    private let runningModel: RunningMotionClassifier? = {
+        let configuration = MLModelConfiguration()
+        return try? RunningMotionClassifier(configuration: configuration)
+    }()
+
     private var attitudeArray = [CMAttitude]()
     private var gravityArray = [CMAcceleration]()
     private var accelerometerArray = [CMAcceleration]()
@@ -43,11 +48,11 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
         isActive = true
 
         if motion.isDeviceMotionAvailable {
-            motion.deviceMotionUpdateInterval = 1.0 / 50.0
+            motion.deviceMotionUpdateInterval = 1.0 / 100.0
             motion.showsDeviceMovementDisplay = true
             motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
 
-            timer = Timer(fire: Date(), interval: 1.0 / 50.0, repeats: true,
+            timer = Timer(fire: Date(), interval: 1.0 / 100.0, repeats: true,
                           block: { _ in
                               if let data = self.motion.deviceMotion {
                                   self.attitudeArray.append(data.attitude)
@@ -55,7 +60,7 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
                                   self.accelerometerArray.append(data.userAcceleration)
                                   self.rotationArray.append(data.rotationRate)
 
-                                  if self.gravityArray.count >= 112 {
+                                  if self.gravityArray.count >= 100 {
                                       let result = self.getActivity(
                                           attitude: self.attitudeArray,
                                           gravity: self.gravityArray,
@@ -108,7 +113,22 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
             let stateIn = try? MLMultiArray(array)
         else { return "" }
 
-        let input = BRCActivityClassifierAInput(
+//        let input = BRCActivityClassifierAInput(
+//            gravity_x: gravX,
+//            gravity_y: gravY,
+//            gravity_z: gravZ,
+//            rotationRate_x: rotX,
+//            rotationRate_y: rotY,
+//            rotationRate_z: rotZ,
+//            userAcceleration_x: accX,
+//            userAcceleration_y: accY,
+//            userAcceleration_z: accZ,
+//            stateIn: stateIn
+//        )
+        let input = RunningMotionClassifierInput(
+            attitude_pitch: attiP,
+            attitude_roll: attiR,
+            attitude_yaw: attiY,
             gravity_x: gravX,
             gravity_y: gravY,
             gravity_z: gravZ,
@@ -121,20 +141,12 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
             stateIn: stateIn
         )
 
-        // swiftlint:disable:next line_length
-//        let input = MyActivityClassifierInput(attitude_pitch: attiP, attitude_roll: attiR, attitude_yaw: attiY, gravity_x: gravX, gravity_y: gravY, gravity_z: gravZ, rotationRate_x: rotX, rotationRate_y: rotY, rotationRate_z: rotZ, userAcceleration_x: accX, userAcceleration_y: accY, userAcceleration_z: accZ, stateIn: stateIn)
-
-        // swiftlint:disable:next line_length
-//        let input = ActivityClassifierInput(attitude_pitch: attiP, attitude_roll: attiR, attitude_yaw: attiY, gravity_x: gravX, gravity_y: gravY, gravity_z: gravZ, rotationRate_x: rotX, rotationRate_y: rotY, rotationRate_z: rotZ, userAcceleration_x: accX, userAcceleration_y: accY, userAcceleration_z: accZ, stateIn: stateIn)
-        guard let result = try? model?.prediction(input: input) else { return "" }
-//        guard let result = try? myModel?.prediction(input: input) else { return "" }
-//        guard let result = try? activityModel?.prediction(input: input) else { return "" }
-
-        let runProb = result.labelProbability["jogging"] ?? 0
-        let standingProb = result.labelProbability["standing"] ?? 0
-        let walkingProb = result.labelProbability["walking"] ?? 0
-//        print("[CORE MOTION] \(String(format: "run: %.2f", runProb * 100)) \(String(format: "walking: %.2f", walkingProb * 100)) \(String(format: "stand: %.2f", standingProb * 100))")
-        return standingProb > 60 ? "standing" : "walking"
+//        guard let result = try? model?.prediction(input: input) else { return "" }
+        guard let result = try? runningModel?.prediction(input: input) else { return "" }
+        let standingProb = result.labelProbability["stand"] ?? 0
+        let walkingProb = result.labelProbability["run"] ?? 0
+        print("[CORE MOTION] \(String(format: "walking: %.2f", walkingProb * 100)) \(String(format: "stand: %.2f", standingProb * 100))")
+        return standingProb > 0.60 ? "standing" : "walking"
     }
 
     func start() {

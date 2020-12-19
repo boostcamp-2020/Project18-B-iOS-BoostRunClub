@@ -12,9 +12,9 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     let minSpeed: CGFloat
     var maxHue: CGFloat
     var minHue: CGFloat
-    var colors = [CGColor]()
-//    var colors = [(start: CGColor, end: CGColor)]()
-    var splits = [RunningSplit]()
+//    var colors = [CGColor]()
+    var colors = [(start: CGColor, end: CGColor)]()
+    var slices = [RunningSlice]()
 
     init(
         locations: [Location],
@@ -23,7 +23,7 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
         colorMin: UIColor,
         colorMax: UIColor
     ) {
-        self.splits = splits
+        slices = splits.reduce(into: []) { $0.append(contentsOf: $1.runningSlices) }
         let minMaxValue = locations.reduce(into: (min: Int.max, max: Int.min)) {
             $0.min = min($0.min, $1.speed)
             $0.max = max($0.max, $1.speed)
@@ -41,28 +41,25 @@ class PaceGradientRouteOverlay: BasicRouteOverlay {
     }
 
     private func setColors() {
-//        guard !splits.isEmpty else { return }
-//
-//        let speedFactor: CGFloat = 1 / (maxSpeed - minSpeed)
-//        let hueFactor: CGFloat = 1 / (maxHue - minHue)
-//
-//        var hue = minHue + CGFloat()
-
-        guard !locations.isEmpty else { return }
-
         let speedFactor: CGFloat = 1 / (maxSpeed - minSpeed)
-        let hueFactor: CGFloat = 1 / (maxHue - minHue)
-        var hue = minHue + (CGFloat(locations[0].speed) - minSpeed) * speedFactor * hueFactor
-        var speed: CGFloat = 0
-        for (idx, location) in locations.enumerated() {
-            if idx != 0 {
-                let delta = (CGFloat(location.speed) - CGFloat(locations[idx - 1].speed)) * speedFactor * 0.5
-                speed = delta == 0 ? 0 : speed + delta
-            }
-            hue = clamped(value: hue + speed, minValue: minHue, maxValue: maxHue)
+        let hueFactor: CGFloat = (maxHue - minHue)
 
-            let color = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
-            colors.append(color.cgColor)
+        slices.forEach { slice in
+            if !slice.isRunning {
+                self.colors.append((start: UIColor.black.cgColor, end: UIColor.black.cgColor))
+                return
+            }
+            let startIdx = clamped(value: slice.startIndex, minValue: 0, maxValue: locations.count - 2)
+            let endIdx = clamped(value: slice.endIndex, minValue: startIdx, maxValue: locations.count - 1)
+
+            let startHue = minHue + (CGFloat(locations[startIdx].speed) - minSpeed) * speedFactor * hueFactor
+            let endHue = minHue + (CGFloat(locations[endIdx].speed) - minSpeed) * speedFactor * hueFactor
+            self.colors.append((
+                start: UIColor(hue: startHue, saturation: 1, brightness: 1, alpha: 1).cgColor,
+                end: UIColor(hue: endHue, saturation: 1, brightness: 1, alpha: 1).cgColor
+            )
+            )
         }
+        
     }
 }

@@ -32,19 +32,19 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
         context.setStrokeColor(borderColor.cgColor)
         context.strokePath()
 
-        for idx in 0 ..< (points.count - 1) {
-            let startPoint = points[idx]
-            let endPoint = points[idx + 1]
-            let startColor = routeOverlay.colors[idx]
-            let endColor = routeOverlay.colors[idx + 1]
+        for (idx, slice) in routeOverlay.slices.enumerated() {
+            let startIdx = clamped(value: slice.startIndex, minValue: 0, maxValue: points.count - 2)
+            let endIdx = clamped(value: slice.endIndex, minValue: startIdx + 1, maxValue: points.count - 1)
+            let startColor = routeOverlay.colors[idx].start
+            let endColor = routeOverlay.colors[idx].end
 
             context.setLineWidth(baseWidth)
             context.setLineJoin(.round)
             context.setLineCap(.round)
 
             let path = CGMutablePath()
-            path.move(to: startPoint)
-            path.addLine(to: endPoint)
+            path.move(to: points[startIdx])
+            path.addLines(between: points[startIdx ... endIdx].map { $0 })
 
             context.addPath(path)
             context.saveGState()
@@ -64,14 +64,56 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
             }
 
             context.drawLinearGradient(
-                gradient, start: startPoint,
-                end: endPoint,
+                gradient, start: points[startIdx],
+                end: points[endIdx],
                 options: [
-                    .drawsAfterEndLocation,
-                    .drawsBeforeStartLocation,
+                    //                    .drawsAfterEndLocation,
+//                    .drawsBeforeStartLocation,
                 ]
             )
             context.restoreGState()
         }
+//
+//        for idx in 0 ..< (points.count - 1) {
+//            let startPoint = points[idx]
+//            let endPoint = points[idx + 1]
+//            let startColor = routeOverlay.colors[idx]
+//            let endColor = routeOverlay.colors[idx + 1]
+//
+//            context.setLineWidth(baseWidth)
+//            context.setLineJoin(.round)
+//            context.setLineCap(.round)
+//
+//            let path = CGMutablePath()
+//            path.move(to: startPoint)
+//            path.addLine(to: endPoint)
+//
+//            context.addPath(path)
+//            context.saveGState()
+//
+//            context.replacePathWithStrokedPath()
+//            context.clip()
+//
+//            guard
+//                let gradient = CGGradient(
+//                    colorsSpace: nil,
+//                    colors: [startColor, endColor] as CFArray,
+//                    locations: [0, 1]
+//                )
+//            else {
+//                context.restoreGState()
+//                continue
+//            }
+//
+//            context.drawLinearGradient(
+//                gradient, start: startPoint,
+//                end: endPoint,
+//                options: [
+//                    .drawsAfterEndLocation,
+//                    .drawsBeforeStartLocation,
+//                ]
+//            )
+//            context.restoreGState()
+//        }
     }
 }

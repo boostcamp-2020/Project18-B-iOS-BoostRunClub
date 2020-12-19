@@ -104,7 +104,7 @@ extension SplitInfoDetailViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Configure Layout
+// MARK: - Configure
 
 extension SplitInfoDetailViewController {
     private func configureLayout() {

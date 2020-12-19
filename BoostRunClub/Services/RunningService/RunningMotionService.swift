@@ -35,11 +35,18 @@ class RunningMotionService: RunningMotionServiceable {
 
     func start() {
         bindProvider()
+        motionDataModelProvider.start()
     }
 
     private func bindProvider() {
 //        motionActivityProvider.currentMotionType
-//        motionDataModelProvider.motionType
+        motionDataModelProvider.motionType
+            .receive(on: RunLoop.main)
+            .sink {
+                self.motionTypeSubject.send($0)
+            }
+            .store(in: &cancellables)
+
 //        locationProvider.locationSubject
     }
 
