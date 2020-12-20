@@ -14,7 +14,7 @@ class RunningDashBoardServiceableMock: RunningDashBoardServiceable {
     var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
 
     var location: CLLocation?
-    var calorie: Int = 0
+    var calorie: Double = 0
     var pace: Double = 0
     var cadence: Int = 0
     var distance: Double = 0

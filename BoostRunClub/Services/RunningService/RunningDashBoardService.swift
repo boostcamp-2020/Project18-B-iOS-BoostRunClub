@@ -22,7 +22,7 @@ final class RunningDashBoardService: RunningDashBoardServiceable {
     // runningTime, calorie, pace, cadence, distance
     private(set) var location: CLLocation?
     private(set) var runningTime = CurrentValueSubject<TimeInterval, Never>(0)
-    private(set) var calorie: Int = 0
+    private(set) var calorie: Double = 0
     private(set) var pace: Double = 0
     private(set) var cadence: Int = 0
     private(set) var distance: Double = 0
@@ -124,7 +124,7 @@ final class RunningDashBoardService: RunningDashBoardServiceable {
             let newDistance = addedDistance + distance
 
             //    킬로미터 * Motion상수 * weight
-            calorie += Int(addedDistance / 1000 * MotionType.running.METFactor * 70)
+            calorie += addedDistance / 1000 * MotionType.running.METFactor * 70
 
             distance = newDistance
         }

@@ -66,54 +66,9 @@ class GradientRouteRenderer: MKOverlayPathRenderer {
             context.drawLinearGradient(
                 gradient, start: points[startIdx],
                 end: points[endIdx],
-                options: [
-                    .drawsAfterEndLocation,
-                    .drawsBeforeStartLocation,
-                ]
+                options: [.drawsAfterEndLocation]
             )
             context.restoreGState()
         }
-//
-//        for idx in 0 ..< (points.count - 1) {
-//            let startPoint = points[idx]
-//            let endPoint = points[idx + 1]
-//            let startColor = routeOverlay.colors[idx]
-//            let endColor = routeOverlay.colors[idx + 1]
-//
-//            context.setLineWidth(baseWidth)
-//            context.setLineJoin(.round)
-//            context.setLineCap(.round)
-//
-//            let path = CGMutablePath()
-//            path.move(to: startPoint)
-//            path.addLine(to: endPoint)
-//
-//            context.addPath(path)
-//            context.saveGState()
-//
-//            context.replacePathWithStrokedPath()
-//            context.clip()
-//
-//            guard
-//                let gradient = CGGradient(
-//                    colorsSpace: nil,
-//                    colors: [startColor, endColor] as CFArray,
-//                    locations: [0, 1]
-//                )
-//            else {
-//                context.restoreGState()
-//                continue
-//            }
-//
-//            context.drawLinearGradient(
-//                gradient, start: startPoint,
-//                end: endPoint,
-//                options: [
-//                    .drawsAfterEndLocation,
-//                    .drawsBeforeStartLocation,
-//                ]
-//            )
-//            context.restoreGState()
-//        }
     }
 }

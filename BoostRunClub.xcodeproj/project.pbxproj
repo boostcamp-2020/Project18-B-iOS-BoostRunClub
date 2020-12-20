@@ -180,7 +180,6 @@
 		96A99711258E5F0C00829819 /* EventTimeProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996D1258E5D7B00829819 /* EventTimeProvidable.swift */; };
 		96A99715258E5F5A00829819 /* RunningSnapShotProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */; };
 		96A99718258E5F7E00829819 /* RunningSnapShotProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */; };
-		96A9972E258E906500829819 /* RunningMotionClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 96A9972D258E906500829819 /* RunningMotionClassifier.mlmodel */; };
 		96A9973E258EFE8300829819 /* MotionDataModelProvidableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9973D258EFE8300829819 /* MotionDataModelProvidableMock.swift */; };
 		96A9974D258EFEA800829819 /* EventTimeProvidableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99745258EFE9900829819 /* EventTimeProvidableMock.swift */; };
 		96A9974E258EFEA800829819 /* DefaultsProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99739258EFE6200829819 /* DefaultsProviderMock.swift */; };
@@ -197,6 +196,7 @@
 		96A99779258F02D900829819 /* RunningDashBoardServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */; };
 		96A9977A258F02D900829819 /* RunningServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707625891F9F00D3ABFE /* RunningServiceType.swift */; };
 		96A9977B258F02D900829819 /* RunningRecordServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99770258F02A400829819 /* RunningRecordServiceable.swift */; };
+		96A997A8258F309D00829819 /* RunningMotionClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 96A997A7258F309D00829819 /* RunningMotionClassifier.mlmodel */; };
 		96B2DC1B2584888400A95DD0 /* DetailSplitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC1A2584888400A95DD0 /* DetailSplitsView.swift */; };
 		96B2DC23258488BC00A95DD0 /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC22258488BC00A95DD0 /* DetailMapView.swift */; };
 		96B2DC2B258489CF00A95DD0 /* UILabel+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */; };
@@ -401,7 +401,6 @@
 		96A996E4258E5E3B00829819 /* DefaultsManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManagable.swift; sourceTree = "<group>"; };
 		96A996EB258E5E7700829819 /* PedometerProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProvidable.swift; sourceTree = "<group>"; };
 		96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSnapShotProvidable.swift; sourceTree = "<group>"; };
-		96A9972D258E906500829819 /* RunningMotionClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RunningMotionClassifier.mlmodel; sourceTree = "<group>"; };
 		96A99735258EFE5200829819 /* PedometerProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProviderMock.swift; sourceTree = "<group>"; };
 		96A99739258EFE6200829819 /* DefaultsProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsProviderMock.swift; sourceTree = "<group>"; };
 		96A9973D258EFE8300829819 /* MotionDataModelProvidableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataModelProvidableMock.swift; sourceTree = "<group>"; };
@@ -414,6 +413,7 @@
 		96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDashBoardServiceable.swift; sourceTree = "<group>"; };
 		96A99770258F02A400829819 /* RunningRecordServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordServiceable.swift; sourceTree = "<group>"; };
 		96A99774258F02C100829819 /* RunningMotionServiecable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMotionServiecable.swift; sourceTree = "<group>"; };
+		96A997A7258F309D00829819 /* RunningMotionClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RunningMotionClassifier.mlmodel; sourceTree = "<group>"; };
 		96B2DC1A2584888400A95DD0 /* DetailSplitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSplitsView.swift; sourceTree = "<group>"; };
 		96B2DC22258488BC00A95DD0 /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Make.swift"; sourceTree = "<group>"; };
@@ -524,7 +524,7 @@
 		717878472587E0D8004EF8EA /* CoreML */ = {
 			isa = PBXGroup;
 			children = (
-				96A9972D258E906500829819 /* RunningMotionClassifier.mlmodel */,
+				96A997A7258F309D00829819 /* RunningMotionClassifier.mlmodel */,
 			);
 			path = CoreML;
 			sourceTree = "<group>";
@@ -1114,6 +1114,7 @@
 				717878522587E1C4004EF8EA /* MotionType.swift in Sources */,
 				96E13212257680B100656476 /* DependencyFactory.swift in Sources */,
 				96ED4031257C7654007DB3DF /* BRCModel.xcdatamodeld in Sources */,
+				96A997A8258F309D00829819 /* RunningMotionClassifier.mlmodel in Sources */,
 				4C587510258014C000185B4C /* UIView+identifier.swift in Sources */,
 				96FA7DF62570177C00090999 /* CaseIterable+.swift in Sources */,
 				9689A15E25763CC800DED689 /* PausedRunningViewController.swift in Sources */,
@@ -1235,7 +1236,6 @@
 				96FA7E0B257025FF00090999 /* RunningMapViewModel.swift in Sources */,
 				9689A16225763D1E00DED689 /* PausedRunningCoordinator.swift in Sources */,
 				9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */,
-				96A9972E258E906500829819 /* RunningMotionClassifier.mlmodel in Sources */,
 				967BEB982587EEE5001A241F /* BasicRouteOverlay.swift in Sources */,
 				71FBAAF2257D244F005C8D30 /* Factory+PrepareRunScene.swift in Sources */,
 				718729422578DA63007BD24F /* RunningSplit.swift in Sources */,
