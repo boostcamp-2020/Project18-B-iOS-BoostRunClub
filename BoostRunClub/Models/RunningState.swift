@@ -11,7 +11,7 @@ import Foundation
 struct RunningState {
     var location: CLLocation
     var runningTime: TimeInterval
-    var calorie: Int
+    var calorie: Double
     var pace: Int
     var avgPace: Int
     var cadence: Int

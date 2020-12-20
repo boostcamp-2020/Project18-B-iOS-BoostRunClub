@@ -14,7 +14,7 @@ protocol RunningDashBoardServiceable {
     var runningTime: CurrentValueSubject<TimeInterval, Never> { get }
 
     var location: CLLocation? { get }
-    var calorie: Int { get }
+    var calorie: Double { get }
     var pace: Double { get }
     var cadence: Int { get }
     var distance: Double { get }

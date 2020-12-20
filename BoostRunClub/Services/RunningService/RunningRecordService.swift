@@ -140,7 +140,7 @@ final class RunningRecordService: RunningRecordServiceable {
             activityUUID: uuid,
             avgBPM: 0,
             cadence: lastState.cadence,
-            calorie: lastState.calorie,
+            calorie: Int(lastState.calorie),
             elevation: Int(elevation),
             locations: locations.map { Location(clLocation: $0) },
             splits: runningSplits
