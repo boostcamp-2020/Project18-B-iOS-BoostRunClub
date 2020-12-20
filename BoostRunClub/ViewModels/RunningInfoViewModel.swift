@@ -116,7 +116,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     }
 
     func viewDidAppear() {
-        if !runningService.isRunning {
+        if !runningService.isStarted {
             runningService.start()
             initialAnimationSignal.send()
         }

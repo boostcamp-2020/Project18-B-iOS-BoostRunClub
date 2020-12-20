@@ -19,7 +19,6 @@ class DependencyFactory {
     lazy var locationProvider = LocationProvider()
     lazy var pedometerProvider = PedometerProvider()
     lazy var motionDataModelProvider = MotionDataModelProvider()
-    lazy var motionActivityProvider = MotionActivityProvider()
     lazy var runningSnapShotProvider = RunningSnapShotProvider()
 
     // Running Service
@@ -30,7 +29,6 @@ class DependencyFactory {
     )
     lazy var runningMotionService = RunningMotionService(
         motionDataModelProvider: motionDataModelProvider,
-        motionActivityProvider: motionActivityProvider,
         locationProvider: locationProvider
     )
     lazy var runningDashBoardService = RunningDashBoardService(

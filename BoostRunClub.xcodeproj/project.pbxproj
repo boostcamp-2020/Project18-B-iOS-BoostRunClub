@@ -108,14 +108,13 @@
 		961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961840E32580F6A200069FDA /* ActivityListItem.swift */; };
 		961905E8258D2A40001FB34F /* Double+Radian+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */; };
 		9620707725891F9F00D3ABFE /* RunningServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707625891F9F00D3ABFE /* RunningServiceType.swift */; };
-		9620707B2589655A00D3ABFE /* RunningDashBoardServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707A2589655A00D3ABFE /* RunningDashBoardServiceable.swift */; };
+		9620707B2589655A00D3ABFE /* RunningDashBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707A2589655A00D3ABFE /* RunningDashBoardService.swift */; };
 		9620707F2589657A00D3ABFE /* RunningRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707E2589657A00D3ABFE /* RunningRecordService.swift */; };
 		962070832589666300D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
 		9620708B25896A6900D3ABFE /* PedometerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620708A25896A6900D3ABFE /* PedometerProvider.swift */; };
 		9620708E2589810800D3ABFE /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962070822589666300D3ABFE /* RunningState.swift */; };
 		9620709C2589856100D3ABFE /* RunningSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718729412578DA63007BD24F /* RunningSplit.swift */; };
 		9629A7C3258E347C00CEFA66 /* RunningMotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9629A7C2258E347C00CEFA66 /* RunningMotionService.swift */; };
-		9629A7C7258E35B300CEFA66 /* MotionActivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9629A7C6258E35B300CEFA66 /* MotionActivityProvider.swift */; };
 		9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815125722B5B00B8BE6B /* RunDataView.swift */; };
 		9635815525722CFA00B8BE6B /* NikeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815425722CFA00B8BE6B /* NikeLabel.swift */; };
 		9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635815F25726EAB00B8BE6B /* BoostRunClubTests.swift */; };
@@ -174,8 +173,6 @@
 		96A996DE258E5DFD00829819 /* MotionDataModelProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996DD258E5DFD00829819 /* MotionDataModelProvidable.swift */; };
 		96A996E5258E5E3B00829819 /* DefaultsManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996E4258E5E3B00829819 /* DefaultsManagable.swift */; };
 		96A996EC258E5E7700829819 /* PedometerProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996EB258E5E7700829819 /* PedometerProvidable.swift */; };
-		96A996F1258E5EAB00829819 /* MotionActivityProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996F0258E5EAB00829819 /* MotionActivityProvidable.swift */; };
-		96A99700258E5EEB00829819 /* MotionActivityProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996F0258E5EAB00829819 /* MotionActivityProvidable.swift */; };
 		96A99705258E5EF000829819 /* PedometerProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996EB258E5E7700829819 /* PedometerProvidable.swift */; };
 		96A99708258E5EF600829819 /* DefaultsManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996E4258E5E3B00829819 /* DefaultsManagable.swift */; };
 		96A9970B258E5EFF00829819 /* MotionDataModelProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A996DD258E5DFD00829819 /* MotionDataModelProvidable.swift */; };
@@ -184,6 +181,22 @@
 		96A99715258E5F5A00829819 /* RunningSnapShotProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */; };
 		96A99718258E5F7E00829819 /* RunningSnapShotProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */; };
 		96A9972E258E906500829819 /* RunningMotionClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 96A9972D258E906500829819 /* RunningMotionClassifier.mlmodel */; };
+		96A9973E258EFE8300829819 /* MotionDataModelProvidableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9973D258EFE8300829819 /* MotionDataModelProvidableMock.swift */; };
+		96A9974D258EFEA800829819 /* EventTimeProvidableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99745258EFE9900829819 /* EventTimeProvidableMock.swift */; };
+		96A9974E258EFEA800829819 /* DefaultsProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99739258EFE6200829819 /* DefaultsProviderMock.swift */; };
+		96A9974F258EFEA800829819 /* PedometerProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99735258EFE5200829819 /* PedometerProviderMock.swift */; };
+		96A99757258F01A000829819 /* RunningDashBoardServiceableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99756258F01A000829819 /* RunningDashBoardServiceableMock.swift */; };
+		96A9975D258F01B000829819 /* RunningRecordServiceableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9975C258F01B000829819 /* RunningRecordServiceableMock.swift */; };
+		96A99761258F01C400829819 /* RunningMotionServiceableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99760258F01C400829819 /* RunningMotionServiceableMock.swift */; };
+		96A99765258F01D500829819 /* RunningServiceTypeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99764258F01D500829819 /* RunningServiceTypeMock.swift */; };
+		96A99769258F025300829819 /* RunningService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99768258F025300829819 /* RunningService.swift */; };
+		96A9976D258F028600829819 /* RunningDashBoardServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */; };
+		96A99771258F02A500829819 /* RunningRecordServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99770258F02A400829819 /* RunningRecordServiceable.swift */; };
+		96A99775258F02C100829819 /* RunningMotionServiecable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99774258F02C100829819 /* RunningMotionServiecable.swift */; };
+		96A99778258F02D900829819 /* RunningMotionServiecable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99774258F02C100829819 /* RunningMotionServiecable.swift */; };
+		96A99779258F02D900829819 /* RunningDashBoardServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */; };
+		96A9977A258F02D900829819 /* RunningServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620707625891F9F00D3ABFE /* RunningServiceType.swift */; };
+		96A9977B258F02D900829819 /* RunningRecordServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A99770258F02A400829819 /* RunningRecordServiceable.swift */; };
 		96B2DC1B2584888400A95DD0 /* DetailSplitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC1A2584888400A95DD0 /* DetailSplitsView.swift */; };
 		96B2DC23258488BC00A95DD0 /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC22258488BC00A95DD0 /* DetailMapView.swift */; };
 		96B2DC2B258489CF00A95DD0 /* UILabel+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */; };
@@ -338,12 +351,11 @@
 		961840E32580F6A200069FDA /* ActivityListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListItem.swift; sourceTree = "<group>"; };
 		961905E7258D2A40001FB34F /* Double+Radian+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Radian+Degree.swift"; sourceTree = "<group>"; };
 		9620707625891F9F00D3ABFE /* RunningServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceType.swift; sourceTree = "<group>"; };
-		9620707A2589655A00D3ABFE /* RunningDashBoardServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDashBoardServiceable.swift; sourceTree = "<group>"; };
+		9620707A2589655A00D3ABFE /* RunningDashBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDashBoardService.swift; sourceTree = "<group>"; };
 		9620707E2589657A00D3ABFE /* RunningRecordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordService.swift; sourceTree = "<group>"; };
 		962070822589666300D3ABFE /* RunningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningState.swift; sourceTree = "<group>"; };
 		9620708A25896A6900D3ABFE /* PedometerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProvider.swift; sourceTree = "<group>"; };
 		9629A7C2258E347C00CEFA66 /* RunningMotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMotionService.swift; sourceTree = "<group>"; };
-		9629A7C6258E35B300CEFA66 /* MotionActivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionActivityProvider.swift; sourceTree = "<group>"; };
 		9635815125722B5B00B8BE6B /* RunDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDataView.swift; sourceTree = "<group>"; };
 		9635815425722CFA00B8BE6B /* NikeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikeLabel.swift; sourceTree = "<group>"; };
 		9635815D25726EAA00B8BE6B /* BoostRunClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoostRunClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -388,9 +400,20 @@
 		96A996DD258E5DFD00829819 /* MotionDataModelProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataModelProvidable.swift; sourceTree = "<group>"; };
 		96A996E4258E5E3B00829819 /* DefaultsManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManagable.swift; sourceTree = "<group>"; };
 		96A996EB258E5E7700829819 /* PedometerProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProvidable.swift; sourceTree = "<group>"; };
-		96A996F0258E5EAB00829819 /* MotionActivityProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionActivityProvidable.swift; sourceTree = "<group>"; };
 		96A99714258E5F5A00829819 /* RunningSnapShotProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSnapShotProvidable.swift; sourceTree = "<group>"; };
 		96A9972D258E906500829819 /* RunningMotionClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RunningMotionClassifier.mlmodel; sourceTree = "<group>"; };
+		96A99735258EFE5200829819 /* PedometerProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerProviderMock.swift; sourceTree = "<group>"; };
+		96A99739258EFE6200829819 /* DefaultsProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsProviderMock.swift; sourceTree = "<group>"; };
+		96A9973D258EFE8300829819 /* MotionDataModelProvidableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataModelProvidableMock.swift; sourceTree = "<group>"; };
+		96A99745258EFE9900829819 /* EventTimeProvidableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimeProvidableMock.swift; sourceTree = "<group>"; };
+		96A99756258F01A000829819 /* RunningDashBoardServiceableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDashBoardServiceableMock.swift; sourceTree = "<group>"; };
+		96A9975C258F01B000829819 /* RunningRecordServiceableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordServiceableMock.swift; sourceTree = "<group>"; };
+		96A99760258F01C400829819 /* RunningMotionServiceableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMotionServiceableMock.swift; sourceTree = "<group>"; };
+		96A99764258F01D500829819 /* RunningServiceTypeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceTypeMock.swift; sourceTree = "<group>"; };
+		96A99768258F025300829819 /* RunningService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningService.swift; sourceTree = "<group>"; };
+		96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningDashBoardServiceable.swift; sourceTree = "<group>"; };
+		96A99770258F02A400829819 /* RunningRecordServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordServiceable.swift; sourceTree = "<group>"; };
+		96A99774258F02C100829819 /* RunningMotionServiecable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningMotionServiecable.swift; sourceTree = "<group>"; };
 		96B2DC1A2584888400A95DD0 /* DetailSplitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSplitsView.swift; sourceTree = "<group>"; };
 		96B2DC22258488BC00A95DD0 /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		96B2DC2A258489CF00A95DD0 /* UILabel+Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Make.swift"; sourceTree = "<group>"; };
@@ -663,10 +686,14 @@
 		96207075258919E900D3ABFE /* RunningService */ = {
 			isa = PBXGroup;
 			children = (
+				96A99768258F025300829819 /* RunningService.swift */,
 				9620707625891F9F00D3ABFE /* RunningServiceType.swift */,
-				9620707A2589655A00D3ABFE /* RunningDashBoardServiceable.swift */,
+				9620707A2589655A00D3ABFE /* RunningDashBoardService.swift */,
+				96A9976C258F028600829819 /* RunningDashBoardServiceable.swift */,
 				9620707E2589657A00D3ABFE /* RunningRecordService.swift */,
+				96A99770258F02A400829819 /* RunningRecordServiceable.swift */,
 				9629A7C2258E347C00CEFA66 /* RunningMotionService.swift */,
+				96A99774258F02C100829819 /* RunningMotionServiecable.swift */,
 			);
 			path = RunningService;
 			sourceTree = "<group>";
@@ -684,7 +711,15 @@
 		963581752572703A00B8BE6B /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				96A99735258EFE5200829819 /* PedometerProviderMock.swift */,
+				96A99739258EFE6200829819 /* DefaultsProviderMock.swift */,
+				96A9973D258EFE8300829819 /* MotionDataModelProvidableMock.swift */,
+				96A99745258EFE9900829819 /* EventTimeProvidableMock.swift */,
 				9635817B2572707C00B8BE6B /* LocationProviderMock.swift */,
+				96A99756258F01A000829819 /* RunningDashBoardServiceableMock.swift */,
+				96A9975C258F01B000829819 /* RunningRecordServiceableMock.swift */,
+				96A99760258F01C400829819 /* RunningMotionServiceableMock.swift */,
+				96A99764258F01D500829819 /* RunningServiceTypeMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -712,8 +747,6 @@
 		964B4AC8258E395100F9E3BE /* Provider */ = {
 			isa = PBXGroup;
 			children = (
-				9629A7C6258E35B300CEFA66 /* MotionActivityProvider.swift */,
-				96A996F0258E5EAB00829819 /* MotionActivityProvidable.swift */,
 				9620708A25896A6900D3ABFE /* PedometerProvider.swift */,
 				96A996EB258E5E7700829819 /* PedometerProvidable.swift */,
 				71BBFC872582FDE800BC01B7 /* DefaultsProvider.swift */,
@@ -1119,7 +1152,6 @@
 				71EFCC8D2577C3C0007998AD /* CircleButton.swift in Sources */,
 				9635815225722B5B00B8BE6B /* RunDataView.swift in Sources */,
 				4C4D347625874B2400E70189 /* SplitDatailSplitCell.swift in Sources */,
-				9629A7C7258E35B300CEFA66 /* MotionActivityProvider.swift in Sources */,
 				964BC6D82580CA0F00A69A82 /* ActivityCellView.swift in Sources */,
 				96CB22AB258233BC000D67C4 /* RouteDrawer.swift in Sources */,
 				96FA7E0E2570260E00090999 /* SplitsViewModel.swift in Sources */,
@@ -1128,7 +1160,6 @@
 				9651ABED25854FB200DF73C3 /* ActivityDetailConfig.swift in Sources */,
 				96DE093325860FAC0055213C /* CircleLongPressButton.swift in Sources */,
 				71FBAAE6257D23DB005C8D30 /* Factory+LoginScene.swift in Sources */,
-				96A996F1258E5EAB00829819 /* MotionActivityProvidable.swift in Sources */,
 				964BC6D72580CA0F00A69A82 /* ActivityStatisticCellView.swift in Sources */,
 				961840E42580F6A200069FDA /* ActivityListItem.swift in Sources */,
 				967BEB9C2587FDB7001A241F /* BasicRouteRenderer.swift in Sources */,
@@ -1187,6 +1218,7 @@
 				71BBFC882582FDE800BC01B7 /* DefaultsProvider.swift in Sources */,
 				71FBAB06257D24E3005C8D30 /* Factory+RunningMapScene.swift in Sources */,
 				967BEBAA258810B1001A241F /* UIColor+Components.swift in Sources */,
+				96A9976D258F028600829819 /* RunningDashBoardServiceable.swift in Sources */,
 				71FBAB4F257FA267005C8D30 /* ProfileViewModel.swift in Sources */,
 				71A58D18256D2DE50012FF51 /* PrepareRunViewModel.swift in Sources */,
 				96A996DE258E5DFD00829819 /* MotionDataModelProvidable.swift in Sources */,
@@ -1212,6 +1244,7 @@
 				4C5874F6257FD7EB00185B4C /* RunningSplitCell.swift in Sources */,
 				4C4D34722587430E00E70189 /* SplitDetailSplitHeaderView.swift in Sources */,
 				714ECA772574F41B00809CBE /* RunningPageCoordinator.swift in Sources */,
+				96A99771258F02A500829819 /* RunningRecordServiceable.swift in Sources */,
 				71FBAB66257FCD84005C8D30 /* EditProfileViewModel.swift in Sources */,
 				967253132584878A00B4BBC6 /* DetailTitleView.swift in Sources */,
 				960A151C257E43E7008D2BD3 /* RoundSegmentControl.swift in Sources */,
@@ -1230,7 +1263,9 @@
 				9600DB522566AA4400183CB9 /* AppDelegate.swift in Sources */,
 				9600DB542566AA4400183CB9 /* SceneDelegate.swift in Sources */,
 				964BC6E02580CFDA00A69A82 /* ActivityListViewController.swift in Sources */,
-				9620707B2589655A00D3ABFE /* RunningDashBoardServiceable.swift in Sources */,
+				96A99769258F025300829819 /* RunningService.swift in Sources */,
+				9620707B2589655A00D3ABFE /* RunningDashBoardService.swift in Sources */,
+				96A99775258F02C100829819 /* RunningMotionServiecable.swift in Sources */,
 				71FBAAFE257D24A9005C8D30 /* Factory+ProfileScene.swift in Sources */,
 				960A14DE257DD127008D2BD3 /* ActivityViewModel.swift in Sources */,
 				4CCD6E7B256BDD0800195EDA /* PrepareRunCoordinator.swift in Sources */,
@@ -1247,6 +1282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96A99705258E5EF000829819 /* PedometerProvidable.swift in Sources */,
+				96A99778258F02D900829819 /* RunningMotionServiecable.swift in Sources */,
 				964A0C31257FF2A5008D7FD7 /* Date+String.swift in Sources */,
 				96A99708258E5EF600829819 /* DefaultsManagable.swift in Sources */,
 				9635816A25726ECC00B8BE6B /* PrepareRunViewModelTest.swift in Sources */,
@@ -1254,6 +1290,7 @@
 				9635816D25726EED00B8BE6B /* PrepareRunViewModel.swift in Sources */,
 				964A0C38257FF2BB008D7FD7 /* DateRange.swift in Sources */,
 				9620709C2589856100D3ABFE /* RunningSplit.swift in Sources */,
+				96A99761258F01C400829819 /* RunningMotionServiceableMock.swift in Sources */,
 				96B9064D257CE22D0081E8BF /* ZActivity+Activity.swift in Sources */,
 				96B90647257CE1DD0081E8BF /* CoreDataService.swift in Sources */,
 				96A99718258E5F7E00829819 /* RunningSnapShotProvidable.swift in Sources */,
@@ -1264,29 +1301,38 @@
 				9635816025726EAB00B8BE6B /* BoostRunClubTests.swift in Sources */,
 				71CC3F3A2587A89400CE969B /* RunningEvent.swift in Sources */,
 				96461B3C2582BA6B00E665B0 /* MKCoordinateRegion+Make.swift in Sources */,
+				96A9977B258F02D900829819 /* RunningRecordServiceable.swift in Sources */,
+				96A9974D258EFEA800829819 /* EventTimeProvidableMock.swift in Sources */,
 				96B9063E257CDF630081E8BF /* Activity.swift in Sources */,
 				96B9063B257CDF570081E8BF /* ActivityStorageService.swift in Sources */,
 				717878672587E81C004EF8EA /* MotionType.swift in Sources */,
 				963BDEB92572B9F4001D4124 /* String+Regex.swift in Sources */,
 				9635817C2572707C00B8BE6B /* LocationProviderMock.swift in Sources */,
+				96A99779258F02D900829819 /* RunningDashBoardServiceable.swift in Sources */,
 				964A0C32257FF2A5008D7FD7 /* DateFormatter+Common.swift in Sources */,
 				96461B382582BA6000E665B0 /* MapSnapShotSubscription.swift in Sources */,
+				96A99757258F01A000829819 /* RunningDashBoardServiceableMock.swift in Sources */,
 				96B90644257CDF6F0081E8BF /* Location.swift in Sources */,
 				71CB9FFE2574374B00B1DD04 /* GoalTypeViewModel.swift in Sources */,
 				96461B362582BA6000E665B0 /* RouteSnapShotProcessor.swift in Sources */,
+				96A9977A258F02D900829819 /* RunningServiceType.swift in Sources */,
 				96B90641257CDF690081E8BF /* ActivityDetail.swift in Sources */,
 				9620708E2589810800D3ABFE /* RunningState.swift in Sources */,
 				964A0C35257FF2B5008D7FD7 /* ActivityFilterType.swift in Sources */,
 				964A0C30257FF2A5008D7FD7 /* Date+DateRange.swift in Sources */,
-				96A99700258E5EEB00829819 /* MotionActivityProvidable.swift in Sources */,
+				96A9975D258F01B000829819 /* RunningRecordServiceableMock.swift in Sources */,
 				960F9E3A2580FE51008FDA89 /* GoalTypeViewModelTest.swift in Sources */,
+				96A99765258F01D500829819 /* RunningServiceTypeMock.swift in Sources */,
 				96461B372582BA6000E665B0 /* RouteDrawer.swift in Sources */,
 				963BDEBA2572B9F4001D4124 /* CaseIterable+.swift in Sources */,
 				96A9970B258E5EFF00829819 /* MotionDataModelProvidable.swift in Sources */,
+				96A9974E258EFEA800829819 /* DefaultsProviderMock.swift in Sources */,
 				964A0C3B257FF2CB008D7FD7 /* TimerInterval+String.swift in Sources */,
 				96461B392582BA6000E665B0 /* RunningSnapShotProvider.swift in Sources */,
 				96D713422579178800D3D99E /* RunningSlice.swift in Sources */,
+				96A9974F258EFEA800829819 /* PedometerProviderMock.swift in Sources */,
 				963BDEB62572B867001D4124 /* GoalValueSetupViewModel.swift in Sources */,
+				96A9973E258EFE8300829819 /* MotionDataModelProvidableMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

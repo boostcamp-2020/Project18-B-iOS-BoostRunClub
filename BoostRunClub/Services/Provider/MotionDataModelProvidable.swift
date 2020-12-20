@@ -13,5 +13,5 @@ import Foundation
 protocol MotionDataModelProvidable {
     func start()
     func stop()
-    var motionType: CurrentValueSubject<MotionType, Never> { get }
+    var motionTypeSubject: PassthroughSubject<MotionType, Never> { get }
 }

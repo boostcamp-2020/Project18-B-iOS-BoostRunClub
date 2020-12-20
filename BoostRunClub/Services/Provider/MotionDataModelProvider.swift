@@ -26,7 +26,7 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
     private var rotationArray = [CMRotationRate]()
     private var array = [Double](repeating: 0, count: 400)
 
-    var motionType = CurrentValueSubject<MotionType, Never>(.standing)
+    var motionTypeSubject = PassthroughSubject<MotionType, Never>()
 
     func startTrackingActivityType() {
         if isActive { return }
@@ -60,11 +60,11 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
 
                                       switch result {
                                       case "walking":
-                                          self.motionType.send(.running)
+                                          self.motionTypeSubject.send(.running)
                                       case "standing":
-                                          self.motionType.send(.standing)
+                                          self.motionTypeSubject.send(.standing)
                                       default:
-                                          self.motionType.send(.standing)
+                                          self.motionTypeSubject.send(.standing)
                                       }
                                   }
                               }

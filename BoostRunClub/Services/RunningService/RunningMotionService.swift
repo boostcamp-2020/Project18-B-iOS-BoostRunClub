@@ -9,27 +9,18 @@ import Combine
 import CoreMotion
 import Foundation
 
-protocol RunningMotionServiceable {
-    var motionTypeSubject: PassthroughSubject<MotionType, Never> { get }
-    func start()
-    func stop()
-}
-
 class RunningMotionService: RunningMotionServiceable {
     private var motionDataModelProvider: MotionDataModelProvidable
     private var locationProvider: LocationProvidable
-    private var motionActivityProvider: MotionActivityProvidable
 
     var motionTypeSubject = PassthroughSubject<MotionType, Never>()
     var cancellables = Set<AnyCancellable>()
 
     init(
         motionDataModelProvider: MotionDataModelProvidable,
-        motionActivityProvider: MotionActivityProvidable,
         locationProvider: LocationProvidable
     ) {
         self.motionDataModelProvider = motionDataModelProvider
-        self.motionActivityProvider = motionActivityProvider
         self.locationProvider = locationProvider
     }
 
@@ -39,8 +30,7 @@ class RunningMotionService: RunningMotionServiceable {
     }
 
     private func bindProvider() {
-//        motionActivityProvider.currentMotionType
-        motionDataModelProvider.motionType
+        motionDataModelProvider.motionTypeSubject
             .receive(on: RunLoop.main)
             .sink {
                 self.motionTypeSubject.send($0)
