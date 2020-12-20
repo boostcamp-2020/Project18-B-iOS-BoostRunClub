@@ -26,6 +26,7 @@ class RunningServiceTypeMock: RunningServiceType {
     var runningEventSubject = PassthroughSubject<RunningEvent, Never>()
     var isStarted: Bool = false
     var isPaused: Bool = false
+    var autoResume: Bool = true
 
     func start() {
         isStarted = true
@@ -35,7 +36,8 @@ class RunningServiceTypeMock: RunningServiceType {
         isStarted = false
     }
 
-    func pause() {
+    func pause(autoResume: Bool) {
+        self.autoResume = autoResume
         isPaused = true
     }
 

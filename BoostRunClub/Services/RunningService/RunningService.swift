@@ -42,6 +42,7 @@ class RunningService: RunningServiceType {
 
         motionProvider.motionTypeSubject
             .receive(on: RunLoop.main)
+            .throttle(for: 2, scheduler: RunLoop.main, latest: true)
             .filter { [weak self] _ in self?.autoStateChangeable ?? false }
             .filter { [weak self] in $0 != self?.runningStateSubject.value }
             .sink { [weak self] in
