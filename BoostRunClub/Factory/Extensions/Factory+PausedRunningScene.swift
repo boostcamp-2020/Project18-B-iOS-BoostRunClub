@@ -18,6 +18,6 @@ extension DependencyFactory: PausedRunningSceneFactory {
     }
 
     func makePausedRunningVM() -> PausedRunningViewModelTypes {
-        PausedRunningViewModel(runningDataProvider: runningDataService)
+        PausedRunningViewModel(runningService: runningDataService)
     }
 }

@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
-        viewModel.outputs.profileSignal
+        viewModel.outputs.profileSubject
             .receive(on: RunLoop.main)
             .sink { profile in
                 if let imageData = profile.image {

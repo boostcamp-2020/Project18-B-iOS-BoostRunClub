@@ -18,6 +18,8 @@ protocol ActivityDetailViewModelInputs {
     func didTapBackItem()
     func didTapShowRouteDetail()
     func didTapShowInfoDetail()
+
+    // Life Cycle
     func viewDidLoad()
     func viewDidAppear()
 }
@@ -25,19 +27,22 @@ protocol ActivityDetailViewModelInputs {
 protocol ActivityDetailViewModelOutputs {
     var showInfoDetailSignal: PassthroughSubject<Void, Never> { get }
     var showRouteDetailSignal: PassthroughSubject<ActivityDetailConfig, Never> { get }
-    var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
+    var closeSignal: PassthroughSubject<Void, Never> { get }
+
     var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never> { get }
 
     var initialAnimationSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailViewModelOutputs {
-    init?(activity: Activity, detail: ActivityDetail?, activityProvider: ActivityReadable) {
+    private var initialAnimation = false
+
+    init?(activity: Activity, detail: ActivityDetail?, activityService: ActivityReadable) {
         let detailConfig: ActivityDetailConfig
         if let detail = detail {
             detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
         } else {
-            guard let detail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+            guard let detail = activityService.fetchActivityDetail(activityId: activity.uuid) else { return nil }
             detailConfig = ActivityDetailConfig(activity: activity, detail: detail)
         }
 
@@ -59,13 +64,16 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
     }
 
     func didTapBackItem() {
-        goBackToSceneSignal.send()
+        closeSignal.send()
     }
 
     func viewDidLoad() {}
 
     func viewDidAppear() {
-        initialAnimationSignal.send()
+        if !initialAnimation {
+            initialAnimation = true
+            initialAnimationSignal.send()
+        }
     }
 
     // Outputs
@@ -73,7 +81,7 @@ class ActivityDetailViewModel: ActivityDetailViewModelInputs, ActivityDetailView
 
     var showInfoDetailSignal = PassthroughSubject<Void, Never>()
     var showRouteDetailSignal = PassthroughSubject<ActivityDetailConfig, Never>()
-    var goBackToSceneSignal = PassthroughSubject<Void, Never>()
+    var closeSignal = PassthroughSubject<Void, Never>()
     var detailConfigSubject: CurrentValueSubject<ActivityDetailConfig, Never>
 }
 

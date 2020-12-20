@@ -15,20 +15,24 @@ protocol ActivityDateFilterViewModelTypes: AnyObject {
 }
 
 protocol ActivityDateFilterViewModelInputs {
-    func viewDidLoad()
-
     func didTapSelectButton()
     func didTapBackgroundView()
     func didPickerChanged(row: Int, component: Int)
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol ActivityDateFilterViewModelOutputs {
     typealias PickerMover = (component: Int, row: Int, animate: Bool)
-
+    // Data For Configure
     var pickerListSubject: CurrentValueSubject<[[String]], Never> { get }
 
+    // Signal For View Action
     var adjustPickerSignal: PassthroughSubject<PickerMover, Never> { get }
-    var closeSheetSignal: PassthroughSubject<DateRange?, Never> { get }
+
+    // Signal For Coordinate
+    var closeSignal: PassthroughSubject<DateRange?, Never> { get }
 }
 
 class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDateFilterViewModelOutputs {
@@ -80,17 +84,17 @@ class ActivityDateFilterViewModel: ActivityDateFilterViewModelInputs, ActivityDa
         case .month:
             dateRange = dateRanges[selectedRow[0]][selectedRow[1]]
         }
-        closeSheetSignal.send(dateRange)
+        closeSignal.send(dateRange)
     }
 
     func didTapBackgroundView() {
-        closeSheetSignal.send(nil)
+        closeSignal.send(nil)
     }
 
     // Outputs
     var pickerListSubject = CurrentValueSubject<[[String]], Never>([])
 
-    var closeSheetSignal = PassthroughSubject<DateRange?, Never>()
+    var closeSignal = PassthroughSubject<DateRange?, Never>()
     var adjustPickerSignal = PassthroughSubject<PickerMover, Never>()
 }
 

@@ -26,6 +26,6 @@ extension DependencyFactory: RunningPageContainerFactory {
 
     func makeRunningPageVM(goalInfo: GoalInfo? = nil) -> RunningPageViewModelTypes {
         runningDataService.setGoal(goalInfo)
-        return RunningPageViewModel(runningDataProvider: runningDataService)
+        return RunningPageViewModel(runningService: runningDataService)
     }
 }

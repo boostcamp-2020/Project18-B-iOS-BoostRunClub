@@ -19,19 +19,21 @@ protocol ActivityListViewModelInputs {
 }
 
 protocol ActivityListViewModelOutputs {
+    // Data For Configure
     var activityListItemSubject: CurrentValueSubject<[ActivityListItem], Never> { get }
 
+    // Signal For Coordinate
     var showActivityDetails: PassthroughSubject<Activity, Never> { get }
-    var goBackToSceneSignal: PassthroughSubject<Void, Never> { get }
+    var closeSignal: PassthroughSubject<Void, Never> { get }
 }
 
 class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelOutputs {
-    let activityProvider: ActivityReadable
+    let activityService: ActivityReadable
 
-    init(activityProvider: ActivityReadable) {
-        self.activityProvider = activityProvider
+    init(activityReader: ActivityReadable) {
+        activityService = activityReader
 
-        let activites = activityProvider.fetchActivities().sorted(by: >)
+        let activites = activityReader.fetchActivities().sorted(by: >)
         let listItems = makeActivityListItems(from: activites)
         activityListItemSubject.send(listItems)
     }
@@ -42,7 +44,7 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
 
     // Inputs
     func didTapBackItem() {
-        goBackToSceneSignal.send()
+        closeSignal.send()
     }
 
     func didTapActivity(section: Int, row: Int) {
@@ -54,7 +56,7 @@ class ActivityListViewModel: ActivityListViewModelInputs, ActivityListViewModelO
     var activityListItemSubject = CurrentValueSubject<[ActivityListItem], Never>([])
 
     var showActivityDetails = PassthroughSubject<Activity, Never>()
-    var goBackToSceneSignal = PassthroughSubject<Void, Never>()
+    var closeSignal = PassthroughSubject<Void, Never>()
 }
 
 extension ActivityListViewModel: ActivityListViewModelTypes {

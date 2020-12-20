@@ -29,9 +29,13 @@ class ActivityListDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "\(ActivityCellView.self)",
             for: indexPath
-        ) as? ActivityCellView
-        cell?.configure(with: listItem[indexPath.section].items[indexPath.row])
-        return cell ?? UICollectionViewCell()
+        )
+
+        if let cell = cell as? ActivityCellView {
+            cell.configure(with: listItem[indexPath.section].items[indexPath.row])
+        }
+
+        return cell
     }
 
     func collectionView(
@@ -45,8 +49,12 @@ class ActivityListDataSource: NSObject, UICollectionViewDataSource {
             ofKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "\(ActivityListHeaderView.self)",
             for: indexPath
-        ) as? ActivityListHeaderView
-        header?.configure(with: listItem[indexPath.section].total)
-        return header ?? UICollectionReusableView()
+        )
+
+        if let header = header as? ActivityListHeaderView {
+            header.configure(with: listItem[indexPath.section].total)
+        }
+
+        return header
     }
 }

@@ -9,8 +9,8 @@ import Combine
 import UIKit
 
 class DetailSplitsView: UIView {
-    private(set) var heightChangedPublisher = PassthroughSubject<Void, Never>()
-    private(set) var tapInfoButtonSignal = PassthroughSubject<Void, Never>()
+    private(set) var didHeightChangeSignal = PassthroughSubject<Void, Never>()
+    private(set) var didTapInfoButtonSignal = PassthroughSubject<Void, Never>()
 
     private var titleLabel = UILabel.makeBold(text: "구간", size: 30)
     private(set) var tableView = DetailSplitsTableView()
@@ -36,7 +36,7 @@ class DetailSplitsView: UIView {
 extension DetailSplitsView {
     @objc
     func didTapInfoButton() {
-        tapInfoButtonSignal.send()
+        didTapInfoButtonSignal.send()
     }
 }
 
@@ -44,10 +44,9 @@ extension DetailSplitsView {
 
 extension DetailSplitsView {
     private func commonInit() {
-        tableView.intrinsicSizeChangedSignal
-            .sink { [weak self] in
-                self?.invalidateIntrinsicContentSize()
-                self?.heightChangedPublisher.send()
+        tableView.didIntrinsicSizeChangedSignal
+            .sink { [weak self] _ in
+                self?.didHeightChangeSignal.send()
             }
             .store(in: &cancellables)
 

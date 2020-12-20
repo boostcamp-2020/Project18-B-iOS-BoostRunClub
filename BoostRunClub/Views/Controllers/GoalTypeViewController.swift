@@ -30,7 +30,7 @@ final class GoalTypeViewController: UIViewController {
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
-        viewModel.outputs.goalTypeObservable
+        viewModel.outputs.goalTypeSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] goalType in
                 self?.tableViewCells.forEach {
@@ -41,6 +41,11 @@ final class GoalTypeViewController: UIViewController {
                     }
                 }
             }
+            .store(in: &cancellables)
+
+        viewModel.outputs.closeSignal
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.closeWithAnimation() }
             .store(in: &cancellables)
     }
 

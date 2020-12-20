@@ -17,37 +17,44 @@ protocol PausedRunningViewModelTypes {
 protocol PausedRunningViewModelInputs {
     func didTapResumeButton()
     func didLongHoldStopRunningButton()
-    func viewDidAppear()
     func closeAnimationEnded()
     func didTapRunData(index: Int)
+
+    // Life Cycle
+    func viewDidAppear()
 }
 
 protocol PausedRunningViewModelOutputs {
-    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
-    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
-    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
-    var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
-    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
+    // Data For Configure
     var runInfoData: [RunningInfo] { get }
     var pathCoordinates: [CLLocationCoordinate2D] { get }
     var slices: [RunningSlice] { get }
+
+    // Signal For View Action
+    var showRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var closeRunningInfoAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
+
+    // Signal For Coordinate
+    var showRunningInfoSignal: PassthroughSubject<Void, Never> { get }
+    var showPrepareRunningSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<(activity: Activity, detail: ActivityDetail), Never> { get }
 }
 
 class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewModelOutputs {
-    let runningDataProvider: RunningServiceType
+    let runningService: RunningServiceType
     private var cancellables = Set<AnyCancellable>()
 
     // TODO: RunningDataProvicer Protocol 구현
-    init(runningDataProvider: RunningServiceType) {
-        self.runningDataProvider = runningDataProvider
-        let runTime = runningDataProvider.dashBoard.runningTime.value.simpleFormattedString
-        let avgPace = runningDataProvider.dashBoard.avgPace
-        let pace = runningDataProvider.dashBoard.pace
-        let cadence = runningDataProvider.dashBoard.cadence
-        let calorie = runningDataProvider.dashBoard.calorie
-        let distance = runningDataProvider.dashBoard.distance
-        pathCoordinates = runningDataProvider.recoder.locations.map { $0.coordinate }
+    init(runningService: RunningServiceType) {
+        self.runningService = runningService
+        let runTime = runningService.dashBoardService.runningTime.value.simpleFormattedString
+        let avgPace = runningService.dashBoardService.avgPace
+        let pace = runningService.dashBoardService.pace
+        let cadence = runningService.dashBoardService.cadence
+        let calorie = runningService.dashBoardService.calorie
+        let distance = runningService.dashBoardService.distance
+        pathCoordinates = runningService.recordService.locations.map { $0.coordinate }
         runInfoData = [
             RunningInfo(type: .time, value: runTime),
             RunningInfo(type: .averagePace, value: String(format: "%d'%d\"", Int(avgPace) / 60, Int(avgPace) % 60)),
@@ -57,14 +64,14 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
             RunningInfo(type: .cadence, value: cadence <= 0 ? "--" : String(cadence)),
         ]
 
-        runningDataProvider.runningState
+        runningService.runningStateSubject
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .running {
                     self?.didTapResumeButton()
                 }
             }.store(in: &cancellables)
 
-        runningDataProvider.activityResults
+        runningService.runningResultSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 if let info = $0 {
@@ -83,11 +90,11 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     // Inputs
     func didTapResumeButton() {
         closeRunningInfoAnimationSignal.send()
-        runningDataProvider.resume()
+        runningService.resume()
     }
 
     func didLongHoldStopRunningButton() {
-        runningDataProvider.stop()
+        runningService.stop()
     }
 
     func viewDidAppear() {
@@ -108,7 +115,7 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
     var pathCoordinates: [CLLocationCoordinate2D]
 
     var slices: [RunningSlice] {
-        runningDataProvider.recoder.routes
+        runningService.recordService.routes
     }
 
     var showRunningInfoSignal = PassthroughSubject<Void, Never>()

@@ -15,38 +15,42 @@ protocol ActivityViewModelTypes: AnyObject {
 }
 
 protocol ActivityViewModelInputs {
-    func viewDidLoad()
     func didFilterChanged(to idx: Int)
     func didFilterRangeChanged(range: DateRange)
     func didSelectActivity(at index: Int)
     func didTapShowDateFilter()
     func didTapShowAllActivities()
     func didTapShowProfileButton()
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol ActivityViewModelOutputs {
     typealias FilterWithRange = (type: ActivityFilterType, ranges: [DateRange], current: DateRange)
 
+    // Data For Configure
     var filterTypeSubject: CurrentValueSubject<ActivityFilterType, Never> { get }
     var totalDataSubject: CurrentValueSubject<ActivityTotalConfig, Never> { get }
     var recentActivitiesSubject: CurrentValueSubject<[Activity], Never> { get }
 
+    // Signal For Coordinate
     var showProfileSignal: PassthroughSubject<Void, Never> { get }
     var showFilterSheetSignal: PassthroughSubject<FilterWithRange, Never> { get }
-    var showActivityListScene: PassthroughSubject<Void, Never> { get }
-    var showActivityDetailScene: PassthroughSubject<Activity, Never> { get }
+    var showActivityListSignal: PassthroughSubject<Void, Never> { get }
+    var showActivityDetailSignal: PassthroughSubject<Activity, Never> { get }
 }
 
 class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
-    let activityProvider: ActivityReadable
+    let activityService: ActivityReadable
 
     private var activities = [Activity]()
     private var ranges = [ActivityFilterType: [DateRange]]()
     var cancellables = Set<AnyCancellable>()
 
-    init(activityProvider: ActivityReadable) {
-        self.activityProvider = activityProvider
-        activityProvider.activityChangeSignal
+    init(activityReader: ActivityReadable) {
+        activityService = activityReader
+        activityReader.activityChangeSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.fetchActivities() }
             .store(in: &cancellables)
@@ -89,11 +93,11 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     func didSelectActivity(at index: Int) {
         guard recentActivitiesSubject.value.count > index else { return }
-        showActivityDetailScene.send(recentActivitiesSubject.value[index])
+        showActivityDetailSignal.send(recentActivitiesSubject.value[index])
     }
 
     func didTapShowAllActivities() {
-        showActivityListScene.send()
+        showActivityListSignal.send()
     }
 
     func didTapShowProfileButton() {
@@ -112,8 +116,8 @@ class ActivityViewModel: ActivityViewModelInputs, ActivityViewModelOutputs {
 
     var showProfileSignal = PassthroughSubject<Void, Never>()
     var showFilterSheetSignal = PassthroughSubject<FilterWithRange, Never>()
-    var showActivityListScene = PassthroughSubject<Void, Never>()
-    var showActivityDetailScene = PassthroughSubject<Activity, Never>()
+    var showActivityListSignal = PassthroughSubject<Void, Never>()
+    var showActivityDetailSignal = PassthroughSubject<Activity, Never>()
 }
 
 extension ActivityViewModel: ActivityViewModelTypes {
@@ -125,7 +129,7 @@ extension ActivityViewModel: ActivityViewModelTypes {
 
 extension ActivityViewModel {
     private func fetchActivities() {
-        activities = activityProvider.fetchActivities().sorted(by: >)
+        activities = activityService.fetchActivities().sorted(by: >)
 
         ranges[filterTypeSubject.value] = filterTypeSubject.value.groupDateRanges(from: activities)
 

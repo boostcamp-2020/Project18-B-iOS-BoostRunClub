@@ -64,7 +64,7 @@ struct ActivityTotalConfig {
         elevation: Double = 0,
         dateRange: DateRange = DateRange(start: Date(), end: Date())
     ) {
-        self.period = period // 주: 날짜 or 이번주 or 저번주, 월: yyyy년 mm월, 년: yyyy년, 전체: 2020년 ...
+        self.period = period
         totalDistance = distance
         self.numRunning = numRunning
         self.avgPace = avgPace

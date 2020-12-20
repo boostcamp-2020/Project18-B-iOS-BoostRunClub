@@ -34,6 +34,6 @@ class SplitInfoDetailDataSource: NSObject, UITableViewDataSource {
             cell.valueLabel.text = data[indexPath.row].value
         }
 
-        return cell ?? UITableViewCell()
+        return cell
     }
 }

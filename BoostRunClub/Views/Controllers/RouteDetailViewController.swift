@@ -28,7 +28,7 @@ final class RouteDetailViewController: UIViewController {
     func bindViewModel() {
         guard let viewModel = viewModel else { return }
 
-        viewModel.outputs.detailConfigSignal
+        viewModel.outputs.detailConfigSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] (detail: ActivityDetailConfig) in
                 self?.setupMapView(detail)
@@ -134,25 +134,35 @@ extension RouteDetailViewController: MKMapViewDelegate {
 
 extension RouteDetailViewController {
     private func setupMapView(_ detail: ActivityDetailConfig) {
-        let coordinates: [CLLocationCoordinate2D] = detail.locations
+        let coords: [CLLocationCoordinate2D] = detail.locations
             .map { (location: Location) in
                 CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             }
-        let region = MKCoordinateRegion.make(from: coordinates, offsetRatio: 0.3)
+        let region = MKCoordinateRegion.make(from: coords, offsetRatio: 0.3)
 
         mapView.setRegion(region, animated: false)
         mapView.addOverlay(
             PaceGradientRouteOverlay(
                 locations: detail.locations,
+                splits: detail.splits,
                 mapRect: mapView.visibleMapRect,
                 colorMin: .red,
                 colorMax: .green
             ))
 
-        CLLocationCoordinate2D.computeSplitCoordinate(from: coordinates, distance: 1000)
-            .enumerated()
-            .forEach { index, splitCoordinate in
-                addAnnotation(in: mapView, coordinate: splitCoordinate, title: "\(index + 1)km")
+        detail.splits.enumerated()
+            .forEach { index, split in
+                guard
+                    index < detail.splits.count - 1,
+                    let lastSlice = split.runningSlices.last,
+                    lastSlice.endIndex > 0
+                else { return }
+
+                let annotation = MKPointAnnotation()
+                annotation.title = "\(index + 1)km"
+                let locationIdx = lastSlice.endIndex < coords.count ? lastSlice.endIndex : coords.count - 1
+                annotation.coordinate = coords[locationIdx]
+                self.addAnnotation(in: mapView, coordinate: coords[locationIdx], title: "\(index + 1)km")
             }
     }
 

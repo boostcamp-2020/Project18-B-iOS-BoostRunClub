@@ -26,22 +26,32 @@ class DetailMapView: UIView {
         commonInit()
     }
 
-    func setupMapView(locations: [Location], splits _: [RunningSplit]) {
+    func configure(locations: [Location], splits: [RunningSplit]) {
         let coords = locations.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
         let region = MKCoordinateRegion.make(from: coords, offsetRatio: 0.3)
         mapView.setRegion(region, animated: false)
         mapView.addOverlay(
             PaceGradientRouteOverlay(
                 locations: locations,
+                splits: splits,
                 mapRect: mapView.visibleMapRect,
                 colorMin: .red,
                 colorMax: .green
             ))
 
-        CLLocationCoordinate2D.computeSplitCoordinate(from: coords, distance: 1000)
-            .enumerated()
-            .forEach { index, splitCoordinate in
-                addAnnotation(in: mapView, coordinate: splitCoordinate, title: "\(index + 1)km")
+        splits.enumerated()
+            .forEach { index, split in
+                guard
+                    index < splits.count - 1,
+                    let lastSlice = split.runningSlices.last,
+                    lastSlice.endIndex > 0
+                else { return }
+
+                let annotation = MKPointAnnotation()
+                annotation.title = "\(index + 1)km"
+                let locationIdx = lastSlice.endIndex < coords.count ? lastSlice.endIndex : coords.count - 1
+                annotation.coordinate = coords[locationIdx]
+                self.addAnnotation(in: mapView, coordinate: coords[locationIdx], title: "\(index + 1)km")
             }
     }
 

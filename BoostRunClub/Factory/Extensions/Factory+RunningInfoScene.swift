@@ -9,7 +9,7 @@ import UIKit
 
 protocol RunningInfoSceneFactory {
     func makeRunningInfoVC(with viewModel: RunningInfoViewModelTypes) -> UIViewController
-    func makeRunningInfoVM() -> RunningInfoViewModelTypes
+    func makeRunningInfoVM(isResumed: Bool) -> RunningInfoViewModelTypes
 }
 
 extension DependencyFactory: RunningInfoSceneFactory {
@@ -17,7 +17,7 @@ extension DependencyFactory: RunningInfoSceneFactory {
         RunningInfoViewController(with: viewModel)
     }
 
-    func makeRunningInfoVM() -> RunningInfoViewModelTypes {
-        RunningInfoViewModel(runningDataProvider: runningDataService)
+    func makeRunningInfoVM(isResumed: Bool) -> RunningInfoViewModelTypes {
+        RunningInfoViewModel(runningService: runningDataService, resumed: isResumed)
     }
 }

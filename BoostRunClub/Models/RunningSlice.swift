@@ -14,12 +14,9 @@ struct RunningSlice: Codable {
     var distance: Double = 0
     var isRunning: Bool = false
 
-    mutating func setupSlice(with locations: [CLLocation]) {
-        endIndex = locations.count - 1
+    mutating func setupSlice(with runningStates: [RunningState]) {
         if startIndex < endIndex {
-            distance = (startIndex ..< endIndex).reduce(into: Double(0)) { distance, idx in
-                distance += locations[idx].distance(from: locations[idx + 1])
-            }
+            distance = runningStates[endIndex].distance - runningStates[startIndex].distance
         } else {
             distance = 0
         }

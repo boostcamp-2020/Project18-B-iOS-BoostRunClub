@@ -21,10 +21,10 @@ protocol GoalValueSetupViewModelInputs {
 }
 
 protocol GoalValueSetupViewModelOutputs {
-    var goalValueObservable: CurrentValueSubject<String, Never> { get }
-    var runningEstimationObservable: AnyPublisher<String, Never> { get }
-    var closeSheetSignal: PassthroughSubject<String?, Never> { get }
     var goalType: GoalType { get }
+    var goalValueSubject: CurrentValueSubject<String, Never> { get }
+
+    var closeSignal: PassthroughSubject<String?, Never> { get }
 }
 
 class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupViewModelOutputs {
@@ -33,7 +33,7 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
 
     init(goalType: GoalType, goalValue: String) {
         self.goalType = goalType
-        goalValueObservable = CurrentValueSubject<String, Never>(goalValue)
+        goalValueSubject = CurrentValueSubject<String, Never>(goalValue)
     }
 
     deinit {
@@ -49,7 +49,7 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
             let text = currentString + number
             if text ~= String.RegexPattern.distance.patternString {
                 inputValue = text
-                goalValueObservable.send(text)
+                goalValueSubject.send(text)
             }
         case .time:
             guard
@@ -60,7 +60,7 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
             inputValue = currentString + number
             var outputValue = String(repeating: "0", count: 4 - inputValue.count) + inputValue
             outputValue.insert(contentsOf: ":", at: outputValue.index(outputValue.startIndex, offsetBy: 2))
-            goalValueObservable.send(outputValue)
+            goalValueSubject.send(outputValue)
 
         case .speed, .none:
             break
@@ -73,22 +73,22 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
         }
         switch goalType {
         case .distance:
-            goalValueObservable.send(inputValue.isEmpty ? "0" : inputValue)
+            goalValueSubject.send(inputValue.isEmpty ? "0" : inputValue)
         case .time:
             var outputValue = String(repeating: "0", count: 4 - inputValue.count) + inputValue
             outputValue.insert(contentsOf: ":", at: outputValue.index(outputValue.startIndex, offsetBy: 2))
-            goalValueObservable.send(outputValue)
+            goalValueSubject.send(outputValue)
         case .speed, .none:
             break
         }
     }
 
     func didTapCancelButton() {
-        closeSheetSignal.send(nil)
+        closeSignal.send(nil)
     }
 
     func didTapApplyButton() {
-        var goalValue = goalValueObservable.value
+        var goalValue = goalValueSubject.value
         switch goalType {
         case .distance:
             guard let number = Float(goalValue) else {
@@ -99,18 +99,14 @@ class GoalValueSetupViewModel: GoalValueSetupViewModelInputs, GoalValueSetupView
         case .time, .speed, .none:
             break
         }
-        closeSheetSignal.send(goalValue)
+        closeSignal.send(goalValue)
     }
 
     // MARK: Outputs
 
-    var closeSheetSignal = PassthroughSubject<String?, Never>()
-    var goalValueObservable: CurrentValueSubject<String, Never>
-    var runningEstimationObservable: AnyPublisher<String, Never> {
-        return goalValueObservable.map {
-            return $0
-        }.eraseToAnyPublisher()
-    }
+    var goalValueSubject: CurrentValueSubject<String, Never>
+
+    var closeSignal = PassthroughSubject<String?, Never>()
 }
 
 // MARK: - Types

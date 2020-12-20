@@ -20,11 +20,11 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
     }
 
     override func start() {
-        showRunningInfoScene()
+        showRunningInfoScene(isResume: false)
     }
 
-    func showRunningInfoScene() {
-        let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController)
+    func showRunningInfoScene(isResume: Bool) {
+        let runInfoCoordinator = RunningInfoCoordinator(navigationController: navigationController, isResume: isResume)
 
         let uuid = runInfoCoordinator.identifier
         closeSubscription[uuid] = coordinate(coordinator: runInfoCoordinator)
@@ -47,7 +47,7 @@ final class RunningCoordinator: BasicCoordinator<RunningCoordinationResult> {
             .sink { [weak self] in
                 switch $0 {
                 case .runInfo:
-                    self?.showRunningInfoScene()
+                    self?.showRunningInfoScene(isResume: true)
                 case .prepareRun:
                     let result = RunningCoordinationResult.prepareRun
                     self?.closeSignal.send(result)

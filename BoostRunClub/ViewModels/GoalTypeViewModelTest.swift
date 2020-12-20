@@ -26,9 +26,9 @@ class GoalTypeViewModelTest: XCTestCase {
         let receivedSignal = expectation(description: "received signal to close action sheet")
         let expectedGoalType: GoalType = .distance
 
-        goalTypeVM.goalTypeObservable.send(expectedGoalType)
+        goalTypeVM.goalTypeSubject.send(expectedGoalType)
 
-        let cancellable = goalTypeVM.closeSheetSignal
+        let cancellable = goalTypeVM.closeSignal
             .sink {
                 if $0 == expectedGoalType {
                     receivedSignal.fulfill()
@@ -49,8 +49,8 @@ class GoalTypeViewModelTest: XCTestCase {
             let receivedSignal = expectation(description: "received signal that user selected goal type")
 
             let cancellable = Publishers.CombineLatest(
-                goalTypeVM.goalTypeObservable,
-                goalTypeVM.closeSheetSignal
+                goalTypeVM.goalTypeSubject,
+                goalTypeVM.closeSignal
             )
             .sink {
                 if $0 == goalType,

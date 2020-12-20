@@ -16,16 +16,22 @@ protocol RunningInfoViewModelTypes: AnyObject {
 protocol RunningInfoViewModelInputs {
     func didTapPauseButton()
     func didTapRunData(index: Int)
+
+    // Life Cycle
     func viewDidAppear()
 }
 
 protocol RunningInfoViewModelOutputs {
     typealias RunningInfoTypeSubject = CurrentValueSubject<RunningInfo, Never>
+    // Data For Configure
+    var runningInfoSubjects: [RunningInfoTypeSubject] { get }
 
-    var runningInfoObservables: [RunningInfoTypeSubject] { get }
-    var runningInfoTapAnimation: PassthroughSubject<Int, Never> { get }
-    var initialAnimation: PassthroughSubject<Void, Never> { get }
-    var resumeAnimation: PassthroughSubject<Void, Never> { get }
+    // Signal For View Action
+    var runningInfoTapAnimationSignal: PassthroughSubject<Int, Never> { get }
+    var initialAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var resumeAnimationSignal: PassthroughSubject<Void, Never> { get }
+
+    // Signal For Coordinate
     var showPausedRunningSignal: PassthroughSubject<Void, Never> { get }
 }
 
@@ -33,18 +39,19 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
     private var cancellables = Set<AnyCancellable>()
 
     private var possibleTypes: [RunningInfoType: String]
-    let runningDataProvider: RunningServiceType
+    let runningService: RunningServiceType
 
-    init(runningDataProvider: RunningServiceType) {
-        // TODO: GOALTYPE - SPEED 제거
+    var isResumed: Bool
+    init(runningService: RunningServiceType, resumed: Bool) {
+        isResumed = resumed
         possibleTypes = RunningInfoType.getPossibleTypes(from: .none)
             .reduce(into: [:]) { $0[$1] = $1.initialValue }
 
-        self.runningDataProvider = runningDataProvider
+        self.runningService = runningService
 
-        runningDataProvider.dashBoard.runningSubject
+        runningService.dashBoardService.runningStateSubject
             .sink { [weak self] data in
-                self?.runningInfoObservables.forEach {
+                self?.runningInfoSubjects.forEach {
                     let value: String
                     switch $0.value.type {
                     case .kilometer:
@@ -65,82 +72,24 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             }
             .store(in: &cancellables)
 
-        runningDataProvider.dashBoard.runningTime
+        runningService.dashBoardService.runningTime
             .map { $0.simpleFormattedString }
             .sink { [weak self] timeString in
                 self?.possibleTypes[.time] = timeString
 
-                self?.runningInfoObservables.forEach {
+                self?.runningInfoSubjects.forEach {
                     if $0.value.type == .time {
                         $0.send(RunningInfo(type: .time, value: timeString))
                     }
                 }
             }.store(in: &cancellables)
 
-//        runningDataProvider.distance
-//            .map { String(format: "%.2f", $0 / 1000) }
-//            .sink { [weak self] distance in
-//                self?.possibleTypes[.kilometer] = distance
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .kilometer {
-//                        $0.send(RunningInfo(type: .kilometer, value: distance))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.pace
-//            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-//            .sink { [weak self] pace in
-//                self?.possibleTypes[.pace] = pace
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .pace {
-//                        $0.send(RunningInfo(type: .pace, value: pace))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.avgPace
-//            .map { String(format: "%d'%d\"", $0 / 60, $0 % 60) }
-//            .sink { [weak self] averagePace in
-//                self?.possibleTypes[.averagePace] = averagePace
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .averagePace {
-//                        $0.send(RunningInfo(type: .averagePace, value: averagePace))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-//        runningDataProvider.calorie
-//            .map { $0 <= 0 ? "--" : String($0) }
-//            .sink { [weak self] calorie in
-//                self?.possibleTypes[.calorie] = calorie
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .calorie {
-//                        $0.send(RunningInfo(type: .calorie, value: calorie))
-//                    }
-//                }
-//            }.store(in: &cancellables)
-
-        runningDataProvider.runningState
-//            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+        runningService.runningStateSubject
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .standing {
                     self?.showPausedRunningSignal.send()
                 }
             }.store(in: &cancellables)
-
-//        runningDataProvider.cadence
-//            .map { $0 <= 0 ? "--" :
-//                String($0)
-//            }
-//            .sink { [weak self] cadence in
-//                self?.possibleTypes[.cadence] = cadence
-//                self?.runningInfoObservables.forEach {
-//                    if $0.value.type == .cadence {
-//                        $0.send(RunningInfo(type: .cadence, value: cadence))
-//                    }
-//                }
-//            }.store(in: &cancellables)
     }
 
     deinit {
@@ -151,41 +100,43 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapPauseButton() {
         showPausedRunningSignal.send()
-        runningDataProvider.pause()
+        runningService.pause()
     }
 
     func didTapRunData(index: Int) {
-        var nextType = runningInfoObservables[index].value.type.circularNext()
+        var nextType = runningInfoSubjects[index].value.type.circularNext()
         nextType = possibleTypes[nextType] != nil ? nextType : RunningInfoType.allCases[0]
-        runningInfoObservables[index].send(
+        runningInfoSubjects[index].send(
             RunningInfo(
                 type: nextType,
                 value: possibleTypes[nextType, default: nextType.initialValue]
             )
         )
-        runningInfoTapAnimation.send(index)
+        runningInfoTapAnimationSignal.send(index)
     }
 
     func viewDidAppear() {
-        if runningDataProvider.isRunning {
-            resumeAnimation.send()
-        } else {
-            runningDataProvider.start()
-            initialAnimation.send()
+        if !runningService.isStarted {
+            runningService.start()
+            initialAnimationSignal.send()
+        }
+
+        if isResumed {
+            resumeAnimationSignal.send()
         }
     }
 
     // MARK: Outputs
 
-    var runningInfoObservables = [
+    var runningInfoSubjects = [
         RunningInfoTypeSubject(RunningInfo(type: .time)),
         RunningInfoTypeSubject(RunningInfo(type: .pace)),
         RunningInfoTypeSubject(RunningInfo(type: .averagePace)),
         RunningInfoTypeSubject(RunningInfo(type: .kilometer)),
     ]
-    var runningInfoTapAnimation = PassthroughSubject<Int, Never>()
-    var initialAnimation = PassthroughSubject<Void, Never>()
-    var resumeAnimation = PassthroughSubject<Void, Never>()
+    var runningInfoTapAnimationSignal = PassthroughSubject<Int, Never>()
+    var initialAnimationSignal = PassthroughSubject<Void, Never>()
+    var resumeAnimationSignal = PassthroughSubject<Void, Never>()
     var showPausedRunningSignal = PassthroughSubject<Void, Never>()
 }
 

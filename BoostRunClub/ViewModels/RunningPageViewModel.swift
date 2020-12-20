@@ -23,16 +23,21 @@ protocol RunningPageViewModelInputs {
 }
 
 protocol RunningPageViewModelOutputs {
-    var speechSignal: PassthroughSubject<String, Never> { get }
-    var scaleSubject: PassthroughSubject<Double, Never> { get }
-    var scaleSubjectNotDragging: AnyPublisher<Double, Never> { get }
-    var goBackToMainPageSignal: PassthroughSubject<Int, Never> { get }
+    // Data For Configure
     var runningTimeSubject: AnyPublisher<String, Never> { get }
+
+    // Signal For View Action
+    var speechSignal: PassthroughSubject<String, Never> { get }
+    var scaleOnDraggingSubject: PassthroughSubject<Double, Never> { get }
+    var scaleOnSlidingSubject: AnyPublisher<Double, Never> { get }
     var setPageSignal: PassthroughSubject<Int, Never> { get }
+
+    // Signal For Coordinate
+    var backToPageMainSignal: PassthroughSubject<Int, Never> { get }
 }
 
 class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutputs {
-    private let runningDataProvider: RunningServiceType
+    private let runningService: RunningServiceType
     private var isDragging: Bool = false
     private var currentPageIdx = 1
     private var cancellables = Set<AnyCancellable>()
@@ -40,10 +45,10 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
 
     @Published private var scale: Double = 0.0
 
-    init(runningDataProvider: RunningServiceType) {
-        self.runningDataProvider = runningDataProvider
+    init(runningService: RunningServiceType) {
+        self.runningService = runningService
 
-        runningDataProvider.runningEvent
+        runningService.runningEventSubject
             .sink { [weak self] event in
                 print("[SPEAK!]!!!!!!!!!!!!!!!!!!!!\(event.text)")
                 self?.speechSignal.send(event.text)
@@ -66,11 +71,11 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     func didTapGoBackButton() {
-        goBackToMainPageSignal.send(currentPageIdx)
+        backToPageMainSignal.send(currentPageIdx)
     }
 
     func dragging() {
-        scaleSubject.send(scale)
+        scaleOnDraggingSubject.send(scale)
     }
 
     func didChangeCurrentPage(idx: Int) {
@@ -92,10 +97,10 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     // Outputs
 
     var speechSignal = PassthroughSubject<String, Never>()
-    var scaleSubject = PassthroughSubject<Double, Never>()
-    var goBackToMainPageSignal = PassthroughSubject<Int, Never>()
+    var scaleOnDraggingSubject = PassthroughSubject<Double, Never>()
+    var backToPageMainSignal = PassthroughSubject<Int, Never>()
     var setPageSignal = PassthroughSubject<Int, Never>()
-    var scaleSubjectNotDragging: AnyPublisher<Double, Never> {
+    var scaleOnSlidingSubject: AnyPublisher<Double, Never> {
         $scale
             .filter { _ in !self.isDragging }
             .map { abs($0) }
@@ -103,7 +108,7 @@ class RunningPageViewModel: RunningPageViewModelInputs, RunningPageViewModelOutp
     }
 
     var runningTimeSubject: AnyPublisher<String, Never> {
-        runningDataProvider.dashBoard.runningTime
+        runningService.dashBoardService.runningTime
             .map { $0.fullFormattedString }
             .eraseToAnyPublisher()
     }

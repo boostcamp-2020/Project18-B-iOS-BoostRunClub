@@ -19,13 +19,16 @@ protocol GoalTypeViewModelInputs {
 }
 
 protocol GoalTypeViewModelOutputs {
-    var closeSheetSignal: PassthroughSubject<GoalType, Never> { get }
-    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
+    // Data For Configure
+    var goalTypeSubject: CurrentValueSubject<GoalType, Never> { get }
+
+    // Signal For Coordinate
+    var closeSignal: PassthroughSubject<GoalType, Never> { get }
 }
 
 class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
     init(goalType: GoalType) {
-        goalTypeObservable = CurrentValueSubject<GoalType, Never>(goalType)
+        goalTypeSubject = CurrentValueSubject<GoalType, Never>(goalType)
     }
 
     deinit {
@@ -35,18 +38,18 @@ class GoalTypeViewModel: GoalTypeViewModelInputs, GoalTypeViewModelOutputs {
     // MARK: Inputs
 
     func didTapBackgroundView() {
-        closeSheetSignal.send(goalTypeObservable.value)
+        closeSignal.send(goalTypeSubject.value)
     }
 
     func didSelectGoalType(_ goalType: GoalType) {
-        goalTypeObservable.send(goalType)
-        closeSheetSignal.send(goalTypeObservable.value)
+        goalTypeSubject.send(goalType)
+        closeSignal.send(goalTypeSubject.value)
     }
 
     // MARK: Ouputs
 
-    private(set) var closeSheetSignal = PassthroughSubject<GoalType, Never>()
-    let goalTypeObservable: CurrentValueSubject<GoalType, Never>
+    private(set) var closeSignal = PassthroughSubject<GoalType, Never>()
+    let goalTypeSubject: CurrentValueSubject<GoalType, Never>
 }
 
 // MARK: - Types

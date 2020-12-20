@@ -33,39 +33,44 @@ class ActivityDetailDataSource: NSObject, UITableViewDataSource {
         }
     }
 
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = SimpleSplitViewCell()
-        if indexPath.row == 0 {
-            cell.configure(style: .description)
-        } else {
-            let idx = indexPath.row - 1
-            let split = splits[idx]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "\(SimpleSplitViewCell.self)", for: indexPath)
 
-            let distanceText: String
-            if idx < splits.count - 1 {
-                distanceText = "\(idx + 1)"
-            } else {
-                distanceText = String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
+        if let cell = cell as? SimpleSplitViewCell {
+            switch indexPath.row {
+            case 0:
+                cell.configure(style: .description)
+            default:
+                let idx = indexPath.row - 1
+                let split = splits[idx]
+
+                let distanceText: String
+                if idx < splits.count - 1 {
+                    distanceText = "\(idx + 1)"
+                } else {
+                    distanceText = String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
+                }
+
+                let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
+                let elevationText = String(split.elevation)
+
+                let paceRatio: CGFloat
+                if maxPace - minPace > 0 {
+                    paceRatio = (maxPace - CGFloat(split.avgPace)) / (maxPace - minPace)
+                } else {
+                    paceRatio = 0
+                }
+
+                cell.configure(
+                    style: .value,
+                    distance: distanceText,
+                    pace: paceText,
+                    elevation: elevationText,
+                    paceRatio: paceRatio
+                )
             }
-
-            let paceText = String(format: "%d'%d\"", split.avgPace / 60, split.avgPace % 60)
-            let elevationText = String(split.elevation)
-
-            let paceRatio: CGFloat
-            if maxPace - minPace > 0 {
-                paceRatio = (maxPace - CGFloat(split.avgPace)) / (maxPace - minPace)
-            } else {
-                paceRatio = 0
-            }
-
-            cell.configure(
-                style: .value,
-                distance: distanceText,
-                pace: paceText,
-                elevation: elevationText,
-                paceRatio: paceRatio
-            )
         }
+
         return cell
     }
 }

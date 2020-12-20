@@ -38,18 +38,18 @@ final class RunningPageViewController: UIPageViewController {
     }
 
     func bindViewModel() {
-        viewModel?.outputs.scaleSubject
+        viewModel?.outputs.scaleOnDraggingSubject
             .sink { [weak self] in
                 self?.transformBackButton(scale: CGFloat(abs($0)))
                 self?.backButton.setArrowImage(dir: $0 > 0 ? .left : .right)
             }
             .store(in: &cancellables)
 
-        viewModel?.outputs.scaleSubjectNotDragging
+        viewModel?.outputs.scaleOnSlidingSubject
             .sink { [weak self] in self?.transformBackButton(scale: CGFloat($0)) }
             .store(in: &cancellables)
 
-        viewModel?.outputs.goBackToMainPageSignal
+        viewModel?.outputs.backToPageMainSignal
             .sink { [weak self] in self?.goBackToMainPage(currPageIdx: $0) }
             .store(in: &cancellables)
 

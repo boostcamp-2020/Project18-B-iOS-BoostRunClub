@@ -69,30 +69,7 @@ extension Activity: Comparable {
     }
 }
 
-// ERASE! : dummy 데이터용
 extension Activity {
-    init(date: Date) {
-        self.init(avgPace: Int.random(in: 500 ... 3000),
-                  distance: Double.random(in: 800 ... 9000),
-                  duration: Double.random(in: 3000 ... 9000),
-                  elevation: Double.random(in: -10 ... 100),
-                  thumbnail: nil,
-                  createdAt: date,
-                  finishedAt: date,
-                  uuid: UUID())
-    }
-
-    init(date: Date, endDate: Date) {
-        self.init(avgPace: Int.random(in: 500 ... 3000),
-                  distance: Double.random(in: 800 ... 9000),
-                  duration: Double.random(in: 3000 ... 9000),
-                  elevation: Double.random(in: -10 ... 100),
-                  thumbnail: nil,
-                  createdAt: date,
-                  finishedAt: endDate,
-                  uuid: UUID())
-    }
-
     var titleText: String {
         "\(createdAt.toDayOfWeekString) \(createdAt.period) 러닝 "
     }

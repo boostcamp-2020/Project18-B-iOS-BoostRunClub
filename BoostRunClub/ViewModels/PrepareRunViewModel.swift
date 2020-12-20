@@ -25,16 +25,20 @@ protocol PrepareRunViewModelInputs {
 }
 
 protocol PrepareRunViewModelOutputs {
-    var userLocation: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
-    var goalTypeObservable: CurrentValueSubject<GoalType, Never> { get }
-    // TODO: - GoalType/value observable을 goalInfo로 바꿀지 생각해보기
-    var goalValueObservable: CurrentValueSubject<String, Never> { get }
-    var goalValueSetupClosed: PassthroughSubject<Void, Never> { get }
-    var goalTypeSetupClosed: PassthroughSubject<Void, Never> { get }
+    // Data For Configure
+    var userLocationSubject: PassthroughSubject<CLLocationCoordinate2D, Never> { get }
+    var goalTypeSubject: CurrentValueSubject<GoalType, Never> { get }
+    var goalValueSubject: CurrentValueSubject<String, Never> { get }
+
+    // Signal For View Action
+    var goalValueSetupAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var goalTypeSetupAnimationSignal: PassthroughSubject<Void, Never> { get }
+    var countDownAnimation: PassthroughSubject<Void, Never> { get }
+
+    // Signal For Coordinate
     var showGoalTypeActionSheetSignal: PassthroughSubject<GoalType, Never> { get }
     var showGoalValueSetupSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
     var showRunningSceneSignal: PassthroughSubject<GoalInfo, Never> { get }
-    var countDownAnimation: PassthroughSubject<Void, Never> { get }
     var showProfileSignal: PassthroughSubject<Void, Never> { get }
 }
 
@@ -44,8 +48,8 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     var cancellables = Set<AnyCancellable>()
     private var goalInfo: GoalInfo {
         GoalInfo(
-            type: goalTypeObservable.value,
-            value: goalValueObservable.value
+            type: goalTypeSubject.value,
+            value: goalValueSubject.value
         )
     }
 
@@ -53,7 +57,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
         self.locationProvider = locationProvider
         locationProvider.locationSubject
             .compactMap { $0.coordinate }
-            .sink { [weak self] in self?.userLocation.send($0) }
+            .sink { [weak self] in self?.userLocationSubject.send($0) }
             .store(in: &cancellables)
     }
 
@@ -68,7 +72,7 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     }
 
     func didTapSetGoalButton() {
-        showGoalTypeActionSheetSignal.send(goalTypeObservable.value)
+        showGoalTypeActionSheetSignal.send(goalTypeSubject.value)
     }
 
     func didTapStartButton() {
@@ -80,19 +84,19 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
     }
 
     func didChangeGoalType(_ goalType: GoalType) {
-        if goalType != goalTypeObservable.value {
-            goalTypeObservable.send(goalType)
-            goalValueObservable.send(goalType.initialValue)
+        if goalType != goalTypeSubject.value {
+            goalTypeSubject.send(goalType)
+            goalValueSubject.send(goalType.initialValue)
             if goalType != .none {
-                goalTypeSetupClosed.send()
+                goalTypeSetupAnimationSignal.send()
             }
         }
     }
 
     func didChangeGoalValue(_ goalValue: String?) {
-        goalValueSetupClosed.send()
+        goalValueSetupAnimationSignal.send()
         if let goalValue = goalValue {
-            goalValueObservable.send(goalValue)
+            goalValueSubject.send(goalValue)
         }
     }
 
@@ -102,12 +106,12 @@ class PrepareRunViewModel: PrepareRunViewModelInputs, PrepareRunViewModelOutputs
 
     // MARK: Outputs
 
-    var goalTypeObservable = CurrentValueSubject<GoalType, Never>(.none)
-    var goalValueObservable = CurrentValueSubject<String, Never>("")
-    var goalValueSetupClosed = PassthroughSubject<Void, Never>()
-    var goalTypeSetupClosed = PassthroughSubject<Void, Never>()
+    var goalTypeSubject = CurrentValueSubject<GoalType, Never>(.none)
+    var goalValueSubject = CurrentValueSubject<String, Never>("")
+    var goalValueSetupAnimationSignal = PassthroughSubject<Void, Never>()
+    var goalTypeSetupAnimationSignal = PassthroughSubject<Void, Never>()
 
-    var userLocation = PassthroughSubject<CLLocationCoordinate2D, Never>()
+    var userLocationSubject = PassthroughSubject<CLLocationCoordinate2D, Never>()
 
     var countDownAnimation = PassthroughSubject<Void, Never>()
 

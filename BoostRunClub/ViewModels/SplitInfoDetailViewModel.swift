@@ -14,7 +14,7 @@ protocol SplitInfoDetailViewModelType {
 }
 
 protocol SplitInfoDetailViewModelInputs {
-    func didTapbackButton()
+    func didTapBackButton()
 }
 
 protocol SplitInfoDetailViewModelOutputs {
@@ -28,8 +28,8 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
     let activity: Activity
     var activityDetail: ActivityDetail
 
-    init?(activity: Activity, activityProvider: ActivityReadable) {
-        guard let activityDetail = activityProvider.fetchActivityDetail(activityId: activity.uuid) else { return nil }
+    init?(activity: Activity, activityReader: ActivityReadable) {
+        guard let activityDetail = activityReader.fetchActivityDetail(activityId: activity.uuid) else { return nil }
 
         self.activity = activity
         self.activityDetail = activityDetail
@@ -42,7 +42,7 @@ class SplitInfoDetailViewModel: SplitInfoDetailViewModelInputs, SplitInfoDetailV
         splitSubject.value = makeSplitRows()
     }
 
-    func didTapbackButton() {}
+    func didTapBackButton() {}
 
     var splitInfoSubject = CurrentValueSubject<[SplitInfo], Never>([])
     var splitSubject = CurrentValueSubject<[SplitRow], Never>([])
@@ -68,7 +68,7 @@ extension SplitInfoDetailViewModel {
     }
 
     func makeSplitInfo() -> [SplitInfo] {
-        var splitInfo: [SplitInfo] = [
+        let splitInfo: [SplitInfo] = [
             SplitInfo(title: "거리", value: "\(distText) km"),
             SplitInfo(title: "평균 페이스", value: "\(avgPaceText) /km"),
             SplitInfo(title: "최고 페이스", value: "\(maxPaceText) /km"),
@@ -126,6 +126,7 @@ extension SplitInfoDetailViewModel {
         let elevation = "--"
 
         return SplitRow(
+            distance: splits[idx].distance,
             kilometer: kilometer,
             avgPace: paceToText(splits[idx].avgPace),
             change: valueChange,

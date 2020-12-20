@@ -72,7 +72,7 @@ class PausedRunningViewController: UIViewController {
 
         showRoutesOnMap(routes: viewModel.outputs.pathCoordinates, slices: viewModel.outputs.slices)
 
-        endRunningButton.didTapButton
+        endRunningButton.didTapButtonSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.view.notificationFeedback()

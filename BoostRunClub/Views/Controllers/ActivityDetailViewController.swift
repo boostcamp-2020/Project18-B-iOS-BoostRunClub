@@ -57,7 +57,7 @@ class ActivityDetailViewController: UIViewController {
             .sink { [weak self] config in
                 self?.titleView.configure(dateText: config.titleDate, title: config.title)
                 self?.totalView.configure(with: config)
-                self?.mapContainerView.setupMapView(locations: config.locations, splits: config.splits)
+                self?.mapContainerView.configure(locations: config.locations, splits: config.splits)
                 self?.dataSource.loadData(splits: config.splits, distance: config.distance)
                 self?.splitsView.tableView.reloadData()
             }
@@ -68,11 +68,11 @@ class ActivityDetailViewController: UIViewController {
             .sink { [weak self] in self?.initialAnimation() }
             .store(in: &cancellables)
 
-        splitsView.heightChangedPublisher
+        splitsView.didHeightChangeSignal
             .sink { [weak self] in self?.contentStack.layoutIfNeeded() }
             .store(in: &cancellables)
 
-        splitsView.tapInfoButtonSignal
+        splitsView.didTapInfoButtonSignal
             .sink { [weak self] in self?.viewModel?.inputs.didTapShowInfoDetail() }
             .store(in: &cancellables)
 

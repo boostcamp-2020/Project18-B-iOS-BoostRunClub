@@ -11,8 +11,8 @@ import UIKit
 class ActivitiesContainerCellView: UITableViewCell {
     lazy var collectionView = ActivityCollectionView()
 
-    var heightChangedPublisher = PassthroughSubject<UITableViewCell, Never>()
-    var itemSelectedPublisher = PassthroughSubject<IndexPath, Never>()
+    var didHeightChangeSignal = PassthroughSubject<UITableViewCell, Never>()
+    var didItemSelectedSignal = PassthroughSubject<IndexPath, Never>()
     var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -30,10 +30,10 @@ class ActivitiesContainerCellView: UITableViewCell {
         contentView.backgroundColor = .clear
 
         collectionView.delegate = self
-        collectionView.heightPublisher
+        collectionView.didHeightChangeSignal
             .sink {
                 self.bounds.size.height = $0
-                self.heightChangedPublisher.send(self)
+                self.didHeightChangeSignal.send(self)
             }
             .store(in: &cancellables)
 
@@ -56,6 +56,6 @@ class ActivitiesContainerCellView: UITableViewCell {
 
 extension ActivitiesContainerCellView: UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        itemSelectedPublisher.send(indexPath)
+        didItemSelectedSignal.send(indexPath)
     }
 }

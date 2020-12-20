@@ -29,7 +29,7 @@ class PrepareRunViewModelTest: XCTestCase {
 
         allCases.forEach { goalType in
             let receivedSignal = expectation(description: "receivedSignal")
-            prepareVM.goalTypeObservable.send(goalType)
+            prepareVM.goalTypeSubject.send(goalType)
             let cancellable = prepareVM.showGoalTypeActionSheetSignal
                 .sink {
                     results.append($0)
@@ -55,11 +55,11 @@ class PrepareRunViewModelTest: XCTestCase {
         allCases.forEach { goalType in
             let receivedSignal = expectation(description: "received correct goal type 장임호가 쓴 테스트")
 
-            prepareVM.goalTypeObservable.send(.none)
+            prepareVM.goalTypeSubject.send(.none)
             let cancellable = Publishers.CombineLatest3(
-                prepareVM.goalTypeObservable,
-                prepareVM.goalValueObservable,
-                prepareVM.goalTypeSetupClosed
+                prepareVM.goalTypeSubject,
+                prepareVM.goalValueSubject,
+                prepareVM.goalTypeSetupAnimationSignal
             )
             .sink {
                 if $0.0 == goalType,
@@ -82,9 +82,9 @@ class PrepareRunViewModelTest: XCTestCase {
 
     func testDidChangeGoalType_noneCase() {
         let goalType = GoalType.none
-        prepareVM.goalTypeObservable.send(.distance)
+        prepareVM.goalTypeSubject.send(.distance)
         let receivedSignal = expectation(description: "received correct goal type(.none)")
-        let cancellable = prepareVM.goalTypeObservable.zip(prepareVM.goalValueObservable).dropFirst()
+        let cancellable = prepareVM.goalTypeSubject.zip(prepareVM.goalValueSubject).dropFirst()
             .sink {
                 if $0.0 == goalType,
                    $0.1 == goalType.initialValue
@@ -101,11 +101,11 @@ class PrepareRunViewModelTest: XCTestCase {
         let goalValue: String? = nil
         let receivedSignal = expectation(description: "")
 
-        prepareVM.goalValueSetupClosed.sink { _ in
+        prepareVM.goalValueSetupAnimationSignal.sink { _ in
             receivedSignal.fulfill()
         }.store(in: &cancellables)
 
-        prepareVM.goalValueObservable.dropFirst().sink { _ in
+        prepareVM.goalValueSubject.dropFirst().sink { _ in
             XCTFail("초기화 값 이외의 다른 값이 발생했습니다.")
         }.store(in: &cancellables)
 
@@ -117,8 +117,8 @@ class PrepareRunViewModelTest: XCTestCase {
         let goalValue = "Goal Value"
         let receivedSignal = expectation(description: "")
 
-        prepareVM.goalValueObservable.send(goalValue)
-        prepareVM.goalValueObservable.dropFirst()
+        prepareVM.goalValueSubject.send(goalValue)
+        prepareVM.goalValueSubject.dropFirst()
             .sink {
                 if $0 == goalValue {
                     receivedSignal.fulfill()

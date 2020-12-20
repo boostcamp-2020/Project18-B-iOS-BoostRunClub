@@ -64,26 +64,25 @@ final class PrepareRunCoordinator: BasicCoordinator<PrepareRunCoordinationResult
     }
 
     func showGoalTypeActionSheet(goalType: GoalType = .none) -> AnyPublisher<GoalType, Never> {
-        let goalTypeVM = GoalTypeViewModel(goalType: goalType)
-        let goalTypeVC = GoalTypeViewController(with: goalTypeVM)
+        let goalTypeVM = factory.makeGoalTypeVM(goalType: goalType)
+        let goalTypeVC = factory.makeGoalTypeVC(with: goalTypeVM)
 
         goalTypeVC.modalPresentationStyle = .overFullScreen
         navigationController.present(goalTypeVC, animated: false, completion: nil)
 
-        return goalTypeVM.closeSheetSignal.receive(on: RunLoop.main)
-            .map { [weak goalTypeVC] in
-                goalTypeVC?.closeWithAnimation()
-                return $0
-            }.eraseToAnyPublisher()
+        return goalTypeVM.outputs.closeSignal.eraseToAnyPublisher()
     }
 
     func showGoalValueSetupViewController(goalInfo: GoalInfo) -> AnyPublisher<String?, Never> {
-        // TODO: goalType, goalValue -> GoalInfo 타입으로 변경
-        let goalValueSetupVM = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
-        let goalValueSetupVC = GoalValueSetupViewController(with: goalValueSetupVM)
+        let goalValueSetupVM = factory.makeGoalValueSetupVM(
+            goalType: goalInfo.type,
+            goalValue: goalInfo.value
+        )
+
+        let goalValueSetupVC = factory.makeGoalValueSetupVC(with: goalValueSetupVM)
         navigationController.pushViewController(goalValueSetupVC, animated: false)
 
-        return goalValueSetupVM.closeSheetSignal
+        return goalValueSetupVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .map { [weak goalValueSetupVC] in
                 goalValueSetupVC?.navigationController?.popViewController(animated: false)

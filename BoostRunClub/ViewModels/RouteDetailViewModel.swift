@@ -16,13 +16,16 @@ protocol RouteDetailViewModelTypes: AnyObject {
 }
 
 protocol RouteDetailViewModelInputs {
-    func viewDidLoad()
     func didTapCloseButton()
+
+    // Life Cycle
+    func viewDidLoad()
 }
 
 protocol RouteDetailViewModelOutputs {
+    var detailConfigSubject: PassthroughSubject<ActivityDetailConfig, Never> { get }
+
     var closeSignal: PassthroughSubject<Void, Never> { get }
-    var detailConfigSignal: PassthroughSubject<ActivityDetailConfig, Never> { get }
 }
 
 final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewModelOutputs {
@@ -34,7 +37,7 @@ final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewMod
 
     // inputs
     func viewDidLoad() {
-        detailConfigSignal.send(activityDetailConfig)
+        detailConfigSubject.send(activityDetailConfig)
     }
 
     func didTapCloseButton() {
@@ -43,7 +46,7 @@ final class RouteDetailViewModel: RouteDetailViewModelInputs, RouteDetailViewMod
 
     // outputs
     var closeSignal = PassthroughSubject<Void, Never>()
-    var detailConfigSignal = PassthroughSubject<ActivityDetailConfig, Never>()
+    var detailConfigSubject = PassthroughSubject<ActivityDetailConfig, Never>()
 
     deinit {
         print("[\(Date())] 🌙ViewModel⭐️ \(Self.self) deallocated.")

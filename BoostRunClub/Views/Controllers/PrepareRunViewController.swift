@@ -31,7 +31,7 @@ final class PrepareRunViewController: UIViewController {
 
     private func bindViewModel() {
         guard let viewModel = viewModel else { return }
-        viewModel.outputs.userLocation
+        viewModel.outputs.userLocationSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] coordinate in
                 let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
@@ -39,7 +39,7 @@ final class PrepareRunViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        Publishers.CombineLatest(viewModel.outputs.goalTypeObservable, viewModel.outputs.goalValueObservable)
+        Publishers.CombineLatest(viewModel.outputs.goalTypeSubject, viewModel.outputs.goalValueSubject)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] goalType, goalValue in
                 if goalType == .none {
@@ -51,21 +51,21 @@ final class PrepareRunViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.goalTypeObservable
+        viewModel.outputs.goalTypeSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] goalType in
                 self?.setGoalTypeButton.setTitle(goalType.description, for: .normal)
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.goalValueSetupClosed
+        viewModel.outputs.goalValueSetupAnimationSignal
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewShrinkToOriginalSizeAnimation()
             }
             .store(in: &cancellables)
 
-        viewModel.outputs.goalTypeSetupClosed
+        viewModel.outputs.goalTypeSetupAnimationSignal
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.goalValueViewCrossDissolveAnimation()

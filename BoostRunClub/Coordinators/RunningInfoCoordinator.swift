@@ -14,8 +14,9 @@ enum RunningInfoCoordinationResult {
 
 final class RunningInfoCoordinator: BasicCoordinator<RunningInfoCoordinationResult> {
     let factory: RunningInfoSceneFactory
-
-    init(navigationController: UINavigationController, factory: RunningInfoSceneFactory = DependencyFactory.shared) {
+    var isResumed: Bool
+    init(navigationController: UINavigationController, isResume: Bool, factory: RunningInfoSceneFactory = DependencyFactory.shared) {
+        isResumed = isResume
         self.factory = factory
         super.init(navigationController: navigationController)
     }
@@ -25,7 +26,7 @@ final class RunningInfoCoordinator: BasicCoordinator<RunningInfoCoordinationResu
     }
 
     func showRunningInfoViewController() {
-        let runningInfoVM = factory.makeRunningInfoVM()
+        let runningInfoVM = factory.makeRunningInfoVM(isResumed: isResumed)
 
         runningInfoVM.outputs.showPausedRunningSignal
             .receive(on: RunLoop.main)

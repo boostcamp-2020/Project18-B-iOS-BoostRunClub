@@ -40,7 +40,7 @@ final class ActivityDetailCoordinator: BasicCoordinator<Void> {
         let detailVC = factory.makeActivityDetailVC(with: detailVM)
         navigationController.pushViewController(detailVC, animated: true)
 
-        detailVM.outputs.goBackToSceneSignal
+        detailVM.outputs.closeSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.navigationController.popViewController(animated: true)

@@ -22,7 +22,7 @@ final class RunningMapCoordinator: BasicCoordinator<Void> {
 
     func showRunningMapViewController() {
         let runningMapVM = factory.makeRunningMapVM()
-        runningMapVM.outputs.closeRunningMapSceneSignal
+        runningMapVM.outputs.closeSignal
             .sink { [weak self] in self?.closeSignal.send() }
             .store(in: &cancellables)
 

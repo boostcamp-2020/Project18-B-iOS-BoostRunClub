@@ -24,7 +24,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         ) // test target
         let expectedNumReceived = 1
         var numReceived = 0
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .sink { presentingValue in
                 numReceived += 1
                 XCTAssertEqual(presentingValue, goalInfo.value)
@@ -47,7 +47,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         ) // test target
         let expectedNumReceived = 1
         var numReceived = 0
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .sink { presentingValue in
                 numReceived += 1
                 XCTAssertEqual(presentingValue, goalInfo.value)
@@ -68,7 +68,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let initialInput = "1"
         let expectedValue = "00:01"
 
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .dropFirst()
             .sink { presentingValue in
                 XCTAssertEqual(presentingValue, expectedValue)
@@ -89,7 +89,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let initialInput = "1"
         let expectedValue = initialInput
 
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .dropFirst()
             .sink { presentingValue in
                 XCTAssertEqual(presentingValue, expectedValue)
@@ -128,7 +128,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
             let expectedResult = expectedResults[idx]
             let expectedNumReceived = expectedNumReceived[idx]
             var numReceived = 0
-            let cancellable = viewModel.goalValueObservable
+            let cancellable = viewModel.goalValueSubject
                 .dropFirst()
                 .sink { presentingValue in
                     numReceived += 1
@@ -169,7 +169,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
             let expectedResult = expectedResults[idx]
             let expectedNumReceived = expectedNumReceived[idx]
             var numReceived = 0
-            let cancellable = viewModel.goalValueObservable
+            let cancellable = viewModel.goalValueSubject
                 .dropFirst()
                 .sink { presentingValue in
                     numReceived += 1
@@ -191,7 +191,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let expectedResult = "0"
 
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .dropFirst()
             .sink { presentingValue in
                 XCTAssertEqual(presentingValue, expectedResult)
@@ -211,7 +211,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
         let expectedResult = "00:00"
 
-        let cancellable = viewModel.goalValueObservable
+        let cancellable = viewModel.goalValueSubject
             .dropFirst()
             .sink { presentingValue in
                 XCTAssertEqual(presentingValue, expectedResult)
@@ -235,7 +235,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
         expectedResults.forEach { expectedResult in
             let expectedObserve = expectation(description: "deleteBackward_distance_Inputs")
-            let cancellable = viewModel.goalValueObservable
+            let cancellable = viewModel.goalValueSubject
                 .dropFirst()
                 .sink { presentingValue in
                     XCTAssertEqual(presentingValue, expectedResult)
@@ -260,7 +260,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
         expectedResults.forEach { expectedResult in
             let expectedObserve = expectation(description: "deleteBackward_Time_Inputs")
-            let cancellable = viewModel.goalValueObservable
+            let cancellable = viewModel.goalValueSubject
                 .dropFirst()
                 .sink { presentingValue in
                     XCTAssertEqual(presentingValue, expectedResult)
@@ -280,7 +280,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: "15.15")
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertNil(resultValue)
                 if resultValue == nil {
@@ -298,7 +298,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: "15:15")
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertNil(resultValue)
                 if resultValue == nil {
@@ -329,7 +329,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -361,7 +361,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -381,7 +381,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .distance, value: initialValue)
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertEqual(resultValue, initialValue)
                 if resultValue == initialValue {
@@ -400,7 +400,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
         let goalInfo = GoalInfo(type: .time, value: initialValue)
         let viewModel = GoalValueSetupViewModel(goalType: goalInfo.type, goalValue: goalInfo.value)
 
-        let cancellable = viewModel.closeSheetSignal
+        let cancellable = viewModel.closeSignal
             .sink { resultValue in
                 XCTAssertEqual(resultValue, initialValue)
                 if resultValue == initialValue {
@@ -431,7 +431,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {
@@ -463,7 +463,7 @@ class GoalValueSetupViewModelTest: XCTestCase {
 
             let expectedResult = expectedResults[idx]
 
-            let cancel = viewModel.closeSheetSignal
+            let cancel = viewModel.closeSignal
                 .sink { resultValue in
                     XCTAssertEqual(resultValue, expectedResult)
                     if resultValue == expectedResult {

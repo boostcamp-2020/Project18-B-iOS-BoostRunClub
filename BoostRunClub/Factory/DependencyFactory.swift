@@ -9,22 +9,35 @@ import Foundation
 
 class DependencyFactory {
     static let shared = DependencyFactory()
-    lazy var coreDataService = CoreDataService()
-    lazy var activityProvider = ActivityProvider(coreDataService: coreDataService)
-    lazy var locationProvider = LocationProvider()
-    lazy var motionProvider = MotionProvider()
-    lazy var pedometerProvider = PedometerProvider()
-    lazy var runningDataService = RunningService(
-        motionProvider: motionProvider,
-        dashBoard: RunningDashBoard(
-            eventTimer: EventTimer(),
-            locationProvider: locationProvider,
-            pedometerProvider: pedometerProvider
-        ),
-        recoder: RunningRecoder(
-            activityWriter: activityProvider,
-            mapSnapShotter: MapSnapShotService()
-        )
-    )
+
+    // Service For Storage
     lazy var defaultsProvider = DefaultsProvider()
+    lazy var coreDataService = CoreDataService()
+    lazy var activityStorageService = ActivityStorageService(coreDataService: coreDataService)
+
+    // Provider For RunningService
+    lazy var locationProvider = LocationProvider()
+    lazy var pedometerProvider = PedometerProvider()
+    lazy var motionDataModelProvider = MotionDataModelProvider()
+    lazy var runningSnapShotProvider = RunningSnapShotProvider()
+
+    // Running Service
+    lazy var runningDataService = RunningService(
+        motionProvider: runningMotionService,
+        dashBoard: runningDashBoardService,
+        recoder: runningRecordService
+    )
+    lazy var runningMotionService = RunningMotionService(
+        motionDataModelProvider: motionDataModelProvider,
+        locationProvider: locationProvider
+    )
+    lazy var runningDashBoardService = RunningDashBoardService(
+        eventTimer: EventTimeProvider(),
+        locationProvider: locationProvider,
+        pedometerProvider: pedometerProvider
+    )
+    lazy var runningRecordService = RunningRecordService(
+        activityWriter: activityStorageService,
+        mapSnapShotter: runningSnapShotProvider
+    )
 }

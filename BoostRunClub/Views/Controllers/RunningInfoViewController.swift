@@ -38,7 +38,7 @@ final class RunningInfoViewController: UIViewController {
                 view.notificationFeedback()
             }
 
-            viewModel.outputs.runningInfoObservables[idx]
+            viewModel.outputs.runningInfoSubjects[idx]
                 .receive(on: RunLoop.main)
                 .sink { [weak view] runningInfo in
                     view?.setValue(value: runningInfo.value)
@@ -47,18 +47,18 @@ final class RunningInfoViewController: UIViewController {
                 .store(in: &cancellables)
         }
 
-        viewModel.outputs.runningInfoTapAnimation
+        viewModel.outputs.runningInfoTapAnimationSignal
             .receive(on: RunLoop.main)
             .filter { [weak self] in $0 < self?.runDataViews.count ?? 0 }
             .sink { [weak self] in self?.runDataViews[$0].startBounceAnimation() }
             .store(in: &cancellables)
 
-        viewModel.outputs.initialAnimation
+        viewModel.outputs.initialAnimationSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.startInitialAnimation() }
             .store(in: &cancellables)
 
-        viewModel.outputs.resumeAnimation
+        viewModel.outputs.resumeAnimationSignal
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.startResumeAnimation() }
             .store(in: &cancellables)
