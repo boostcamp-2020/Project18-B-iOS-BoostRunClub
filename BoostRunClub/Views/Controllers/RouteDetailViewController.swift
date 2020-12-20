@@ -123,22 +123,10 @@ extension RouteDetailViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-
-        if let distanceLabelText = annotation.title {
-            let customAnnotation = UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
-            annotationView!.image = customAnnotation
-        }
-
-        return annotationView
+        let customAnnotationView = makeCustomAnnotationView(in: mapView, for: annotation)
+        customAnnotationView.image = makeCustomAnnotationImage(with: annotation)
+        return customAnnotationView
     }
 }
 
@@ -164,10 +152,45 @@ extension RouteDetailViewController {
         CLLocationCoordinate2D.computeSplitCoordinate(from: coordinates, distance: 1000)
             .enumerated()
             .forEach { index, splitCoordinate in
-                let split = MKPointAnnotation()
-                split.title = "\(index + 1)km"
-                split.coordinate = splitCoordinate
-                self.mapView.addAnnotation(split)
+                addAnnotation(in: mapView, coordinate: splitCoordinate, title: "\(index + 1)km")
             }
+    }
+
+    private func addAnnotation(in _: MKMapView, coordinate: CLLocationCoordinate2D, title: String?) {
+        let annotation = MKPointAnnotation()
+        annotation.title = title
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+    }
+
+    private func makeCustomAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
+        let identifier = "CustomAnnotationViewID"
+
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
+            annotationView.annotation = annotation
+            return annotationView
+        } else {
+            let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            return customAnnotationView
+        }
+    }
+
+    private func makeCustomAnnotationImage(with annotation: MKAnnotation) -> UIImage {
+        if let distanceLabelText = annotation.title {
+            return UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
+        } else {
+            return UIImage.customSplitAnnotation(type: .split, title: "")
+        }
+    }
+}
+
+class CustomAnnotationView: MKAnnotationView {
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) not implemented!")
     }
 }
