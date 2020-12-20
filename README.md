@@ -11,7 +11,7 @@
 <br>
 
 ## TL;DR
-사용자의 러닝을 측정하여 데이터를 수집하고, 정제한 러닝 데이터를 바탕으로 생성한 활동내역을 확인할 수 있는 iOS 애플리케이션입니다.
+`사용자의 러닝을 측정하여 데이터를 수집하고, 정제한 러닝 데이터를 바탕으로 생성한 활동내역을 확인할 수 있는 iOS 애플리케이션입니다.`
 
 <br>
 
@@ -89,17 +89,17 @@
 - `AVFoundation` framework의 `AVSpeechSynthesizer`를 사용하여 `음성 피드백`을 제공합니다.
 - 러닝 시작/일시정지/러닝, 목표 달성 시에 사용자에게 음성으로 알려주어 사용성을 높입니다.
 
-### 다크모드
+### Dark Mode
 
 <img src="https://user-images.githubusercontent.com/34773827/102692748-c8e5f100-4258-11eb-9eb7-0846808ec74c.png" width="225"><img src="https://user-images.githubusercontent.com/34773827/102692750-d0a59580-4258-11eb-9bf8-24220172c05d.png" width="225">
 
 <details>
 <summary>👈 더보기</summary>
 
-| <img src="https://user-images.githubusercontent.com/34773827/102692550-6dffca00-4257-11eb-9c61-6cf952b653e4.png" width="225"><img src="https://user-images.githubusercontent.com/34773827/102692544-60e2db00-4257-11eb-81ab-270504a2d629.png" width="225"> | <img src="https://user-images.githubusercontent.com/34773827/102692645-08f8a400-4258-11eb-9218-e8cd96fbec45.png" width="225"><img src="https://user-images.githubusercontent.com/34773827/102692641-01d19600-4258-11eb-9de6-9a330ad203f5.png" width="225"> |
+| <div><img src="https://user-images.githubusercontent.com/34773827/102692550-6dffca00-4257-11eb-9c61-6cf952b653e4.png" width="195"><img src="https://user-images.githubusercontent.com/34773827/102692544-60e2db00-4257-11eb-81ab-270504a2d629.png" width="195"></div> | <div><img src="https://user-images.githubusercontent.com/34773827/102692645-08f8a400-4258-11eb-9218-e8cd96fbec45.png" width="195"><img src="https://user-images.githubusercontent.com/34773827/102692641-01d19600-4258-11eb-9de6-9a330ad203f5.png" width="195"></div> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                        `러닝 일시정지`                         |                           `활동`                            |
-| <img src="https://user-images.githubusercontent.com/34773827/102692613-cc2cad00-4257-11eb-98ff-f579c52fd447.png" width="225"><img src="https://user-images.githubusercontent.com/34773827/102692598-b7e8b000-4257-11eb-8dc6-3b2de619a89c.png" width="225"> | <img src="https://user-images.githubusercontent.com/34773827/102692632-ec5c6c00-4257-11eb-9275-89e7d5899a5e.png" width="225"><img src="https://user-images.githubusercontent.com/34773827/102692633-f54d3d80-4257-11eb-91a5-126f3dc2535e.png" width="225"> |
+| <div><img src="https://user-images.githubusercontent.com/34773827/102692613-cc2cad00-4257-11eb-98ff-f579c52fd447.png" width="195"><img src="https://user-images.githubusercontent.com/34773827/102692598-b7e8b000-4257-11eb-8dc6-3b2de619a89c.png" width="195"></div> | <div><img src="https://user-images.githubusercontent.com/34773827/102692632-ec5c6c00-4257-11eb-9275-89e7d5899a5e.png" width="195"><img src="https://user-images.githubusercontent.com/34773827/102692633-f54d3d80-4257-11eb-91a5-126f3dc2535e.png" width="195"></div> |
 |                           `활동상세`                           |                           `구간상세`                           |
 </details>
 
@@ -139,7 +139,7 @@
 ## Challenges 💪
 >부런클 제작 과정에 있어 저희가 마주했던 도전과제들과 문제를 해결했던 경험을 공유합니다 ✨
 
-### `A. 코디네이터 패턴 도입, 뷰컨트롤러 간 데이터 전달 및 뷰 전환`
+### A. `코디네이터 패턴 도입, 뷰컨트롤러 간 데이터 전달 및 뷰 전환`
 
 
 코디네이터 패턴에서 뷰 전환 로직은 모두 코디네이터 객체가 수행합니다. 프로젝트에 코디네이터 패턴을 적용하여 역할을 분리해 보고자 하였습니다. 따라서 **다른 뷰로 전환하는 로직**이나, **전환 시 넘겨줄 필요가 있는 데이터 전달 로직**은 코디네이터 객체를 통해 수행하는 방향으로 설계해야 했습니다. 
@@ -159,7 +159,7 @@
   </details>
 
 
-### `B. 러닝 데이터 처리를 위한 데이터 구조 설계(running split, slice)`
+### B. `러닝 데이터 처리를 위한 데이터 구조 설계(running split, slice)`
 
 
 러닝을 시작했을 때, 사용자는 1KM 단위로 자신이 뛴 통계 정보를 볼 수 있어야 합니다.
@@ -185,7 +185,7 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 </details>
 
 
-### `C. 일정간격으로 들어오지 않는 CoreLocation 정보를 일정하게 받기`
+### C. `일정간격으로 들어오지 않는 CoreLocation 정보를 일정하게 받기`
 
 처음 프로젝트를 기획 할 때, 기기에서 위치정보는 일정 시간간격으로 들어오거나 임의로 간격을 설정할 수 있을 줄 알았지만 기기마다 그리고 상태마다 간격이 다르다는 것을 알게되었습니다.
 
@@ -203,7 +203,7 @@ Running Slice는 저장해두고있는 Location 배열에서 Slice의 시작 위
 
 </details>
 
-### `D. 러닝 상태 컨트롤 하기`
+### D.`러닝 상태 컨트롤 하기`
 
 저희 프로젝트의 핵심 기능 중 하나는 러닝 상태에 따라 자동으로 화면 전환과,
 러닝 여부에 따라 화면에 표시되는 지표들이 변경되는 것입니다.
@@ -232,7 +232,7 @@ RunningFlowController는 사용자 이벤트 및 모션 상태 변화를 감지�
 
 
 
-### `E. 의존성 컨테이너 - 싱글턴으로 구현 vs 주입을 통한 구현`
+### E. `의존성 컨테이너 - 싱글턴으로 구현 vs 주입을 통한 구현`
 
 러닝 데이터를 측정하고 관리하기위한 애플리케이션을 만들다 보니 Core Location 을 감싸는 구체타입 LocationProvider, Core Motion 을 감싸는 구체타입 MotionProvider, 그리고 Core Data를 감싸는 구체타입 RunningDataProvider 등의 여러 구체타입들을 만들게 되었습니다. 각 구체타입에 대한 의존성을 주입하기 위해 ...
 <details> 
@@ -248,7 +248,7 @@ RunningFlowController는 사용자 이벤트 및 모션 상태 변화를 감지�
 
 </details>
 
-### `F. Core ML을 이용한 모션 감지 정확도 개선`
+### F. `Core ML을 이용한 모션 감지 정확도 개선`
 
 걷고 있는 지 뛰고 있는 지, 아니면 가만히 서 있는 지와 같은 사용자 모션에 따라, 러닝 기록 여부를 결정해야 합니다. CMMotionActivity를 활용하면 최대 5가지의 상태를 구분할 수 있지만, 정확도가 너무 낮다는 문제가 있었습니다. 이 문제를 CoreML을 이용해서 해결했습니다.
 
