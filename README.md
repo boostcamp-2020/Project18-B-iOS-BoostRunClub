@@ -41,7 +41,7 @@
 - [4. 프로젝트 구조](#architecture-)  
 - [5. 사용한 프레임워크](#framework-)  
 - [6. DevOps](#devops-)
-- [7. 도전 과제들과 문제를 해결한 이야기](#challenges-)  
+- [7. 마주했던 도전거리들을 해결한 이야기](#challenges-)  
 
 <br>
 
@@ -117,7 +117,7 @@
 <br>
 
 ## Framework 🏗
->부런클 제작에 사용한 핵심 프레임워크들을 모아보았습니다 ✨
+>부런클 제작에는 외부패키지를 사용하지 않고 애플에서 제공하는 프레임워크만 사용하였습니다. ✨
 
 ![333 001](https://user-images.githubusercontent.com/46217844/102346327-01c86080-3fe2-11eb-9660-e5e4505d6427.jpeg)
 
@@ -259,6 +259,7 @@ RunningFlowController는 사용자 이벤트 및 모션 상태 변화를 감지�
 </details>
 
 <br>
+
 
 
 <div align="center">
