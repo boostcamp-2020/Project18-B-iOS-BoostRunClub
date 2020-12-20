@@ -253,7 +253,7 @@ RunningFlowController는 사용자 이벤트 및 모션 상태 변화를 감지�
 
 <details>
  <summary style="color:red">👈 더보기</summary>
-이 문제를 CoreML을 이용해서 해결했습니다. 기기 센서를 통해 발생하는 값(attitude, gravity, rotationRate, userAcceleration)을 기반으로 label을 두 가지로 구분할 수 있는 모델을 만들었습니다. 데이터를 수집기를 만들어 두 가지 상태에 따른 데이터 셋을 직접 만들었고, 이러한 과정을 통해 기대하는 값의 정확도를 높일 수 있었습니다.
+이 문제를 CoreML을 이용해서 해결했습니다. 기기 센서를 통해 발생하는 값(attitude, gravity, rotationRate, userAcceleration)을 기반으로 label을 두 가지로 구분할 수 있는 모델을 만들었습니다. 데이터를 수집기를 만들어 두 가지 상태에 따른 데이터 셋을 직접 만들었고, 이러한 과정을 통해 기대하는 값의 정확도를 높일 수 있었습니다. (https://github.com/whrlgus/MotionDataCollector)
   <img src = "https://i.imgur.com/wvEluOT.png"/>
 </details>
 
