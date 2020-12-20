@@ -51,8 +51,35 @@ class DetailMapView: UIView {
                 annotation.title = "\(index + 1)km"
                 let locationIdx = lastSlice.endIndex < coords.count ? lastSlice.endIndex : coords.count - 1
                 annotation.coordinate = coords[locationIdx]
-                self.mapView.addAnnotation(annotation)
+                self.addAnnotation(in: mapView, coordinate: coords[locationIdx], title: "\(index + 1)km")
             }
+    }
+
+    private func makeCustomAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
+        let identifier = "CustomAnnotationViewID"
+
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
+            annotationView.annotation = annotation
+            return annotationView
+        } else {
+            let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            return customAnnotationView
+        }
+    }
+
+    private func makeCustomAnnotationImage(with annotation: MKAnnotation) -> UIImage {
+        if let distanceLabelText = annotation.title {
+            return UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
+        } else {
+            return UIImage.customSplitAnnotation(type: .split, title: "")
+        }
+    }
+
+    private func addAnnotation(in _: MKMapView, coordinate: CLLocationCoordinate2D, title: String?) {
+        let annotation = MKPointAnnotation()
+        annotation.title = title
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
     }
 }
 
@@ -84,24 +111,14 @@ extension DetailMapView: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-
-        if let distanceLabelText = annotation.title {
-            let customAnnotation = UIImage.customSplitAnnotation(type: .split, title: distanceLabelText ?? "")
-            annotationView!.image = customAnnotation
-        }
-
-        return annotationView
+        let customAnnotationView = makeCustomAnnotationView(in: mapView, for: annotation)
+        customAnnotationView.image = makeCustomAnnotationImage(with: annotation)
+        return customAnnotationView
     }
 }
+
+// MARK: - Private methods
 
 // MARK: - Configure
 
