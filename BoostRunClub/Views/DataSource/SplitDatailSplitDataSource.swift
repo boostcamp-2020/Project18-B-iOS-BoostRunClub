@@ -36,7 +36,7 @@ class SplitDatailSplitDataSource: NSObject, UITableViewDataSource {
 
         if let cell = cell as? SplitDatailSplitCell {
 //            cell.kilometerLabel.text = data[indexPath.row].kilometer
-            cell.kilometerLabel.text = indexPath.row < data.count - 1 ? "\(indexPath.row + 1)" : String(format: "%.2f", totalDistance.remainder(dividingBy: 1000) / 1000)
+            cell.kilometerLabel.text = indexPath.row < data.count - 1 ? "\(indexPath.row + 1)" : String(format: "%.2f", Double(Int(totalDistance) % 1000) / 1000)
             cell.paceLabel.text = data[indexPath.row].avgPace
             cell.changeLabel.applyChange(data[indexPath.row].change)
             cell.elevationLabel.text = data[indexPath.row].elevation
