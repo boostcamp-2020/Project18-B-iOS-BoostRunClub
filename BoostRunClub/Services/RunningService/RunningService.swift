@@ -16,16 +16,20 @@ class RunningService: RunningServiceType {
 
     private var startTime: Date?
 
-    private var autoStatable = true
+    private var autoStateChangeable = true
     private(set) var isStarted = false
     let runningResultSubject = PassthroughSubject<(activity: Activity, detail: ActivityDetail)?, Never>()
 
-    let runningStateSubject = CurrentValueSubject<MotionType, Never>(.standing)
+    let runningStateSubject = CurrentValueSubject<MotionType, Never>(.running)
     var runningEventSubject = PassthroughSubject<RunningEvent, Never>()
 
     var goalSubscription: AnyCancellable?
 
-    init(motionProvider: RunningMotionServiceable, dashBoard: RunningDashBoardServiceable, recoder: RunningRecordServiceable) {
+    init(
+        motionProvider: RunningMotionServiceable,
+        dashBoard: RunningDashBoardServiceable,
+        recoder: RunningRecordServiceable
+    ) {
         dashBoardService = dashBoard
         recordService = recoder
         motionService = motionProvider
@@ -38,7 +42,7 @@ class RunningService: RunningServiceType {
 
         motionProvider.motionTypeSubject
             .receive(on: RunLoop.main)
-            .filter { [weak self] _ in self?.autoStatable ?? false }
+            .filter { [weak self] _ in self?.autoStateChangeable ?? false }
             .filter { [weak self] in $0 != self?.runningStateSubject.value }
             .sink { [weak self] in
                 self?.runningStateSubject.send($0)
@@ -58,7 +62,7 @@ class RunningService: RunningServiceType {
 
         isStarted = true
         startTime = Date()
-        autoStatable = true
+        autoStateChangeable = true
 
         dashBoardService.start()
         motionService.start()
@@ -78,15 +82,15 @@ class RunningService: RunningServiceType {
         runningEventSubject.send(.stop)
     }
 
-    func pause() {
-        autoStatable = false
+    func pause(autoResume: Bool) {
+        autoStateChangeable = autoResume
 
         dashBoardService.setState(isRunning: false)
         runningEventSubject.send(.pause)
     }
 
     func resume() {
-        autoStatable = true
+        autoStateChangeable = true
 
         dashBoardService.setState(isRunning: true)
         runningEventSubject.send(.resume)

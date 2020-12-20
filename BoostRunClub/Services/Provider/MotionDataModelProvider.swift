@@ -33,11 +33,11 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
         isActive = true
 
         if motion.isDeviceMotionAvailable {
-            motion.deviceMotionUpdateInterval = 1.0 / 50.0
+            motion.deviceMotionUpdateInterval = 1.0 / 100.0
             motion.showsDeviceMovementDisplay = true
             motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
 
-            timer = Timer(fire: Date(), interval: 1.0 / 50.0, repeats: true,
+            timer = Timer(fire: Date(), interval: 1.0 / 100.0, repeats: true,
                           block: { _ in
                               if let data = self.motion.deviceMotion {
                                   self.attitudeArray.append(data.attitude)
@@ -118,7 +118,7 @@ final class MotionDataModelProvider: MotionDataModelProvidable {
         let standingProb = result.labelProbability["standing"] ?? 0
         let walkingProb = result.labelProbability["running"] ?? 0
         print("[CORE MOTION] \(String(format: "walking: %.2f", walkingProb * 100)) \(String(format: "stand: %.2f", standingProb * 100))")
-        return standingProb > 0.60 ? "standing" : "walking"
+        return standingProb > 0.55 ? "standing" : "walking"
     }
 
     func start() {
