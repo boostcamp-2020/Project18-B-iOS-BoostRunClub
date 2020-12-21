@@ -94,4 +94,8 @@ extension Activity {
     var runningTimeText: String {
         TimeInterval(duration).fullFormattedString
     }
+
+    var elapsedTimeText: String {
+        (finishedAt.timeIntervalSinceReferenceDate - createdAt.timeIntervalSinceReferenceDate).fullFormattedString
+    }
 }
