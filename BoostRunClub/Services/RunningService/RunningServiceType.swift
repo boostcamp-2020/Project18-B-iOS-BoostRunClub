@@ -18,7 +18,7 @@ protocol RunningServiceType {
 
     func start()
     func stop()
-    func pause()
+    func pause(autoResume: Bool)
     func resume()
 
     func setGoal(_ goalInfo: GoalInfo?)

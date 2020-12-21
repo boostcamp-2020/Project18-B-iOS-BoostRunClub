@@ -67,7 +67,8 @@ class PausedRunningViewModel: PausedRunningViewModelInputs, PausedRunningViewMod
         runningService.runningStateSubject
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .running {
-                    self?.didTapResumeButton()
+                    self?.runningService.resume()
+                    self?.closeRunningInfoAnimationSignal.send()
                 }
             }.store(in: &cancellables)
 

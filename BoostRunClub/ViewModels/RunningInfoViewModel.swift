@@ -88,6 +88,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
             .sink { [weak self] currentMotionType in
                 if currentMotionType == .standing {
                     self?.showPausedRunningSignal.send()
+                    runningService.pause(autoResume: true)
                 }
             }.store(in: &cancellables)
     }
@@ -100,7 +101,7 @@ class RunningInfoViewModel: RunningInfoViewModelInputs, RunningInfoViewModelOutp
 
     func didTapPauseButton() {
         showPausedRunningSignal.send()
-        runningService.pause()
+        runningService.pause(autoResume: false)
     }
 
     func didTapRunData(index: Int) {
