@@ -1,0 +1,10 @@
+disabled_rules:
+- trailing_comma
+- opening_brace
+
+excluded:
+- AppDelegate.swift
+- SceneDelegate.swift
+
+weak_delegate:
+    excluded: ".*Test\\.swift"
