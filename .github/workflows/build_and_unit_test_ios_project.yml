@@ -1,0 +1,40 @@
+name: iOS CI workflow
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    name: Build, Install Pods, and Run Unit Tests
+    env:
+      SCHEME: "BoostRunClub"
+      DEVICE: "iPhone 12"
+      WORKSPACE: "BoostRunClub.xcworkspace"
+      
+    runs-on: macOS-latest
+    
+    steps:
+    
+    - name: Checkout project
+      uses: actions/checkout@v1
+
+    - name: CocoaPod Install
+      run: pod install
+    
+    - name: Select Xcode 12
+      run: sudo xcode-select -switch /Applications/Xcode_12.2.app
+    
+    - name: Build 
+      run: |
+        set -eo pipefail && xcodebuild build-for-testing \
+                             -scheme $SCHEME \
+                             -workspace $WORKSPACE \
+                             -destination "platform=iOS Simulator,name=$DEVICE" | 
+                             xcpretty --color --simple
+    - name: Run unit tests
+      run: |
+        set -eo pipefail && xcodebuild test-without-building \
+                            -scheme $SCHEME \
+                            -workspace $WORKSPACE \
+                            -destination "platform=iOS Simulator,name=$DEVICE" | 
+                            xcpretty --color --simple
